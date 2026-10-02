@@ -151,23 +151,6 @@ export const styles = StyleSheet.create({
 		alignSelf: 'stretch',
 		justifyContent: 'space-between',
 	},
-	// Veda kartı
-	farewell: {
-		padding: 24,
-		gap: 4,
-		borderRadius: 12,
-		backgroundColor: colors.primaryContainer,
-	},
-	farewellTitle: {
-		fontFamily: fonts.bold,
-		fontSize: 18,
-		color: colors.onPrimary,
-	},
-	farewellText: {
-		fontFamily: fonts.regular,
-		fontSize: 12,
-		color: colors.primaryFixedDim,
-	},
 });
 
 export const headerStyles = StyleSheet.create({
@@ -207,4 +190,23 @@ export const headerStyles = StyleSheet.create({
 		backgroundColor: colors.primary,
 	},
 	row: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+});
+
+export const FarewellCardStyles = StyleSheet.create({
+	farewell: {
+		padding: 24,
+		gap: 4,
+		borderRadius: 12,
+		backgroundColor: colors.primaryContainer,
+	},
+	farewellTitle: {
+		fontFamily: fonts.bold,
+		fontSize: 18,
+		color: colors.onPrimary,
+	},
+	farewellText: {
+		fontFamily: fonts.regular,
+		fontSize: 12,
+		color: colors.primaryFixedDim,
+	},
 });

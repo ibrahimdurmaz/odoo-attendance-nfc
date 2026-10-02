@@ -6,6 +6,8 @@
     "@react-native-vector-icons/feather": "^13.1.4",
     "@react-native-vector-icons/material-icons": "^13.1.4",
     "expo": "~57.0.26",
+    "expo-blur": "~57.0.3",
+    "expo-camera": "~57.0.6",
     "expo-constants": "~57.0.20",
     "expo-font": "~57.0.4",
     "expo-linking": "~57.0.11",
