@@ -6,24 +6,24 @@ import {
 	formatTime,
 } from '@/helper/dateHelpers';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
-import { useState } from 'react';
 import { Text, View } from 'react-native';
+import { BREAK_ALLOWANCE_SECONDS, TARGET_SECONDS } from './HomeScreen';
 import { ProgressRing } from './ProgressRing';
 import { Stat } from './Stat';
 import { styles } from './styles';
 import { Session, Status } from './types';
-const TARGET_SECONDS = 8 * 3600;
-const BREAK_ALLOWANCE_SECONDS = 60 * 60;
+
 export function StatsBlock({
 	status,
 	session,
 	finishedBreakSeconds,
+	now,
 }: {
 	status: Status;
 	session: Session;
 	finishedBreakSeconds: number;
+	now: number;
 }) {
-	const [now, setNow] = useState(Date.now());
 	const workEnd = session.checkOutAt ?? session.breakStartedAt ?? now;
 	const workedSeconds = session.checkInAt
 		? Math.max(0, (workEnd - session.checkInAt) / 1000 - finishedBreakSeconds)

@@ -1,15 +1,19 @@
 import { Pressable, Text, View } from 'react-native';
 
 import { colors } from '@/assets/theme';
+import { useModalStore } from '@/store/modalStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { ModalWrapper } from './ModalWrapper';
 import { CheckInFailedModalStyles } from './styles';
 
 export const CheckInFailedModal = () => {
-	const visible = false;
+	const { modals, closeModal } = useModalStore();
+	const { visible } = modals.checkInFailed;
 	const terminalName = 'terminal 001';
 	const time = '09.00';
-	const onClose = () => {};
+	const onClose = () => {
+		closeModal('checkInFailed');
+	};
 	const onRetry = () => {};
 	const onUseCode = () => {};
 	const styles = CheckInFailedModalStyles;

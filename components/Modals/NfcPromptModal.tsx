@@ -1,9 +1,13 @@
-import type { FC } from 'react';
+import type { Dispatch, FC, SetStateAction } from 'react';
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import { colors } from '@/assets/theme';
+import { formatTime } from '@/helper/dateHelpers';
+import { useModalStore } from '@/store/modalStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
+import { CHECKPOINT, INITIAL_SESSION } from '../HomeScreen/HomeScreen';
+import { Session } from '../HomeScreen/types';
 import { ModalWrapper } from './ModalWrapper';
 import { NfcPromptModalStyles } from './styles';
 
@@ -218,11 +222,41 @@ const Prompt: FC<NfcPromptModalProps> = ({
 	);
 };
 
-export const NfcPromptModal = () => {
-	const visible = false;
-	const onClose = () => {};
-	const onSubmitCode = () => {};
-	const panelName = 'panel 1';
+export const NfcPromptModal = ({
+	setNow,
+	setSession,
+}: {
+	setNow: Dispatch<SetStateAction<number>>;
+	setSession: Dispatch<SetStateAction<Session>>;
+}) => {
+	const { modals, closeModal, triggerModal } = useModalStore();
+	const { visible } = modals.nfcPrompt;
+	const onClose = () => {
+		closeModal('nfcPrompt');
+	};
+	const onSubmitCode = () => {
+		const accepted = true;
+		closeModal('nfcPrompt');
+		if (accepted) {
+			const at = Date.now();
+			setNow(at);
+			setSession({
+				...INITIAL_SESSION,
+				status: 'working',
+				checkInAt: at,
+			});
+			triggerModal('checkInSuccessful', {
+				time: formatTime(Date.now()),
+			});
+		} else {
+			triggerModal('checkInFailed', {
+				terminalName: CHECKPOINT,
+				time: formatTime(Date.now()),
+			});
+		}
+	};
+
+	const panelName = CHECKPOINT;
 	return (
 		<ModalWrapper onClose={onClose} visible={visible}>
 			<Prompt

@@ -1,4 +1,5 @@
 import { colors } from '@/assets/theme';
+import { useModalStore } from '@/store/modalStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import type { FC } from 'react';
@@ -244,8 +245,11 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 };
 
 export const CodeScannerModal = () => {
-	const visible = false;
-	const onClose = () => {};
+	const { modals, closeModal } = useModalStore();
+	const { visible } = modals.codeScanner;
+	const onClose = () => {
+		closeModal('codeScanner');
+	};
 	const onScanned = () => {};
 	return (
 		<ModalWrapper onClose={onClose} visible={visible}>

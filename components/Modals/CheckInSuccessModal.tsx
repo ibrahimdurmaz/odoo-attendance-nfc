@@ -1,17 +1,36 @@
 import { Pressable, Text, View } from 'react-native';
 
 import { colors } from '@/assets/theme';
+import { useModalStore } from '@/store/modalStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
+import { SHIFT_HOURS } from '../HomeScreen/HomeScreen';
 import { ModalWrapper } from './ModalWrapper';
 import { CheckInSuccessModalStyles } from './styles';
 
 export const CheckInSuccessModal = () => {
-	const visible = true;
+	const { modals, closeModal } = useModalStore();
+	const { visible, props } = modals.checkInSuccessful;
+	const toMinutes = (t: string) => {
+		const [h, m] = t.split(':').map(Number);
+		return h * 60 + m;
+	};
+	if (!visible) null;
 	const time = '09.00';
-	const shiftHours = '09:00 - 18:00';
-	const shiftStatus = 'Zamanında Başlangıç';
+
+	const getShiftStatus = (time: string) => {
+		const minutes = toMinutes(time);
+		const start = toMinutes('08:40');
+		const end = toMinutes('09:20');
+
+		if (minutes < start) return 'Erken Başlangıç';
+		if (minutes > end) return 'Geç Başlangıç';
+		return 'Zamanında Başlangıç'; // 08:40 - 09:20 arası (dahil)
+	};
+	const shiftStatus = getShiftStatus(time);
 	const userName = 'Selim';
-	const onClose = () => {};
+	const onClose = () => {
+		closeModal('checkInSuccessful');
+	};
 	const styles = CheckInSuccessModalStyles;
 	return (
 		<ModalWrapper onClose={onClose} visible={visible}>
@@ -55,7 +74,7 @@ export const CheckInSuccessModal = () => {
 							{shiftStatus}
 						</Text>
 					</View>
-					<Text style={styles.shiftHours}>{shiftHours}</Text>
+					<Text style={styles.shiftHours}>{SHIFT_HOURS}</Text>
 				</View>
 
 				<Pressable

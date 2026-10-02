@@ -5,10 +5,12 @@ import {
 	formatTime,
 	getGreeting,
 } from '@/helper/dateHelpers';
+import { useModalStore } from '@/store/modalStore';
+import { createDayRecord, useDayStore } from '@/store/useDayStore';
 import { MaterialIcons } from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { Platform, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CheckInFailedModal } from '../Modals/CheckInFailedModal';
 import { CheckInSuccessModal } from '../Modals/CheckInSuccessModal';
@@ -24,14 +26,16 @@ import { StatsBlock } from './StatsBlock';
 import { styles } from './styles';
 import { Activity, Session } from './types';
 
+// Android NFC okur, iOS paneldeki kodu kamerayla okutur.
+const CHECK_IN_MODAL = Platform.OS === 'android' ? 'nfcPrompt' : 'codeScanner';
 // Örnek veriler;
 const USER_NAME = 'Selim';
-const SHIFT_HOURS = '08:30 - 17:30';
+export const SHIFT_HOURS = '09:00 - 18:00';
 const LOCATION = 'Merkez Ofis';
-const CHECKPOINT = 'Ana Giriş Paneli';
-const BREAK_ALLOWANCE_SECONDS = 60 * 60;
-
-const INITIAL_SESSION: Session = {
+export const CHECKPOINT = 'Ana Giriş Paneli';
+export const BREAK_ALLOWANCE_SECONDS = 60 * 60;
+export const TARGET_SECONDS = 8 * 3600;
+export const INITIAL_SESSION: Session = {
 	status: 'notCheckedIn',
 	checkInAt: null,
 	checkOutAt: null,
@@ -46,6 +50,8 @@ export const HomeScreen: FC = () => {
 	const { status } = session;
 	const isRunning = status === 'working' || status === 'onBreak';
 
+	const { modals, triggerModal } = useModalStore();
+	const saveDay = useDayStore((state) => state.saveDay);
 	// Süreler bir sayaç artırılarak değil, kayıt saatleri ile "şu an" arasındaki
 	// farktan hesaplanır; uygulama arka plandan dönünce de doğru kalır.
 	useEffect(() => {
@@ -59,15 +65,15 @@ export const HomeScreen: FC = () => {
 	// --- Eylemler (Odoo / NFC çağrıları buraya eklenir) ---
 
 	const checkIn = () => {
-		const at = Date.now();
-		setNow(at);
-		setSession({ ...INITIAL_SESSION, status: 'working', checkInAt: at });
+		triggerModal(CHECK_IN_MODAL);
+		console.log(modals.nfcPrompt.visible);
 	};
 
 	const startBreak = () => {
 		const at = Date.now();
 		setNow(at);
 		setSession((prev) => ({ ...prev, status: 'onBreak', breakStartedAt: at }));
+		console.log(session);
 	};
 
 	const endBreak = () => {
@@ -84,18 +90,33 @@ export const HomeScreen: FC = () => {
 	};
 
 	const checkOut = () => {
+		if (!session.checkInAt) return;
 		const at = Date.now();
+		// Moladayken çıkış yapılırsa açık mola çıkış anında kapatılır.
+		const breaks = session.breakStartedAt
+			? [...session.breaks, { start: session.breakStartedAt, end: at }]
+			: session.breaks;
+
+		saveDay(
+			createDayRecord({
+				checkInAt: session.checkInAt,
+				checkOutAt: at,
+				breaks,
+				targetSeconds: TARGET_SECONDS,
+				shiftHours: SHIFT_HOURS,
+				checkpoint: CHECKPOINT,
+				location: LOCATION,
+			}),
+		);
+
 		setNow(at);
-		setSession((prev) => ({
-			...prev,
+		setSession({
+			...session,
 			status: 'completed',
 			checkOutAt: at,
 			breakStartedAt: null,
-			// Moladayken çıkış yapılırsa açık mola çıkış anında kapatılır.
-			breaks: prev.breakStartedAt
-				? [...prev.breaks, { start: prev.breakStartedAt, end: at }]
-				: prev.breaks,
-		}));
+			breaks,
+		});
 	};
 
 	// --- Hesaplar ---
@@ -173,7 +194,7 @@ export const HomeScreen: FC = () => {
 			<CheckInFailedModal />
 			<CheckInSuccessModal />
 			<CodeScannerModal />
-			<NfcPromptModal />
+			<NfcPromptModal setNow={setNow} setSession={setSession} />
 			<Header />
 			<ScrollView
 				contentContainerStyle={styles.content}
@@ -201,6 +222,7 @@ export const HomeScreen: FC = () => {
 
 				<StatsBlock
 					finishedBreakSeconds={finishedBreakSeconds}
+					now={now}
 					session={session}
 					status={status}
 				/>
