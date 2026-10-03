@@ -1,4 +1,4 @@
-import { colors } from '@/assets/theme';
+import { theme } from '@/assets/theme';
 import {
 	formatClock,
 	formatDuration,
@@ -24,6 +24,7 @@ export function StatsBlock({
 	finishedBreakSeconds: number;
 	now: number;
 }) {
+	const colors = theme();
 	const workEnd = session.checkOutAt ?? session.breakStartedAt ?? now;
 	const workedSeconds = session.checkInAt
 		? Math.max(0, (workEnd - session.checkInAt) / 1000 - finishedBreakSeconds)
@@ -43,19 +44,41 @@ export function StatsBlock({
 
 	const isBreakOverLimit = usedBreakSeconds > BREAK_ALLOWANCE_SECONDS;
 	return status === 'completed' ? (
-		<View style={[styles.card, styles.mainCard]}>
-			<View style={styles.successIcon}>
+		<View
+			style={[
+				styles.card,
+				{ backgroundColor: colors.surfaceContainerLowest },
+				styles.mainCard,
+			]}
+		>
+			<View
+				style={[
+					styles.successIcon,
+					{ backgroundColor: colors.surfaceContainerLow },
+				]}
+			>
 				<MaterialIcons color={colors.tertiary} name='task-alt' size={32} />
 			</View>
-			<Text style={styles.overline}>TOPLAM NET ÇALIŞMA</Text>
-			<Text style={styles.total}>{formatDuration(workedSeconds)}</Text>
-			<View style={styles.overtimePill}>
+			<Text style={[styles.overline, { color: colors.onSurfaceVariant }]}>
+				TOPLAM NET ÇALIŞMA
+			</Text>
+			<Text style={[styles.total, { color: colors.primary }]}>
+				{formatDuration(workedSeconds)}
+			</Text>
+			<View
+				style={[
+					styles.overtimePill,
+					{ backgroundColor: colors.secondaryContainer },
+				]}
+			>
 				<MaterialIcons
 					color={colors.onSecondaryContainer}
 					name={overtimeSeconds >= 0 ? 'trending-up' : 'trending-down'}
 					size={16}
 				/>
-				<Text style={styles.overtimeLabel}>
+				<Text
+					style={[styles.overtimeLabel, { color: colors.onSecondaryContainer }]}
+				>
 					{overtimeSeconds >= 0
 						? `+${formatMinutes(overtimeSeconds)} fazla mesai`
 						: `${formatMinutes(-overtimeSeconds)} eksik mesai`}
@@ -68,15 +91,26 @@ export function StatsBlock({
 			</View>
 		</View>
 	) : (
-		<View style={[styles.card, styles.mainCard]}>
+		<View
+			style={[
+				styles.card,
+				{ backgroundColor: colors.surfaceContainerLowest },
+				styles.mainCard,
+			]}
+		>
 			{status === 'onBreak' ? (
-				<View style={styles.pausedChip}>
+				<View
+					style={[
+						styles.pausedChip,
+						{ backgroundColor: colors.surfaceContainerHigh },
+					]}
+				>
 					<MaterialIcons
 						color={colors.onSurfaceVariant}
 						name='pause-circle-outline'
 						size={16}
 					/>
-					<Text style={styles.caption}>
+					<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
 						Çalışma süresi duraklatıldı: {formatDuration(workedSeconds)}
 					</Text>
 				</View>
@@ -90,17 +124,21 @@ export function StatsBlock({
 						: progress
 				}
 			>
-				<Text style={styles.caption}>
+				<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
 					{status === 'onBreak' ? 'Mola Süresi' : 'Geçen Süre'}
 				</Text>
 				<Text
-					style={[styles.timer, status === 'notCheckedIn' && styles.timerIdle]}
+					style={[
+						styles.timer,
+						{ color: colors.onSurface },
+						status === 'notCheckedIn' && styles.timerIdle,
+					]}
 				>
 					{formatClock(
 						status === 'onBreak' ? currentBreakSeconds : workedSeconds,
 					)}
 				</Text>
-				<Text style={styles.ringNote}>
+				<Text style={[styles.ringNote, { color: colors.tertiary }]}>
 					{status === 'notCheckedIn'
 						? `Hedef: ${formatDuration(TARGET_SECONDS)}`
 						: null}

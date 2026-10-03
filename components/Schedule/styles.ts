@@ -1,8 +1,8 @@
-import { colors, fonts } from '@/assets/theme';
+import { fonts } from '@/assets/theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-	screen: { flex: 1, backgroundColor: colors.surface },
+	screen: { flex: 1 },
 	flex: { flex: 1 },
 	row: { flexDirection: 'row', alignItems: 'center', gap: 6 },
 	spread: {
@@ -27,18 +27,15 @@ export const styles = StyleSheet.create({
 		borderRadius: 8,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: colors.primaryContainer,
 	},
 	brand: {
 		fontFamily: fonts.semibold,
 		fontSize: 12,
 		letterSpacing: 0.6,
-		color: colors.primaryContainer,
 	},
 	headerTitle: {
 		fontFamily: fonts.semibold,
 		fontSize: 18,
-		color: colors.onSurface,
 	},
 
 	content: { padding: 16, paddingBottom: 32, gap: 16 },
@@ -47,17 +44,14 @@ export const styles = StyleSheet.create({
 		fontFamily: fonts.semibold,
 		fontSize: 14,
 		lineHeight: 20,
-		color: colors.onSurface,
 	},
 	caption: {
 		fontFamily: fonts.medium,
 		fontSize: 12,
 		lineHeight: 16,
-		color: colors.onSurfaceVariant,
 	},
 	card: {
 		borderRadius: 12,
-		backgroundColor: colors.surfaceContainerLowest,
 		shadowColor: '#000000',
 		shadowOpacity: 0.06,
 		shadowRadius: 3,
@@ -71,35 +65,29 @@ export const styles = StyleSheet.create({
 		width: 8,
 		height: 8,
 		borderRadius: 4,
-		backgroundColor: colors.secondary,
 	},
 	weeklyTotal: {
 		fontFamily: fonts.bold,
 		fontSize: 28,
 		lineHeight: 36,
-		color: colors.onSurface,
 		fontVariant: ['tabular-nums'],
 	},
 	weeklyTarget: {
 		fontFamily: fonts.medium,
 		fontSize: 13,
-		color: colors.onSurfaceVariant,
 	},
 	remaining: {
 		fontFamily: fonts.semibold,
 		fontSize: 12,
-		color: colors.primary,
 	},
 	progressTrack: {
 		height: 8,
 		borderRadius: 4,
 		overflow: 'hidden',
-		backgroundColor: colors.surfaceContainerHigh,
 	},
 	progressFill: {
 		height: 8,
 		borderRadius: 4,
-		backgroundColor: colors.secondary,
 	},
 
 	// Filtreler
@@ -111,9 +99,7 @@ export const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		gap: 6,
-		backgroundColor: colors.surfaceContainer,
 	},
-	chipSelected: { backgroundColor: colors.primaryContainer },
 	chipLabel: { fontFamily: fonts.semibold, fontSize: 12 },
 
 	// Gün kartı
@@ -129,12 +115,10 @@ export const styles = StyleSheet.create({
 		fontFamily: fonts.bold,
 		fontSize: 16,
 		lineHeight: 24,
-		color: colors.onSurface,
 	},
 	timestamp: {
 		fontFamily: fonts.semibold,
 		fontSize: 13,
-		color: colors.onSurface,
 		fontVariant: ['tabular-nums'],
 	},
 	badge: {
@@ -144,16 +128,13 @@ export const styles = StyleSheet.create({
 		paddingHorizontal: 10,
 		paddingVertical: 4,
 		borderRadius: 999,
-		backgroundColor: colors.surfaceContainerHigh,
 	},
-	badgePending: { backgroundColor: colors.secondaryContainer },
 	badgeLabel: { fontFamily: fonts.semibold, fontSize: 12 },
 
 	empty: { alignItems: 'center', gap: 4, padding: 24 },
 	emptyTitle: {
 		fontFamily: fonts.semibold,
 		fontSize: 14,
-		color: colors.onSurface,
 	},
 });
 
@@ -166,34 +147,26 @@ export const WeeksDaysStyles = StyleSheet.create({
 		borderRadius: 12,
 		alignItems: 'center',
 		justifyContent: 'space-between',
-		backgroundColor: colors.surfaceContainerLowest,
 	},
-	weekCellToday: { backgroundColor: colors.primary },
 	weekDate: {
 		fontFamily: fonts.semibold,
 		fontSize: 18,
-		color: colors.onSurface,
 	},
 	weekDuration: {
 		fontFamily: fonts.semibold,
 		fontSize: 11,
-		color: colors.tertiaryContainer,
 		fontVariant: ['tabular-nums'],
 	},
-	onToday: { color: colors.onPrimary },
-	onTodayMuted: { color: colors.primaryFixed },
 	section: { gap: 8 },
 	sectionTitle: {
 		fontFamily: fonts.semibold,
 		fontSize: 14,
 		lineHeight: 20,
-		color: colors.onSurface,
 	},
 	caption: {
 		fontFamily: fonts.medium,
 		fontSize: 12,
 		lineHeight: 16,
-		color: colors.onSurfaceVariant,
 	},
 	spread: {
 		flexDirection: 'row',
@@ -222,7 +195,6 @@ export const DayDetailsHeaderStyles = StyleSheet.create({
 	headerTitle: {
 		fontFamily: fonts.semibold,
 		fontSize: 18,
-		color: colors.onSurface,
 	},
 	pressed: { opacity: 0.7 },
 });
@@ -230,7 +202,7 @@ export const DayDetailsHeaderStyles = StyleSheet.create({
 const NODE_RING_SIZE = 32;
 
 export const DayDetailsStyles = StyleSheet.create({
-	screen: { flex: 1, backgroundColor: colors.surface },
+	screen: { flex: 1 },
 	flex: { flex: 1 },
 	row: { flexDirection: 'row', alignItems: 'center', gap: 6 },
 	spread: {
@@ -254,23 +226,19 @@ export const DayDetailsStyles = StyleSheet.create({
 		fontFamily: fonts.medium,
 		fontSize: 12,
 		lineHeight: 16,
-		color: colors.onSurfaceVariant,
 	},
 	overline: {
 		fontFamily: fonts.medium,
 		fontSize: 12,
 		letterSpacing: 0.6,
-		color: colors.onSurfaceVariant,
 	},
 	sectionTitle: {
 		fontFamily: fonts.semibold,
 		fontSize: 18,
 		lineHeight: 24,
-		color: colors.onSurface,
 	},
 	card: {
 		borderRadius: 12,
-		backgroundColor: colors.surfaceContainerLowest,
 		shadowColor: '#000000',
 		shadowOpacity: 0.06,
 		shadowRadius: 3,
@@ -282,7 +250,6 @@ export const DayDetailsStyles = StyleSheet.create({
 		flexShrink: 1,
 		fontFamily: fonts.semibold,
 		fontSize: 14,
-		color: colors.primary,
 	},
 	statusBadge: {
 		flexDirection: 'row',
@@ -291,7 +258,6 @@ export const DayDetailsStyles = StyleSheet.create({
 		paddingHorizontal: 8,
 		paddingVertical: 4,
 		borderRadius: 999,
-		backgroundColor: colors.surfaceContainer,
 	},
 	statusDot: { width: 8, height: 8, borderRadius: 4 },
 	timeline: { gap: 16 },
@@ -301,7 +267,6 @@ export const DayDetailsStyles = StyleSheet.create({
 		bottom: NODE_RING_SIZE / 2,
 		left: NODE_RING_SIZE / 2 - 1,
 		width: 2,
-		backgroundColor: colors.outlineVariant,
 		opacity: 0.5,
 	},
 
@@ -312,7 +277,6 @@ export const DayDetailsStyles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		gap: 8,
-		backgroundColor: colors.surfaceContainerLow,
 	},
 	bannerIcon: {
 		width: 28,
@@ -326,7 +290,6 @@ export const DayDetailsStyles = StyleSheet.create({
 		fontFamily: fonts.medium,
 		fontSize: 12,
 		lineHeight: 16,
-		color: colors.onSurface,
 	},
 
 	// Lokasyon
@@ -342,19 +305,16 @@ export const DayDetailsStyles = StyleSheet.create({
 		borderRadius: 8,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: colors.surfaceContainerLow,
 	},
 	locationName: {
 		fontFamily: fonts.semibold,
 		fontSize: 18,
 		lineHeight: 24,
-		color: colors.onSurface,
 	},
 	eventTitle: {
 		fontFamily: fonts.bold,
 		fontSize: 14,
 		lineHeight: 20,
-		color: colors.onSurface,
 	},
 	correctionButton: {
 		height: 56,
@@ -363,12 +323,10 @@ export const DayDetailsStyles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 		gap: 8,
-		backgroundColor: colors.surfaceContainerHigh,
 	},
 	correctionLabel: {
 		fontFamily: fonts.semibold,
 		fontSize: 14,
-		color: colors.primary,
 	},
 });
 
@@ -382,38 +340,30 @@ export const SummaryStyles = StyleSheet.create({
 		paddingHorizontal: 10,
 		paddingVertical: 4,
 		borderRadius: 999,
-		backgroundColor: colors.secondaryContainer,
 	},
 	overtimeLabel: {
 		fontFamily: fonts.semibold,
 		fontSize: 12,
-		color: colors.onSecondaryContainer,
 	},
 	total: {
 		fontFamily: fonts.bold,
 		fontSize: 32,
 		lineHeight: 40,
-		color: colors.onSurface,
 		fontVariant: ['tabular-nums'],
 	},
 	totalUnit: {
 		fontFamily: fonts.medium,
 		fontSize: 18,
-		color: colors.onSurfaceVariant,
 	},
 	progressTrack: {
 		height: 8,
 		borderRadius: 4,
 		overflow: 'hidden',
 		flexDirection: 'row',
-		backgroundColor: colors.surfaceContainerHigh,
 	},
-	progressRegular: { backgroundColor: colors.primary },
-	progressOvertime: { backgroundColor: colors.secondary },
 	percent: {
 		fontFamily: fonts.semibold,
 		fontSize: 13,
-		color: colors.secondary,
 		fontVariant: ['tabular-nums'],
 	},
 	flex: { flex: 1 },
@@ -429,17 +379,14 @@ export const SummaryStyles = StyleSheet.create({
 		fontFamily: fonts.medium,
 		fontSize: 12,
 		lineHeight: 16,
-		color: colors.onSurfaceVariant,
 	},
 	overline: {
 		fontFamily: fonts.medium,
 		fontSize: 12,
 		letterSpacing: 0.6,
-		color: colors.onSurfaceVariant,
 	},
 	card: {
 		borderRadius: 12,
-		backgroundColor: colors.surfaceContainerLowest,
 		shadowColor: '#000000',
 		shadowOpacity: 0.06,
 		shadowRadius: 3,
@@ -456,7 +403,6 @@ export const TimelineItemStyles = StyleSheet.create({
 		borderRadius: NODE_RING_SIZE / 2,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: colors.surfaceContainerLowest,
 	},
 	node: {
 		width: 24,
@@ -470,7 +416,6 @@ export const TimelineItemStyles = StyleSheet.create({
 		fontFamily: fonts.bold,
 		fontSize: 14,
 		lineHeight: 20,
-		color: colors.onSurface,
 	},
 	eventTime: {
 		paddingHorizontal: 8,
@@ -480,7 +425,6 @@ export const TimelineItemStyles = StyleSheet.create({
 		fontFamily: fonts.bold,
 		fontSize: 13,
 		fontVariant: ['tabular-nums'],
-		backgroundColor: colors.surfaceContainer,
 	},
 	flex: { flex: 1 },
 	row: { flexDirection: 'row', alignItems: 'center', gap: 6 },
@@ -494,11 +438,9 @@ export const TimelineItemStyles = StyleSheet.create({
 		fontFamily: fonts.medium,
 		fontSize: 12,
 		lineHeight: 16,
-		color: colors.onSurfaceVariant,
 	},
 	card: {
 		borderRadius: 12,
-		backgroundColor: colors.surfaceContainerLowest,
 		shadowColor: '#000000',
 		shadowOpacity: 0.06,
 		shadowRadius: 3,

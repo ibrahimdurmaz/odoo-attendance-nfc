@@ -1,4 +1,4 @@
-import { colors } from '@/assets/theme';
+import { theme } from '@/assets/theme';
 import { useModalStore } from '@/store/modalStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { CameraView, useCameraPermissions } from 'expo-camera';
@@ -28,6 +28,7 @@ const HELP_TIPS = [
 ] as const;
 
 const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
+	const colors = theme();
 	const [permission, requestPermission] = useCameraPermissions();
 	const [isTorchOn, setIsTorchOn] = useState(false);
 	const [isHelpOpen, setIsHelpOpen] = useState(false);
@@ -73,7 +74,7 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 	};
 	const styles = CodeScannerModalStyles;
 	return (
-		<View style={styles.card}>
+		<View style={[styles.card, { backgroundColor: colors.inverseSurface }]}>
 			{isCameraReady ? (
 				<CameraView
 					barcodeScannerSettings={BARCODE_SETTINGS}
@@ -104,8 +105,17 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 
 				{isCameraReady ? (
 					<View style={styles.pill}>
-						<View style={styles.activeDot} />
-						<Text style={styles.pillLabel}>Kamera Aktif</Text>
+						<View
+							style={[
+								styles.activeDot,
+								{ backgroundColor: colors.tertiaryFixed },
+							]}
+						/>
+						<Text
+							style={[styles.pillLabel, { color: colors.inverseOnSurface }]}
+						>
+							Kamera Aktif
+						</Text>
 					</View>
 				) : null}
 
@@ -117,7 +127,7 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 					onPress={() => setIsTorchOn((previous) => !previous)}
 					style={({ pressed }) => [
 						styles.roundButton,
-						isTorchOn && styles.roundButtonOn,
+						isTorchOn && { backgroundColor: colors.secondaryFixed },
 						pressed && styles.pressed,
 					]}
 				>
@@ -133,17 +143,46 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 
 			{isCameraReady ? (
 				<View style={styles.middle}>
-					<Text style={styles.title}>Panelin kodunu okutun</Text>
-					<Text style={styles.subtitle}>Kodu çerçevenin içine getirin</Text>
+					<Text style={[styles.title, { color: colors.inverseOnSurface }]}>
+						Panelin kodunu okutun
+					</Text>
+					<Text style={[styles.subtitle, { color: colors.inverseOnSurface }]}>
+						Kodu çerçevenin içine getirin
+					</Text>
 
 					<View style={styles.viewfinder}>
-						<View style={[styles.corner, styles.cornerTopLeft]} />
-						<View style={[styles.corner, styles.cornerTopRight]} />
-						<View style={[styles.corner, styles.cornerBottomLeft]} />
-						<View style={[styles.corner, styles.cornerBottomRight]} />
+						<View
+							style={[
+								styles.corner,
+								{ borderColor: colors.secondaryFixed },
+								styles.cornerTopLeft,
+							]}
+						/>
+						<View
+							style={[
+								styles.corner,
+								{ borderColor: colors.secondaryFixed },
+								styles.cornerTopRight,
+							]}
+						/>
+						<View
+							style={[
+								styles.corner,
+								{ borderColor: colors.secondaryFixed },
+								styles.cornerBottomLeft,
+							]}
+						/>
+						<View
+							style={[
+								styles.corner,
+								{ borderColor: colors.secondaryFixed },
+								styles.cornerBottomRight,
+							]}
+						/>
 						<Animated.View
 							style={[
 								styles.scanLine,
+								{ backgroundColor: colors.secondaryFixed },
 								{ transform: [{ translateY: scanLineOffset }] },
 							]}
 						/>
@@ -155,7 +194,11 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 							name='center-focus-strong'
 							size={18}
 						/>
-						<Text style={styles.pillLabel}>Otomatik Algılanıyor</Text>
+						<Text
+							style={[styles.pillLabel, { color: colors.inverseOnSurface }]}
+						>
+							Otomatik Algılanıyor
+						</Text>
 					</View>
 				</View>
 			) : (
@@ -165,8 +208,10 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 						name='photo-camera'
 						size={40}
 					/>
-					<Text style={styles.title}>Kamera izni gerekiyor</Text>
-					<Text style={styles.subtitle}>
+					<Text style={[styles.title, { color: colors.inverseOnSurface }]}>
+						Kamera izni gerekiyor
+					</Text>
+					<Text style={[styles.subtitle, { color: colors.inverseOnSurface }]}>
 						Paneldeki kodu okutmak için kameraya erişim verin.
 					</Text>
 					{/* `permission` is null while the status is still loading. */}
@@ -177,10 +222,18 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 							onPress={askForPermission}
 							style={({ pressed }) => [
 								styles.permissionButton,
+								{ backgroundColor: colors.secondaryFixed },
 								pressed && styles.pressed,
 							]}
 						>
-							<Text style={styles.permissionLabel}>İzin Ver</Text>
+							<Text
+								style={[
+									styles.permissionLabel,
+									{ color: colors.onSecondaryFixed },
+								]}
+							>
+								İzin Ver
+							</Text>
 						</Pressable>
 					) : null}
 				</View>
@@ -197,13 +250,25 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 					name='help-outline'
 					size={20}
 				/>
-				<Text style={styles.helpLabel}>Çalışmıyor mu? Yardım al</Text>
+				<Text style={[styles.helpLabel, { color: colors.inverseOnSurface }]}>
+					Çalışmıyor mu? Yardım al
+				</Text>
 			</Pressable>
 
 			{isHelpOpen ? (
-				<View style={styles.helpSheet}>
+				<View
+					style={[
+						styles.helpSheet,
+						{ backgroundColor: colors.surfaceContainerLowest },
+					]}
+				>
 					<View style={styles.helpHeader}>
-						<View style={styles.helpIcon}>
+						<View
+							style={[
+								styles.helpIcon,
+								{ backgroundColor: colors.surfaceContainer },
+							]}
+						>
 							<MaterialIcons
 								color={colors.primary}
 								name='lightbulb-outline'
@@ -211,20 +276,32 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 							/>
 						</View>
 						<View style={styles.helpTitles}>
-							<Text style={styles.helpTitle}>Yardım ve İpuçları</Text>
-							<Text style={styles.helpCaption}>
+							<Text style={[styles.helpTitle, { color: colors.onSurface }]}>
+								Yardım ve İpuçları
+							</Text>
+							<Text
+								style={[styles.helpCaption, { color: colors.onSurfaceVariant }]}
+							>
 								Hızlı okuma için tavsiyeler
 							</Text>
 						</View>
 					</View>
 					{HELP_TIPS.map((tip) => (
-						<View key={tip.icon} style={styles.tip}>
+						<View
+							key={tip.icon}
+							style={[
+								styles.tip,
+								{ backgroundColor: colors.surfaceContainerLow },
+							]}
+						>
 							<MaterialIcons
 								color={colors.secondary}
 								name={tip.icon}
 								size={20}
 							/>
-							<Text style={styles.tipText}>{tip.text}</Text>
+							<Text style={[styles.tipText, { color: colors.onSurface }]}>
+								{tip.text}
+							</Text>
 						</View>
 					))}
 					<Pressable
@@ -233,10 +310,15 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 						onPress={() => setIsHelpOpen(false)}
 						style={({ pressed }) => [
 							styles.helpDismiss,
+							{ backgroundColor: colors.primary },
 							pressed && styles.pressed,
 						]}
 					>
-						<Text style={styles.helpDismissLabel}>Anladım</Text>
+						<Text
+							style={[styles.helpDismissLabel, { color: colors.onPrimary }]}
+						>
+							Anladım
+						</Text>
 					</Pressable>
 				</View>
 			) : null}

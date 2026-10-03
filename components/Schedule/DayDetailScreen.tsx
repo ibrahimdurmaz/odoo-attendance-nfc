@@ -1,4 +1,4 @@
-import { colors } from '@/assets/theme';
+import { theme } from '@/assets/theme';
 import { formatDateKey, formatMinutes, formatTime } from '@/helper/dateHelpers';
 import { useModalStore } from '@/store/modalStore';
 import { DayRecord, useDayStore } from '@/store/useDayStore';
@@ -31,19 +31,20 @@ export type TimelineEvent = {
 	timeColor: string;
 };
 
-const buildTimeline = (day: DayRecord): TimelineEvent[] => {
-	const breakEvents = day.breaks.map(
-		(item): TimelineEvent => ({
-			id: `break-${item.start}`,
-			icon: 'local-cafe',
-			nodeColor: colors.secondaryFixed,
-			iconColor: colors.onSecondaryFixed,
-			title: 'Mola',
-			description: `${formatMinutes((item.end - item.start) / 1000)} dinlenme`,
-			time: `${formatTime(item.start)} – ${formatTime(item.end)}`,
-			timeColor: colors.onSurfaceVariant,
-		}),
-	);
+const buildTimeline = (
+	day: DayRecord,
+	colors: ReturnType<typeof theme>,
+): TimelineEvent[] => {
+	const breakEvents = day.breaks.map((item): TimelineEvent => ({
+		id: `break-${item.start}`,
+		icon: 'local-cafe',
+		nodeColor: colors.secondaryFixed,
+		iconColor: colors.onSecondaryFixed,
+		title: 'Mola',
+		description: `${formatMinutes((item.end - item.start) / 1000)} dinlenme`,
+		time: `${formatTime(item.start)} – ${formatTime(item.end)}`,
+		timeColor: colors.onSurfaceVariant,
+	}));
 
 	return [
 		{
@@ -77,10 +78,15 @@ export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey }) => {
 	);
 	const { triggerModal } = useModalStore();
 	const styles = DayDetailsStyles;
+	// Hook olduğu için erken return'den önce çağrılmalı.
+	const colors = theme();
 
 	if (!day) {
 		return (
-			<SafeAreaView edges={['top']} style={styles.screen}>
+			<SafeAreaView
+				edges={['top']}
+				style={[styles.screen, { backgroundColor: colors.surface }]}
+			>
 				<DayDetailHeader />
 				<View style={styles.missing}>
 					<MaterialIcons
@@ -88,16 +94,21 @@ export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey }) => {
 						name='event-busy'
 						size={32}
 					/>
-					<Text style={styles.eventTitle}>Bu güne ait kayıt bulunamadı</Text>
+					<Text style={[styles.eventTitle, { color: colors.onSurface }]}>
+						Bu güne ait kayıt bulunamadı
+					</Text>
 				</View>
 			</SafeAreaView>
 		);
 	}
 
-	const timeline = buildTimeline(day);
+	const timeline = buildTimeline(day, colors);
 
 	return (
-		<SafeAreaView edges={['top']} style={styles.screen}>
+		<SafeAreaView
+			edges={['top']}
+			style={[styles.screen, { backgroundColor: colors.surface }]}
+		>
 			<DayDetailHeader />
 			<ScrollView
 				contentContainerStyle={styles.content}
@@ -110,11 +121,19 @@ export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey }) => {
 							name='calendar-today'
 							size={18}
 						/>
-						<Text numberOfLines={1} style={styles.date}>
+						<Text
+							numberOfLines={1}
+							style={[styles.date, { color: colors.primary }]}
+						>
 							{formatDateKey(day.dateKey)}
 						</Text>
 					</View>
-					<View style={styles.statusBadge}>
+					<View
+						style={[
+							styles.statusBadge,
+							{ backgroundColor: colors.surfaceContainer },
+						]}
+					>
 						<View
 							style={[
 								styles.statusDot,
@@ -125,7 +144,7 @@ export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey }) => {
 								},
 							]}
 						/>
-						<Text style={styles.caption}>
+						<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
 							{day.correction ? 'Düzeltme Bekliyor' : 'Tamamlandı'}
 						</Text>
 					</View>
@@ -134,11 +153,20 @@ export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey }) => {
 				<StateBand day={day} />
 				{/* Zaman çizelgesi */}
 				<View style={styles.spread}>
-					<Text style={styles.sectionTitle}>Zaman Çizelgesi</Text>
-					<Text style={styles.caption}>{timeline.length} Olay Kaydedildi</Text>
+					<Text style={[styles.sectionTitle, { color: colors.onSurface }]}>
+						Zaman Çizelgesi
+					</Text>
+					<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
+						{timeline.length} Olay Kaydedildi
+					</Text>
 				</View>
 				<View style={styles.timeline}>
-					<View style={styles.timelineLine} />
+					<View
+						style={[
+							styles.timelineLine,
+							{ backgroundColor: colors.outlineVariant },
+						]}
+					/>
 					{timeline.map((event) => (
 						<TimelineItem
 							checkpoint={day.checkpoint}
@@ -149,18 +177,38 @@ export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey }) => {
 				</View>
 
 				{/* Lokasyon */}
-				<View style={[styles.card, styles.location]}>
-					<View style={styles.locationIcon}>
+				<View
+					style={[
+						styles.card,
+						{ backgroundColor: colors.surfaceContainerLowest },
+						styles.location,
+					]}
+				>
+					<View
+						style={[
+							styles.locationIcon,
+							{ backgroundColor: colors.surfaceContainerLow },
+						]}
+					>
 						<MaterialIcons color={colors.secondary} name='place' size={26} />
 					</View>
 					<View style={styles.flex}>
-						<Text style={styles.overline}>LOKASYON & TERMİNAL</Text>
-						<Text numberOfLines={1} style={styles.locationName}>
+						<Text style={[styles.overline, { color: colors.onSurfaceVariant }]}>
+							LOKASYON & TERMİNAL
+						</Text>
+						<Text
+							numberOfLines={1}
+							style={[styles.locationName, { color: colors.onSurface }]}
+						>
 							{day.location}
 						</Text>
 						<Text
 							numberOfLines={1}
-							style={[styles.caption, { color: colors.secondary }]}
+							style={[
+								styles.caption,
+								{ color: colors.onSurfaceVariant },
+								{ color: colors.secondary },
+							]}
 						>
 							{day.checkpoint}
 						</Text>
@@ -175,11 +223,14 @@ export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey }) => {
 					}}
 					style={({ pressed }) => [
 						styles.correctionButton,
+						{ backgroundColor: colors.surfaceContainerHigh },
 						pressed && styles.pressed,
 					]}
 				>
 					<MaterialIcons color={colors.primary} name='edit-note' size={20} />
-					<Text style={styles.correctionLabel}>Düzeltme Talep Et</Text>
+					<Text style={[styles.correctionLabel, { color: colors.primary }]}>
+						Düzeltme Talep Et
+					</Text>
 				</Pressable>
 			</ScrollView>
 

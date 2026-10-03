@@ -1,4 +1,4 @@
-import { colors } from '@/assets/theme';
+import { theme } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { useRouter } from 'expo-router';
 import { Pressable, Text, View } from 'react-native';
@@ -8,6 +8,7 @@ export function DayDetailHeader() {
 	const router = useRouter();
 
 	const styles = DayDetailsHeaderStyles;
+	const colors = theme();
 	return (
 		<View style={styles.header}>
 			<Pressable
@@ -20,7 +21,9 @@ export function DayDetailHeader() {
 			>
 				<MaterialIcons color={colors.onSurface} name='arrow-back' size={24} />
 			</Pressable>
-			<Text style={styles.headerTitle}>Gün Detayı</Text>
+			<Text style={[styles.headerTitle, { color: colors.onSurface }]}>
+				Gün Detayı
+			</Text>
 		</View>
 	);
 }

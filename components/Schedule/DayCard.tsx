@@ -1,4 +1,4 @@
-import { colors } from '@/assets/theme';
+import { theme } from '@/assets/theme';
 import {
 	formatDuration,
 	formatShortDate,
@@ -15,6 +15,7 @@ type DayCardProps = { day: DayRecord; onPress: (dateKey: string) => void };
 export const DayCard: FC<DayCardProps> = ({ day, onPress }) => {
 	const hasPendingCorrection = day.correction !== null;
 	const isUnderTarget = day.workedSeconds < day.targetSeconds;
+	const colors = theme();
 	const accent = hasPendingCorrection
 		? colors.secondary
 		: colors.tertiaryContainer;
@@ -25,6 +26,7 @@ export const DayCard: FC<DayCardProps> = ({ day, onPress }) => {
 			onPress={() => onPress(day.dateKey)}
 			style={({ pressed }) => [
 				styles.card,
+				{ backgroundColor: colors.surfaceContainerLowest },
 				styles.dayCard,
 				pressed && styles.pressed,
 			]}
@@ -32,7 +34,10 @@ export const DayCard: FC<DayCardProps> = ({ day, onPress }) => {
 			<View style={[styles.accentBar, { backgroundColor: accent }]} />
 			<View style={styles.dayCardTop}>
 				<View style={styles.flex}>
-					<Text numberOfLines={1} style={styles.dayTitle}>
+					<Text
+						numberOfLines={1}
+						style={[styles.dayTitle, { color: colors.onSurface }]}
+					>
 						{formatShortDate(day.dateKey)}
 					</Text>
 					<View style={styles.row}>
@@ -41,13 +46,22 @@ export const DayCard: FC<DayCardProps> = ({ day, onPress }) => {
 							name='sensor-door'
 							size={15}
 						/>
-						<Text numberOfLines={1} style={styles.caption}>
+						<Text
+							numberOfLines={1}
+							style={[styles.caption, { color: colors.onSurfaceVariant }]}
+						>
 							{day.checkpoint}
 						</Text>
 					</View>
 				</View>
 				{hasPendingCorrection ? (
-					<View style={[styles.badge, styles.badgePending]}>
+					<View
+						style={[
+							styles.badge,
+							{ backgroundColor: colors.surfaceContainerHigh },
+							{ backgroundColor: colors.secondaryContainer },
+						]}
+					>
 						<MaterialIcons
 							color={colors.onSecondaryContainer}
 							name='pending-actions'
@@ -63,7 +77,12 @@ export const DayCard: FC<DayCardProps> = ({ day, onPress }) => {
 						</Text>
 					</View>
 				) : (
-					<View style={styles.badge}>
+					<View
+						style={[
+							styles.badge,
+							{ backgroundColor: colors.surfaceContainerHigh },
+						]}
+					>
 						<MaterialIcons color={colors.tertiary} name='done-all' size={14} />
 						<Text style={[styles.badgeLabel, { color: colors.tertiary }]}>
 							Tamamlandı
@@ -73,19 +92,26 @@ export const DayCard: FC<DayCardProps> = ({ day, onPress }) => {
 			</View>
 			<View style={styles.dayCardBottom}>
 				<View style={styles.row}>
-					<Text style={styles.timestamp}>{formatTime(day.checkInAt)}</Text>
+					<Text style={[styles.timestamp, { color: colors.onSurface }]}>
+						{formatTime(day.checkInAt)}
+					</Text>
 					<MaterialIcons
 						color={colors.outlineVariant}
 						name='arrow-forward'
 						size={16}
 					/>
-					<Text style={styles.timestamp}>{formatTime(day.checkOutAt)}</Text>
+					<Text style={[styles.timestamp, { color: colors.onSurface }]}>
+						{formatTime(day.checkOutAt)}
+					</Text>
 				</View>
 				<View style={styles.row}>
-					<Text style={styles.caption}>Net:</Text>
+					<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
+						Net:
+					</Text>
 					<Text
 						style={[
 							styles.timestamp,
+							{ color: colors.onSurface },
 							{
 								color: isUnderTarget ? colors.error : colors.tertiaryContainer,
 							},

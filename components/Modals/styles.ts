@@ -1,4 +1,4 @@
-import { colors, fonts } from '@/assets/theme';
+import { fonts } from '@/assets/theme';
 import { StyleSheet } from 'react-native';
 
 const CORNER_SIZE = 32;
@@ -15,7 +15,6 @@ export const CodeScannerModalStyles = StyleSheet.create({
 		borderRadius: 16,
 		overflow: 'hidden',
 		justifyContent: 'space-between',
-		backgroundColor: colors.inverseSurface,
 	},
 	fill: { position: 'absolute', top: 0, right: 0, bottom: 0, left: 0 },
 	// Darkens the camera image so the light text stays readable.
@@ -35,7 +34,6 @@ export const CodeScannerModalStyles = StyleSheet.create({
 		justifyContent: 'center',
 		backgroundColor: 'rgba(248, 249, 255, 0.2)',
 	},
-	roundButtonOn: { backgroundColor: colors.secondaryFixed },
 	pill: {
 		flexDirection: 'row',
 		alignItems: 'center',
@@ -49,12 +47,10 @@ export const CodeScannerModalStyles = StyleSheet.create({
 		width: 8,
 		height: 8,
 		borderRadius: 4,
-		backgroundColor: colors.tertiaryFixed,
 	},
 	pillLabel: {
 		fontFamily: fonts.medium,
 		fontSize: 12,
-		color: colors.inverseOnSurface,
 	},
 
 	middle: { alignItems: 'center', gap: 4 },
@@ -63,14 +59,12 @@ export const CodeScannerModalStyles = StyleSheet.create({
 		fontSize: 18,
 		lineHeight: 24,
 		textAlign: 'center',
-		color: colors.inverseOnSurface,
 	},
 	subtitle: {
 		fontFamily: fonts.regular,
 		fontSize: 14,
 		lineHeight: 20,
 		textAlign: 'center',
-		color: colors.inverseOnSurface,
 		opacity: 0.8,
 	},
 
@@ -83,7 +77,6 @@ export const CodeScannerModalStyles = StyleSheet.create({
 		position: 'absolute',
 		width: CORNER_SIZE,
 		height: CORNER_SIZE,
-		borderColor: colors.secondaryFixed,
 	},
 	cornerTopLeft: {
 		top: 0,
@@ -120,7 +113,6 @@ export const CodeScannerModalStyles = StyleSheet.create({
 		right: 12,
 		height: SCAN_LINE_HEIGHT,
 		borderRadius: 2,
-		backgroundColor: colors.secondaryFixed,
 	},
 
 	permissionButton: {
@@ -130,12 +122,10 @@ export const CodeScannerModalStyles = StyleSheet.create({
 		borderRadius: 12,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: colors.secondaryFixed,
 	},
 	permissionLabel: {
 		fontFamily: fonts.semibold,
 		fontSize: 14,
-		color: colors.onSecondaryFixed,
 	},
 
 	helpButton: {
@@ -151,7 +141,6 @@ export const CodeScannerModalStyles = StyleSheet.create({
 	helpLabel: {
 		fontFamily: fonts.semibold,
 		fontSize: 14,
-		color: colors.inverseOnSurface,
 		textDecorationLine: 'underline',
 	},
 
@@ -163,7 +152,6 @@ export const CodeScannerModalStyles = StyleSheet.create({
 		padding: 20,
 		gap: 8,
 		borderRadius: 12,
-		backgroundColor: colors.surfaceContainerLowest,
 	},
 	helpHeader: {
 		flexDirection: 'row',
@@ -177,19 +165,16 @@ export const CodeScannerModalStyles = StyleSheet.create({
 		borderRadius: 20,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: colors.surfaceContainer,
 	},
 	helpTitles: { flex: 1 },
 	helpTitle: {
 		fontFamily: fonts.semibold,
 		fontSize: 18,
 		lineHeight: 24,
-		color: colors.onSurface,
 	},
 	helpCaption: {
 		fontFamily: fonts.regular,
 		fontSize: 12,
-		color: colors.onSurfaceVariant,
 	},
 	tip: {
 		flexDirection: 'row',
@@ -197,14 +182,12 @@ export const CodeScannerModalStyles = StyleSheet.create({
 		gap: 8,
 		padding: 8,
 		borderRadius: 8,
-		backgroundColor: colors.surfaceContainerLow,
 	},
 	tipText: {
 		flex: 1,
 		fontFamily: fonts.regular,
 		fontSize: 14,
 		lineHeight: 20,
-		color: colors.onSurface,
 	},
 	helpDismiss: {
 		marginTop: 8,
@@ -212,12 +195,10 @@ export const CodeScannerModalStyles = StyleSheet.create({
 		borderRadius: 8,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: colors.primary,
 	},
 	helpDismissLabel: {
 		fontFamily: fonts.semibold,
 		fontSize: 14,
-		color: colors.onPrimary,
 	},
 });
 
@@ -228,7 +209,6 @@ export const CheckInSuccessModalStyles = StyleSheet.create({
 		padding: 24,
 		borderRadius: 16,
 		alignItems: 'center',
-		backgroundColor: colors.surface,
 	},
 	pressed: { opacity: 0.85 },
 
@@ -242,13 +222,11 @@ export const CheckInSuccessModalStyles = StyleSheet.create({
 	haloOuter: {
 		width: 152,
 		height: 152,
-		backgroundColor: colors.secondaryContainer,
 		opacity: 0.25,
 	},
 	haloInner: {
 		width: 124,
 		height: 124,
-		backgroundColor: colors.tertiaryFixed,
 		opacity: 0.4,
 	},
 	checkCircle: {
@@ -257,7 +235,6 @@ export const CheckInSuccessModalStyles = StyleSheet.create({
 		borderRadius: 48,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: colors.tertiary,
 	},
 
 	title: {
@@ -265,14 +242,12 @@ export const CheckInSuccessModalStyles = StyleSheet.create({
 		fontFamily: fonts.bold,
 		fontSize: 24,
 		lineHeight: 32,
-		color: colors.onSurface,
 	},
 	subtitle: {
 		marginTop: 4,
 		fontFamily: fonts.regular,
 		fontSize: 16,
 		lineHeight: 24,
-		color: colors.onSurfaceVariant,
 	},
 
 	timeBadge: {
@@ -281,19 +256,16 @@ export const CheckInSuccessModalStyles = StyleSheet.create({
 		paddingVertical: 8,
 		borderRadius: 12,
 		alignItems: 'center',
-		backgroundColor: colors.surfaceContainerLowest,
 	},
 	overline: {
 		fontFamily: fonts.medium,
 		fontSize: 12,
 		letterSpacing: 0.6,
-		color: colors.onSurfaceVariant,
 	},
 	time: {
 		fontFamily: fonts.bold,
 		fontSize: 32,
 		lineHeight: 40,
-		color: colors.onSurface,
 		fontVariant: ['tabular-nums'],
 	},
 
@@ -307,13 +279,11 @@ export const CheckInSuccessModalStyles = StyleSheet.create({
 		fontFamily: fonts.medium,
 		fontSize: 12,
 		lineHeight: 16,
-		color: colors.onSurfaceVariant,
 	},
 	label: {
 		fontFamily: fonts.semibold,
 		fontSize: 14,
 		lineHeight: 20,
-		color: colors.onSurface,
 	},
 
 	shiftRow: {
@@ -324,7 +294,6 @@ export const CheckInSuccessModalStyles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		gap: 8,
-		backgroundColor: colors.surfaceContainerLowest,
 	},
 	shiftIcon: {
 		width: 40,
@@ -332,7 +301,6 @@ export const CheckInSuccessModalStyles = StyleSheet.create({
 		borderRadius: 20,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: colors.secondaryContainer,
 	},
 	shiftTexts: { flex: 1 },
 	shiftHours: {
@@ -342,8 +310,6 @@ export const CheckInSuccessModalStyles = StyleSheet.create({
 		overflow: 'hidden',
 		fontFamily: fonts.medium,
 		fontSize: 12,
-		color: colors.secondary,
-		backgroundColor: colors.surfaceContainer,
 	},
 
 	button: {
@@ -355,12 +321,10 @@ export const CheckInSuccessModalStyles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 		gap: 4,
-		backgroundColor: colors.primary,
 	},
 	buttonLabel: {
 		fontFamily: fonts.semibold,
 		fontSize: 14,
-		color: colors.onPrimary,
 	},
 });
 
@@ -371,20 +335,17 @@ export const CheckInFailedModalStyles = StyleSheet.create({
 		padding: 24,
 		borderRadius: 16,
 		alignItems: 'center',
-		backgroundColor: colors.surface,
 	},
 	pressed: { opacity: 0.85 },
 	caption: {
 		fontFamily: fonts.medium,
 		fontSize: 12,
 		lineHeight: 16,
-		color: colors.onSurfaceVariant,
 	},
 	label: {
 		fontFamily: fonts.semibold,
 		fontSize: 14,
 		lineHeight: 20,
-		color: colors.onSurface,
 	},
 	tabular: { fontVariant: ['tabular-nums'] },
 
@@ -396,13 +357,11 @@ export const CheckInFailedModalStyles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		gap: 8,
-		backgroundColor: colors.surfaceContainer,
 	},
 	errorDot: {
 		width: 10,
 		height: 10,
 		borderRadius: 5,
-		backgroundColor: colors.error,
 	},
 	terminalName: { flex: 1 },
 
@@ -416,7 +375,6 @@ export const CheckInFailedModalStyles = StyleSheet.create({
 	haloRing: {
 		position: 'absolute',
 		borderRadius: 999,
-		backgroundColor: colors.errorContainer,
 	},
 	haloOuter: { width: 152, height: 152, opacity: 0.25 },
 	haloInner: { width: 124, height: 124, opacity: 0.45 },
@@ -426,7 +384,6 @@ export const CheckInFailedModalStyles = StyleSheet.create({
 		borderRadius: 48,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: colors.surfaceContainerLowest,
 		shadowColor: '#000000',
 		shadowOpacity: 0.15,
 		shadowRadius: 12,
@@ -439,7 +396,6 @@ export const CheckInFailedModalStyles = StyleSheet.create({
 		borderRadius: 34,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: colors.errorContainer,
 	},
 
 	title: {
@@ -448,7 +404,6 @@ export const CheckInFailedModalStyles = StyleSheet.create({
 		fontSize: 24,
 		lineHeight: 32,
 		textAlign: 'center',
-		color: colors.onSurface,
 	},
 	message: {
 		marginTop: 8,
@@ -457,7 +412,6 @@ export const CheckInFailedModalStyles = StyleSheet.create({
 		fontSize: 16,
 		lineHeight: 24,
 		textAlign: 'center',
-		color: colors.onSurfaceVariant,
 	},
 
 	hint: {
@@ -469,7 +423,6 @@ export const CheckInFailedModalStyles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		gap: 16,
-		backgroundColor: colors.surfaceContainerLow,
 	},
 	hintIcon: {
 		width: 48,
@@ -477,7 +430,6 @@ export const CheckInFailedModalStyles = StyleSheet.create({
 		borderRadius: 8,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: colors.surfaceContainerHighest,
 	},
 	hintTexts: { flex: 1 },
 
@@ -490,17 +442,13 @@ export const CheckInFailedModalStyles = StyleSheet.create({
 		justifyContent: 'center',
 		gap: 8,
 	},
-	primaryButton: { backgroundColor: colors.primary },
 	secondaryButton: {
 		marginTop: 12,
-		backgroundColor: colors.surfaceContainerHigh,
 	},
 	buttonLabel: {
 		fontFamily: fonts.semibold,
 		fontSize: 14,
-		color: colors.onSurface,
 	},
-	primaryLabel: { color: colors.onPrimary },
 
 	supportRow: {
 		marginTop: 16,
@@ -517,7 +465,6 @@ export const NfcPromptModalStyles = StyleSheet.create({
 		padding: 20,
 		borderRadius: 16,
 		alignItems: 'center',
-		backgroundColor: colors.surface,
 	},
 	pressed: { opacity: 0.7 },
 	caption: {
@@ -525,7 +472,6 @@ export const NfcPromptModalStyles = StyleSheet.create({
 		fontFamily: fonts.medium,
 		fontSize: 12,
 		lineHeight: 16,
-		color: colors.onSurfaceVariant,
 	},
 
 	topRow: {
@@ -538,7 +484,6 @@ export const NfcPromptModalStyles = StyleSheet.create({
 		width: 10,
 		height: 10,
 		borderRadius: 5,
-		backgroundColor: colors.tertiaryFixedDim,
 	},
 	panelPill: {
 		flexShrink: 1,
@@ -548,13 +493,11 @@ export const NfcPromptModalStyles = StyleSheet.create({
 		paddingHorizontal: 8,
 		paddingVertical: 4,
 		borderRadius: 999,
-		backgroundColor: colors.surfaceContainer,
 	},
 	panelName: {
 		flexShrink: 1,
 		fontFamily: fonts.semibold,
 		fontSize: 12,
-		color: colors.onSurface,
 	},
 	closeButton: {
 		width: 32,
@@ -562,7 +505,6 @@ export const NfcPromptModalStyles = StyleSheet.create({
 		borderRadius: 16,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: colors.surfaceContainer,
 	},
 
 	hero: {
@@ -576,19 +518,16 @@ export const NfcPromptModalStyles = StyleSheet.create({
 	ringOuter: {
 		width: 220,
 		height: 220,
-		backgroundColor: colors.secondaryFixed,
 		opacity: 0.2,
 	},
 	ringMiddle: {
 		width: 184,
 		height: 184,
-		backgroundColor: colors.primaryFixed,
 		opacity: 0.35,
 	},
 	ringInner: {
 		width: 148,
 		height: 148,
-		backgroundColor: colors.surfaceContainerHigh,
 	},
 	heroCore: {
 		width: 116,
@@ -596,14 +535,12 @@ export const NfcPromptModalStyles = StyleSheet.create({
 		borderRadius: 58,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: colors.primaryContainer,
 	},
 	heroLabelRow: { flexDirection: 'row', alignItems: 'center', gap: 2 },
 	heroLabel: {
 		fontFamily: fonts.semibold,
 		fontSize: 11,
 		letterSpacing: 0.6,
-		color: colors.onPrimaryContainer,
 	},
 
 	title: {
@@ -611,7 +548,6 @@ export const NfcPromptModalStyles = StyleSheet.create({
 		fontSize: 24,
 		lineHeight: 32,
 		textAlign: 'center',
-		color: colors.onSurface,
 	},
 	subtitle: {
 		marginTop: 4,
@@ -619,7 +555,6 @@ export const NfcPromptModalStyles = StyleSheet.create({
 		fontSize: 14,
 		lineHeight: 20,
 		textAlign: 'center',
-		color: colors.onSurfaceVariant,
 	},
 	fallbackButton: {
 		marginTop: 24,
@@ -629,12 +564,10 @@ export const NfcPromptModalStyles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		gap: 6,
-		backgroundColor: colors.surfaceContainerLow,
 	},
 	fallbackLabel: {
 		fontFamily: fonts.semibold,
 		fontSize: 14,
-		color: colors.primary,
 	},
 
 	keypad: { alignSelf: 'stretch', marginTop: 16, gap: 8 },
@@ -644,7 +577,6 @@ export const NfcPromptModalStyles = StyleSheet.create({
 		fontFamily: fonts.semibold,
 		fontSize: 18,
 		lineHeight: 24,
-		color: colors.onSurface,
 	},
 	dots: {
 		flexDirection: 'row',
@@ -656,9 +588,7 @@ export const NfcPromptModalStyles = StyleSheet.create({
 		width: 14,
 		height: 14,
 		borderRadius: 7,
-		backgroundColor: colors.surfaceContainerHighest,
 	},
-	dotFilled: { backgroundColor: colors.primary },
 	keyRow: { flexDirection: 'row', gap: 8 },
 	key: {
 		flex: 1,
@@ -666,22 +596,16 @@ export const NfcPromptModalStyles = StyleSheet.create({
 		borderRadius: 8,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: colors.surfaceContainer,
 	},
-	keyPressed: { backgroundColor: colors.secondaryContainer },
 	keyLabel: {
 		fontFamily: fonts.bold,
 		fontSize: 20,
-		color: colors.onSurface,
 		fontVariant: ['tabular-nums'],
 	},
-	deleteKey: { backgroundColor: colors.surfaceContainerLow },
 	deleteLabel: {
 		fontFamily: fonts.semibold,
 		fontSize: 14,
-		color: colors.error,
 	},
-	confirmKey: { backgroundColor: colors.primary },
 	confirmKeyDisabled: { opacity: 0.4 },
 });
 

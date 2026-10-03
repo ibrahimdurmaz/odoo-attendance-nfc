@@ -1,4 +1,4 @@
-import { colors } from '@/assets/theme';
+import { theme } from '@/assets/theme';
 import { addDays, toDateKey } from '@/helper/dateHelpers';
 import { getRecentDays, useDayStore } from '@/store/useDayStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
@@ -63,10 +63,16 @@ export const ScheduleScreen = () => {
 	const openDay = (dateKey: string) => {
 		router.navigate({ pathname: '/day_details', params: { dateKey } });
 	};
+	const colors = theme();
 	return (
-		<SafeAreaView edges={['top']} style={styles.screen}>
+		<SafeAreaView
+			edges={['top']}
+			style={[styles.screen, { backgroundColor: colors.surface }]}
+		>
 			<View style={styles.header}>
-				<View style={styles.logo}>
+				<View
+					style={[styles.logo, { backgroundColor: colors.primaryContainer }]}
+				>
 					<MaterialIcons
 						color={colors.onPrimary}
 						name='calendar-month'
@@ -74,8 +80,12 @@ export const ScheduleScreen = () => {
 					/>
 				</View>
 				<View>
-					<Text style={styles.brand}>ODOO</Text>
-					<Text style={styles.headerTitle}>Çizelge</Text>
+					<Text style={[styles.brand, { color: colors.primaryContainer }]}>
+						ODOO
+					</Text>
+					<Text style={[styles.headerTitle, { color: colors.onSurface }]}>
+						Çizelge
+					</Text>
 				</View>
 			</View>
 
@@ -111,7 +121,11 @@ export const ScheduleScreen = () => {
 								accessibilityState={{ selected: isSelected }}
 								key={item.key}
 								onPress={() => setFilter(item.key)}
-								style={[styles.chip, isSelected && styles.chipSelected]}
+								style={[
+									styles.chip,
+									{ backgroundColor: colors.surfaceContainer },
+									isSelected && { backgroundColor: colors.primaryContainer },
+								]}
 							>
 								<MaterialIcons color={tint} name={item.icon} size={16} />
 								<Text style={[styles.chipLabel, { color: tint }]}>
@@ -125,18 +139,36 @@ export const ScheduleScreen = () => {
 				{/* Gün kayıtları */}
 				<View style={styles.section}>
 					<View style={styles.spread}>
-						<Text style={styles.sectionTitle}>Kayıt Detayları</Text>
-						<Text style={styles.caption}>{visibleDays.length} Kayıt</Text>
+						<Text style={[styles.sectionTitle, { color: colors.onSurface }]}>
+							Kayıt Detayları
+						</Text>
+						<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
+							{visibleDays.length} Kayıt
+						</Text>
 					</View>
 					{visibleDays.length === 0 ? (
-						<View style={[styles.card, styles.empty]}>
+						<View
+							style={[
+								styles.card,
+								{ backgroundColor: colors.surfaceContainerLowest },
+								styles.empty,
+							]}
+						>
 							<MaterialIcons
 								color={colors.primaryContainer}
 								name='event-busy'
 								size={32}
 							/>
-							<Text style={styles.emptyTitle}>Kayıt bulunamadı</Text>
-							<Text style={[styles.caption, styles.centered]}>
+							<Text style={[styles.emptyTitle, { color: colors.onSurface }]}>
+								Kayıt bulunamadı
+							</Text>
+							<Text
+								style={[
+									styles.caption,
+									{ color: colors.onSurfaceVariant },
+									styles.centered,
+								]}
+							>
 								Mesaiyi bitirdiğiniz günler burada listelenir.
 							</Text>
 						</View>

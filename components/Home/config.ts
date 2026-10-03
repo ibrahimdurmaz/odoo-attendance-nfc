@@ -1,10 +1,16 @@
-import { colors } from '@/assets/theme';
+import { theme } from '@/assets/theme';
 import { IconName, Status } from './types';
 
-export const STATUS_BADGE: Record<
-	Status,
-	{ label: string; icon: IconName; background: string; foreground: string }
-> = {
+type StatusBadge = {
+	label: string;
+	icon: IconName;
+	background: string;
+	foreground: string;
+};
+
+export const getStatusBadges = (
+	colors: ReturnType<typeof theme>,
+): Record<Status, StatusBadge> => ({
 	notCheckedIn: {
 		label: 'Giriş yapılmadı',
 		icon: 'bedtime',
@@ -29,4 +35,4 @@ export const STATUS_BADGE: Record<
 		background: colors.surfaceContainerHigh,
 		foreground: colors.tertiary,
 	},
-};
+});

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { HomeScreen } from '@/components/HomeScreen/HomeScreen';
+import { HomeScreen } from '@/components/Home/HomeScreen';
 
 export default function TabOneScreen() {
 	return <HomeScreen />;

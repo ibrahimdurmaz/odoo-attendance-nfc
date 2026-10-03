@@ -2,12 +2,12 @@ import type { Dispatch, FC, SetStateAction } from 'react';
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
-import { colors } from '@/assets/theme';
+import { theme } from '@/assets/theme';
 import { formatTime } from '@/helper/dateHelpers';
 import { useModalStore } from '@/store/modalStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
-import { CHECKPOINT, INITIAL_SESSION } from '../HomeScreen/HomeScreen';
-import { Session } from '../HomeScreen/types';
+import { CHECKPOINT, INITIAL_SESSION } from '../Home/HomeScreen';
+import { Session } from '../Home/types';
 import { ModalWrapper } from './ModalWrapper';
 import { NfcPromptModalStyles } from './styles';
 
@@ -31,6 +31,7 @@ const Prompt: FC<NfcPromptModalProps> = ({
 	panelName,
 	onSubmitCode,
 }) => {
+	const colors = theme();
 	const [isKeypadOpen, setIsKeypadOpen] = useState(false);
 	const [code, setCode] = useState('');
 	const visible = false;
@@ -64,24 +65,45 @@ const Prompt: FC<NfcPromptModalProps> = ({
 			accessibilityRole='button'
 			key={digit}
 			onPress={() => addDigit(digit)}
-			style={({ pressed }) => [styles.key, pressed && styles.keyPressed]}
+			style={({ pressed }) => [
+				styles.key,
+				{ backgroundColor: colors.surfaceContainer },
+				pressed && { backgroundColor: colors.secondaryContainer },
+			]}
 		>
-			<Text style={styles.keyLabel}>{digit}</Text>
+			<Text style={[styles.keyLabel, { color: colors.onSurface }]}>
+				{digit}
+			</Text>
 		</Pressable>
 	);
 	const styles = NfcPromptModalStyles;
 	return (
-		<View style={styles.card}>
+		<View style={[styles.card, { backgroundColor: colors.surface }]}>
 			<View style={styles.topRow}>
-				<View style={styles.readyDot} />
-				<Text style={styles.caption}>Hazır</Text>
-				<View style={styles.panelPill}>
+				<View
+					style={[
+						styles.readyDot,
+						{ backgroundColor: colors.tertiaryFixedDim },
+					]}
+				/>
+				<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
+					Hazır
+				</Text>
+				<View
+					style={[
+						styles.panelPill,
+						{ backgroundColor: colors.surfaceContainer },
+					]}
+				>
 					<MaterialIcons
 						color={colors.secondary}
 						name='meeting-room'
 						size={16}
 					/>
-					<Text numberOfLines={1} style={styles.panelName}>
+					<Text
+						numberOfLines={1}
+						style={[styles.panelName, { color: colors.onSurface }]}
+					>
 						{panelName}
 					</Text>
 				</View>
@@ -92,6 +114,7 @@ const Prompt: FC<NfcPromptModalProps> = ({
 					onPress={onClose}
 					style={({ pressed }) => [
 						styles.closeButton,
+						{ backgroundColor: colors.surfaceContainer },
 						pressed && styles.pressed,
 					]}
 				>
@@ -107,7 +130,9 @@ const Prompt: FC<NfcPromptModalProps> = ({
 				<View style={styles.keypad}>
 					<View style={styles.keypadHeader}>
 						<MaterialIcons color={colors.secondary} name='password' size={20} />
-						<Text style={styles.keypadTitle}>Hızlı Erişim Kodu</Text>
+						<Text style={[styles.keypadTitle, { color: colors.onSurface }]}>
+							Hızlı Erişim Kodu
+						</Text>
 						<Pressable
 							accessibilityLabel='NFC ile okutmaya dön'
 							accessibilityRole='button'
@@ -115,6 +140,7 @@ const Prompt: FC<NfcPromptModalProps> = ({
 							onPress={closeKeypad}
 							style={({ pressed }) => [
 								styles.closeButton,
+								{ backgroundColor: colors.surfaceContainer },
 								pressed && styles.pressed,
 							]}
 						>
@@ -133,7 +159,11 @@ const Prompt: FC<NfcPromptModalProps> = ({
 						{Array.from({ length: CODE_LENGTH }, (_, index) => (
 							<View
 								key={index}
-								style={[styles.dot, index < code.length && styles.dotFilled]}
+								style={[
+									styles.dot,
+									{ backgroundColor: colors.surfaceContainerHighest },
+									index < code.length && { backgroundColor: colors.primary },
+								]}
 							/>
 						))}
 					</View>
@@ -150,11 +180,13 @@ const Prompt: FC<NfcPromptModalProps> = ({
 							onPress={removeDigit}
 							style={({ pressed }) => [
 								styles.key,
-								styles.deleteKey,
+								{ backgroundColor: colors.surfaceContainerLow },
 								pressed && styles.pressed,
 							]}
 						>
-							<Text style={styles.deleteLabel}>Sil</Text>
+							<Text style={[styles.deleteLabel, { color: colors.error }]}>
+								Sil
+							</Text>
 						</Pressable>
 						{renderDigitKey('0')}
 						<Pressable
@@ -165,7 +197,7 @@ const Prompt: FC<NfcPromptModalProps> = ({
 							onPress={submitCode}
 							style={({ pressed }) => [
 								styles.key,
-								styles.confirmKey,
+								{ backgroundColor: colors.primary },
 								!isCodeComplete && styles.confirmKeyDisabled,
 								pressed && styles.pressed,
 							]}
@@ -177,10 +209,33 @@ const Prompt: FC<NfcPromptModalProps> = ({
 			) : (
 				<>
 					<View style={styles.hero}>
-						<View style={[styles.ring, styles.ringOuter]} />
-						<View style={[styles.ring, styles.ringMiddle]} />
-						<View style={[styles.ring, styles.ringInner]} />
-						<View style={styles.heroCore}>
+						<View
+							style={[
+								styles.ring,
+								styles.ringOuter,
+								{ backgroundColor: colors.secondaryFixed },
+							]}
+						/>
+						<View
+							style={[
+								styles.ring,
+								styles.ringMiddle,
+								{ backgroundColor: colors.primaryFixed },
+							]}
+						/>
+						<View
+							style={[
+								styles.ring,
+								styles.ringInner,
+								{ backgroundColor: colors.surfaceContainerHigh },
+							]}
+						/>
+						<View
+							style={[
+								styles.heroCore,
+								{ backgroundColor: colors.primaryContainer },
+							]}
+						>
 							<MaterialIcons
 								color={colors.onPrimary}
 								name='contactless'
@@ -192,13 +247,22 @@ const Prompt: FC<NfcPromptModalProps> = ({
 									name='phone-iphone'
 									size={14}
 								/>
-								<Text style={styles.heroLabel}>OKUTUN</Text>
+								<Text
+									style={[
+										styles.heroLabel,
+										{ color: colors.onPrimaryContainer },
+									]}
+								>
+									OKUTUN
+								</Text>
 							</View>
 						</View>
 					</View>
 
-					<Text style={styles.title}>Telefonu panele yaklaştırın</Text>
-					<Text style={styles.subtitle}>
+					<Text style={[styles.title, { color: colors.onSurface }]}>
+						Telefonu panele yaklaştırın
+					</Text>
+					<Text style={[styles.subtitle, { color: colors.onSurfaceVariant }]}>
 						Doğrulama için parmak izi gerekebilir
 					</Text>
 
@@ -208,11 +272,12 @@ const Prompt: FC<NfcPromptModalProps> = ({
 						onPress={() => setIsKeypadOpen(true)}
 						style={({ pressed }) => [
 							styles.fallbackButton,
+							{ backgroundColor: colors.surfaceContainerLow },
 							pressed && styles.pressed,
 						]}
 					>
 						<MaterialIcons color={colors.primary} name='dialpad' size={20} />
-						<Text style={styles.fallbackLabel}>
+						<Text style={[styles.fallbackLabel, { color: colors.primary }]}>
 							Çalışmıyor mu? Kodla giriş yap
 						</Text>
 					</Pressable>

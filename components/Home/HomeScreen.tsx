@@ -1,4 +1,4 @@
-import { colors } from '@/assets/theme';
+import { theme } from '@/assets/theme';
 import {
 	formatDate,
 	formatMinutes,
@@ -18,7 +18,7 @@ import { CodeScannerModal } from '../Modals/CodeScannerModal';
 import { NfcPromptModal } from '../Modals/NfcPromptModal';
 import { ActionButton } from './ActionButton';
 import { ActivityRow } from './ActivityRow';
-import { STATUS_BADGE } from './config';
+import { getStatusBadges } from './config';
 import { FarewellCard } from './FarewellCard';
 import { Header } from './Header';
 import { InfoTile } from './InfoTile';
@@ -118,7 +118,7 @@ export const HomeScreen: FC = () => {
 			breaks,
 		});
 	};
-
+	const colors = theme();
 	// --- Hesaplar ---
 
 	const finishedBreakSeconds = session.breaks.reduce(
@@ -130,7 +130,7 @@ export const HomeScreen: FC = () => {
 		: 0;
 	const usedBreakSeconds = finishedBreakSeconds + currentBreakSeconds;
 	const isBreakOverLimit = usedBreakSeconds > BREAK_ALLOWANCE_SECONDS;
-	const badge = STATUS_BADGE[status];
+	const badge = getStatusBadges(colors)[status];
 
 	const activities: Activity[] = [];
 	if (session.checkInAt) {
@@ -190,7 +190,10 @@ export const HomeScreen: FC = () => {
 	}
 
 	return (
-		<SafeAreaView edges={['top']} style={styles.screen}>
+		<SafeAreaView
+			edges={['top']}
+			style={[styles.screen, { backgroundColor: colors.surface }]}
+		>
 			<CheckInFailedModal />
 			<CheckInSuccessModal />
 			<CodeScannerModal />
@@ -203,8 +206,13 @@ export const HomeScreen: FC = () => {
 				{/* Karşılama ve durum rozeti */}
 				<View style={styles.greeting}>
 					<View style={styles.greetingTexts}>
-						<Text style={styles.caption}>{formatDate(now)}</Text>
-						<Text numberOfLines={1} style={styles.greetingTitle}>
+						<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
+							{formatDate(now)}
+						</Text>
+						<Text
+							numberOfLines={1}
+							style={[styles.greetingTitle, { color: colors.onSurface }]}
+						>
 							{getGreeting(now)}, {USER_NAME}
 						</Text>
 					</View>
@@ -295,10 +303,20 @@ export const HomeScreen: FC = () => {
 				</View>
 
 				{/* Bugünkü hareketler */}
-				<View style={[styles.card, styles.activityCard]}>
+				<View
+					style={[
+						styles.card,
+						{ backgroundColor: colors.surfaceContainerLowest },
+						styles.activityCard,
+					]}
+				>
 					<View style={styles.sectionHeader}>
-						<Text style={styles.sectionTitle}>Bugünkü Hareketler</Text>
-						<Text style={styles.caption}>{activities.length} Kayıt</Text>
+						<Text style={[styles.sectionTitle, { color: colors.onSurface }]}>
+							Bugünkü Hareketler
+						</Text>
+						<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
+							{activities.length} Kayıt
+						</Text>
 					</View>
 					{activities.length === 0 ? (
 						<View style={styles.empty}>
@@ -307,8 +325,16 @@ export const HomeScreen: FC = () => {
 								name='history-toggle-off'
 								size={32}
 							/>
-							<Text style={styles.activityTitle}>Henüz hareket yok</Text>
-							<Text style={[styles.caption, styles.centered]}>
+							<Text style={[styles.activityTitle, { color: colors.onSurface }]}>
+								Henüz hareket yok
+							</Text>
+							<Text
+								style={[
+									styles.caption,
+									{ color: colors.onSurfaceVariant },
+									styles.centered,
+								]}
+							>
 								Giriş yaptığınızda mesai başlangıcı, molalar ve süreler burada
 								listelenir.
 							</Text>

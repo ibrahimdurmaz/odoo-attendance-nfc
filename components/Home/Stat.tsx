@@ -1,18 +1,21 @@
-import { colors, fonts } from '@/assets/theme';
+import { fonts, theme } from '@/assets/theme';
 import { FC } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 type StatProps = { label: string; value: string; valueColor?: string };
 
-export const Stat: FC<StatProps> = ({
-	label,
-	value,
-	valueColor = colors.onSurface,
-}) => {
+export const Stat: FC<StatProps> = ({ label, value, valueColor }) => {
+	const colors = theme();
 	return (
 		<View style={styles.stat}>
-			<Text style={styles.caption}>{label}</Text>
-			<Text style={[styles.statValue, { color: valueColor }]}>{value}</Text>
+			<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
+				{label}
+			</Text>
+			<Text
+				style={[styles.statValue, { color: valueColor ?? colors.onSurface }]}
+			>
+				{value}
+			</Text>
 		</View>
 	);
 };
@@ -28,6 +31,5 @@ const styles = StyleSheet.create({
 		fontFamily: fonts.medium,
 		fontSize: 12,
 		lineHeight: 16,
-		color: colors.onSurfaceVariant,
 	},
 });

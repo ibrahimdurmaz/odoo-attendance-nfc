@@ -1,13 +1,14 @@
 import { Pressable, Text, View } from 'react-native';
 
-import { colors } from '@/assets/theme';
+import { theme } from '@/assets/theme';
 import { useModalStore } from '@/store/modalStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
-import { SHIFT_HOURS } from '../HomeScreen/HomeScreen';
+import { SHIFT_HOURS } from '../Home/HomeScreen';
 import { ModalWrapper } from './ModalWrapper';
 import { CheckInSuccessModalStyles } from './styles';
 
 export const CheckInSuccessModal = () => {
+	const colors = theme();
 	const { modals, closeModal } = useModalStore();
 	const { visible, props } = modals.checkInSuccessful;
 	const toMinutes = (t: string) => {
@@ -34,21 +35,46 @@ export const CheckInSuccessModal = () => {
 	const styles = CheckInSuccessModalStyles;
 	return (
 		<ModalWrapper onClose={onClose} visible={visible}>
-			<View style={styles.card}>
+			<View style={[styles.card, { backgroundColor: colors.surface }]}>
 				<View style={styles.halo}>
-					<View style={[styles.haloRing, styles.haloOuter]} />
-					<View style={[styles.haloRing, styles.haloInner]} />
-					<View style={styles.checkCircle}>
+					<View
+						style={[
+							styles.haloRing,
+							styles.haloOuter,
+							{ backgroundColor: colors.secondaryContainer },
+						]}
+					/>
+					<View
+						style={[
+							styles.haloRing,
+							styles.haloInner,
+							{ backgroundColor: colors.tertiaryFixed },
+						]}
+					/>
+					<View
+						style={[styles.checkCircle, { backgroundColor: colors.tertiary }]}
+					>
 						<MaterialIcons color={colors.onTertiary} name='check' size={48} />
 					</View>
 				</View>
 
-				<Text style={styles.title}>Giriş kaydedildi</Text>
-				<Text style={styles.subtitle}>İyi çalışmalar, {userName}.</Text>
+				<Text style={[styles.title, { color: colors.onSurface }]}>
+					Giriş kaydedildi
+				</Text>
+				<Text style={[styles.subtitle, { color: colors.onSurfaceVariant }]}>
+					İyi çalışmalar, {userName}.
+				</Text>
 
-				<View style={styles.timeBadge}>
-					<Text style={styles.overline}>KAYIT SAATİ</Text>
-					<Text style={styles.time}>{time}</Text>
+				<View
+					style={[
+						styles.timeBadge,
+						{ backgroundColor: colors.surfaceContainerLowest },
+					]}
+				>
+					<Text style={[styles.overline, { color: colors.onSurfaceVariant }]}>
+						KAYIT SAATİ
+					</Text>
+					<Text style={[styles.time, { color: colors.onSurface }]}>{time}</Text>
 				</View>
 
 				<View style={styles.syncRow}>
@@ -57,11 +83,23 @@ export const CheckInSuccessModal = () => {
 						name='cloud-done'
 						size={16}
 					/>
-					<Text style={styles.caption}>Odoo'ya aktarıldı</Text>
+					<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
+						Odoo'ya aktarıldı
+					</Text>
 				</View>
 
-				<View style={styles.shiftRow}>
-					<View style={styles.shiftIcon}>
+				<View
+					style={[
+						styles.shiftRow,
+						{ backgroundColor: colors.surfaceContainerLowest },
+					]}
+				>
+					<View
+						style={[
+							styles.shiftIcon,
+							{ backgroundColor: colors.secondaryContainer },
+						]}
+					>
 						<MaterialIcons
 							color={colors.onSecondaryContainer}
 							name='schedule'
@@ -69,21 +107,42 @@ export const CheckInSuccessModal = () => {
 						/>
 					</View>
 					<View style={styles.shiftTexts}>
-						<Text style={styles.label}>Vardiya Durumu</Text>
-						<Text numberOfLines={1} style={styles.caption}>
+						<Text style={[styles.label, { color: colors.onSurface }]}>
+							Vardiya Durumu
+						</Text>
+						<Text
+							numberOfLines={1}
+							style={[styles.caption, { color: colors.onSurfaceVariant }]}
+						>
 							{shiftStatus}
 						</Text>
 					</View>
-					<Text style={styles.shiftHours}>{SHIFT_HOURS}</Text>
+					<Text
+						style={[
+							styles.shiftHours,
+							{
+								color: colors.secondary,
+								backgroundColor: colors.surfaceContainer,
+							},
+						]}
+					>
+						{SHIFT_HOURS}
+					</Text>
 				</View>
 
 				<Pressable
 					accessibilityLabel='Tamam'
 					accessibilityRole='button'
 					onPress={onClose}
-					style={({ pressed }) => [styles.button, pressed && styles.pressed]}
+					style={({ pressed }) => [
+						styles.button,
+						{ backgroundColor: colors.primary },
+						pressed && styles.pressed,
+					]}
 				>
-					<Text style={styles.buttonLabel}>Tamam</Text>
+					<Text style={[styles.buttonLabel, { color: colors.onPrimary }]}>
+						Tamam
+					</Text>
 					<MaterialIcons
 						color={colors.onPrimary}
 						name='arrow-forward'

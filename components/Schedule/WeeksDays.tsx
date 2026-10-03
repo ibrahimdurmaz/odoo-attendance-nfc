@@ -1,4 +1,4 @@
-import { colors } from '@/assets/theme';
+import { theme } from '@/assets/theme';
 import {
 	addDays,
 	DAYS_SHORT,
@@ -32,11 +32,20 @@ export function WeeksDays({
 		addDays(monday, index),
 	);
 	const styles = WeeksDaysStyles;
+	const colors = theme();
 	return (
 		<View style={styles.section}>
 			<View style={styles.spread}>
-				<Text style={styles.sectionTitle}>Bu Haftanın Seyri</Text>
-				<Text style={[styles.caption, { color: colors.secondary }]}>
+				<Text style={[styles.sectionTitle, { color: colors.onSurface }]}>
+					Bu Haftanın Seyri
+				</Text>
+				<Text
+					style={[
+						styles.caption,
+						{ color: colors.onSurfaceVariant },
+						{ color: colors.secondary },
+					]}
+				>
 					{formatWeekRange(monday, addDays(monday, WORK_DAYS_PER_WEEK - 1))}
 				</Text>
 			</View>
@@ -56,18 +65,35 @@ export function WeeksDays({
 							onPress={() => onPress(dateKey)}
 							style={({ pressed }) => [
 								styles.weekCell,
-								isToday && styles.weekCellToday,
+								{ backgroundColor: colors.surfaceContainerLowest },
+								isToday && { backgroundColor: colors.primary },
 								pressed && styles.pressed,
 							]}
 						>
-							<Text style={[styles.caption, isToday && styles.onTodayMuted]}>
+							<Text
+								style={[
+									styles.caption,
+									{ color: colors.onSurfaceVariant },
+									isToday && { color: colors.primaryFixed },
+								]}
+							>
 								{isToday ? 'Bugün' : dayName}
 							</Text>
-							<Text style={[styles.weekDate, isToday && styles.onToday]}>
+							<Text
+								style={[
+									styles.weekDate,
+									{ color: colors.onSurface },
+									isToday && { color: colors.onPrimary },
+								]}
+							>
 								{date.getDate()}
 							</Text>
 							<Text
-								style={[styles.weekDuration, isToday && styles.onTodayMuted]}
+								style={[
+									styles.weekDuration,
+									{ color: colors.tertiaryContainer },
+									isToday && { color: colors.primaryFixed },
+								]}
 							>
 								{record ? formatDuration(record.workedSeconds) : '—'}
 							</Text>

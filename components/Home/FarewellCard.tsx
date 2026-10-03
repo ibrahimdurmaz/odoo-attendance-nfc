@@ -1,17 +1,20 @@
-import { colors } from '@/assets/theme';
+import { theme } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { Text, View } from 'react-native';
 import { FarewellCardStyles } from './styles';
 const USER_NAME = 'Selim';
 export function FarewellCard() {
+	const colors = theme();
 	const styles = FarewellCardStyles;
 	return (
-		<View style={styles.farewell}>
+		<View
+			style={[styles.farewell, { backgroundColor: colors.primaryContainer }]}
+		>
 			<MaterialIcons color={colors.primaryFixed} name='waving-hand' size={22} />
-			<Text style={styles.farewellTitle}>
+			<Text style={[styles.farewellTitle, { color: colors.onPrimary }]}>
 				Yarın görüşmek üzere, {USER_NAME}.
 			</Text>
-			<Text style={styles.farewellText}>
+			<Text style={[styles.farewellText, { color: colors.primaryFixedDim }]}>
 				Bugünkü temponuz için teşekkürler. Dinlenmeyi unutmayın!
 			</Text>
 		</View>

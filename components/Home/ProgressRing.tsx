@@ -1,4 +1,4 @@
-import { colors } from '@/assets/theme';
+import { theme } from '@/assets/theme';
 import { FC, ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
@@ -10,11 +10,13 @@ type ProgressRingProps = {
 };
 const RING_SIZE = 220;
 const RING_STROKE = 12;
+
 export const ProgressRing: FC<ProgressRingProps> = ({
 	progress,
 	color,
 	children,
 }) => {
+	const colors = theme();
 	const radius = (RING_SIZE - RING_STROKE) / 2;
 	const circumference = 2 * Math.PI * radius;
 	const clamped = Math.min(1, Math.max(0, progress));

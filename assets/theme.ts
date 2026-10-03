@@ -1,4 +1,5 @@
-export const colors = {
+import { useProfileStore } from '@/store/useProfileStore';
+const lightTheme = {
 	primary: '#57344f',
 	onPrimary: '#ffffff',
 	primaryContainer: '#714b67',
@@ -20,6 +21,7 @@ export const colors = {
 
 	error: '#ba1a1a',
 	errorContainer: '#ffdad6',
+	onErrorContainer: '#93000a',
 
 	surface: '#f8f9ff',
 	surfaceContainerLowest: '#ffffff',
@@ -33,7 +35,48 @@ export const colors = {
 	outlineVariant: '#d1c3ca',
 	inverseSurface: '#233144',
 	inverseOnSurface: '#eaf1ff',
-} as const;
+};
+const darkTheme = {
+	primary: '#e9b8d9',
+	onPrimary: '#46263f',
+	primaryContainer: '#c795ba',
+	onPrimaryContainer: '#2f1029',
+	primaryFixed: '#4f2f48',
+	primaryFixedDim: '#3a1d35',
+
+	secondary: '#78d5db',
+	secondaryContainer: '#00494d',
+	onSecondaryContainer: '#92eff5',
+	secondaryFixed: '#95f1f8',
+	onSecondaryFixed: '#002022',
+
+	tertiary: '#4edea3',
+	onTertiary: '#003824',
+	tertiaryContainer: '#3cc48d',
+	tertiaryFixed: '#0b4a34',
+	tertiaryFixedDim: '#4edea3',
+
+	error: '#ffb4ab',
+	errorContainer: '#93000a',
+	onErrorContainer: '#ffdad6',
+
+	surface: '#0b121c',
+	surfaceContainerLowest: '#141d2a',
+	surfaceContainerLow: '#1b2533',
+	surfaceContainer: '#212c3b',
+	surfaceContainerHigh: '#2a3646',
+	surfaceContainerHighest: '#334052',
+	onSurface: '#e1e8f5',
+	onSurfaceVariant: '#d1c3ca',
+	outline: '#9a8d94',
+	outlineVariant: '#4e444a',
+	inverseSurface: '#233144',
+	inverseOnSurface: '#eaf1ff',
+};
+export const theme = () => {
+	const colorScheme = useProfileStore().preferences.theme;
+	return colorScheme === 'light' ? lightTheme : darkTheme;
+};
 
 // Tek font ailesi: Plus Jakarta Sans. Adlar @expo-google-fonts/plus-jakarta-sans
 // paketindeki adlardır; fontu farklı adlarla yüklediyseniz yalnızca burayı değiştirin.

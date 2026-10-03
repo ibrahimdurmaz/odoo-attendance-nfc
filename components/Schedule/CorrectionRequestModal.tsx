@@ -1,4 +1,4 @@
-import { colors, fonts } from '@/assets/theme';
+import { fonts, theme } from '@/assets/theme';
 import { formatMinutesOfDay, formatTime } from '@/helper/dateHelpers';
 import { useModalStore } from '@/store/modalStore';
 import {
@@ -88,6 +88,7 @@ const useKeyboardHeight = (): number => {
 type StepperProps = { label: string; onStep: (direction: 1 | -1) => void };
 
 const Stepper: FC<StepperProps> = ({ label, onStep }) => {
+	const colors = theme();
 	return (
 		<View style={styles.stepper}>
 			<Pressable
@@ -95,7 +96,11 @@ const Stepper: FC<StepperProps> = ({ label, onStep }) => {
 				accessibilityRole='button'
 				hitSlop={6}
 				onPress={() => onStep(1)}
-				style={({ pressed }) => [styles.stepButton, pressed && styles.pressed]}
+				style={({ pressed }) => [
+					styles.stepButton,
+					{ backgroundColor: colors.surfaceContainer },
+					pressed && styles.pressed,
+				]}
 			>
 				<MaterialIcons
 					color={colors.onSurface}
@@ -103,13 +108,19 @@ const Stepper: FC<StepperProps> = ({ label, onStep }) => {
 					size={20}
 				/>
 			</Pressable>
-			<Text style={styles.stepLabel}>{label}</Text>
+			<Text style={[styles.stepLabel, { color: colors.onSurfaceVariant }]}>
+				{label}
+			</Text>
 			<Pressable
 				accessibilityLabel={`${label} azalt`}
 				accessibilityRole='button'
 				hitSlop={6}
 				onPress={() => onStep(-1)}
-				style={({ pressed }) => [styles.stepButton, pressed && styles.pressed]}
+				style={({ pressed }) => [
+					styles.stepButton,
+					{ backgroundColor: colors.surfaceContainer },
+					pressed && styles.pressed,
+				]}
 			>
 				<MaterialIcons
 					color={colors.onSurface}
@@ -130,6 +141,7 @@ const Form: FC<FormProps> = ({ day }) => {
 	const keyboardHeight = useKeyboardHeight();
 	const { closeModal } = useModalStore();
 	const requestCorrection = useDayStore((state) => state.requestCorrection);
+	const colors = theme();
 
 	const originalTimestamp = getOriginalTimestamp(day, recordType);
 	const canSubmit = reason.trim().length > 0;
@@ -163,6 +175,7 @@ const Form: FC<FormProps> = ({ day }) => {
 		<View
 			style={[
 				styles.card,
+				{ backgroundColor: colors.surfaceContainerLowest },
 				{ transform: [{ translateY: -keyboardHeight / 2 }] },
 			]}
 		>
@@ -172,16 +185,27 @@ const Form: FC<FormProps> = ({ day }) => {
 				showsVerticalScrollIndicator={false}
 			>
 				<View>
-					<Text style={styles.title}>Düzeltme Talep Et</Text>
-					<Text style={styles.description}>
+					<Text style={[styles.title, { color: colors.onSurface }]}>
+						Düzeltme Talep Et
+					</Text>
+					<Text
+						style={[styles.description, { color: colors.onSurfaceVariant }]}
+					>
 						Kayıtlarda eksiklik veya hata olduğunu düşünüyorsanız talep
 						oluşturun.
 					</Text>
 				</View>
 
 				<View style={styles.field}>
-					<Text style={styles.label}>Hangi kayıt?</Text>
-					<View style={styles.segments}>
+					<Text style={[styles.label, { color: colors.onSurface }]}>
+						Hangi kayıt?
+					</Text>
+					<View
+						style={[
+							styles.segments,
+							{ backgroundColor: colors.surfaceContainerLow },
+						]}
+					>
 						{RECORD_TYPES.map((type) => {
 							const isSelected = type.key === recordType;
 							const tint = isSelected
@@ -194,7 +218,12 @@ const Form: FC<FormProps> = ({ day }) => {
 									accessibilityState={{ selected: isSelected }}
 									key={type.key}
 									onPress={() => selectRecordType(type.key)}
-									style={[styles.segment, isSelected && styles.segmentSelected]}
+									style={[
+										styles.segment,
+										isSelected && {
+											backgroundColor: colors.primaryContainer,
+										},
+									]}
 								>
 									<MaterialIcons color={tint} name={type.icon} size={18} />
 									<Text style={[styles.segmentLabel, { color: tint }]}>
@@ -208,16 +237,22 @@ const Form: FC<FormProps> = ({ day }) => {
 
 				<View style={styles.field}>
 					<View style={styles.labelRow}>
-						<Text style={styles.label}>Doğru saat</Text>
+						<Text style={[styles.label, { color: colors.onSurface }]}>
+							Doğru saat
+						</Text>
 						<View style={styles.originalRow}>
 							<MaterialIcons
 								color={colors.onSurfaceVariant}
 								name='history'
 								size={15}
 							/>
-							<Text style={styles.caption}>
+							<Text
+								style={[styles.caption, { color: colors.onSurfaceVariant }]}
+							>
 								Orijinal kayıt:{' '}
-								<Text style={styles.originalTime}>
+								<Text
+									style={[styles.originalTime, { color: colors.onSurface }]}
+								>
 									{originalTimestamp === null
 										? 'yok'
 										: formatTime(originalTimestamp)}
@@ -225,8 +260,18 @@ const Form: FC<FormProps> = ({ day }) => {
 							</Text>
 						</View>
 					</View>
-					<View style={styles.timeBox}>
-						<View style={styles.timeIcon}>
+					<View
+						style={[
+							styles.timeBox,
+							{ backgroundColor: colors.surfaceContainerLow },
+						]}
+					>
+						<View
+							style={[
+								styles.timeIcon,
+								{ backgroundColor: colors.surfaceContainer },
+							]}
+						>
 							<MaterialIcons
 								color={colors.primaryContainer}
 								name='schedule'
@@ -234,8 +279,12 @@ const Form: FC<FormProps> = ({ day }) => {
 							/>
 						</View>
 						<View style={styles.timeTexts}>
-							<Text style={styles.caption}>Önerilen Düzeltme</Text>
-							<Text style={styles.time}>
+							<Text
+								style={[styles.caption, { color: colors.onSurfaceVariant }]}
+							>
+								Önerilen Düzeltme
+							</Text>
+							<Text style={[styles.time, { color: colors.onSurface }]}>
 								{formatMinutesOfDay(minutesOfDay)}
 							</Text>
 						</View>
@@ -249,8 +298,10 @@ const Form: FC<FormProps> = ({ day }) => {
 
 				<View style={styles.field}>
 					<View style={styles.labelRow}>
-						<Text style={styles.label}>Neden?</Text>
-						<Text style={styles.caption}>
+						<Text style={[styles.label, { color: colors.onSurface }]}>
+							Neden?
+						</Text>
+						<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
 							{reason.length}/{REASON_MAX_LENGTH}
 						</Text>
 					</View>
@@ -261,19 +312,33 @@ const Form: FC<FormProps> = ({ day }) => {
 						onChangeText={setReason}
 						placeholder='Kısa bir gerekçe belirtin...'
 						placeholderTextColor={colors.outline}
-						style={styles.reasonInput}
+						style={[
+							styles.reasonInput,
+							{
+								color: colors.onSurface,
+								backgroundColor: colors.surfaceContainerLow,
+							},
+						]}
 						textAlignVertical='top'
 						value={reason}
 					/>
 				</View>
 
-				<View style={styles.note}>
+				<View
+					style={[styles.note, { backgroundColor: colors.surfaceContainerLow }]}
+				>
 					<MaterialIcons
 						color={colors.secondary}
 						name='info-outline'
 						size={18}
 					/>
-					<Text style={[styles.caption, styles.noteText]}>
+					<Text
+						style={[
+							styles.caption,
+							styles.noteText,
+							{ color: colors.onSurfaceVariant },
+						]}
+					>
 						Talebiniz yöneticinize gönderilir. Onaylandığında çalışma çizelgeniz
 						otomatik güncellenir.
 					</Text>
@@ -288,12 +353,15 @@ const Form: FC<FormProps> = ({ day }) => {
 						onPress={submit}
 						style={({ pressed }) => [
 							styles.submitButton,
+							{ backgroundColor: colors.primaryContainer },
 							!canSubmit && styles.submitDisabled,
 							pressed && styles.pressed,
 						]}
 					>
 						<MaterialIcons color={colors.onPrimary} name='send' size={20} />
-						<Text style={styles.submitLabel}>Talebi Gönder</Text>
+						<Text style={[styles.submitLabel, { color: colors.onPrimary }]}>
+							Talebi Gönder
+						</Text>
 					</Pressable>
 					<Pressable
 						accessibilityLabel='Vazgeç'
@@ -306,7 +374,11 @@ const Form: FC<FormProps> = ({ day }) => {
 							pressed && styles.pressed,
 						]}
 					>
-						<Text style={styles.cancelLabel}>Vazgeç</Text>
+						<Text
+							style={[styles.cancelLabel, { color: colors.onSurfaceVariant }]}
+						>
+							Vazgeç
+						</Text>
 					</Pressable>
 				</View>
 			</ScrollView>
@@ -340,7 +412,6 @@ const styles = StyleSheet.create({
 		maxHeight: '100%',
 		borderRadius: 16,
 		overflow: 'hidden',
-		backgroundColor: colors.surfaceContainerLowest,
 	},
 	content: { padding: 20, gap: 16 },
 	pressed: { opacity: 0.7 },
@@ -349,26 +420,22 @@ const styles = StyleSheet.create({
 		fontFamily: fonts.bold,
 		fontSize: 24,
 		lineHeight: 32,
-		color: colors.onSurface,
 	},
 	description: {
 		marginTop: 4,
 		fontFamily: fonts.regular,
 		fontSize: 14,
 		lineHeight: 20,
-		color: colors.onSurfaceVariant,
 	},
 	caption: {
 		fontFamily: fonts.medium,
 		fontSize: 12,
 		lineHeight: 16,
-		color: colors.onSurfaceVariant,
 	},
 	label: {
 		fontFamily: fonts.semibold,
 		fontSize: 14,
 		lineHeight: 20,
-		color: colors.onSurface,
 	},
 	field: { gap: 6 },
 	labelRow: {
@@ -382,7 +449,6 @@ const styles = StyleSheet.create({
 		gap: 8,
 		padding: 4,
 		borderRadius: 12,
-		backgroundColor: colors.surfaceContainerLow,
 	},
 	segment: {
 		flex: 1,
@@ -393,18 +459,16 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		gap: 6,
 	},
-	segmentSelected: { backgroundColor: colors.primaryContainer },
 	segmentLabel: { fontFamily: fonts.medium, fontSize: 12 },
 
 	originalRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
-	originalTime: { fontFamily: fonts.bold, color: colors.onSurface },
+	originalTime: { fontFamily: fonts.bold },
 	timeBox: {
 		padding: 12,
 		borderRadius: 12,
 		flexDirection: 'row',
 		alignItems: 'center',
 		gap: 12,
-		backgroundColor: colors.surfaceContainerLow,
 	},
 	timeIcon: {
 		width: 48,
@@ -412,14 +476,12 @@ const styles = StyleSheet.create({
 		borderRadius: 12,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: colors.surfaceContainer,
 	},
 	timeTexts: { flex: 1 },
 	time: {
 		fontFamily: fonts.bold,
 		fontSize: 32,
 		lineHeight: 40,
-		color: colors.onSurface,
 		fontVariant: ['tabular-nums'],
 	},
 	stepper: { alignItems: 'center', gap: 2 },
@@ -429,12 +491,10 @@ const styles = StyleSheet.create({
 		borderRadius: 8,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: colors.surfaceContainer,
 	},
 	stepLabel: {
 		fontFamily: fonts.medium,
 		fontSize: 11,
-		color: colors.onSurfaceVariant,
 	},
 
 	reasonInput: {
@@ -444,8 +504,6 @@ const styles = StyleSheet.create({
 		fontFamily: fonts.regular,
 		fontSize: 14,
 		lineHeight: 20,
-		color: colors.onSurface,
-		backgroundColor: colors.surfaceContainerLow,
 	},
 
 	note: {
@@ -454,7 +512,6 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'flex-start',
 		gap: 8,
-		backgroundColor: colors.surfaceContainerLow,
 	},
 	noteText: { flex: 1 },
 
@@ -465,18 +522,15 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 		gap: 8,
-		backgroundColor: colors.primaryContainer,
 	},
 	submitDisabled: { opacity: 0.4 },
 	submitLabel: {
 		fontFamily: fonts.semibold,
 		fontSize: 14,
-		color: colors.onPrimary,
 	},
 	cancelButton: { height: 44, alignItems: 'center', justifyContent: 'center' },
 	cancelLabel: {
 		fontFamily: fonts.medium,
 		fontSize: 12,
-		color: colors.onSurfaceVariant,
 	},
 });

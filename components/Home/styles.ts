@@ -1,8 +1,8 @@
-import { colors, fonts } from '@/assets/theme';
+import { fonts } from '@/assets/theme';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-	screen: { flex: 1, backgroundColor: colors.surface },
+	screen: { flex: 1 },
 	flex: { flex: 1 },
 	row: { flexDirection: 'row', alignItems: 'center', gap: 8 },
 	centered: { textAlign: 'center' },
@@ -16,11 +16,9 @@ export const styles = StyleSheet.create({
 		fontFamily: fonts.medium,
 		fontSize: 12,
 		lineHeight: 16,
-		color: colors.onSurfaceVariant,
 	},
 	card: {
 		borderRadius: 12,
-		backgroundColor: colors.surfaceContainerLowest,
 		shadowColor: '#000000',
 		shadowOpacity: 0.06,
 		shadowRadius: 3,
@@ -40,7 +38,6 @@ export const styles = StyleSheet.create({
 		fontFamily: fonts.bold,
 		fontSize: 22,
 		lineHeight: 30,
-		color: colors.onSurface,
 	},
 	badge: {
 		flexDirection: 'row',
@@ -61,13 +58,11 @@ export const styles = StyleSheet.create({
 		paddingHorizontal: 12,
 		paddingVertical: 4,
 		borderRadius: 999,
-		backgroundColor: colors.surfaceContainerHigh,
 	},
 	timer: {
 		fontFamily: fonts.bold,
 		fontSize: 32,
 		lineHeight: 40,
-		color: colors.onSurface,
 		// Rakamlar eşit genişlikte olsun ki sayaç her saniye sağa sola oynamasın.
 		fontVariant: ['tabular-nums'],
 	},
@@ -75,7 +70,6 @@ export const styles = StyleSheet.create({
 	ringNote: {
 		fontFamily: fonts.semibold,
 		fontSize: 12,
-		color: colors.tertiary,
 	},
 
 	// Gün sonu özeti
@@ -85,19 +79,16 @@ export const styles = StyleSheet.create({
 		borderRadius: 28,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: colors.surfaceContainerLow,
 	},
 	overline: {
 		fontFamily: fonts.medium,
 		fontSize: 12,
 		letterSpacing: 0.6,
-		color: colors.onSurfaceVariant,
 	},
 	total: {
 		fontFamily: fonts.bold,
 		fontSize: 36,
 		lineHeight: 44,
-		color: colors.primary,
 	},
 	overtimePill: {
 		flexDirection: 'row',
@@ -106,12 +97,10 @@ export const styles = StyleSheet.create({
 		paddingHorizontal: 12,
 		paddingVertical: 4,
 		borderRadius: 999,
-		backgroundColor: colors.secondaryContainer,
 	},
 	overtimeLabel: {
 		fontFamily: fonts.bold,
 		fontSize: 12,
-		color: colors.onSecondaryContainer,
 	},
 
 	// Hareketler
@@ -124,7 +113,6 @@ export const styles = StyleSheet.create({
 	sectionTitle: {
 		fontFamily: fonts.bold,
 		fontSize: 18,
-		color: colors.onSurface,
 	},
 	activityIcon: {
 		width: 40,
@@ -137,7 +125,6 @@ export const styles = StyleSheet.create({
 	activityTitle: {
 		fontFamily: fonts.semibold,
 		fontSize: 14,
-		color: colors.onSurface,
 	},
 
 	empty: {
@@ -167,18 +154,15 @@ export const headerStyles = StyleSheet.create({
 		borderRadius: 8,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: colors.primaryContainer,
 	},
 	brand: {
 		fontFamily: fonts.semibold,
 		fontSize: 12,
 		letterSpacing: 0.6,
-		color: colors.primaryContainer,
 	},
 	headerTitle: {
 		fontFamily: fonts.semibold,
 		fontSize: 18,
-		color: colors.onSurface,
 	},
 	avatar: {
 		width: 32,
@@ -187,7 +171,6 @@ export const headerStyles = StyleSheet.create({
 		marginLeft: 8,
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: colors.primary,
 	},
 	row: { flexDirection: 'row', alignItems: 'center', gap: 8 },
 });
@@ -197,16 +180,13 @@ export const FarewellCardStyles = StyleSheet.create({
 		padding: 24,
 		gap: 4,
 		borderRadius: 12,
-		backgroundColor: colors.primaryContainer,
 	},
 	farewellTitle: {
 		fontFamily: fonts.bold,
 		fontSize: 18,
-		color: colors.onPrimary,
 	},
 	farewellText: {
 		fontFamily: fonts.regular,
 		fontSize: 12,
-		color: colors.primaryFixedDim,
 	},
 });

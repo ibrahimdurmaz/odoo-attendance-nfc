@@ -1,12 +1,18 @@
-import { colors, fonts } from '@/assets/theme';
+import { fonts, theme } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { FC } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Activity } from './types';
 
 export const ActivityRow: FC<{ activity: Activity }> = ({ activity }) => {
+	const colors = theme();
 	return (
-		<View style={styles.activityRow}>
+		<View
+			style={[
+				styles.activityRow,
+				{ backgroundColor: colors.surfaceContainerLow },
+			]}
+		>
 			<View
 				style={[styles.activityIcon, { backgroundColor: activity.background }]}
 			>
@@ -17,14 +23,22 @@ export const ActivityRow: FC<{ activity: Activity }> = ({ activity }) => {
 				/>
 			</View>
 			<View style={styles.activityTexts}>
-				<Text numberOfLines={1} style={styles.activityTitle}>
+				<Text
+					numberOfLines={1}
+					style={[styles.activityTitle, { color: colors.onSurface }]}
+				>
 					{activity.title}
 				</Text>
-				<Text numberOfLines={1} style={styles.caption}>
+				<Text
+					numberOfLines={1}
+					style={[styles.caption, { color: colors.onSurfaceVariant }]}
+				>
 					{activity.subtitle}
 				</Text>
 			</View>
-			<Text style={styles.activityTime}>{activity.time}</Text>
+			<Text style={[styles.activityTime, { color: colors.onSurface }]}>
+				{activity.time}
+			</Text>
 		</View>
 	);
 };
@@ -36,19 +50,17 @@ const styles = StyleSheet.create({
 		gap: 12,
 		padding: 12,
 		borderRadius: 8,
-		backgroundColor: colors.surfaceContainerLow,
 	},
 	activityTime: {
 		fontFamily: fonts.bold,
 		fontSize: 13,
-		color: colors.onSurface,
+
 		fontVariant: ['tabular-nums'],
 	},
 	activityTexts: { flex: 1 },
 	activityTitle: {
 		fontFamily: fonts.semibold,
 		fontSize: 14,
-		color: colors.onSurface,
 	},
 	activityIcon: {
 		width: 40,
@@ -61,6 +73,5 @@ const styles = StyleSheet.create({
 		fontFamily: fonts.medium,
 		fontSize: 12,
 		lineHeight: 16,
-		color: colors.onSurfaceVariant,
 	},
 });

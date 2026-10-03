@@ -1,19 +1,28 @@
-import { colors } from '@/assets/theme';
+import { theme } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
+import { useRouter } from 'expo-router';
 import { Pressable, Text, View } from 'react-native';
 import { headerStyles } from './styles';
 
 export function Header() {
 	const styles = headerStyles;
+	const colors = theme();
+	const router = useRouter();
 	return (
 		<View style={styles.header}>
 			<View style={styles.row}>
-				<View style={styles.logo}>
+				<View
+					style={[styles.logo, { backgroundColor: colors.primaryContainer }]}
+				>
 					<MaterialIcons color={colors.onPrimary} name='badge' size={24} />
 				</View>
 				<View>
-					<Text style={styles.brand}>ODOO</Text>
-					<Text style={styles.headerTitle}>Ana Sayfa</Text>
+					<Text style={[styles.brand, { color: colors.primaryContainer }]}>
+						ODOO
+					</Text>
+					<Text style={[styles.headerTitle, { color: colors.onSurface }]}>
+						Ana Sayfa
+					</Text>
 				</View>
 			</View>
 			<View style={styles.row}>
@@ -28,9 +37,14 @@ export function Header() {
 						size={24}
 					/>
 				</Pressable>
-				<View style={styles.avatar}>
+				<Pressable
+					onPress={() => {
+						router.navigate('/(tabs)/profile');
+					}}
+					style={[styles.avatar, { backgroundColor: colors.primary }]}
+				>
 					<MaterialIcons color={colors.onPrimary} name='person' size={18} />
-				</View>
+				</Pressable>
 			</View>
 		</View>
 	);

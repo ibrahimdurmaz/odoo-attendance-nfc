@@ -1,9 +1,10 @@
-import { colors } from '@/assets/theme';
+import { theme } from '@/assets/theme';
 import Feather from '@react-native-vector-icons/feather';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { Tabs } from 'expo-router';
 
 export default function TabLayout() {
+	const colors = theme();
 	return (
 		<Tabs
 			screenOptions={{
