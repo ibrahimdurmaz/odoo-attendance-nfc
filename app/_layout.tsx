@@ -42,14 +42,26 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-	const colorScheme = useProfileStore().preferences.theme;
-
+	const profileStore = useProfileStore();
+	const colorScheme = profileStore.preferences.theme;
+	const isLoggedIn = !!profileStore.profile?.employeeId;
+	const setPassword = !!profileStore.profile?.hasPassword;
 	return (
 		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-			<Stack>
-				<Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-				<Stack.Screen name='day_details' options={{ headerShown: false }} />
-				<Stack.Screen name='login' options={{ headerShown: false }} />
+			<Stack
+				screenOptions={{ headerShown: false }}
+				initialRouteName={isLoggedIn ? '(tabs)' : 'login'}
+			>
+				<Stack.Protected guard={isLoggedIn}>
+					<Stack.Screen name='(tabs)' />
+					<Stack.Screen name='day_details' />
+				</Stack.Protected>
+				<Stack.Protected guard={!isLoggedIn}>
+					<Stack.Screen name='login' />
+				</Stack.Protected>
+				<Stack.Protected guard={!setPassword}>
+					<Stack.Screen name='set_password' />
+				</Stack.Protected>
 			</Stack>
 		</ThemeProvider>
 	);

@@ -12,8 +12,7 @@ import { SettingsSection } from './SettingsSection';
 import { StatsSection } from './StatsSection';
 export const ProfileScreen: FC = () => {
 	const profile = useProfileStore((state) => state.profile);
-	const login = useProfileStore((state) => state.login);
-	const logout = useProfileStore((state) => state.logout);
+	const { login, logout } = useProfileStore();
 	const colors = theme();
 
 	// to do

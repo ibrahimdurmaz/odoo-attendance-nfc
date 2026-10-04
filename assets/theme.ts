@@ -74,7 +74,8 @@ const darkTheme = {
 	inverseOnSurface: '#eaf1ff',
 };
 export const theme = () => {
-	const colorScheme = useProfileStore().preferences.theme;
+	const profileStore = useProfileStore();
+	const colorScheme = profileStore.preferences.theme;
 	return colorScheme === 'light' ? lightTheme : darkTheme;
 };
 

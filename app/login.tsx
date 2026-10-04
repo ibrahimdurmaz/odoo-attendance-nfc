@@ -1,5 +1,5 @@
-import { View } from 'react-native';
+import { LoginScreen } from '@/components/Login/LoginScreen';
 
 export default function TabOneScreen() {
-	return <View style={{ flex: 1 }}></View>;
+	return <LoginScreen />;
 }

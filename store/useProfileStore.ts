@@ -14,6 +14,8 @@ export type Profile = {
 	/** Fotoğraf yoksa null; kartta baş harfler gösterilir. */
 	avatarUrl: string | null;
 	remainingLeaveDays: number;
+	hasPassword: boolean;
+	admin: boolean;
 };
 
 export type Preferences = {
@@ -22,8 +24,7 @@ export type Preferences = {
 };
 
 type ProfileState = {
-	/** Oturum açık değilse null. */
-	profile: Profile | null;
+	profile: Profile;
 	preferences: Preferences;
 };
 
@@ -31,6 +32,7 @@ type ProfileActions = {
 	login: (profile: Profile) => void;
 	logout: () => void;
 	setLanguage: (language: Language) => void;
+	setPasswordHasBeenSet: () => void;
 	setTheme: (theme: ThemeMode) => void;
 	resetStore: () => void;
 };
@@ -57,10 +59,24 @@ export const PLACEHOLDER_PROFILE: Profile = {
 	company: 'Odoo Kurumsal',
 	avatarUrl: null,
 	remainingLeaveDays: 14,
+	hasPassword: true,
+	admin: false,
+};
+
+export const initialProfile: Profile = {
+	fullName: '',
+	jobTitle: '',
+	department: '',
+	employeeId: '',
+	company: '',
+	avatarUrl: null,
+	remainingLeaveDays: 0,
+	hasPassword: false,
+	admin: false,
 };
 
 const initialState: ProfileState = {
-	profile: PLACEHOLDER_PROFILE,
+	profile: initialProfile,
 	preferences: { language: 'tr', theme: 'light' },
 };
 
@@ -68,11 +84,17 @@ export const useProfileStore = create<ProfileStore>()(
 	// persist(
 	(set) => ({
 		...initialState,
-		login: (profile) => set(() => ({ profile })),
+		login: (data) =>
+			//set((state) => ({ profile: { ...state.profile, ...data } })),
+			set((state) => ({
+				profile: { ...state.profile, ...PLACEHOLDER_PROFILE },
+			})),
 		// Dil ve görünüm cihazın tercihidir; çıkış yapınca silinmez.
-		logout: () => set(() => ({ profile: null })),
+		logout: () => set(() => ({ profile: initialProfile })),
 		setLanguage: (language) =>
 			set((state) => ({ preferences: { ...state.preferences, language } })),
+		setPasswordHasBeenSet: () =>
+			set((state) => ({ profile: { ...state.profile, hasPassword: true } })),
 		setTheme: (theme) =>
 			set((state) => ({ preferences: { ...state.preferences, theme } })),
 		resetStore: () => set(() => initialState),
