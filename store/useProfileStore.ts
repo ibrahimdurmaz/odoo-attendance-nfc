@@ -1,22 +1,9 @@
 import { create } from 'zustand';
+import { Employee } from './types';
 
 export type Language = 'tr' | 'en' | 'de';
 
 export type ThemeMode = 'light' | 'dark' | 'system';
-
-export type Profile = {
-	fullName: string;
-	jobTitle: string;
-	department: string;
-	/** Sicil numarası, "EMP-8042". */
-	employeeId: string;
-	company: string;
-	/** Fotoğraf yoksa null; kartta baş harfler gösterilir. */
-	avatarUrl: string | null;
-	remainingLeaveDays: number;
-	hasPassword: boolean;
-	admin: boolean;
-};
 
 export type Preferences = {
 	language: Language;
@@ -24,12 +11,12 @@ export type Preferences = {
 };
 
 type ProfileState = {
-	profile: Profile;
+	profile: Employee;
 	preferences: Preferences;
 };
 
 type ProfileActions = {
-	login: (profile: Profile) => void;
+	login: (profile: Employee) => void;
 	logout: () => void;
 	setLanguage: (language: Language) => void;
 	setPasswordHasBeenSet: () => void;
@@ -51,28 +38,42 @@ export const LANGUAGE_OPTIONS: {
 ];
 
 // Login sayfası gelene kadar uygulama bu kullanıcıyla açılır.
-export const PLACEHOLDER_PROFILE: Profile = {
+export const PLACEHOLDER_PROFILE: Employee = {
 	fullName: 'Selim Kaya',
 	jobTitle: 'Kıdemli Yazılım Mühendisi',
-	department: 'Ar-Ge Departmanı',
+	department: 'ik', // gerçek DepartmentKey
 	employeeId: 'EMP-8042',
-	company: 'Odoo Kurumsal',
+	company: 'odoo_tr', // gerçek CompanyKey
 	avatarUrl: null,
 	remainingLeaveDays: 14,
 	hasPassword: true,
-	admin: false,
-};
+	admin: true,
+	email: 'selim.kaya@odoo-kurumsal.com',
+	phone: '5321234567',
+	startDateKey: '2021-03-15',
+	shiftTemplate: 'standard',
+	annualLeaveDays: 20,
+	status: 'inside',
+	createdAt: Date.parse('2021-03-15T09:00:00+03:00'),
+} as const;
 
-export const initialProfile: Profile = {
+export const initialProfile: Employee = {
 	fullName: '',
 	jobTitle: '',
-	department: '',
+	department: 'arge', // varsayılan DepartmentKey
 	employeeId: '',
-	company: '',
+	company: 'odoo_tr', // varsayılan CompanyKey
 	avatarUrl: null,
 	remainingLeaveDays: 0,
 	hasPassword: false,
 	admin: false,
+	email: '',
+	phone: '',
+	startDateKey: '',
+	shiftTemplate: 'standard', // varsayılan ShiftTemplateKey
+	annualLeaveDays: 0,
+	status: 'absent', // varsayılan AttendanceStatus
+	createdAt: 0,
 };
 
 const initialState: ProfileState = {

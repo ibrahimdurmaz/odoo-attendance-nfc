@@ -1,5 +1,6 @@
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { ComponentProps } from 'react';
+import { ColorValue } from 'react-native';
 
 export type IconName = ComponentProps<typeof MaterialIcons>['name'];
 
@@ -21,6 +22,6 @@ export type Activity = {
 	title: string;
 	subtitle: string;
 	time: string;
-	background: string;
-	foreground: string;
+	background: ColorValue;
+	foreground: ColorValue;
 };

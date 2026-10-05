@@ -46,6 +46,7 @@ function RootLayoutNav() {
 	const colorScheme = profileStore.preferences.theme;
 	const isLoggedIn = !!profileStore.profile?.employeeId;
 	const setPassword = !!profileStore.profile?.hasPassword;
+	const isAdmin = !!profileStore.profile?.admin;
 	return (
 		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
 			<Stack
@@ -61,6 +62,10 @@ function RootLayoutNav() {
 				</Stack.Protected>
 				<Stack.Protected guard={!setPassword}>
 					<Stack.Screen name='set_password' />
+				</Stack.Protected>
+				<Stack.Protected guard={isAdmin}>
+					<Stack.Screen name='add_employee' />
+					<Stack.Screen name='employee_list' />
 				</Stack.Protected>
 			</Stack>
 		</ThemeProvider>

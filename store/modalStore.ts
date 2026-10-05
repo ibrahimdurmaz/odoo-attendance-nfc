@@ -5,7 +5,8 @@ type ModalTags =
 	| 'checkInSuccessful'
 	| 'codeScanner'
 	| 'correctionRequest'
-	| 'language';
+	| 'language'
+	| 'employeeCreated';
 type ModalState = {
 	modals: Record<ModalTags, { visible: boolean; props?: any }>;
 };
@@ -23,6 +24,7 @@ const initialState: ModalState = {
 		codeScanner: { visible: false },
 		correctionRequest: { visible: false },
 		language: { visible: false },
+		employeeCreated: { visible: false },
 	},
 };
 

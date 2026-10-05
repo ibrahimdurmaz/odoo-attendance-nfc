@@ -1,10 +1,13 @@
 import { theme } from '@/assets/theme';
+import { useProfileStore } from '@/store/useProfileStore';
 import Feather from '@react-native-vector-icons/feather';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { Tabs } from 'expo-router';
 
 export default function TabLayout() {
+	const profileStore = useProfileStore();
 	const colors = theme();
+	const isAdmin = !!profileStore.profile?.admin;
 	return (
 		<Tabs
 			screenOptions={{
@@ -15,7 +18,7 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name='index'
 				options={{
-					title: 'Home',
+					title: 'Ana Ekran',
 					tabBarIcon: ({ color }) => (
 						<Feather color={color} name='clock' size={24} />
 					),
@@ -24,7 +27,7 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name='schedule'
 				options={{
-					title: 'Stats',
+					title: 'İstatistik',
 					tabBarIcon: ({ color }) => (
 						<MaterialIcons color={color} name='calendar-month' size={24} />
 					),
@@ -33,9 +36,23 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name='profile'
 				options={{
-					title: 'Profile',
+					title: 'Profil',
 					tabBarIcon: ({ color }) => (
 						<Feather color={color} name='user' size={24} />
+					),
+				}}
+			/>
+			<Tabs.Screen
+				name='admin'
+				options={{
+					title: 'Yönetim',
+					href: isAdmin ? undefined : null, // admin değilse tab bar'da görünmez
+					tabBarIcon: ({ color }) => (
+						<MaterialIcons
+							color={color}
+							name='admin-panel-settings'
+							size={24}
+						/>
 					),
 				}}
 			/>

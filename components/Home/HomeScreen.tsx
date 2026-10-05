@@ -31,6 +31,7 @@ const CHECK_IN_MODAL = Platform.OS === 'android' ? 'nfcPrompt' : 'codeScanner';
 // Örnek veriler;
 const USER_NAME = 'Selim';
 export const SHIFT_HOURS = '09:00 - 18:00';
+export const ATTENDANCE_TARGET_PERCENT = 95;
 const LOCATION = 'Merkez Ofis';
 export const CHECKPOINT = 'Ana Giriş Paneli';
 export const BREAK_ALLOWANCE_SECONDS = 60 * 60;

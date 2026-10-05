@@ -1,15 +1,15 @@
 import { fonts } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { FC } from 'react';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { ColorValue, Pressable, StyleSheet, Text } from 'react-native';
 import { IconName } from './types';
 
 type ActionButtonProps = {
 	label: string;
 	icon: IconName;
 	onPress: () => void;
-	background: string;
-	foreground: string;
+	background: ColorValue;
+	foreground: ColorValue;
 };
 
 export const ActionButton: FC<ActionButtonProps> = ({

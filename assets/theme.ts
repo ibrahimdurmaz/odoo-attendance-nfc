@@ -1,5 +1,7 @@
 import { useProfileStore } from '@/store/useProfileStore';
-const lightTheme = {
+import { ColorValue } from 'react-native';
+export type ThemeColors = Record<string, ColorValue>;
+const lightTheme: ThemeColors = {
 	primary: '#57344f',
 	onPrimary: '#ffffff',
 	primaryContainer: '#714b67',
@@ -36,7 +38,7 @@ const lightTheme = {
 	inverseSurface: '#233144',
 	inverseOnSurface: '#eaf1ff',
 };
-const darkTheme = {
+const darkTheme: ThemeColors = {
 	primary: '#e9b8d9',
 	onPrimary: '#46263f',
 	primaryContainer: '#c795ba',

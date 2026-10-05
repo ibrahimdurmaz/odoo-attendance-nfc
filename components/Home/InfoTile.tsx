@@ -1,7 +1,7 @@
 import { fonts, theme } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { FC } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ColorValue, StyleSheet, Text, View } from 'react-native';
 import { IconName } from './types';
 
 type InfoTileProps = {
@@ -9,7 +9,7 @@ type InfoTileProps = {
 	label: string;
 	value: string;
 	note: string;
-	noteColor?: string;
+	noteColor?: ColorValue;
 };
 
 export const InfoTile: FC<InfoTileProps> = ({

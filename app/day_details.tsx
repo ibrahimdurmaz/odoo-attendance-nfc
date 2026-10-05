@@ -1,12 +1,7 @@
 import { DayDetailScreen } from '@/components/Schedule/DayDetailScreen';
 import { useLocalSearchParams } from 'expo-router';
-import { View } from 'react-native';
 
-export default function TabOneScreen() {
+export default function Screen() {
 	const { dateKey } = useLocalSearchParams<{ dateKey: string }>();
-	return (
-		<View style={{ flex: 1 }}>
-			<DayDetailScreen dateKey={dateKey} />
-		</View>
-	);
+	return <DayDetailScreen dateKey={dateKey} />;
 }
