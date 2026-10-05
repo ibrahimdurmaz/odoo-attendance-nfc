@@ -5,14 +5,19 @@ import type { FC } from 'react';
 import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { IconName } from '../../Home/types';
 type BottomActionBarProps = {
 	hasErrors: boolean;
 	onSubmit: () => void;
+	submitLabel?: string;
+	submitIcon?: IconName;
 };
 
 export const BottomActionBar: FC<BottomActionBarProps> = ({
 	hasErrors,
 	onSubmit,
+	submitLabel = 'Çalışanı Oluştur',
+	submitIcon = 'person-add',
 }) => {
 	const colors = theme();
 	const router = useRouter();
@@ -44,8 +49,8 @@ export const BottomActionBar: FC<BottomActionBarProps> = ({
 					onPress={onSubmit}
 					style={({ pressed }) => [styles.submit, pressed && styles.pressed]}
 				>
-					<MaterialIcons color={colors.onPrimary} name='person-add' size={20} />
-					<Text style={styles.submitLabel}>Çalışanı Oluştur</Text>
+					<MaterialIcons color={colors.onPrimary} name={submitIcon} size={20} />
+					<Text style={styles.submitLabel}>{submitLabel}</Text>
 				</Pressable>
 			</View>
 		</View>

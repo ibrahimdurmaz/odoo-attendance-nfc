@@ -3,7 +3,7 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC, ReactNode } from 'react';
 import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { IconName } from '../Home/types';
+import { IconName } from '../../Home/types';
 
 type FormSectionProps = {
 	icon: IconName;

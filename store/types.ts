@@ -24,6 +24,7 @@ export type Employee = {
 	annualLeaveDays: number;
 	status: AttendanceStatus;
 	createdAt: number;
+	active?: boolean;
 };
 
 /** Formdan gelen veri: durum ve oluşturulma zamanı store tarafından eklenir. */

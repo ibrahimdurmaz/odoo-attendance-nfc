@@ -1,4 +1,4 @@
-import { AddEmployeeScreen } from '@/components/AddEmployee/AddEmployeeScreen';
+import { AddEmployeeScreen } from '@/components/Employee/AddEmployee/AddEmployeeScreen';
 
 export default function Screen() {
 	return <AddEmployeeScreen />;

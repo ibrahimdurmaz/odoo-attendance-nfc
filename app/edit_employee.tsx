@@ -1,7 +1,7 @@
-import { EmployeeDetailScreen } from '@/components/Employee/EmployeeDetails.tsx/EmployeeDetailScreen';
+import { EditEmployeeScreen } from '@/components/Employee/AddEmployee/EditEmployeeScreen';
 import { useLocalSearchParams } from 'expo-router';
 
 export default function Screen() {
 	const { employeeId } = useLocalSearchParams<{ employeeId: string }>();
-	return <EmployeeDetailScreen employeeId={employeeId} />;
+	return <EditEmployeeScreen employeeId={employeeId} />;
 }

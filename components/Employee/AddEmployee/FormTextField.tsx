@@ -9,7 +9,7 @@ import {
 	TextInputProps,
 	View,
 } from 'react-native';
-import { IconName } from '../Home/types';
+import { IconName } from '../../Home/types';
 import { FieldLabel } from './FieldLabel';
 
 type FormTextFieldProps = Omit<TextInputProps, 'style'> & {

@@ -16,13 +16,13 @@ import {
 	DEPARTMENTS,
 	SHIFT_TEMPLATES,
 	useEmployeeStore,
-} from '../../store/useEmployeeStore';
-import { AdminHeader } from '../Admin/AdminHeader';
+} from '../../../store/useEmployeeStore';
+import { AdminHeader } from '../../Admin/AdminHeader';
 import type {
 	EmployeeFormErrors,
 	EmployeeFormField,
 	EmployeeFormValues,
-} from '../Admin/employeeForm';
+} from '../../Admin/employeeForm';
 import {
 	createInitialFormValues,
 	formatPhone,
@@ -30,7 +30,7 @@ import {
 	toNewEmployee,
 	toPhoneDigits,
 	validateEmployeeForm,
-} from '../Admin/employeeForm';
+} from '../../Admin/employeeForm';
 import { BottomActionBar } from './BottomActionBar';
 import { FormSection } from './FormSection';
 import { FormStrip } from './FormStrip';

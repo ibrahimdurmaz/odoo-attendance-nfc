@@ -4,8 +4,8 @@ import { StyleSheet, View } from 'react-native';
 
 import { theme } from '@/assets/theme';
 import { useModalStore } from '@/store/modalStore';
-import { useEmployeeStore } from '../../../store/useEmployeeStore';
-import { ModalWrapper } from '../../Modals/ModalWrapper';
+import { useEmployeeStore } from '../../../../store/useEmployeeStore';
+import { ModalWrapper } from '../../../Modals/ModalWrapper';
 import { CreatedActions } from './CreatedActions';
 import { EmployeeSummaryCard } from './EmployeeSummary';
 import { InfoTile } from './InfoTile';

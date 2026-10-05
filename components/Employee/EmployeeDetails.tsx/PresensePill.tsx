@@ -4,19 +4,10 @@ import { ColorValue, StyleSheet, Text, View } from 'react-native';
 import { fonts, theme } from '@/assets/theme';
 import { AttendanceStatus } from '@/store/types';
 import { ATTENDANCE_LABELS } from '@/store/useEmployeeStore';
-import MaterialIcons from '@react-native-vector-icons/material-icons';
-import { IconName } from '../Home/types';
 
-const STATUS_ICONS: Record<AttendanceStatus, IconName> = {
-	inside: 'check',
-	onBreak: 'local-cafe',
-	outside: 'radio-button-unchecked',
-	absent: 'block',
-};
+type PresencePillProps = { status: AttendanceStatus; isActive: boolean };
 
-type StatusPillProps = { status: AttendanceStatus };
-
-export const StatusPill: FC<StatusPillProps> = ({ status }) => {
+export const PresencePill: FC<PresencePillProps> = ({ status, isActive }) => {
 	const colors = theme();
 
 	const tones: Record<
@@ -37,30 +28,29 @@ export const StatusPill: FC<StatusPillProps> = ({ status }) => {
 			foreground: colors.onSurfaceVariant,
 		},
 	};
-	const tone = tones[status];
+	const tone = isActive ? tones[status] : tones.outside;
 
 	return (
-		<View style={[pillStyles.pill, { backgroundColor: tone.background }]}>
-			<MaterialIcons
-				color={tone.foreground}
-				name={STATUS_ICONS[status]}
-				size={14}
+		<View style={[presenceStyles.pill, { backgroundColor: tone.background }]}>
+			<View
+				style={[presenceStyles.dot, { backgroundColor: tone.foreground }]}
 			/>
-			<Text style={[pillStyles.label, { color: tone.foreground }]}>
-				{ATTENDANCE_LABELS[status]}
+			<Text style={[presenceStyles.label, { color: tone.foreground }]}>
+				{isActive ? ATTENDANCE_LABELS[status] : 'Pasif'}
 			</Text>
 		</View>
 	);
 };
 
-const pillStyles = StyleSheet.create({
+const presenceStyles = StyleSheet.create({
 	pill: {
 		paddingHorizontal: 10,
-		paddingVertical: 4,
+		paddingVertical: 2,
 		borderRadius: 999,
 		flexDirection: 'row',
 		alignItems: 'center',
 		gap: 4,
 	},
+	dot: { width: 6, height: 6, borderRadius: 3 },
 	label: { fontFamily: fonts.medium, fontSize: 12, lineHeight: 16 },
 });

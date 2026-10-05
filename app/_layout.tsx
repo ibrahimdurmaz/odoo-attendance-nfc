@@ -66,6 +66,7 @@ function RootLayoutNav() {
 				<Stack.Protected guard={isAdmin}>
 					<Stack.Screen name='add_employee' />
 					<Stack.Screen name='employee_list' />
+					<Stack.Screen name='edit_employee' />
 				</Stack.Protected>
 			</Stack>
 		</ThemeProvider>

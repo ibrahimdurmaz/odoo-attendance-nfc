@@ -6,7 +6,8 @@ type ModalTags =
 	| 'codeScanner'
 	| 'correctionRequest'
 	| 'language'
-	| 'employeeCreated';
+	| 'employeeCreated'
+	| 'deactivateEmployee';
 type ModalState = {
 	modals: Record<ModalTags, { visible: boolean; props?: any }>;
 };
@@ -25,6 +26,7 @@ const initialState: ModalState = {
 		correctionRequest: { visible: false },
 		language: { visible: false },
 		employeeCreated: { visible: false },
+		deactivateEmployee: { visible: false },
 	},
 };
 

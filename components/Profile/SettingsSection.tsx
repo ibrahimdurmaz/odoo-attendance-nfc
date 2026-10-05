@@ -136,7 +136,6 @@ export const SettingsSection: FC = () => {
 					]}
 				/>
 
-				{/* Yalnızca tercihi saklar; koyu tema renkleri henüz yok. */}
 				<View style={settingsStyles.row}>
 					<SettingIcon name='light-mode' />
 					<Text style={[settingsStyles.rowLabel, { color: colors.onSurface }]}>

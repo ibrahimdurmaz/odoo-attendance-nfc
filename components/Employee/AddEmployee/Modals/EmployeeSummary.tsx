@@ -9,8 +9,8 @@ import {
 	COMPANIES,
 	DEPARTMENTS,
 	getOptionLabel,
-} from '../../../store/useEmployeeStore';
-import { EmployeeAvatar } from '../../Admin/EmployeeAvatar';
+} from '../../../../store/useEmployeeStore';
+import { EmployeeAvatar } from '../../../Admin/EmployeeAvatar';
 
 type ThemeColors = ReturnType<typeof theme>;
 type IconName = ComponentProps<typeof MaterialIcons>['name'];

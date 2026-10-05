@@ -2,7 +2,7 @@ import { fonts, theme, ThemeColors } from '@/assets/theme';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { EmployeeRole, ROLES } from '../Admin/employeeForm';
+import { EmployeeRole, ROLES } from '../../Admin/employeeForm';
 type RoleSegmentProps = {
 	value: EmployeeRole;
 	onChange: (role: EmployeeRole) => void;
