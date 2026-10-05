@@ -1,10 +1,14 @@
 import { theme } from '@/assets/theme';
 import { formatDateKey, formatMinutes, formatTime } from '@/helper/dateHelpers';
+import {
+	getEmployeeDays,
+	useEmployeeScheduleStore,
+} from '@/store/employeeScheduleStore';
 import { useModalStore } from '@/store/modalStore';
 import { DayRecord, useDayStore } from '@/store/useDayStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { ComponentProps, FC } from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { ColorValue, Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CorrectionRequestModal } from './CorrectionRequestModal';
 import { DayDetailHeader } from './DayDetailHeader';
@@ -18,33 +22,36 @@ type IconName = ComponentProps<typeof MaterialIcons>['name'];
 type DayDetailScreenProps = {
 	/** Çizelgeden seçilen gün, "2026-10-02". */
 	dateKey: string;
+	id?: string;
 };
 
 export type TimelineEvent = {
 	id: string;
 	icon: IconName;
-	nodeColor: string;
-	iconColor: string;
+	nodeColor: ColorValue;
+	iconColor: ColorValue;
 	title: string;
 	description: string;
 	time: string;
-	timeColor: string;
+	timeColor: ColorValue;
 };
 
 const buildTimeline = (
 	day: DayRecord,
 	colors: ReturnType<typeof theme>,
 ): TimelineEvent[] => {
-	const breakEvents = day.breaks.map((item): TimelineEvent => ({
-		id: `break-${item.start}`,
-		icon: 'local-cafe',
-		nodeColor: colors.secondaryFixed,
-		iconColor: colors.onSecondaryFixed,
-		title: 'Mola',
-		description: `${formatMinutes((item.end - item.start) / 1000)} dinlenme`,
-		time: `${formatTime(item.start)} – ${formatTime(item.end)}`,
-		timeColor: colors.onSurfaceVariant,
-	}));
+	const breakEvents = day.breaks.map(
+		(item): TimelineEvent => ({
+			id: `break-${item.start}`,
+			icon: 'local-cafe',
+			nodeColor: colors.secondaryFixed,
+			iconColor: colors.onSecondaryFixed,
+			title: 'Mola',
+			description: `${formatMinutes((item.end - item.start) / 1000)} dinlenme`,
+			time: `${formatTime(item.start)} – ${formatTime(item.end)}`,
+			timeColor: colors.onSurfaceVariant,
+		}),
+	);
 
 	return [
 		{
@@ -71,11 +78,13 @@ const buildTimeline = (
 	];
 };
 
-export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey }) => {
+export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey, id }) => {
 	// `days[dateKey]` kayıt yoksa undefined döner; store'un tipi bunu göstermediği için açıkça yazıldı.
-	const day = useDayStore(
-		(state): DayRecord | undefined => state.days[dateKey],
-	);
+	const ownDays = useDayStore((state) => state.days);
+	const schedules = useEmployeeScheduleStore((state) => state.schedules);
+	const days = id ? getEmployeeDays(schedules, id) : ownDays;
+	const day = days[dateKey];
+
 	const { triggerModal } = useModalStore();
 	const styles = DayDetailsStyles;
 	// Hook olduğu için erken return'den önce çağrılmalı.

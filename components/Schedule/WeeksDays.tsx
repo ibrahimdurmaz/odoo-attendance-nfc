@@ -6,6 +6,10 @@ import {
 	MONTHS,
 	toDateKey,
 } from '@/helper/dateHelpers';
+import {
+	getEmployeeDays,
+	useEmployeeScheduleStore,
+} from '@/store/employeeScheduleStore';
 import { useDayStore } from '@/store/useDayStore';
 import { Pressable, Text, View } from 'react-native';
 import { WeeksDaysStyles } from './styles';
@@ -20,12 +24,16 @@ const formatWeekRange = (monday: Date, friday: Date): string => {
 };
 export function WeeksDays({
 	onPress,
+	id,
 	monday,
 }: {
 	onPress: (dateKey: string) => void;
+	id?: string;
 	monday: Date;
 }) {
-	const days = useDayStore((state) => state.days);
+	const ownDays = useDayStore((state) => state.days);
+	const schedules = useEmployeeScheduleStore((state) => state.schedules);
+	const days = id ? getEmployeeDays(schedules, id) : ownDays;
 	const today = new Date();
 	const todayKey = toDateKey(today);
 	const weekDates = Array.from({ length: WORK_DAYS_PER_WEEK }, (_, index) =>

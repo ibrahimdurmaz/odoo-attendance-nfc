@@ -1,10 +1,16 @@
 import { theme } from '@/assets/theme';
 import { addDays, toDateKey } from '@/helper/dateHelpers';
 import { getRecentDays, useDayStore } from '@/store/useDayStore';
+
+import {
+	getEmployeeDays,
+	useEmployeeScheduleStore,
+} from '@/store/employeeScheduleStore';
+import { useEmployeeStore } from '@/store/useEmployeeStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { useRouter } from 'expo-router';
 import type { ComponentProps } from 'react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { DayCard } from './DayCard';
@@ -34,10 +40,28 @@ const getMonday = (today: Date): Date => {
 	);
 };
 
-export const ScheduleScreen = () => {
-	const days = useDayStore((state) => state.days);
+type ScheduleScreenProps = {
+	/** Sicil no. Verilirse o çalışanın çizelgesi, verilmezse kendi çizelgen gösterilir. */
+	id?: string;
+};
+
+export const ScheduleScreen = ({ id }: ScheduleScreenProps) => {
+	const ownDays = useDayStore((state) => state.days);
+	const schedules = useEmployeeScheduleStore((state) => state.schedules);
+	const loadSchedule = useEmployeeScheduleStore((state) => state.loadSchedule);
+	const employee = useEmployeeStore((state) =>
+		state.employees.find((item) => item.employeeId === id),
+	);
 	const router = useRouter();
 	const [filter, setFilter] = useState<Filter>('week');
+
+	// Ekrandaki bütün veri buradan çıkar: alt bileşenler store okumaz, `days`
+	// ve ondan hesaplananları prop olarak alır.
+	const days = id ? getEmployeeDays(schedules, id) : ownDays;
+
+	useEffect(() => {
+		if (id) loadSchedule(id);
+	}, [id, loadSchedule]);
 
 	const recentDays = useMemo(() => getRecentDays(days), [days]);
 
@@ -61,7 +85,10 @@ export const ScheduleScreen = () => {
 		return true;
 	});
 	const openDay = (dateKey: string) => {
-		router.navigate({ pathname: '/day_details', params: { dateKey } });
+		router.navigate({
+			pathname: '/day_details',
+			params: id ? { dateKey, id } : { dateKey },
+		});
 	};
 	const colors = theme();
 	return (
@@ -70,21 +97,37 @@ export const ScheduleScreen = () => {
 			style={[styles.screen, { backgroundColor: colors.surface }]}
 		>
 			<View style={styles.header}>
-				<View
-					style={[styles.logo, { backgroundColor: colors.primaryContainer }]}
-				>
-					<MaterialIcons
-						color={colors.onPrimary}
-						name='calendar-month'
-						size={22}
-					/>
-				</View>
+				{id ? (
+					<Pressable
+						accessibilityLabel='Geri'
+						accessibilityRole='button'
+						hitSlop={8}
+						onPress={() => router.back()}
+						style={[styles.logo, { backgroundColor: colors.surfaceContainer }]}
+					>
+						<MaterialIcons
+							color={colors.onSurface}
+							name='arrow-back'
+							size={22}
+						/>
+					</Pressable>
+				) : (
+					<View
+						style={[styles.logo, { backgroundColor: colors.primaryContainer }]}
+					>
+						<MaterialIcons
+							color={colors.onPrimary}
+							name='calendar-month'
+							size={22}
+						/>
+					</View>
+				)}
 				<View>
 					<Text style={[styles.brand, { color: colors.primaryContainer }]}>
-						ODOO
+						{id ? 'ÇALIŞAN ÇİZELGESİ' : 'ODOO'}
 					</Text>
 					<Text style={[styles.headerTitle, { color: colors.onSurface }]}>
-						Çizelge
+						{id ? (employee?.fullName ?? id) : 'Çizelge'}
 					</Text>
 				</View>
 			</View>
@@ -101,7 +144,7 @@ export const ScheduleScreen = () => {
 				/>
 
 				{/* Bu haftanın günleri */}
-				<WeeksDays onPress={openDay} monday={monday} />
+				<WeeksDays id={id} onPress={openDay} monday={monday} />
 
 				{/* Filtreler */}
 				<ScrollView
@@ -169,7 +212,9 @@ export const ScheduleScreen = () => {
 									styles.centered,
 								]}
 							>
-								Mesaiyi bitirdiğiniz günler burada listelenir.
+								{id
+									? 'Çalışanın mesaiyi bitirdiği günler burada listelenir.'
+									: 'Mesaiyi bitirdiğiniz günler burada listelenir.'}
 							</Text>
 						</View>
 					) : (

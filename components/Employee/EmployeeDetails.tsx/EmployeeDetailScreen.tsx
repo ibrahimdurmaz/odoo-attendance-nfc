@@ -54,7 +54,10 @@ export const EmployeeDetailScreen: FC<EmployeeDetailScreenProps> = ({
 	};
 
 	const onViewSchedule = () => {
-		// Çalışanın çizelgesine geçiş buraya gelecek.
+		router.navigate({
+			pathname: '/schedule',
+			params: { employeeId: employeeId },
+		});
 	};
 	return (
 		<SafeAreaView style={styles.screen}>
