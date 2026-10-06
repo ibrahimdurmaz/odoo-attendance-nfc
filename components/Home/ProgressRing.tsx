@@ -1,11 +1,11 @@
 import { theme } from '@/assets/theme';
 import { FC, ReactNode } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ColorValue, StyleSheet, View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 
 type ProgressRingProps = {
 	progress: number;
-	color: string;
+	color: ColorValue;
 	children: ReactNode;
 };
 const RING_SIZE = 220;

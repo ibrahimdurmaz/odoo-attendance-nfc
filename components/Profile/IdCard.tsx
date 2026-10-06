@@ -1,5 +1,5 @@
 import { fonts, theme } from '@/assets/theme';
-import { Profile } from '@/store/useProfileStore';
+import { Employee } from '@/store/types';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { FC } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
@@ -13,7 +13,7 @@ const getInitials = (fullName: string): string => {
 	return `${first}${last}`.toLocaleUpperCase('tr-TR');
 };
 
-type IdCardProps = { profile: Profile };
+type IdCardProps = { profile: Employee };
 
 export const IdCard: FC<IdCardProps> = ({ profile }) => {
 	const colors = theme();

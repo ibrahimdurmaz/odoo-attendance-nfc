@@ -23,6 +23,8 @@ export const MONTHS = [
 	'Aralık',
 ];
 
+export const EMPTY_TIME = '--:--';
+
 export const pad = (value: number): string => String(value).padStart(2, '0');
 
 /** 23228 → "06:27:08" */

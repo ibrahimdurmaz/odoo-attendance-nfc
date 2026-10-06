@@ -14,7 +14,7 @@ import { isEmployeeActive } from '../AddEmployee/employeeEdit';
 import { FormSection } from '../AddEmployee/FormSection';
 import { AccountStatePill } from './AccountStatePill';
 import { DetailRow } from './DetailRow';
-import { EMPTY_VALUE } from './EmployeeDetailScreen';
+import { EMPTY_VALUE } from './constants';
 type EmployeeSectionProps = { employee: Employee };
 /** "2021-03-12" → "12 Mart 2021" */
 const formatStartDate = (dateKey: string): string => {

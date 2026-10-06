@@ -19,6 +19,13 @@ import { NfcPromptModal } from '../Modals/NfcPromptModal';
 import { ActionButton } from './ActionButton';
 import { ActivityRow } from './ActivityRow';
 import { getStatusBadges } from './config';
+import {
+	BREAK_ALLOWANCE_SECONDS,
+	CHECKPOINT,
+	INITIAL_SESSION,
+	SHIFT_HOURS,
+	TARGET_SECONDS,
+} from './constants';
 import { FarewellCard } from './FarewellCard';
 import { Header } from './Header';
 import { InfoTile } from './InfoTile';
@@ -30,19 +37,7 @@ import { Activity, Session } from './types';
 const CHECK_IN_MODAL = Platform.OS === 'android' ? 'nfcPrompt' : 'codeScanner';
 // Örnek veriler;
 const USER_NAME = 'Selim';
-export const SHIFT_HOURS = '09:00 - 18:00';
-export const ATTENDANCE_TARGET_PERCENT = 95;
 const LOCATION = 'Merkez Ofis';
-export const CHECKPOINT = 'Ana Giriş Paneli';
-export const BREAK_ALLOWANCE_SECONDS = 60 * 60;
-export const TARGET_SECONDS = 8 * 3600;
-export const INITIAL_SESSION: Session = {
-	status: 'notCheckedIn',
-	checkInAt: null,
-	checkOutAt: null,
-	breakStartedAt: null,
-	breaks: [],
-};
 
 export const HomeScreen: FC = () => {
 	const [session, setSession] = useState<Session>(INITIAL_SESSION);

@@ -1,4 +1,4 @@
-import { theme } from '@/assets/theme';
+import { theme, ThemeColors } from '@/assets/theme';
 import { formatDateKey, formatMinutes, formatTime } from '@/helper/dateHelpers';
 import {
 	getEmployeeDays,
@@ -38,7 +38,7 @@ export type TimelineEvent = {
 
 const buildTimeline = (
 	day: DayRecord,
-	colors: ReturnType<typeof theme>,
+	colors: ThemeColors,
 ): TimelineEvent[] => {
 	const breakEvents = day.breaks.map(
 		(item): TimelineEvent => ({

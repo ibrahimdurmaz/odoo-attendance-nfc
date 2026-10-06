@@ -2,10 +2,8 @@ import type { FC } from 'react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Clipboard, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { fonts, theme } from '@/assets/theme';
+import { fonts, theme, ThemeColors } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
-
-type ThemeColors = ReturnType<typeof theme>;
 
 type TemporaryPasswordCardProps = { password: string };
 const COPIED_FEEDBACK_MS = 2200;

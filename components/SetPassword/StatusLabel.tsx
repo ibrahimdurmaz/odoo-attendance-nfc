@@ -1,7 +1,7 @@
-import { theme } from '@/assets/theme';
+import { ThemeColors } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { FC } from 'react';
-import { Text, View } from 'react-native';
+import { ColorValue, Text, View } from 'react-native';
 import { IconName } from '../Home/types';
 import { PasswordStrength } from '../Login/passwordRules';
 import { statusStyles } from './styles';
@@ -18,8 +18,8 @@ export const StatusLabel: FC<StatusLabelProps> = ({ text, color, icon }) => {
 };
 
 export const STRENGTH_LABELS = (
-	colors: ReturnType<typeof theme>,
-): Record<PasswordStrength, { text: string; color: string }> => {
+	colors: ThemeColors,
+): Record<PasswordStrength, { text: string; color: ColorValue }> => {
 	return {
 		weak: { text: 'Zayıf', color: colors.error },
 		medium: { text: 'Orta Seviye', color: colors.primary },

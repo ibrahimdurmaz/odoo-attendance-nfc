@@ -3,9 +3,8 @@ import { useMemo } from 'react';
 import { ScrollView, StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { fonts, theme } from '@/assets/theme';
+import { fonts, theme, ThemeColors } from '@/assets/theme';
 import { AdminHeader } from '@/components/Admin/AdminHeader';
-import { AttendanceStatus } from '@/store/types';
 import { useEmployeeStore } from '@/store/useEmployeeStore';
 import { useRouter } from 'expo-router';
 import { DetailActions } from './DetailActions';
@@ -19,16 +18,6 @@ import {
 } from './EmployeeSection';
 import { TodaySection, TodaySummary } from './TodaysSection';
 
-type ThemeColors = ReturnType<typeof theme>;
-
-export const EMPTY_VALUE = '—';
-
-export const WORK_STATE_LABELS: Record<AttendanceStatus, string> = {
-	inside: 'Çalışıyor',
-	onBreak: 'Molada',
-	outside: 'Mesai Dışı',
-	absent: 'Gelmemiş',
-};
 
 type EmployeeDetailScreenProps = {
 	/** Gösterilecek çalışanın sicil numarası; bilgiler store'dan okunur. */

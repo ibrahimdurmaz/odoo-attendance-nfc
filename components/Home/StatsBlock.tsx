@@ -7,7 +7,7 @@ import {
 } from '@/helper/dateHelpers';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { Text, View } from 'react-native';
-import { BREAK_ALLOWANCE_SECONDS, TARGET_SECONDS } from './HomeScreen';
+import { BREAK_ALLOWANCE_SECONDS, TARGET_SECONDS } from './constants';
 import { ProgressRing } from './ProgressRing';
 import { Stat } from './Stat';
 import { styles } from './styles';

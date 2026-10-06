@@ -2,14 +2,23 @@ import {
 	CHECKPOINT,
 	SHIFT_HOURS,
 	TARGET_SECONDS,
-} from '@/components/Home/HomeScreen';
+} from '@/components/Home/constants';
 import { AttendanceSummary, DepartmentFilter, Employee } from '@/store/types';
+import { RequestStatus } from '@/store/useCorrectionRequestStore';
 import { createDayRecord, DayRecord } from '@/store/useDayStore';
 import { addDays, toDateKey } from './dateHelpers';
 
 const EMPLOYEE_ID_PREFIX = 'EMP-';
 /** Liste boşken üretilecek ilk sicil numarası. */
 const FIRST_EMPLOYEE_NUMBER = 8001;
+
+export const STATUS_TABS: RequestStatus[] = ['pending', 'approved', 'rejected'];
+
+export const TAB_LABELS: Record<RequestStatus, string> = {
+	pending: 'Bekleyen',
+	approved: 'Onaylanan',
+	rejected: 'Reddedilen',
+};
 
 /** Listedeki en büyük sicil numarasının bir fazlası: "EMP-8044". */
 export const getNextEmployeeId = (employees: Employee[]): string => {

@@ -1,15 +1,16 @@
-import { theme } from '@/assets/theme';
+import { ThemeColors } from '@/assets/theme';
+import { ColorValue } from 'react-native';
 import { IconName, Status } from './types';
 
 type StatusBadge = {
 	label: string;
 	icon: IconName;
-	background: string;
-	foreground: string;
+	background: ColorValue;
+	foreground: ColorValue;
 };
 
 export const getStatusBadges = (
-	colors: ReturnType<typeof theme>,
+	colors: ThemeColors,
 ): Record<Status, StatusBadge> => ({
 	notCheckedIn: {
 		label: 'Giriş yapılmadı',

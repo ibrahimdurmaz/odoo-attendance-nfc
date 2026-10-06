@@ -2,10 +2,8 @@ import type { FC } from 'react';
 import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { fonts, theme } from '@/assets/theme';
+import { fonts, theme, ThemeColors } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
-
-type ThemeColors = ReturnType<typeof theme>;
 
 export const SuccessHero: FC = () => {
 	const colors = theme();

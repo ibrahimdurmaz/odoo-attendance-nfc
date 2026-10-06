@@ -1,8 +1,8 @@
 import { fonts, theme } from '@/assets/theme';
 import { FC } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ColorValue, StyleSheet, Text, View } from 'react-native';
 
-type StatProps = { label: string; value: string; valueColor?: string };
+type StatProps = { label: string; value: string; valueColor?: ColorValue };
 
 export const Stat: FC<StatProps> = ({ label, value, valueColor }) => {
 	const colors = theme();

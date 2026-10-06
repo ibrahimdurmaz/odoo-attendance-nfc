@@ -1,10 +1,8 @@
-import { fonts, theme } from '@/assets/theme';
+import { fonts, theme, ThemeColors } from '@/assets/theme';
 import { AttendanceStatus } from '@/store/types';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { ColorValue, Image, StyleSheet, Text, View } from 'react-native';
-
-type ThemeColors = ReturnType<typeof theme>;
 
 type EmployeeAvatarProps = {
 	fullName: string;
@@ -39,6 +37,7 @@ export const EmployeeAvatar: FC<EmployeeAvatarProps> = ({
 		inside: colors.tertiary,
 		onBreak: colors.secondary,
 		outside: colors.outlineVariant,
+		absent: colors.outlineVariant,
 	};
 
 	return (

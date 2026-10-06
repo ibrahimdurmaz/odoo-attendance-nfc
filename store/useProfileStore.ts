@@ -46,7 +46,7 @@ export const PLACEHOLDER_PROFILE: Employee = {
 	company: 'odoo_tr', // gerçek CompanyKey
 	avatarUrl: null,
 	remainingLeaveDays: 14,
-	hasPassword: true,
+	hasPassword: false,
 	admin: true,
 	email: 'selim.kaya@odoo-kurumsal.com',
 	phone: '5321234567',

@@ -1,11 +1,9 @@
 import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { fonts, theme } from '@/assets/theme';
+import { fonts, theme, ThemeColors } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { useRouter } from 'expo-router';
-
-type ThemeColors = ReturnType<typeof theme>;
 
 export const CreatedActions = () => {
 	const colors = theme();

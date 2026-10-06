@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { theme } from '@/assets/theme';
+import { theme, ThemeColors } from '@/assets/theme';
 import { useModalStore } from '@/store/modalStore';
 import { useEmployeeStore } from '../../../../store/useEmployeeStore';
 import { ModalWrapper } from '../../../Modals/ModalWrapper';
@@ -11,8 +11,6 @@ import { EmployeeSummaryCard } from './EmployeeSummary';
 import { InfoTile } from './InfoTile';
 import { SuccessHero } from './SuccessHero';
 import { TemporaryPasswordCard } from './TemporaryPasswordCard';
-
-type ThemeColors = ReturnType<typeof theme>;
 
 type EmployeeCreatedModalProps = {
 	/** Az önce eklenen çalışanın sicil numarası; bilgiler store'dan okunur. */

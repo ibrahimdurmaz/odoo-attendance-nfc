@@ -30,6 +30,9 @@ export function Header() {
 					accessibilityLabel='Bildirimler'
 					accessibilityRole='button'
 					hitSlop={8}
+					onPress={() => {
+						router.navigate('/notification');
+					}}
 				>
 					<MaterialIcons
 						color={colors.onSurfaceVariant}

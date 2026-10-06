@@ -1,8 +1,8 @@
-import type { ComponentProps, FC } from 'react';
+import type { FC } from 'react';
 import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { fonts, theme } from '@/assets/theme';
+import { fonts, theme, ThemeColors } from '@/assets/theme';
 import { Employee } from '@/store/types';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {
@@ -11,9 +11,6 @@ import {
 	getOptionLabel,
 } from '../../../../store/useEmployeeStore';
 import { EmployeeAvatar } from '../../../Admin/EmployeeAvatar';
-
-type ThemeColors = ReturnType<typeof theme>;
-type IconName = ComponentProps<typeof MaterialIcons>['name'];
 
 type EmployeeSummaryCardProps = { employee: Employee };
 

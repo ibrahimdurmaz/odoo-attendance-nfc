@@ -6,7 +6,7 @@ import { Employee } from '@/store/types';
 import { isEmployeeActive } from '../AddEmployee/employeeEdit';
 import { FormSection } from '../AddEmployee/FormSection';
 import { DetailRow } from './DetailRow';
-import { EMPTY_VALUE, WORK_STATE_LABELS } from './EmployeeDetailScreen';
+import { EMPTY_VALUE, WORK_STATE_LABELS } from './constants';
 import { ValueChip } from './ValueChip';
 /** Bugünün giriş bilgisi. Çalışanın günlük kaydı geldiğinde ekrana verilir. */
 export type TodaySummary = {

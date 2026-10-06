@@ -1,11 +1,9 @@
-import { fonts, theme } from '@/assets/theme';
+import { fonts, theme, ThemeColors } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { useRouter } from 'expo-router';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-
-type ThemeColors = ReturnType<typeof theme>;
 
 type AdminHeaderProps = {
 	title: string;
@@ -19,7 +17,9 @@ export const AdminHeader: FC<AdminHeaderProps> = ({ title }) => {
 	const onBack = () => {
 		router.navigate('/(tabs)');
 	};
-	const onNotificationsPress = () => {};
+	const onNotificationsPress = () => {
+		router.navigate('/notification');
+	};
 	const onProfilePress = () => {
 		router.navigate('/profile');
 	};

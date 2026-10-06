@@ -3,7 +3,7 @@ import { Pressable, Text, View } from 'react-native';
 import { theme } from '@/assets/theme';
 import { useModalStore } from '@/store/modalStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
-import { SHIFT_HOURS } from '../Home/HomeScreen';
+import { SHIFT_HOURS } from '../Home/constants';
 import { ModalWrapper } from './ModalWrapper';
 import { CheckInSuccessModalStyles } from './styles';
 

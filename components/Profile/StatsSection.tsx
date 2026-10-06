@@ -3,14 +3,14 @@ import { formatDuration, toDateKey } from '@/helper/dateHelpers';
 import { useDayStore } from '@/store/useDayStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { FC, useMemo } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ColorValue, StyleSheet, Text, View } from 'react-native';
 import { IconName } from '../Home/types';
 
 type StatCardProps = {
 	label: string;
 	icon: IconName;
-	iconBackground: string;
-	accent: string;
+	iconBackground: ColorValue;
+	accent: ColorValue;
 	value: string;
 	unit?: string;
 	caption: string;

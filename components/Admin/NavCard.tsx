@@ -13,6 +13,8 @@ type NavCardProps = {
 	/** Başlığın yanındaki küçük etiket ("3 bekleyen"). */
 	badge?: string;
 	isAccent?: boolean;
+	/** Bekleyen iş varsa sağdaki ok yeşil gösterilir. */
+	isChevronHighlighted?: boolean;
 	onPress: () => void;
 };
 
@@ -22,6 +24,7 @@ export const NavCard: FC<NavCardProps> = ({
 	subtitle,
 	badge,
 	isAccent = false,
+	isChevronHighlighted = false,
 	onPress,
 }) => {
 	const colors = theme();
@@ -58,9 +61,16 @@ export const NavCard: FC<NavCardProps> = ({
 					{subtitle}
 				</Text>
 			</View>
-			<View style={styles.chevron}>
+			<View
+				style={[
+					styles.chevron,
+					isChevronHighlighted && styles.chevronHighlighted,
+				]}
+			>
 				<MaterialIcons
-					color={colors.onSurfaceVariant}
+					color={
+						isChevronHighlighted ? colors.tertiary : colors.onSurfaceVariant
+					}
 					name='chevron-right'
 					size={20}
 				/>
@@ -129,4 +139,5 @@ const createNavCardStyles = (colors: ThemeColors) =>
 			justifyContent: 'center',
 			backgroundColor: colors.surfaceContainerLow,
 		},
+		chevronHighlighted: { backgroundColor: colors.tertiaryFixed },
 	});

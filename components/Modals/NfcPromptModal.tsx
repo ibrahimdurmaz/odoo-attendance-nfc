@@ -6,7 +6,7 @@ import { theme } from '@/assets/theme';
 import { formatTime } from '@/helper/dateHelpers';
 import { useModalStore } from '@/store/modalStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
-import { CHECKPOINT, INITIAL_SESSION } from '../Home/HomeScreen';
+import { CHECKPOINT, INITIAL_SESSION } from '../Home/constants';
 import { Session } from '../Home/types';
 import { ModalWrapper } from './ModalWrapper';
 import { NfcPromptModalStyles } from './styles';

@@ -3,12 +3,10 @@ import { useMemo } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { fonts, theme } from '@/assets/theme';
+import { fonts, theme, ThemeColors } from '@/assets/theme';
 import { useEmployeeStore } from '@/store/useEmployeeStore';
 import { AdminHeader } from '../../Admin/AdminHeader';
 import { EditEmployeeForm } from './EditEmployeeForm';
-
-type ThemeColors = ReturnType<typeof theme>;
 
 type EditEmployeeScreenProps = {
 	/** Düzenlenecek çalışanın sicil numarası; bilgiler store'dan okunur. */

@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { theme } from '@/assets/theme';
+import { theme, ThemeColors } from '@/assets/theme';
 import { getNextEmployeeId } from '@/helper/employee';
 import { useModalStore } from '@/store/modalStore';
 import {
@@ -41,8 +41,6 @@ import { EmployeeCreatedModal } from './Modals/EmployeeCreatedModal';
 import { PhotoPicker } from './PhotoPicker';
 import { RoleSegment } from './RoleSegment';
 import { SelectField } from './SelectField';
-
-type ThemeColors = ReturnType<typeof theme>;
 
 export const AddEmployeeScreen = () => {
 	const colors = theme();

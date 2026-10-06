@@ -1,3 +1,5 @@
+import { CorrectionRecordType } from './useDayStore';
+
 export type DepartmentKey = 'arge' | 'satis' | 'ik' | 'uretim' | 'pazarlama';
 export type CompanyKey = 'odoo_tr' | 'odoo_arge';
 export type ShiftTemplateKey = 'standard' | 'flexible' | 'second';
@@ -44,3 +46,28 @@ export type AttendanceSummary = {
 };
 
 export type Option<Key extends string> = { key: Key; label: string };
+
+export type NotificationResult = 'approved' | 'rejected';
+
+/** Çalışanın düzeltme talebinin sonucu: yönetici onayladı ya da reddetti. */
+export type AppNotification = {
+	id: string;
+	/** Talebin ait olduğu gün, "2026-09-28". */
+	dateKey: string;
+	recordType: CorrectionRecordType;
+	/** Talep edilen saat, "17:40". */
+	requestedTime: string;
+	/** Çalışanın talebe yazdığı gerekçe. */
+	reason: string;
+	result: NotificationResult;
+	/** Reddedildiyse yöneticinin notu; onaylandıysa null. */
+	managerNote: string | null;
+	createdAt: number;
+	/** Bildirimler sayfasında gösterildiyse true; bunlar sayfadan çıkınca silinir. */
+	isSeen: boolean;
+};
+
+export type NewNotification = Omit<
+	AppNotification,
+	'id' | 'createdAt' | 'isSeen'
+>;

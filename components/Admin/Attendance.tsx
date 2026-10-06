@@ -26,6 +26,7 @@ const AttendanceTile: FC<AttendanceTileProps> = ({
 		inside: colors.tertiary,
 		onBreak: colors.secondary,
 		outside: colors.onSurfaceVariant,
+		absent: colors.onSurfaceVariant,
 	};
 
 	return (

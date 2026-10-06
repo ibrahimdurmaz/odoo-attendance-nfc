@@ -1,4 +1,4 @@
-import { fonts, theme } from '@/assets/theme';
+import { fonts, theme, ThemeColors } from '@/assets/theme';
 import { useModalStore } from '@/store/modalStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
@@ -6,12 +6,6 @@ import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { EmployeeAvatar } from '../../../Admin/EmployeeAvatar';
 import { ModalWrapper } from '../../../Modals/ModalWrapper';
-
-type ThemeColors = ReturnType<typeof theme>;
-
-// ---------------------------------------------------------------------------
-// WarningBadge: üstteki uyarı ikonu
-// ---------------------------------------------------------------------------
 
 const WarningBadge: FC = () => {
 	const colors = theme();
