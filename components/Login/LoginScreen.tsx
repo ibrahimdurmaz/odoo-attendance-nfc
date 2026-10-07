@@ -1,4 +1,3 @@
-import type { FC } from 'react';
 import { useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import {
@@ -13,11 +12,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { theme } from '@/assets/theme';
-import {
-	PLACEHOLDER_PROFILE,
-	Profile,
-	useProfileStore,
-} from '@/store/useProfileStore';
+import { Employee } from '@/store/types';
+import { PLACEHOLDER_PROFILE, useProfileStore } from '@/store/useProfileStore';
 import { useRouter } from 'expo-router';
 import { AuthTextField } from './AuthTextField';
 import { BrandHeader } from './BrandHeader';
@@ -31,7 +27,7 @@ const DEMO_PASSWORD = 'Selim2024';
 const authenticate = async (
 	identifier: string,
 	password: string,
-): Promise<Profile | null> => {
+): Promise<Employee | null> => {
 	const isKnownUser =
 		identifier.trim().toUpperCase() === PLACEHOLDER_PROFILE.employeeId;
 	return isKnownUser && password === DEMO_PASSWORD ? PLACEHOLDER_PROFILE : null;
@@ -39,7 +35,7 @@ const authenticate = async (
 
 type LoginError = 'credentials' | 'connection';
 
-export const LoginScreen: FC = ({}) => {
+export const LoginScreen = ({ serverUrl }: { serverUrl: string }) => {
 	const login = useProfileStore((state) => state.login);
 	const [identifier, setIdentifier] = useState('');
 	const [password, setPassword] = useState('');

@@ -51,7 +51,7 @@ function RootLayoutNav() {
 		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
 			<Stack
 				screenOptions={{ headerShown: false }}
-				initialRouteName={isLoggedIn ? '(tabs)' : 'login'}
+				initialRouteName={isLoggedIn ? '(tabs)' : 'server_setup'}
 			>
 				<Stack.Protected guard={isLoggedIn}>
 					<Stack.Screen name='(tabs)' />
@@ -59,6 +59,7 @@ function RootLayoutNav() {
 					<Stack.Screen name='notification' />
 				</Stack.Protected>
 				<Stack.Protected guard={!isLoggedIn}>
+					<Stack.Screen name='server_setup' />
 					<Stack.Screen name='login' />
 				</Stack.Protected>
 				<Stack.Protected guard={!setPassword}>
