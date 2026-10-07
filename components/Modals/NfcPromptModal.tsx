@@ -10,6 +10,7 @@ import { CHECKPOINT, INITIAL_SESSION } from '../Home/constants';
 import { Session } from '../Home/types';
 import { ModalWrapper } from './ModalWrapper';
 import { NfcPromptModalStyles } from './styles';
+import { useTranslation } from 'react-i18next';
 
 type NfcPromptModalProps = {
 	onClose: () => void;
@@ -32,6 +33,7 @@ const Prompt: FC<NfcPromptModalProps> = ({
 	onSubmitCode,
 }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	const [isKeypadOpen, setIsKeypadOpen] = useState(false);
 	const [code, setCode] = useState('');
 	const visible = false;
@@ -87,7 +89,7 @@ const Prompt: FC<NfcPromptModalProps> = ({
 					]}
 				/>
 				<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
-					Hazır
+					{t('Modals.NfcPromptModal.Ready')}
 				</Text>
 				<View
 					style={[
@@ -108,7 +110,7 @@ const Prompt: FC<NfcPromptModalProps> = ({
 					</Text>
 				</View>
 				<Pressable
-					accessibilityLabel='Kapat'
+					accessibilityLabel={t('UI.Buttons.Close')}
 					accessibilityRole='button'
 					hitSlop={8}
 					onPress={onClose}
@@ -131,10 +133,10 @@ const Prompt: FC<NfcPromptModalProps> = ({
 					<View style={styles.keypadHeader}>
 						<MaterialIcons color={colors.secondary} name='password' size={20} />
 						<Text style={[styles.keypadTitle, { color: colors.onSurface }]}>
-							Hızlı Erişim Kodu
+							{t('Modals.NfcPromptModal.KeypadTitle')}
 						</Text>
 						<Pressable
-							accessibilityLabel='NFC ile okutmaya dön'
+							accessibilityLabel={t('Modals.NfcPromptModal.BackToNfc')}
 							accessibilityRole='button'
 							hitSlop={8}
 							onPress={closeKeypad}
@@ -153,7 +155,10 @@ const Prompt: FC<NfcPromptModalProps> = ({
 					</View>
 
 					<View
-						accessibilityLabel={`${code.length} / ${CODE_LENGTH} hane girildi`}
+						accessibilityLabel={t('Modals.NfcPromptModal.DigitsEntered', {
+							count: code.length,
+							total: CODE_LENGTH,
+						})}
 						style={styles.dots}
 					>
 						{Array.from({ length: CODE_LENGTH }, (_, index) => (
@@ -175,7 +180,7 @@ const Prompt: FC<NfcPromptModalProps> = ({
 					))}
 					<View style={styles.keyRow}>
 						<Pressable
-							accessibilityLabel='Sil'
+							accessibilityLabel={t('Modals.NfcPromptModal.Delete')}
 							accessibilityRole='button'
 							onPress={removeDigit}
 							style={({ pressed }) => [
@@ -185,12 +190,12 @@ const Prompt: FC<NfcPromptModalProps> = ({
 							]}
 						>
 							<Text style={[styles.deleteLabel, { color: colors.error }]}>
-								Sil
+								{t('Modals.NfcPromptModal.Delete')}
 							</Text>
 						</Pressable>
 						{renderDigitKey('0')}
 						<Pressable
-							accessibilityLabel='Onayla'
+							accessibilityLabel={t('Modals.NfcPromptModal.Confirm')}
 							accessibilityRole='button'
 							accessibilityState={{ disabled: !isCodeComplete }}
 							disabled={!isCodeComplete}
@@ -253,21 +258,21 @@ const Prompt: FC<NfcPromptModalProps> = ({
 										{ color: colors.onPrimaryContainer },
 									]}
 								>
-									OKUTUN
+									{t('Modals.NfcPromptModal.Scan')}
 								</Text>
 							</View>
 						</View>
 					</View>
 
 					<Text style={[styles.title, { color: colors.onSurface }]}>
-						Telefonu panele yaklaştırın
+						{t('Modals.NfcPromptModal.Title')}
 					</Text>
 					<Text style={[styles.subtitle, { color: colors.onSurfaceVariant }]}>
-						Doğrulama için parmak izi gerekebilir
+						{t('Modals.NfcPromptModal.Subtitle')}
 					</Text>
 
 					<Pressable
-						accessibilityLabel='Çalışmıyor mu? Kodla giriş yap'
+						accessibilityLabel={t('Modals.NfcPromptModal.UseCode')}
 						accessibilityRole='button'
 						onPress={() => setIsKeypadOpen(true)}
 						style={({ pressed }) => [
@@ -278,7 +283,7 @@ const Prompt: FC<NfcPromptModalProps> = ({
 					>
 						<MaterialIcons color={colors.primary} name='dialpad' size={20} />
 						<Text style={[styles.fallbackLabel, { color: colors.primary }]}>
-							Çalışmıyor mu? Kodla giriş yap
+							{t('Modals.NfcPromptModal.UseCode')}
 						</Text>
 					</Pressable>
 				</>

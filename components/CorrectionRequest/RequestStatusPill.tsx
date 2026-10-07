@@ -5,6 +5,7 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { ColorValue, StyleSheet, Text, View } from 'react-native';
 import { IconName } from '../Home/types';
+import { useTranslation } from 'react-i18next';
 const STATUS_ICONS: Record<RequestStatus, IconName> = {
 	pending: 'schedule',
 	approved: 'check-circle',
@@ -15,6 +16,7 @@ type RequestStatusPillProps = { status: RequestStatus };
 
 export const RequestStatusPill: FC<RequestStatusPillProps> = ({ status }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 
 	const tones: Record<
 		RequestStatus,
@@ -40,7 +42,7 @@ export const RequestStatusPill: FC<RequestStatusPillProps> = ({ status }) => {
 				size={15}
 			/>
 			<Text style={[pillStyles.label, { color: tone.foreground }]}>
-				{REQUEST_STATUS_LABELS[status]}
+				{t(REQUEST_STATUS_LABELS[status])}
 			</Text>
 		</View>
 	);

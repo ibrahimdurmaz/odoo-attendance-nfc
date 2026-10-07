@@ -4,10 +4,12 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { fonts, theme, ThemeColors } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
+import { useTranslation } from 'react-i18next';
 
 export const SuccessHero: FC = () => {
 	const colors = theme();
 	const styles = useMemo(() => createHeroStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.container}>
@@ -28,13 +30,15 @@ export const SuccessHero: FC = () => {
 					name='verified-user'
 					size={15}
 				/>
-				<Text style={styles.pillText}>Odoo İK Dizini Güncellendi</Text>
+				<Text style={styles.pillText}>
+					{t('AddEmployee.SuccessHero.Pill')}
+				</Text>
 			</View>
 			<Text accessibilityRole='header' style={styles.title}>
-				Çalışan Başarıyla Oluşturuldu
+				{t('AddEmployee.SuccessHero.Title')}
 			</Text>
 			<Text style={styles.text}>
-				Sistem kaydı tamamlandı ve kimlik doğrulama anahtarları üretildi.
+				{t('AddEmployee.SuccessHero.Text')}
 			</Text>
 		</View>
 	);

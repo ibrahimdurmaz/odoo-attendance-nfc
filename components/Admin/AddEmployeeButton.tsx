@@ -4,23 +4,25 @@ import { Pressable, StyleSheet, Text } from 'react-native';
 import { fonts, theme, ThemeColors } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 export const AddEmployeeButton = () => {
 	const colors = theme();
 	const router = useRouter();
+	const { t } = useTranslation();
 	const styles = useMemo(() => createAddButtonStyles(colors), [colors]);
 	const onPress = () => {
 		router.navigate('/add_employee');
 	};
 	return (
 		<Pressable
-			accessibilityLabel='Yeni Çalışan Ekle'
+			accessibilityLabel={t('Admin.AddEmployeeButton.Label')}
 			accessibilityRole='button'
 			onPress={onPress}
 			style={({ pressed }) => [styles.button, pressed && styles.pressed]}
 		>
 			<MaterialIcons color={colors.onPrimary} name='person-add' size={24} />
-			<Text style={styles.label}>Yeni Çalışan Ekle</Text>
+			<Text style={styles.label}>{t('Admin.AddEmployeeButton.Label')}</Text>
 		</Pressable>
 	);
 };

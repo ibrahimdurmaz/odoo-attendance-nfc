@@ -4,22 +4,25 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { fonts, theme, ThemeColors } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
+import { useTranslation } from 'react-i18next';
 
 type DangerZoneProps = { onDeactivate: () => void };
 
 export const DangerZone: FC<DangerZoneProps> = ({ onDeactivate }) => {
 	const colors = theme();
 	const styles = useMemo(() => createDangerStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.card}>
 			<View style={styles.header}>
 				<MaterialIcons color={colors.error} name='warning' size={22} />
 				<View style={styles.texts}>
-					<Text style={styles.title}>Hesap Devre Dışı Bırakma</Text>
+					<Text style={styles.title}>
+						{t('EditEmployee.DangerZone.Title')}
+					</Text>
 					<Text style={styles.text}>
-						Çalışan pasife alındığında sisteme erişemez ve vardiya listelerinden
-						gizlenir.
+						{t('EditEmployee.DangerZone.Text')}
 					</Text>
 				</View>
 			</View>
@@ -29,7 +32,9 @@ export const DangerZone: FC<DangerZoneProps> = ({ onDeactivate }) => {
 				style={({ pressed }) => [styles.button, pressed && styles.pressed]}
 			>
 				<MaterialIcons color={colors.error} name='person-off' size={18} />
-				<Text style={styles.buttonLabel}>Çalışanı Pasife Al</Text>
+				<Text style={styles.buttonLabel}>
+					{t('EditEmployee.DangerZone.Deactivate')}
+				</Text>
 			</Pressable>
 		</View>
 	);

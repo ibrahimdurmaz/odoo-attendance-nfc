@@ -9,30 +9,51 @@ import {
 	ShiftTemplateKey,
 } from './types';
 
+// label / shortLabel değerleri çeviri anahtarıdır; ekranda t() ile çevrilir.
 export const DEPARTMENTS: (Option<DepartmentKey> & { shortLabel: string })[] = [
-	{ key: 'arge', label: 'Ar-Ge & Mühendislik', shortLabel: 'Ar-Ge' },
-	{ key: 'satis', label: 'Satış', shortLabel: 'Satış' },
-	{ key: 'ik', label: 'İnsan Kaynakları', shortLabel: 'İK' },
-	{ key: 'uretim', label: 'Üretim & Lojistik', shortLabel: 'Üretim' },
-	{ key: 'pazarlama', label: 'Pazarlama', shortLabel: 'Pazarlama' },
+	{
+		key: 'arge',
+		label: 'ExtraConstants.Departments.Arge',
+		shortLabel: 'ExtraConstants.DepartmentsShort.Arge',
+	},
+	{
+		key: 'satis',
+		label: 'ExtraConstants.Departments.Satis',
+		shortLabel: 'ExtraConstants.DepartmentsShort.Satis',
+	},
+	{
+		key: 'ik',
+		label: 'ExtraConstants.Departments.Ik',
+		shortLabel: 'ExtraConstants.DepartmentsShort.Ik',
+	},
+	{
+		key: 'uretim',
+		label: 'ExtraConstants.Departments.Uretim',
+		shortLabel: 'ExtraConstants.DepartmentsShort.Uretim',
+	},
+	{
+		key: 'pazarlama',
+		label: 'ExtraConstants.Departments.Pazarlama',
+		shortLabel: 'ExtraConstants.DepartmentsShort.Pazarlama',
+	},
 ];
 
 export const COMPANIES: Option<CompanyKey>[] = [
-	{ key: 'odoo_tr', label: 'Odoo Kurumsal A.Ş.' },
-	{ key: 'odoo_arge', label: 'Odoo İleri Teknolojiler Ltd.' },
+	{ key: 'odoo_tr', label: 'ExtraConstants.Companies.OdooTr' },
+	{ key: 'odoo_arge', label: 'ExtraConstants.Companies.OdooArge' },
 ];
 
 export const SHIFT_TEMPLATES: Option<ShiftTemplateKey>[] = [
-	{ key: 'standard', label: 'Standart Vardiya (09:00 – 18:00)' },
-	{ key: 'flexible', label: 'Esnek Çalışma (09:30 – 18:30)' },
-	{ key: 'second', label: 'İkinci Vardiya (16:00 – 00:30)' },
+	{ key: 'standard', label: 'ExtraConstants.ShiftTemplates.Standard' },
+	{ key: 'flexible', label: 'ExtraConstants.ShiftTemplates.Flexible' },
+	{ key: 'second', label: 'ExtraConstants.ShiftTemplates.Second' },
 ];
 
 export const ATTENDANCE_LABELS: Record<AttendanceStatus, string> = {
-	inside: 'İçeride',
-	onBreak: 'Molada',
-	outside: 'Dışarıda',
-	absent: 'Gelmedi',
+	inside: 'ExtraConstants.AttendanceStatus.Inside',
+	onBreak: 'ExtraConstants.AttendanceStatus.OnBreak',
+	outside: 'ExtraConstants.AttendanceStatus.Outside',
+	absent: 'ExtraConstants.AttendanceStatus.Absent',
 };
 
 export const getOptionLabel = <Key extends string>(

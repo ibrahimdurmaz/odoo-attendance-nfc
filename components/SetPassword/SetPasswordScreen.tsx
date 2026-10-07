@@ -14,6 +14,7 @@ import { SaveButton } from './SaveButton';
 import { StatusLabel, STRENGTH_LABELS } from './StatusLabel';
 import { TrustNote } from './TrustNote';
 import { screenStyles } from './styles';
+import { useTranslation } from 'react-i18next';
 
 export const SetPasswordScreen = () => {
 	const [password, setPassword] = useState('');
@@ -27,6 +28,7 @@ export const SetPasswordScreen = () => {
 	const canSubmit = evaluation.isValid && isMatching;
 	const colors = theme();
 	const router = useRouter();
+	const { t } = useTranslation();
 	const strength = evaluation.strength
 		? STRENGTH_LABELS(colors)[evaluation.strength]
 		: null;
@@ -41,10 +43,14 @@ export const SetPasswordScreen = () => {
 		<StatusLabel
 			color={colors.tertiaryContainer}
 			icon='check-circle'
-			text='Eşleşti'
+			text={t('SetPassword.SetPasswordScreen.Matched')}
 		/>
 	) : confirmation.length > 0 ? (
-		<StatusLabel color={colors.error} icon='error' text='Uyuşmuyor' />
+		<StatusLabel
+			color={colors.error}
+			icon='error'
+			text={t('SetPassword.SetPasswordScreen.Mismatch')}
+		/>
 	) : null;
 
 	return (
@@ -67,7 +73,7 @@ export const SetPasswordScreen = () => {
 							autoComplete='new-password'
 							icon='vpn-key'
 							isPassword
-							label='Yeni Şifre'
+							label={t('SetPassword.SetPasswordScreen.NewPassword')}
 							labelAccessory={
 								strength ? (
 									<StatusLabel color={strength.color} text={strength.text} />
@@ -75,7 +81,7 @@ export const SetPasswordScreen = () => {
 							}
 							onChangeText={setPassword}
 							onSubmitEditing={() => confirmationRef.current?.focus()}
-							placeholder='Yeni şifrenizi girin'
+							placeholder={t('SetPassword.SetPasswordScreen.NewPasswordPlaceholder')}
 							returnKeyType='next'
 							textContentType='newPassword'
 							value={password}
@@ -85,11 +91,11 @@ export const SetPasswordScreen = () => {
 							hasError={confirmation.length > 0 && !isMatching}
 							icon='lock-outline'
 							isPassword
-							label='Şifre Tekrar'
+							label={t('SetPassword.SetPasswordScreen.ConfirmPassword')}
 							labelAccessory={matchStatus}
 							onChangeText={setConfirmation}
 							onSubmitEditing={submit}
-							placeholder='Şifrenizi tekrar girin'
+							placeholder={t('SetPassword.SetPasswordScreen.ConfirmPasswordPlaceholder')}
 							ref={confirmationRef}
 							returnKeyType='done'
 							textContentType='newPassword'

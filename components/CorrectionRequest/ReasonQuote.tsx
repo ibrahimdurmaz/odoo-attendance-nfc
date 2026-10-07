@@ -3,11 +3,13 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 type ReasonQuoteProps = { reason: string };
 
 export const ReasonQuote: FC<ReasonQuoteProps> = ({ reason }) => {
 	const colors = theme();
 	const styles = useMemo(() => createReasonStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.box}>
@@ -17,7 +19,9 @@ export const ReasonQuote: FC<ReasonQuoteProps> = ({ reason }) => {
 					name='chat-bubble-outline'
 					size={16}
 				/>
-				<Text style={styles.label}>Neden?</Text>
+				<Text style={styles.label}>
+					{t('CorrectionRequestDetail.ReasonQuote.Label')}
+				</Text>
 			</View>
 			<View style={styles.quote}>
 				<Text style={styles.text}>"{reason}"</Text>

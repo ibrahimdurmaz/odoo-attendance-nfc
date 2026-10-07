@@ -21,6 +21,7 @@ import { RejectRequestModal } from './Modals/RejectRequestModal';
 import { RequestEmployeeCard } from './RequestEmployeeCard';
 import { RequestSummaryCard } from './RequestSummaryCard';
 import { ResolvedNote } from './ResolvedNote';
+import { useTranslation } from 'react-i18next';
 
 type CorrectionRequestDetailScreenProps = {
 	/** Gösterilecek talebin kimliği; talep store'dan okunur. */
@@ -33,6 +34,7 @@ export const CorrectionRequestDetailScreen: FC<
 	const colors = theme();
 	const styles = useMemo(() => createScreenStyles(colors), [colors]);
 	const router = useRouter();
+	const { t } = useTranslation();
 	const { triggerModal } = useModalStore();
 
 	const request = useCorrectionRequestStore((state) =>
@@ -60,8 +62,12 @@ export const CorrectionRequestDetailScreen: FC<
 	if (!request) {
 		return (
 			<SafeAreaView edges={['top']} style={styles.screen}>
-				<AdminHeader title='Talep Detayı' />
-				<Text style={styles.notFound}>Talep bulunamadı.</Text>
+				<AdminHeader
+					title={t('CorrectionRequestDetail.CorrectionRequestDetailScreen.Title')}
+				/>
+				<Text style={styles.notFound}>
+					{t('CorrectionRequestDetail.CorrectionRequestDetailScreen.NotFound')}
+				</Text>
 			</SafeAreaView>
 		);
 	}
@@ -83,7 +89,9 @@ export const CorrectionRequestDetailScreen: FC<
 
 	return (
 		<SafeAreaView edges={['top']} style={styles.screen}>
-			<AdminHeader title='Talep Detayı' />
+			<AdminHeader
+					title={t('CorrectionRequestDetail.CorrectionRequestDetailScreen.Title')}
+				/>
 			<ScrollView
 				contentContainerStyle={styles.content}
 				showsVerticalScrollIndicator={false}

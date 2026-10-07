@@ -2,22 +2,24 @@ import { fonts, theme, ThemeColors } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { FC, useMemo } from 'react';
 import { Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 type SearchBarProps = { value: string; onChangeText: (text: string) => void };
 
 export const SearchBar: FC<SearchBarProps> = ({ value, onChangeText }) => {
 	const colors = theme();
 	const styles = useMemo(() => createSearchStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.box}>
 			<MaterialIcons color={colors.outline} name='search' size={20} />
 			<TextInput
-				accessibilityLabel='Ad veya sicil no ara'
+				accessibilityLabel={t('EmployeeList.SearchBar.A11y')}
 				autoCapitalize='none'
 				autoCorrect={false}
 				onChangeText={onChangeText}
-				placeholder='Ad veya sicil no ara...'
+				placeholder={t('EmployeeList.SearchBar.Placeholder')}
 				placeholderTextColor={colors.outline}
 				returnKeyType='search'
 				style={styles.input}
@@ -25,7 +27,7 @@ export const SearchBar: FC<SearchBarProps> = ({ value, onChangeText }) => {
 			/>
 			{value.length > 0 ? (
 				<Pressable
-					accessibilityLabel='Aramayı Temizle'
+					accessibilityLabel={t('UI.Buttons.ClearSearch')}
 					accessibilityRole='button'
 					hitSlop={10}
 					onPress={() => onChangeText('')}

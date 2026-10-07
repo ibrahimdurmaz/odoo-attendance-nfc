@@ -9,6 +9,7 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { ModalWrapper } from '../Modals/ModalWrapper';
+import { useTranslation } from 'react-i18next';
 
 type LanguageOptionProps = {
 	label: string;
@@ -124,14 +125,15 @@ type LanguageModalHeaderProps = { onClose: () => void };
 
 const LanguageModalHeader: FC<LanguageModalHeaderProps> = ({ onClose }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	return (
 		<View style={headerStyles.row}>
 			<MaterialIcons color={colors.primary} name='translate' size={22} />
 			<Text style={[headerStyles.title, { color: colors.onSurface }]}>
-				Dil Seçimi
+				{t('Profile.LanguageModal.Title')}
 			</Text>
 			<Pressable
-				accessibilityLabel='Kapat'
+				accessibilityLabel={t('UI.Buttons.Close')}
 				accessibilityRole='button'
 				hitSlop={8}
 				onPress={onClose}
@@ -175,12 +177,13 @@ export const LanguageModal: FC = () => {
 	const language = useProfileStore((state) => state.preferences.language);
 	const setLanguage = useProfileStore((state) => state.setLanguage);
 	const colors = theme();
+	const { t } = useTranslation();
 
 	const close = () => {
 		closeModal('language');
 	};
 
-	// Yalnızca seçimi ("tr" | "en" | "de") saklar; metinlerin çevrilmesi buraya eklenecek.
+	// Seçimi saklar; i18n store'u dinlediği için metinler hemen yeni dile geçer.
 	const selectLanguage = (code: Language) => {
 		setLanguage(code);
 		close();
@@ -197,7 +200,7 @@ export const LanguageModal: FC = () => {
 				<LanguageModalHeader onClose={close} />
 
 				<View
-					accessibilityLabel='Kullanılabilir Diller'
+					accessibilityLabel={t('Profile.LanguageModal.AvailableLanguages')}
 					accessibilityRole='radiogroup'
 					style={modalStyles.list}
 				>
@@ -218,7 +221,7 @@ export const LanguageModal: FC = () => {
 					<Text
 						style={[modalStyles.noteText, { color: colors.onSurfaceVariant }]}
 					>
-						Seçiminiz hemen uygulanır.
+						{t('Profile.LanguageModal.AppliedImmediately')}
 					</Text>
 				</View>
 			</View>

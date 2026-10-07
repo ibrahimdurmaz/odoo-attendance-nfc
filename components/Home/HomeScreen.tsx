@@ -10,6 +10,7 @@ import { createDayRecord, useDayStore } from '@/store/useDayStore';
 import { MaterialIcons } from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Platform, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CheckInFailedModal } from '../Modals/CheckInFailedModal';
@@ -37,7 +38,7 @@ import { Activity, Session } from './types';
 const CHECK_IN_MODAL = Platform.OS === 'android' ? 'nfcPrompt' : 'codeScanner';
 // Örnek veriler;
 const USER_NAME = 'Selim';
-const LOCATION = 'Merkez Ofis';
+export const LOCATION = 'Merkez Ofis';
 
 export const HomeScreen: FC = () => {
 	const [session, setSession] = useState<Session>(INITIAL_SESSION);
@@ -115,6 +116,7 @@ export const HomeScreen: FC = () => {
 		});
 	};
 	const colors = theme();
+	const { t } = useTranslation();
 	// --- Hesaplar ---
 
 	const finishedBreakSeconds = session.breaks.reduce(
@@ -133,7 +135,7 @@ export const HomeScreen: FC = () => {
 		activities.push({
 			id: 'check-in',
 			icon: 'login',
-			title: 'Giriş Kaydı',
+			title: t('Home.Activities.CheckIn'),
 			subtitle: CHECKPOINT,
 			time: formatTime(session.checkInAt),
 			background: colors.tertiaryFixed,
@@ -144,8 +146,10 @@ export const HomeScreen: FC = () => {
 		activities.push({
 			id: `break-${item.start}`,
 			icon: 'free-breakfast',
-			title: 'Mola',
-			subtitle: `${formatMinutes((item.end - item.start) / 1000)} dinlenme`,
+			title: t('Home.Activities.Break'),
+			subtitle: t('Home.Activities.BreakDuration', {
+				duration: formatMinutes((item.end - item.start) / 1000),
+			}),
 			time: `${formatTime(item.start)} – ${formatTime(item.end)}`,
 			background: colors.secondaryContainer,
 			foreground: colors.onSecondaryContainer,
@@ -155,8 +159,8 @@ export const HomeScreen: FC = () => {
 		activities.push({
 			id: 'active-break',
 			icon: 'free-breakfast',
-			title: 'Mola',
-			subtitle: 'Devam ediyor',
+			title: t('Home.Activities.Break'),
+			subtitle: t('Home.Activities.InProgress'),
 			time: formatTime(session.breakStartedAt),
 			background: colors.secondaryContainer,
 			foreground: colors.onSecondaryContainer,
@@ -166,9 +170,9 @@ export const HomeScreen: FC = () => {
 		activities.push({
 			id: 'active-work',
 			icon: 'timer',
-			title: 'Aktif Mesai',
-			subtitle: 'Devam ediyor',
-			time: 'Şimdi',
+			title: t('Home.Activities.ActiveWork'),
+			subtitle: t('Home.Activities.InProgress'),
+			time: t('Home.Activities.Now'),
 			background: colors.primaryFixed,
 			foreground: colors.primaryContainer,
 		});
@@ -177,7 +181,7 @@ export const HomeScreen: FC = () => {
 		activities.push({
 			id: 'check-out',
 			icon: 'logout',
-			title: 'Çıkış Kaydı',
+			title: t('Home.Activities.CheckOut'),
 			subtitle: CHECKPOINT,
 			time: formatTime(session.checkOutAt),
 			background: colors.primaryFixed,
@@ -236,7 +240,7 @@ export const HomeScreen: FC = () => {
 						background={colors.tertiaryContainer}
 						foreground={colors.onTertiary}
 						icon='login'
-						label='Giriş Yap'
+						label={t('Home.Actions.CheckIn')}
 						onPress={checkIn}
 					/>
 				) : null}
@@ -247,7 +251,7 @@ export const HomeScreen: FC = () => {
 								background={colors.surfaceContainerHigh}
 								foreground={colors.onSecondaryContainer}
 								icon='coffee'
-								label='Mola Başlat'
+								label={t('Home.Actions.StartBreak')}
 								onPress={startBreak}
 							/>
 						</View>
@@ -256,7 +260,7 @@ export const HomeScreen: FC = () => {
 								background={colors.primaryContainer}
 								foreground={colors.onPrimary}
 								icon='logout'
-								label='Çıkış Yap'
+								label={t('Home.Actions.CheckOut')}
 								onPress={checkOut}
 							/>
 						</View>
@@ -268,14 +272,14 @@ export const HomeScreen: FC = () => {
 							background={colors.tertiaryContainer}
 							foreground={colors.onTertiary}
 							icon='play-arrow'
-							label='Moladan Dön'
+							label={t('Home.Actions.EndBreak')}
 							onPress={endBreak}
 						/>
 						<ActionButton
 							background={colors.surfaceContainerHigh}
 							foreground={colors.onSurfaceVariant}
 							icon='logout'
-							label='Mesaiyi Bitir ve Çıkış Yap'
+							label={t('Home.Actions.FinishAndCheckOut')}
 							onPress={checkOut}
 						/>
 					</View>
@@ -285,14 +289,18 @@ export const HomeScreen: FC = () => {
 				<View style={styles.buttonRow}>
 					<InfoTile
 						icon='event-note'
-						label='Planlanan Vardiya'
+						label={t('Home.InfoTiles.PlannedShift')}
 						note={LOCATION}
 						value={SHIFT_HOURS}
 					/>
 					<InfoTile
 						icon='local-cafe'
-						label='Kullanılan Mola'
-						note={isBreakOverLimit ? 'Limit aşıldı' : 'Limit dahilinde'}
+						label={t('Home.InfoTiles.UsedBreak')}
+						note={
+							isBreakOverLimit
+								? t('Home.InfoTiles.LimitExceeded')
+								: t('Home.InfoTiles.WithinLimit')
+						}
 						noteColor={isBreakOverLimit ? colors.error : colors.tertiary}
 						value={`${formatMinutes(usedBreakSeconds)} / ${formatMinutes(BREAK_ALLOWANCE_SECONDS)}`}
 					/>
@@ -308,10 +316,12 @@ export const HomeScreen: FC = () => {
 				>
 					<View style={styles.sectionHeader}>
 						<Text style={[styles.sectionTitle, { color: colors.onSurface }]}>
-							Bugünkü Hareketler
+							{t('Home.TodaysActivities.Title')}
 						</Text>
 						<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
-							{activities.length} Kayıt
+							{t('Home.TodaysActivities.RecordCount', {
+								count: activities.length,
+							})}
 						</Text>
 					</View>
 					{activities.length === 0 ? (
@@ -322,7 +332,7 @@ export const HomeScreen: FC = () => {
 								size={32}
 							/>
 							<Text style={[styles.activityTitle, { color: colors.onSurface }]}>
-								Henüz hareket yok
+								{t('Home.TodaysActivities.EmptyTitle')}
 							</Text>
 							<Text
 								style={[
@@ -331,8 +341,7 @@ export const HomeScreen: FC = () => {
 									styles.centered,
 								]}
 							>
-								Giriş yaptığınızda mesai başlangıcı, molalar ve süreler burada
-								listelenir.
+								{t('Home.TodaysActivities.EmptyText')}
 							</Text>
 						</View>
 					) : (

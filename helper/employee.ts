@@ -3,6 +3,7 @@ import {
 	SHIFT_HOURS,
 	TARGET_SECONDS,
 } from '@/components/Home/constants';
+import { LOCATION } from '@/components/Home/HomeScreen';
 import { AttendanceSummary, DepartmentFilter, Employee } from '@/store/types';
 import { RequestStatus } from '@/store/useCorrectionRequestStore';
 import { createDayRecord, DayRecord } from '@/store/useDayStore';
@@ -14,10 +15,11 @@ const FIRST_EMPLOYEE_NUMBER = 8001;
 
 export const STATUS_TABS: RequestStatus[] = ['pending', 'approved', 'rejected'];
 
+/** Değerler çeviri anahtarıdır; ekranda t() ile çevrilir. */
 export const TAB_LABELS: Record<RequestStatus, string> = {
-	pending: 'Bekleyen',
-	approved: 'Onaylanan',
-	rejected: 'Reddedilen',
+	pending: 'CorrectionRequest.StatusSegments.Pending',
+	approved: 'CorrectionRequest.StatusSegments.Approved',
+	rejected: 'CorrectionRequest.StatusSegments.Rejected',
 };
 
 /** Listedeki en büyük sicil numarasının bir fazlası: "EMP-8044". */
@@ -112,7 +114,6 @@ export const getAttendanceSummary = (
 };
 
 const SAMPLE_DAYS = 30;
-const LOCATION = 'Merkez Ofis';
 const MINUTE_MS = 60 * 1000;
 /** Yaklaşık her 12 iş gününden biri kayıtsız (izin, rapor) bırakılır. */
 const ABSENCE_RATE = 0.08;

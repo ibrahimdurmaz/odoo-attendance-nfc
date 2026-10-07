@@ -3,6 +3,7 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 type RejectActionsProps = {
 	isDisabled: boolean;
 	onSubmit: () => void;
@@ -16,6 +17,7 @@ export const RejectActions: FC<RejectActionsProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createActionStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.container}>
@@ -36,14 +38,18 @@ export const RejectActions: FC<RejectActionsProps> = ({
 					name='block'
 					size={22}
 				/>
-				<Text style={[styles.label, styles.submitLabel]}>Reddi Gönder</Text>
+				<Text style={[styles.label, styles.submitLabel]}>
+					{t('CorrectionRequestDetail.RejectActions.Submit')}
+				</Text>
 			</Pressable>
 			<Pressable
 				accessibilityRole='button'
 				onPress={onCancel}
 				style={({ pressed }) => [styles.button, pressed && styles.pressed]}
 			>
-				<Text style={[styles.label, styles.cancelLabel]}>Vazgeç</Text>
+				<Text style={[styles.label, styles.cancelLabel]}>
+					{t('CorrectionRequestDetail.RejectActions.Cancel')}
+				</Text>
 			</Pressable>
 		</View>
 	);

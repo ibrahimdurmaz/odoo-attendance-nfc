@@ -3,9 +3,11 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 export const NotificationsEmptyState: FC = () => {
 	const colors = theme();
 	const styles = useMemo(() => createEmptyStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.container}>
@@ -16,10 +18,11 @@ export const NotificationsEmptyState: FC = () => {
 					size={32}
 				/>
 			</View>
-			<Text style={styles.title}>Yeni bildiriminiz yok</Text>
+			<Text style={styles.title}>
+				{t('Notification.NotificationsEmptyState.Title')}
+			</Text>
 			<Text style={styles.text}>
-				Düzeltme talepleriniz onaylandığında ya da reddedildiğinde sonucu burada
-				görürsünüz.
+				{t('Notification.NotificationsEmptyState.Text')}
 			</Text>
 		</View>
 	);

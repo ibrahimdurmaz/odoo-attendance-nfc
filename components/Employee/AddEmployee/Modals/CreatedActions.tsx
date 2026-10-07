@@ -4,11 +4,13 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { fonts, theme, ThemeColors } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 
 export const CreatedActions = () => {
 	const colors = theme();
 	const styles = useMemo(() => createActionStyles(colors), [colors]);
 	const router = useRouter();
+	const { t } = useTranslation();
 	const onAddAnother = () => {
 		router.navigate('/add_employee');
 	};
@@ -28,7 +30,7 @@ export const CreatedActions = () => {
 			>
 				<MaterialIcons color={colors.onPrimary} name='person-add' size={22} />
 				<Text style={[styles.label, styles.primaryLabel]}>
-					Yeni Çalışan Ekle
+					{t('AddEmployee.CreatedActions.AddAnother')}
 				</Text>
 			</Pressable>
 			<Pressable
@@ -42,7 +44,7 @@ export const CreatedActions = () => {
 			>
 				<MaterialIcons color={colors.onSurface} name='arrow-back' size={22} />
 				<Text style={[styles.label, styles.secondaryLabel]}>
-					Çalışan Listesine Dön
+					{t('AddEmployee.CreatedActions.BackToList')}
 				</Text>
 			</Pressable>
 		</View>

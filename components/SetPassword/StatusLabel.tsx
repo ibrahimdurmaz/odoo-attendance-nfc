@@ -1,4 +1,5 @@
 import { ThemeColors } from '@/assets/theme';
+import i18n from '@/i18n';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { FC } from 'react';
 import { ColorValue, Text, View } from 'react-native';
@@ -21,8 +22,14 @@ export const STRENGTH_LABELS = (
 	colors: ThemeColors,
 ): Record<PasswordStrength, { text: string; color: ColorValue }> => {
 	return {
-		weak: { text: 'Zayıf', color: colors.error },
-		medium: { text: 'Orta Seviye', color: colors.primary },
-		strong: { text: 'Güçlü', color: colors.tertiaryContainer },
+		weak: { text: i18n.t('SetPassword.StatusLabel.Weak'), color: colors.error },
+		medium: {
+			text: i18n.t('SetPassword.StatusLabel.Medium'),
+			color: colors.primary,
+		},
+		strong: {
+			text: i18n.t('SetPassword.StatusLabel.Strong'),
+			color: colors.tertiaryContainer,
+		},
 	};
 };

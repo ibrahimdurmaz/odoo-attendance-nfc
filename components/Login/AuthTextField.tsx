@@ -5,6 +5,7 @@ import { forwardRef, useState } from 'react';
 import type { TextInputProps } from 'react-native';
 import { Pressable, Text, TextInput, View } from 'react-native';
 import { AuthTextFieldStyles } from './styles';
+import { useTranslation } from 'react-i18next';
 
 type IconName = ComponentProps<typeof MaterialIcons>['name'];
 
@@ -32,6 +33,7 @@ export const AuthTextField = forwardRef<TextInput, AuthTextFieldProps>(
 	) => {
 		const [isHidden, setIsHidden] = useState(true);
 		const colors = theme();
+		const { t } = useTranslation();
 		const tint = hasError ? colors.error : colors.onSurfaceVariant;
 		const styles = AuthTextFieldStyles;
 		return (
@@ -68,7 +70,11 @@ export const AuthTextField = forwardRef<TextInput, AuthTextFieldProps>(
 					/>
 					{isPassword ? (
 						<Pressable
-							accessibilityLabel={isHidden ? 'Şifreyi göster' : 'Şifreyi gizle'}
+							accessibilityLabel={
+								isHidden
+									? t('Login.AuthTextField.ShowPassword')
+									: t('Login.AuthTextField.HidePassword')
+							}
 							accessibilityRole='button'
 							hitSlop={10}
 							onPress={() => setIsHidden((previous) => !previous)}

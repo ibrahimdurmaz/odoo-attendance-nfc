@@ -2,29 +2,33 @@ import { fonts, theme, ThemeColors } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { FC, useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 type ListStripProps = { onAddEmployee: () => void };
 
 export const ListStrip: FC<ListStripProps> = ({ onAddEmployee }) => {
 	const colors = theme();
 	const styles = useMemo(() => createStripStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.strip}>
 			<View style={styles.overlineRow}>
 				<View style={styles.dot} />
 				<Text numberOfLines={1} style={styles.overline}>
-					REHBER VE CANLI YOKLAMA
+					{t('EmployeeList.ListStrip.Overline')}
 				</Text>
 			</View>
 			<Pressable
-				accessibilityLabel='Yeni Çalışan Ekle'
+				accessibilityLabel={t('EmployeeList.ListStrip.AddEmployeeA11y')}
 				accessibilityRole='button'
 				onPress={onAddEmployee}
 				style={({ pressed }) => [styles.button, pressed && styles.pressed]}
 			>
 				<MaterialIcons color={colors.onPrimary} name='person-add' size={18} />
-				<Text style={styles.buttonLabel}>Yeni Ekle</Text>
+				<Text style={styles.buttonLabel}>
+					{t('EmployeeList.ListStrip.AddNew')}
+				</Text>
 			</Pressable>
 		</View>
 	);

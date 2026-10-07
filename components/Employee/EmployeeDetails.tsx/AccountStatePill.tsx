@@ -2,11 +2,13 @@ import type { FC } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { fonts, theme } from '@/assets/theme';
+import { useTranslation } from 'react-i18next';
 
 type AccountStatePillProps = { isActive: boolean };
 
 export const AccountStatePill: FC<AccountStatePillProps> = ({ isActive }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 
 	return (
 		<View
@@ -25,7 +27,9 @@ export const AccountStatePill: FC<AccountStatePillProps> = ({ isActive }) => {
 					{ color: isActive ? colors.tertiary : colors.onSurfaceVariant },
 				]}
 			>
-				{isActive ? 'Aktif' : 'Pasif'}
+				{isActive
+					? t('EmployeeDetail.AccountStatePill.Active')
+					: t('EmployeeDetail.AccountStatePill.Passive')}
 			</Text>
 		</View>
 	);

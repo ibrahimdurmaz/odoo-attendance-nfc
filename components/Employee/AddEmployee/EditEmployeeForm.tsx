@@ -44,6 +44,7 @@ import { DeactivateEmployeeModal } from './Modals/DeactivateEmployeeModal';
 import { PhotoPicker } from './PhotoPicker';
 import { RoleSegment } from './RoleSegment';
 import { SelectField } from './SelectField';
+import { useTranslation } from 'react-i18next';
 type EditEmployeeFormProps = {
 	employee: Employee;
 	onSaved: () => void;
@@ -56,6 +57,7 @@ export const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
 	const employees = useEmployeeStore((state) => state.employees);
 	const { triggerModal } = useModalStore();
 	const router = useRouter();
+	const { t } = useTranslation();
 	// `initialValues`: kayıtlı hâl. `values` bundan farklılaştığında kaydet çubuğu görünür.
 	const [initialValues, setInitialValues] = useState<EditEmployeeFormValues>(
 		() => toEditFormValues(employee),
@@ -122,14 +124,14 @@ export const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
 						uri={values.avatarUrl}
 					/>
 
-					<FormSection icon='badge' title='Kişisel Bilgiler'>
+					<FormSection icon='badge' title={t('EditEmployee.EditEmployeeForm.PersonalInfo')}>
 						<View style={formStyles.columns}>
 							<View style={formStyles.column}>
 								<FormTextField
 									autoCapitalize='words'
 									error={errors.firstName}
 									isRequired
-									label='Ad'
+									label={t('EditEmployee.EditEmployeeForm.FirstName')}
 									onChangeText={(text) => setField('firstName', text)}
 									value={values.firstName}
 								/>
@@ -139,7 +141,7 @@ export const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
 									autoCapitalize='words'
 									error={errors.lastName}
 									isRequired
-									label='Soyad'
+									label={t('EditEmployee.EditEmployeeForm.LastName')}
 									onChangeText={(text) => setField('lastName', text)}
 									value={values.lastName}
 								/>
@@ -150,45 +152,45 @@ export const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
 							error={errors.email}
 							isRequired
 							keyboardType='email-address'
-							label='E-posta'
+							label={t('EditEmployee.EditEmployeeForm.Email')}
 							onChangeText={(text) => setField('email', text)}
 							value={values.email}
 						/>
 						<FormTextField
 							error={errors.phone}
 							keyboardType='phone-pad'
-							label='Telefon'
+							label={t('EditEmployee.EditEmployeeForm.Phone')}
 							onChangeText={(text) => setField('phone', toPhoneDigits(text))}
-							placeholder='5XX XXX XX XX'
+							placeholder={t('EditEmployee.EditEmployeeForm.PhonePlaceholder')}
 							prefix='+90'
 							value={formatPhone(values.phone)}
 						/>
 					</FormSection>
 
-					<FormSection icon='corporate-fare' title='İş Bilgileri'>
+					<FormSection icon='corporate-fare' title={t('EditEmployee.EditEmployeeForm.JobInfo')}>
 						<LockedField
-							label='Sicil No'
-							note='Sicil no değiştirilemez'
+							label={t('EditEmployee.EditEmployeeForm.EmployeeId')}
+							note={t('EditEmployee.EditEmployeeForm.EmployeeIdLocked')}
 							value={employee.employeeId}
 						/>
 						<FormTextField
 							autoCapitalize='words'
 							error={errors.jobTitle}
 							isRequired
-							label='Ünvan'
+							label={t('EditEmployee.EditEmployeeForm.JobTitle')}
 							onChangeText={(text) => setField('jobTitle', text)}
 							value={values.jobTitle}
 						/>
 						<SelectField
 							isRequired
-							label='Departman'
+							label={t('EditEmployee.EditEmployeeForm.Department')}
 							onChange={(key) => setField('department', key)}
 							options={DEPARTMENTS}
 							value={values.department}
 						/>
 						<SelectField
 							isRequired
-							label='Şirket'
+							label={t('EditEmployee.EditEmployeeForm.Company')}
 							onChange={(key) => setField('company', key)}
 							options={COMPANIES}
 							value={values.company}
@@ -197,19 +199,19 @@ export const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
 							error={errors.startDate}
 							isRequired
 							keyboardType='numbers-and-punctuation'
-							label='İşe Başlama Tarihi'
+							label={t('EditEmployee.EditEmployeeForm.StartDate')}
 							maxLength={10}
 							onChangeText={(text) => setField('startDate', text)}
-							placeholder='GG.AA.YYYY'
+							placeholder={t('EditEmployee.EditEmployeeForm.DatePlaceholder')}
 							trailingIcon='calendar-today'
 							value={values.startDate}
 						/>
 					</FormSection>
 
-					<FormSection icon='schedule' title='Çalışma Düzeni'>
+					<FormSection icon='schedule' title={t('EditEmployee.EditEmployeeForm.WorkSchedule')}>
 						<SelectField
 							isRequired
-							label='Vardiya'
+							label={t('EditEmployee.EditEmployeeForm.Shift')}
 							onChange={(key) => setField('shiftTemplate', key)}
 							options={SHIFT_TEMPLATES}
 							value={values.shiftTemplate}
@@ -218,15 +220,15 @@ export const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
 							error={errors.annualLeaveDays}
 							isRequired
 							keyboardType='number-pad'
-							label='Yıllık İzin Hakkı'
+							label={t('EditEmployee.EditEmployeeForm.AnnualLeave')}
 							maxLength={2}
 							onChangeText={(text) => setField('annualLeaveDays', text)}
-							unit='İş Günü'
+							unit={t('EditEmployee.EditEmployeeForm.WorkDays')}
 							value={values.annualLeaveDays}
 						/>
 					</FormSection>
 
-					<FormSection icon='manage-accounts' title='Hesap'>
+					<FormSection icon='manage-accounts' title={t('EditEmployee.EditEmployeeForm.Account')}>
 						<RoleSegment
 							onChange={(role) => setField('role', role)}
 							value={values.role}
@@ -249,7 +251,7 @@ export const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
 						hasErrors={Object.keys(errors).length > 0}
 						onSubmit={save}
 						submitIcon='check'
-						submitLabel='Değişiklikleri Kaydet'
+						submitLabel={t('EditEmployee.EditEmployeeForm.SaveChanges')}
 					/>
 				) : null}
 			</KeyboardAvoidingView>

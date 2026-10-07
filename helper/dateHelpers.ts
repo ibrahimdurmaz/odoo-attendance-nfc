@@ -1,27 +1,40 @@
-const DAYS = [
-	'Pazar',
-	'Pazartesi',
-	'Salı',
-	'Çarşamba',
-	'Perşembe',
-	'Cuma',
-	'Cumartesi',
-];
-export const DAYS_SHORT = ['Paz', 'Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt'];
-export const MONTHS = [
-	'Ocak',
-	'Şubat',
-	'Mart',
-	'Nisan',
-	'Mayıs',
-	'Haziran',
-	'Temmuz',
-	'Ağustos',
-	'Eylül',
-	'Ekim',
-	'Kasım',
-	'Aralık',
-];
+import i18n from '@/i18n';
+
+const DAY_KEYS = [
+	'Sunday',
+	'Monday',
+	'Tuesday',
+	'Wednesday',
+	'Thursday',
+	'Friday',
+	'Saturday',
+] as const;
+const MONTH_KEYS = [
+	'January',
+	'February',
+	'March',
+	'April',
+	'May',
+	'June',
+	'July',
+	'August',
+	'September',
+	'October',
+	'November',
+	'December',
+] as const;
+
+/** 0 (Pazar) – 6 (Cumartesi) → "Pazartesi" */
+export const getDayName = (dayIndex: number): string =>
+	i18n.t(`ExtraConstants.Days.${DAY_KEYS[dayIndex] ?? 'Sunday'}`);
+
+/** 0 (Pazar) – 6 (Cumartesi) → "Pzt" */
+export const getShortDayName = (dayIndex: number): string =>
+	i18n.t(`ExtraConstants.ShortDays.${DAY_KEYS[dayIndex] ?? 'Sunday'}`);
+
+/** 0 (Ocak) – 11 (Aralık) → "Ekim" */
+export const getMonthName = (monthIndex: number): string =>
+	i18n.t(`ExtraConstants.Months.${MONTH_KEYS[monthIndex] ?? 'January'}`);
 
 export const EMPTY_TIME = '--:--';
 
@@ -36,12 +49,17 @@ export const formatClock = (seconds: number): string => {
 /** 30720 → "8s 32dk" */
 export const formatDuration = (seconds: number): string => {
 	const total = Math.max(0, Math.floor(seconds));
-	return `${Math.floor(total / 3600)}s ${pad(Math.floor((total % 3600) / 60))}dk`;
+	return i18n.t('ExtraConstants.Duration.HoursMinutes', {
+		hours: Math.floor(total / 3600),
+		minutes: pad(Math.floor((total % 3600) / 60)),
+	});
 };
 
 /** 2160 → "36 dk" */
 export const formatMinutes = (seconds: number): string =>
-	`${Math.floor(Math.max(0, seconds) / 60)} dk`;
+	i18n.t('ExtraConstants.Duration.Minutes', {
+		minutes: Math.floor(Math.max(0, seconds) / 60),
+	});
 
 /** "08:31" */
 export const formatTime = (timestamp: number): string => {
@@ -56,14 +74,19 @@ export const formatMinutesOfDay = (minutesOfDay: number): string =>
 /** "1 Ekim 2026, Perşembe" */
 export const formatDate = (timestamp: number): string => {
 	const date = new Date(timestamp);
-	return `${date.getDate()} ${MONTHS[date.getMonth()] ?? ''} ${date.getFullYear()}, ${DAYS[date.getDay()] ?? ''}`;
+	return i18n.t('ExtraConstants.DateFormats.Long', {
+		day: date.getDate(),
+		month: getMonthName(date.getMonth()),
+		year: date.getFullYear(),
+		weekday: getDayName(date.getDay()),
+	});
 };
 
 export const getGreeting = (timestamp: number): string => {
 	const hour = new Date(timestamp).getHours();
-	if (hour < 12) return 'Günaydın';
-	if (hour < 18) return 'İyi günler';
-	return 'İyi akşamlar';
+	if (hour < 12) return i18n.t('ExtraConstants.Greetings.Morning');
+	if (hour < 18) return i18n.t('ExtraConstants.Greetings.Afternoon');
+	return i18n.t('ExtraConstants.Greetings.Evening');
 };
 
 /**
@@ -93,5 +116,24 @@ export const formatDateKey = (dateKey: string): string =>
 /** "2026-10-01" → "1 Ekim, Perşembe" */
 export const formatShortDate = (dateKey: string): string => {
 	const date = parseDateKey(dateKey);
-	return `${date.getDate()} ${MONTHS[date.getMonth()] ?? ''}, ${DAYS[date.getDay()] ?? ''}`;
+	return i18n.t('ExtraConstants.DateFormats.Short', {
+		day: date.getDate(),
+		month: getMonthName(date.getMonth()),
+		weekday: getDayName(date.getDay()),
+	});
 };
+
+/** Date → "28 Eylül" */
+export const formatDayMonth = (date: Date): string =>
+	i18n.t('ExtraConstants.DateFormats.DayMonth', {
+		day: date.getDate(),
+		month: getMonthName(date.getMonth()),
+	});
+
+/** Date → "15 Mart 2021" */
+export const formatDayMonthYear = (date: Date): string =>
+	i18n.t('ExtraConstants.DateFormats.DayMonthYear', {
+		day: date.getDate(),
+		month: getMonthName(date.getMonth()),
+		year: date.getFullYear(),
+	});

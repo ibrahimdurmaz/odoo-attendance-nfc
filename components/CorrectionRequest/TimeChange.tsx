@@ -3,6 +3,7 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 type TimeChangeProps = { currentTime: string | null; requestedTime: string };
 
 export const TimeChange: FC<TimeChangeProps> = ({
@@ -11,17 +12,23 @@ export const TimeChange: FC<TimeChangeProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createTimeChangeStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View
-			accessibilityLabel={`Mevcut: ${currentTime ?? 'kayıt yok'}, talep edilen: ${requestedTime}`}
+			accessibilityLabel={t('CorrectionRequest.TimeChange.A11y', {
+				current: currentTime ?? t('CorrectionRequest.TimeChange.NoRecord'),
+				requested: requestedTime,
+			})}
 			accessible
 			style={styles.row}
 		>
 			{currentTime ? (
 				<Text style={styles.current}>{currentTime}</Text>
 			) : (
-				<Text style={styles.missing}>Kayıt yok</Text>
+				<Text style={styles.missing}>
+					{t('CorrectionRequest.TimeChange.NoRecord')}
+				</Text>
 			)}
 			<MaterialIcons color={colors.outline} name='arrow-forward' size={14} />
 			<Text style={styles.requested}>{requestedTime}</Text>

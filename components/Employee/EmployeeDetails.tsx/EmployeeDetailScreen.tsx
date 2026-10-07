@@ -17,6 +17,7 @@ import {
 	ScheduleSection,
 } from './EmployeeSection';
 import { TodaySection, TodaySummary } from './TodaysSection';
+import { useTranslation } from 'react-i18next';
 
 
 type EmployeeDetailScreenProps = {
@@ -30,6 +31,7 @@ export const EmployeeDetailScreen: FC<EmployeeDetailScreenProps> = ({
 	const colors = theme();
 	const router = useRouter();
 	const styles = useMemo(() => createScreenStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	const employee = useEmployeeStore((state) =>
 		state.employees.find((item) => item.employeeId === employeeId),
@@ -50,7 +52,7 @@ export const EmployeeDetailScreen: FC<EmployeeDetailScreenProps> = ({
 	};
 	return (
 		<SafeAreaView style={styles.screen}>
-			<AdminHeader title='Personel Detayı' />
+			<AdminHeader title={t('EmployeeDetail.EmployeeDetailScreen.Title')} />
 			{employee ? (
 				<ScrollView
 					contentContainerStyle={styles.content}
@@ -69,7 +71,9 @@ export const EmployeeDetailScreen: FC<EmployeeDetailScreenProps> = ({
 					/>
 				</ScrollView>
 			) : (
-				<Text style={styles.notFound}>Çalışan bulunamadı.</Text>
+				<Text style={styles.notFound}>
+					{t('EmployeeDetail.EmployeeDetailScreen.NotFound')}
+				</Text>
 			)}
 		</SafeAreaView>
 	);

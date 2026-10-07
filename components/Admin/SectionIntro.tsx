@@ -3,16 +3,18 @@ import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { fonts, theme, ThemeColors } from '@/assets/theme';
+import { useTranslation } from 'react-i18next';
 
 export const SectionIntro: FC = () => {
 	const colors = theme();
 	const styles = useMemo(() => createIntroStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.overline}>ODOO YÖNETİM KONSOLU</Text>
+			<Text style={styles.overline}>{t('Admin.SectionIntro.Overline')}</Text>
 			<Text accessibilityRole='header' style={styles.title}>
-				Operasyon & Katılım
+				{t('Admin.SectionIntro.Title')}
 			</Text>
 		</View>
 	);

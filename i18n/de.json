@@ -1,0 +1,865 @@
+{
+	"Admin": {
+		"AdminScreen": {
+			"Title": "Verwaltung",
+			"Employees": "Mitarbeitende",
+			"ActiveEmployees_one": "{{count}} aktive Person",
+			"ActiveEmployees_other": "{{count}} aktive Mitarbeitende",
+			"PendingBadge": "{{count}} offen",
+			"CorrectionRequests": "Korrekturanträge",
+			"CorrectionRequestsSubtitle": "Prüfung von Arbeitszeiten & Logs"
+		},
+		"SectionIntro": {
+			"Overline": "ODOO VERWALTUNGSKONSOLE",
+			"Title": "Betrieb & Anwesenheit"
+		},
+		"AttendanceCard": {
+			"Title": "Heutige Anwesenheit",
+			"Shift": "Schicht: {{hours}}",
+			"AttendanceRate": "Anwesenheitsquote",
+			"AttendanceRateA11y": "Anwesenheitsquote {{rate}} Prozent",
+			"Target": "Ziel: {{percent}} %",
+			"Staff": "{{present}} / {{total}} Personal",
+			"Approved": "Bestätigt",
+			"Waiting": "Erwartet",
+			"NoEntry": "Nicht eingestempelt",
+			"ActiveBreak": "Aktive Pause"
+		},
+		"AttendanceTile": {
+			"Persons": "Pers.",
+			"A11y": "{{label}}: {{count}} Personen, {{caption}}"
+		},
+		"AddEmployeeButton": {
+			"Label": "Mitarbeitende hinzufügen"
+		}
+	},
+	"Home": {
+		"Header": {
+			"Brand": "ODOO",
+			"Title": "Startseite"
+		},
+		"StatusBadge": {
+			"NotCheckedIn": "Nicht eingestempelt",
+			"Working": "Sie arbeiten",
+			"OnBreak": "In der Pause",
+			"Completed": "Tag abgeschlossen"
+		},
+		"Activities": {
+			"CheckIn": "Kommen",
+			"Break": "Pause",
+			"BreakDuration": "{{duration}} Pause",
+			"InProgress": "Läuft",
+			"ActiveWork": "Aktive Arbeitszeit",
+			"Now": "Jetzt",
+			"CheckOut": "Gehen"
+		},
+		"Actions": {
+			"CheckIn": "Einstempeln",
+			"StartBreak": "Pause starten",
+			"CheckOut": "Ausstempeln",
+			"EndBreak": "Pause beenden",
+			"FinishAndCheckOut": "Arbeitstag beenden und ausstempeln"
+		},
+		"InfoTiles": {
+			"PlannedShift": "Geplante Schicht",
+			"UsedBreak": "Genutzte Pause",
+			"LimitExceeded": "Limit überschritten",
+			"WithinLimit": "Im Limit"
+		},
+		"TodaysActivities": {
+			"Title": "Heutige Buchungen",
+			"RecordCount_one": "{{count}} Eintrag",
+			"RecordCount_other": "{{count}} Einträge",
+			"EmptyTitle": "Noch keine Buchungen",
+			"EmptyText": "Sobald Sie einstempeln, werden Arbeitsbeginn, Pausen und Zeiten hier angezeigt."
+		},
+		"StatsBlock": {
+			"TotalNetWork": "GESAMTE NETTOARBEITSZEIT",
+			"Overtime": "+{{duration}} Überstunden",
+			"Undertime": "{{duration}} Minusstunden",
+			"Target": "Ziel",
+			"TargetHours": "8 Stunden",
+			"Completed": "Erledigt",
+			"TotalBreak": "Pause gesamt",
+			"WorkPaused": "Arbeitszeit pausiert: {{duration}}",
+			"BreakTime": "Pausenzeit",
+			"ElapsedTime": "Vergangene Zeit",
+			"TargetValue": "Ziel: {{duration}}",
+			"PercentCompleted": "{{percent}} erledigt",
+			"BreakStartedAt": "Beginn {{time}}",
+			"TargetShift": "Soll-Arbeitszeit",
+			"RemainingTime": "Restzeit",
+			"BreakAllowance": "Pausenanspruch"
+		},
+		"FarewellCard": {
+			"Title": "Bis morgen, {{name}}.",
+			"Text": "Danke für Ihren Einsatz heute. Vergessen Sie nicht, sich zu erholen!"
+		}
+	},
+	"Profile": {
+		"Header": {
+			"Title": "Profil"
+		},
+		"IdCard": {
+			"Active": "AKTIV",
+			"EmployeeIdLabel": "PERSONALNUMMER",
+			"StaffId": "Mitarbeiterausweis"
+		},
+		"SecurityNote": {
+			"Text": "Ihr Ausweis ist nur auf diesem Telefon gültig"
+		},
+		"StatsSection": {
+			"Title": "Arbeitszeit & Urlaub",
+			"RemainingLeave": "Resturlaub",
+			"AnnualEntitlement": "Jahresanspruch",
+			"Days": "Tage",
+			"OvertimeThisMonth": "Überstunden diesen Monat",
+			"RecordedThisMonth_one": "Diesen Monat {{count}} Tag erfasst",
+			"RecordedThisMonth_other": "Diesen Monat {{count}} Tage erfasst"
+		},
+		"SettingsSection": {
+			"Title": "Einstellungen",
+			"Language": "Sprache",
+			"LanguageA11y": "Sprache: {{language}}",
+			"Appearance": "Darstellung",
+			"Light": "Hell",
+			"Dark": "Dunkel"
+		},
+		"LogoutSection": {
+			"Logout": "Abmelden",
+			"SignedInAs": "Angemeldet als {{name}}"
+		},
+		"LoggedOutView": {
+			"Title": "Abgemeldet",
+			"Text": "Melden Sie sich an, um Ihr Profil zu sehen."
+		},
+		"LanguageModal": {
+			"Title": "Sprachauswahl",
+			"AvailableLanguages": "Verfügbare Sprachen",
+			"AppliedImmediately": "Ihre Auswahl wird sofort übernommen."
+		}
+	},
+	"Schedule": {
+		"ScheduleScreen": {
+			"Brand": "ODOO",
+			"Title": "Zeitplan",
+			"Filters": {
+				"Week": "Diese Woche",
+				"Month": "Letzte 30 Tage",
+				"Overtime": "Überstunden",
+				"Undertime": "Minusstunden"
+			},
+			"RecordDetails": "Eintragsdetails",
+			"RecordCount_one": "{{count}} Eintrag",
+			"RecordCount_other": "{{count}} Einträge",
+			"EmptyTitle": "Keine Einträge gefunden",
+			"EmptyText": "Tage, an denen Sie Ihren Arbeitstag beendet haben, werden hier angezeigt."
+		},
+		"WeeklySummary": {
+			"Title": "Wöchentlicher Arbeitsstatus",
+			"Target": "/ {{hours}} Std.",
+			"Remaining": "Noch {{duration}}",
+			"DaysRecorded_one": "{{count}} Tag erfasst",
+			"DaysRecorded_other": "{{count}} Tage erfasst",
+			"WeeklyQuota": "Wochensoll: {{hours}} Std."
+		},
+		"WeeksDays": {
+			"Title": "Verlauf dieser Woche",
+			"Today": "Heute",
+			"SameMonthRange": "{{start}} - {{end}}"
+		},
+		"DayCard": {
+			"A11y": "{{date}}, Tagesdetails",
+			"PendingCorrection": "Korrektur ausstehend",
+			"Completed": "Abgeschlossen",
+			"Net": "Netto:"
+		}
+	},
+	"AddEmployee": {
+		"AddEmployeeScreen": {
+			"Title": "Neue Mitarbeitende anlegen",
+			"PersonalInfo": "Persönliche Daten",
+			"FirstName": "Vorname",
+			"FirstNamePlaceholder": "z. B. Anna",
+			"LastName": "Nachname",
+			"LastNamePlaceholder": "z. B. Schmidt",
+			"CorporateEmail": "Geschäftliche E-Mail",
+			"EmailPlaceholder": "name@odoo.de",
+			"PhoneNumber": "Telefonnummer",
+			"PhonePlaceholder": "5XX XXX XX XX",
+			"JobInfo": "Beschäftigungsdaten",
+			"EmployeeId": "Personalnummer",
+			"AutoGenerated": "Automatisch erzeugt",
+			"JobTitle": "Position",
+			"JobTitlePlaceholder": "z. B. Senior Software Engineer",
+			"Department": "Abteilung",
+			"Company": "Unternehmen",
+			"StartDate": "Eintrittsdatum",
+			"DatePlaceholder": "TT.MM.JJJJ",
+			"WorkSchedule": "Arbeitszeitmodell",
+			"ShiftTemplate": "Schichtvorlage",
+			"AnnualLeave": "Jahresurlaub (Tage)",
+			"WorkDays": "Arbeitstage",
+			"AccessAndRole": "Zugriff & Rolle",
+			"PasswordInfo": "Beim Anlegen des Kontos erzeugt das System ein einmaliges temporäres Passwort und sendet es automatisch per SMS/Nachricht an die E-Mail-Adresse der Person."
+		},
+		"FormStrip": {
+			"Overline": "HR-MODUL • NEUES PROFIL",
+			"AdminPermission": "Administratorrecht"
+		},
+		"PhotoPicker": {
+			"AddPhoto": "Foto hinzufügen",
+			"ChangePhoto": "Foto ändern",
+			"SelectImage": "Bild wählen",
+			"Remove": "Entfernen",
+			"Failed": "Foto konnte nicht ausgewählt werden. Bitte versuchen Sie es erneut.",
+			"Hint": "Porträt aus der Galerie wählen (PNG, JPG)"
+		},
+		"RoleSegment": {
+			"Employee": "Mitarbeitende",
+			"Admin": "Admin"
+		},
+		"IntegrationCard": {
+			"Title": "Odoo Drehkreuz- & Kiosk-Integration",
+			"Text": "Nach dem Speichern kann eine NFC-/RFID-Karte zugewiesen werden."
+		},
+		"BottomActionBar": {
+			"Errors": "Einige Felder fehlen oder sind ungültig. Bitte prüfen Sie Ihre Eingaben.",
+			"Cancel": "Abbrechen",
+			"CreateEmployee": "Anlegen"
+		},
+		"Validation": {
+			"Required": "Pflichtfeld",
+			"InvalidEmail": "Geben Sie eine gültige E-Mail-Adresse ein",
+			"PhoneLength": "Muss {{length}} Ziffern haben",
+			"EmployeeIdTaken": "Diese Personalnummer ist bereits vergeben",
+			"DateFormat": "Im Format TT.MM.JJJJ eingeben",
+			"LeaveRange": "Muss zwischen 0 und {{max}} liegen"
+		},
+		"EmployeeCreatedModal": {
+			"NfcCard": "NFC-/RFID-Karte",
+			"AwaitingPairing": "Kopplung ausstehend",
+			"EmailInvite": "E-Mail-Einladung",
+			"Sent": "Gesendet"
+		},
+		"SuccessHero": {
+			"Pill": "Odoo HR-Verzeichnis aktualisiert",
+			"Title": "Erfolgreich angelegt",
+			"Text": "Der Systemeintrag ist abgeschlossen und die Authentifizierungsschlüssel wurden erzeugt."
+		},
+		"TemporaryPasswordCard": {
+			"Title": "Temporäres Passwort",
+			"FirstLoginTag": "Für die erste Anmeldung",
+			"OneTimeCode": "Einmalcode",
+			"Copy": "Kopieren",
+			"CopyA11y": "Passwort kopieren",
+			"Copied": "Kopiert",
+			"Notice": "Geben Sie dieses Passwort sicher weiter. Bei der ersten Anmeldung muss ein neues Passwort festgelegt werden."
+		},
+		"CreatedActions": {
+			"AddAnother": "Weitere Person hinzufügen",
+			"BackToList": "Zurück zur Mitarbeiterliste"
+		}
+	},
+	"CorrectionRequest": {
+		"CorrectionRequestsScreen": {
+			"Title": "Korrekturanträge",
+			"NoMatchTitle": "Keine passenden Anträge",
+			"NoMatchText": "Für die gesuchte Person oder das Datum wurde kein Antrag gefunden.",
+			"EmptyTitle": "Keine Anträge: {{status}}",
+			"EmptyText": "Von Mitarbeitenden gesendete Korrekturanträge werden hier angezeigt."
+		},
+		"StatusSegments": {
+			"Pending": "Offen",
+			"Approved": "Genehmigt",
+			"Rejected": "Abgelehnt",
+			"SegmentA11y_one": "{{label}}, {{count}} Antrag",
+			"SegmentA11y_other": "{{label}}, {{count}} Anträge"
+		},
+		"RequestSearchBar": {
+			"Placeholder": "Name oder Datum suchen...",
+			"A11y": "Name oder Datum suchen"
+		},
+		"RequestCard": {
+			"Summary": "{{date}} • {{recordType}}-Eintrag"
+		},
+		"TimeChange": {
+			"A11y": "Aktuell: {{current}}, beantragt: {{requested}}",
+			"NoRecord": "Kein Eintrag"
+		},
+		"ResultBanner": {
+			"Approved": "Antrag genehmigt",
+			"Rejected": "Antrag abgelehnt",
+			"Text": "Für {{name}} wurde eine Ergebnisbenachrichtigung erstellt.",
+			"DismissA11y": "Benachrichtigung schließen"
+		}
+	},
+	"CorrectionRequestDetail": {
+		"CorrectionRequestDetailScreen": {
+			"Title": "Antragsdetails",
+			"NotFound": "Antrag nicht gefunden."
+		},
+		"RequestSummaryCard": {
+			"ToCorrect": "Zu korrigieren: {{recordType}}",
+			"CurrentStatus": "Aktueller Stand",
+			"RecordedTime": "Erfasste Zeit",
+			"MissingTimestamp": "Fehlender Zeitstempel",
+			"NoRecord": "Kein Eintrag",
+			"Requested": "Beantragt",
+			"RequestedCaptions": {
+				"Entry": "Arbeitsbeginn",
+				"Break": "Pausenbeginn",
+				"Exit": "Arbeitsende"
+			}
+		},
+		"ReasonQuote": {
+			"Label": "Begründung"
+		},
+		"ImpactNote": {
+			"Title": "Auswirkungsanalyse",
+			"Text": "Bei Genehmigung beträgt die Nettozeit <strong>{{duration}}</strong>. {{conclusion}}",
+			"CompletesTarget": "Damit wird das Ziel von {{duration}} erreicht.",
+			"BelowTarget": "Damit liegt sie {{duration}} unter dem Ziel.",
+			"NoRecord": "Die Auswirkung kann nicht berechnet werden, da für diesen Tag kein Eintrag vorliegt."
+		},
+		"ResolvedNote": {
+			"Title": "Ergebnis",
+			"ManagerNote": "Notiz der Führungskraft: {{note}}"
+		},
+		"DayTimelineCard": {
+			"Title": "Einträge dieses Tages",
+			"CheckIn": "Kommen",
+			"Break": "Pause",
+			"CheckOut": "Gehen",
+			"RecordNotFound": "Eintrag nicht gefunden",
+			"Empty": "Für diesen Tag wurden keine Einträge gefunden."
+		},
+		"TimelineRow": {
+			"UnderReview": "Korrektur beantragt"
+		},
+		"DecisionBar": {
+			"Reject": "Ablehnen",
+			"Approve": "Genehmigen"
+		},
+		"RejectModalHeader": {
+			"Title": "Antrag ablehnen",
+			"Info": "Der Ablehnungsgrund wird der Person als Benachrichtigung gesendet."
+		},
+		"TemplateChips": {
+			"Label": "Schnellvorlagen:",
+			"AddA11y": "Vorlage hinzufügen: {{template}}",
+			"Templates": {
+				"Mismatch": "Stimmt nicht mit den Einträgen überein.",
+				"MoreInfo": "Weitere Informationen erforderlich.",
+				"Timeout": "Frist überschritten."
+			}
+		},
+		"RejectReasonField": {
+			"Label": "Begründung",
+			"A11y": "Ablehnungsgrund",
+			"Placeholder": "Ablehnungsgrund für die Person eingeben..."
+		},
+		"RejectActions": {
+			"Submit": "Ablehnung senden",
+			"Cancel": "Abbrechen"
+		}
+	},
+	"DayDetails": {
+		"DayDetailHeader": {
+			"Title": "Tagesdetails"
+		},
+		"DayDetailScreen": {
+			"NotFound": "Für diesen Tag wurde kein Eintrag gefunden",
+			"PendingCorrection": "Korrektur ausstehend",
+			"Completed": "Abgeschlossen",
+			"Timeline": "Zeitverlauf",
+			"EventCount_one": "{{count}} Ereignis erfasst",
+			"EventCount_other": "{{count}} Ereignisse erfasst",
+			"LocationTerminal": "STANDORT & TERMINAL",
+			"RequestCorrection": "Korrektur beantragen",
+			"Events": {
+				"Break": "Pause",
+				"BreakDuration": "{{duration}} Pause",
+				"ShiftStart": "Arbeitsbeginn",
+				"CheckInRecorded": "Kommen erfasst",
+				"ShiftEnd": "Arbeitsende",
+				"ShiftCompleted": "Arbeitstag abgeschlossen"
+			}
+		},
+		"StateBand": {
+			"Pending": "Korrekturantrag wartet auf Genehmigung: {{recordType}} → {{time}}",
+			"Complete": "Alle Buchungen des Tages vollständig"
+		},
+		"Summary": {
+			"TotalNetWork": "GESAMTE NETTOARBEITSZEIT",
+			"Overtime": "+{{duration}} Überstunden",
+			"Undertime": "{{duration}} zu wenig",
+			"WorkedA11y": "{{hours}} Stunden {{minutes}} Minuten",
+			"Hours": "Std.",
+			"Minutes": "Min.",
+			"Planned": "Geplant: {{hours}} ({{duration}})"
+		},
+		"CorrectionRequestModal": {
+			"Title": "Korrektur beantragen",
+			"Description": "Wenn Ihre Einträge unvollständig oder fehlerhaft sind, stellen Sie einen Antrag.",
+			"WhichRecord": "Welcher Eintrag?",
+			"CorrectTime": "Richtige Uhrzeit",
+			"OriginalRecord": "Ursprünglicher Eintrag: ",
+			"None": "keiner",
+			"SuggestedCorrection": "Vorgeschlagene Korrektur",
+			"Hour": "Std.",
+			"Minute": "Min.",
+			"Increase": "{{label}} erhöhen",
+			"Decrease": "{{label}} verringern",
+			"Reason": "Begründung",
+			"ReasonA11y": "Begründung der Korrektur",
+			"ReasonPlaceholder": "Kurze Begründung angeben...",
+			"Note": "Ihr Antrag wird an Ihre Führungskraft gesendet. Nach der Genehmigung wird Ihr Zeitplan automatisch aktualisiert.",
+			"Submit": "Antrag senden",
+			"Cancel": "Abbrechen"
+		}
+	},
+	"EditEmployee": {
+		"EditEmployeeScreen": {
+			"Title": "Mitarbeitende bearbeiten",
+			"NotFound": "Person nicht gefunden."
+		},
+		"EditEmployeeForm": {
+			"PersonalInfo": "Persönliche Daten",
+			"FirstName": "Vorname",
+			"LastName": "Nachname",
+			"Email": "E-Mail",
+			"Phone": "Telefon",
+			"PhonePlaceholder": "5XX XXX XX XX",
+			"JobInfo": "Beschäftigungsdaten",
+			"EmployeeId": "Personalnummer",
+			"EmployeeIdLocked": "Die Personalnummer kann nicht geändert werden",
+			"JobTitle": "Position",
+			"Department": "Abteilung",
+			"Company": "Unternehmen",
+			"StartDate": "Eintrittsdatum",
+			"DatePlaceholder": "TT.MM.JJJJ",
+			"WorkSchedule": "Arbeitszeitmodell",
+			"Shift": "Schicht",
+			"AnnualLeave": "Jahresurlaub",
+			"WorkDays": "Arbeitstage",
+			"Account": "Konto",
+			"SaveChanges": "Änderungen speichern"
+		},
+		"AccountStatusSwitch": {
+			"Title": "Kontostatus",
+			"Active": "Aktiv",
+			"Passive": "Inaktiv"
+		},
+		"DangerZone": {
+			"Title": "Konto deaktivieren",
+			"Text": "Deaktivierte Personen haben keinen Zugriff auf das System und werden in Schichtlisten ausgeblendet.",
+			"Deactivate": "Person deaktivieren"
+		},
+		"DeactivateEmployeeModal": {
+			"Title": "{{name}} deaktivieren?",
+			"Text": "Die Person kann sich nicht mehr in der App anmelden und am Terminal keine Buchungen erstellen. Frühere Einträge bleiben erhalten.",
+			"Confirm": "Deaktivieren",
+			"Cancel": "Abbrechen",
+			"Note": "Sie können das Konto jederzeit wieder aktivieren"
+		}
+	},
+	"EmployeeDetail": {
+		"EmployeeDetailScreen": {
+			"Title": "Mitarbeiterdetails",
+			"NotFound": "Person nicht gefunden."
+		},
+		"DetailStrip": {
+			"Overline": "PROFILVERWALTUNG",
+			"EditA11y": "Profil bearbeiten",
+			"Edit": "Bearbeiten"
+		},
+		"PresencePill": {
+			"Passive": "Inaktiv"
+		},
+		"AccountStatePill": {
+			"Active": "Aktiv",
+			"Passive": "Inaktiv"
+		},
+		"TodaySection": {
+			"Title": "Heute",
+			"CheckIn": "Kommen",
+			"NetWork": "Nettoarbeitszeit",
+			"WorkStatus": "Arbeitsstatus",
+			"Passive": "Inaktiv"
+		},
+		"WorkStates": {
+			"Inside": "Arbeitet",
+			"OnBreak": "In der Pause",
+			"Outside": "Außer Dienst",
+			"Absent": "Nicht erschienen"
+		},
+		"PersonalSection": {
+			"Title": "Persönliche Daten",
+			"Email": "E-Mail",
+			"Phone": "Telefon"
+		},
+		"JobSection": {
+			"Title": "Beschäftigungsdaten",
+			"EmployeeId": "Personalnummer",
+			"Department": "Abteilung",
+			"Company": "Unternehmen",
+			"StartDate": "Eintritt"
+		},
+		"ScheduleSection": {
+			"Title": "Arbeitszeitmodell",
+			"Shift": "Schicht",
+			"AnnualLeave": "Jahresurlaub",
+			"RemainingLeave": "Resturlaub",
+			"Days_one": "{{count}} Tag",
+			"Days_other": "{{count}} Tage"
+		},
+		"AccountSection": {
+			"Title": "Konto",
+			"UserRole": "Benutzerrolle",
+			"Admin": "Admin",
+			"Employee": "Mitarbeitende",
+			"AccountStatus": "Kontostatus"
+		},
+		"DetailActions": {
+			"ResetPassword": "Passwort zurücksetzen",
+			"ViewSchedule": "Zeitplan anzeigen"
+		}
+	},
+	"EmployeeList": {
+		"EmployeeListScreen": {
+			"Title": "Mitarbeiterliste",
+			"EmptyTitle": "Noch keine Mitarbeitenden",
+			"EmptyText": "Legen Sie über „Neu“ die erste Person an.",
+			"NoMatchTitle": "Keine passenden Mitarbeitenden",
+			"NoMatchText": "Für den gesuchten Namen oder die Personalnummer wurde kein Eintrag gefunden. Versuchen Sie, die Filter zurückzusetzen."
+		},
+		"ListStrip": {
+			"Overline": "VERZEICHNIS & LIVE-ANWESENHEIT",
+			"AddNew": "Neu",
+			"AddEmployeeA11y": "Neue Mitarbeitende hinzufügen"
+		},
+		"SearchBar": {
+			"Placeholder": "Name oder Personalnummer suchen...",
+			"A11y": "Name oder Personalnummer suchen"
+		},
+		"DepartmentChips": {
+			"All": "Alle",
+			"ChipA11y_one": "{{label}}, {{count}} Person",
+			"ChipA11y_other": "{{label}}, {{count}} Personen"
+		},
+		"MetricBar": {
+			"ActivePresence": "Aktuell anwesend",
+			"TotalPersons": "/ {{total}} Personen"
+		}
+	},
+	"Login": {
+		"BrandHeader": {
+			"Title": "Odoo Anwesenheit",
+			"Subtitle": "Bei Ihrem Konto anmelden"
+		},
+		"LoginScreen": {
+			"IdentifierLabel": "Personalnummer oder E-Mail",
+			"IdentifierPlaceholder": "EMP-8042 oder name@firma.de",
+			"PasswordLabel": "Passwort",
+			"CredentialsErrorTitle": "Personalnummer oder Passwort falsch.",
+			"CredentialsErrorMessage": "Prüfen Sie Ihre Angaben und versuchen Sie es erneut.",
+			"ConnectionErrorTitle": "Server nicht erreichbar.",
+			"ConnectionErrorMessage": "Prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.",
+			"ForgotPassword": "Passwort vergessen"
+		},
+		"AuthTextField": {
+			"ShowPassword": "Passwort anzeigen",
+			"HidePassword": "Passwort verbergen"
+		},
+		"SubmitButton": {
+			"LoggingIn": "Anmeldung läuft..."
+		},
+		"SupportNote": {
+			"Text": "Kein Konto? Wenden Sie sich an Ihre Personalabteilung."
+		}
+	},
+	"Notification": {
+		"NotificationsHeader": {
+			"Title": "Benachrichtigungen"
+		},
+		"NotificationsScreen": {
+			"Count_one": "{{count}} neue Benachrichtigung",
+			"Count_other": "{{count}} neue Benachrichtigungen"
+		},
+		"NotificationsEmptyState": {
+			"Title": "Keine neuen Benachrichtigungen",
+			"Text": "Wenn Ihre Korrekturanträge genehmigt oder abgelehnt werden, sehen Sie das Ergebnis hier."
+		},
+		"NotificationCard": {
+			"A11y": "{{date}}, Korrekturantrag für {{recordType}}-Eintrag {{result}}",
+			"ApprovedResult": "genehmigt",
+			"RejectedResult": "abgelehnt",
+			"Updated": "{{recordType}}-Zeit auf {{time}} aktualisiert",
+			"ManagerNote": "Notiz der Führungskraft: {{note}}",
+			"NotSpecified": "Nicht angegeben"
+		},
+		"ResultBadge": {
+			"Approved": "Genehmigt",
+			"Rejected": "Abgelehnt"
+		},
+		"Pagination": {
+			"Previous": "Zurück",
+			"Next": "Weiter",
+			"PreviousA11y": "Vorherige Seite",
+			"NextA11y": "Nächste Seite"
+		}
+	},
+	"EmployeeSchedule": {
+		"ScheduleScreen": {
+			"Overline": "ZEITPLAN DER PERSON",
+			"EmptyText": "Tage, an denen die Person ihren Arbeitstag beendet hat, werden hier angezeigt."
+		}
+	},
+	"ServerSetup": {
+		"SetupHeading": {
+			"Title": "Anmelden",
+			"Subtitle": "Serververbindung einrichten"
+		},
+		"ServerSetupScreen": {
+			"ServerDomain": "Server-Domain",
+			"Errors": {
+				"InvalidAddressTitle": "Ungültige Serveradresse",
+				"InvalidAddressMessage": "Geben Sie die Adresse im Format „odoo.firma.de“ ohne Leerzeichen und Pfad ein.",
+				"UnreachableTitle": "Verbindung zum Server fehlgeschlagen",
+				"UnreachableMessage": "Bitte prüfen Sie die Adresse und Ihre Internetverbindung."
+			}
+		},
+		"ServerInputCard": {
+			"ProtocolA11y": "Protokoll: {{protocol}}",
+			"AddressA11y": "Serveradresse",
+			"Placeholder": "Serveradresse eingeben",
+			"ClearA11y": "Eingabe löschen"
+		},
+		"ConnectionHint": {
+			"Secure": "Verschlüsselte Verbindung (HTTPS)",
+			"Insecure": "Unverschlüsselte Verbindung (HTTP)",
+			"Port": "Port {{port}}"
+		},
+		"SubmitButton": {
+			"Connecting": "Verbinde...",
+			"Retry": "Erneut versuchen",
+			"Next": "Weiter"
+		},
+		"HelperNote": {
+			"Text": "Die Serveradresse erhalten Sie von Ihrer Administration"
+		}
+	},
+	"SetPassword": {
+		"PasswordHeader": {
+			"Title": "Passwort festlegen",
+			"Welcome": "Willkommen, <name>{{name}}</name>. Legen Sie für Ihre erste Anmeldung ein sicheres, dauerhaftes Passwort fest."
+		},
+		"SetPasswordScreen": {
+			"NewPassword": "Neues Passwort",
+			"NewPasswordPlaceholder": "Neues Passwort eingeben",
+			"ConfirmPassword": "Passwort wiederholen",
+			"ConfirmPasswordPlaceholder": "Passwort erneut eingeben",
+			"Matched": "Stimmt überein",
+			"Mismatch": "Stimmt nicht überein"
+		},
+		"StatusLabel": {
+			"Weak": "Schwach",
+			"Medium": "Mittel",
+			"Strong": "Stark"
+		},
+		"CriteriaCard": {
+			"Overline": "SICHERHEITSKRITERIEN",
+			"Counter": "{{met}}/{{total}} erfüllt",
+			"RuleA11y": "{{label}}: {{state}}",
+			"Met": "erfüllt",
+			"NotMet": "nicht erfüllt",
+			"Rules": {
+				"MinLength": "Mindestens {{count}} Zeichen",
+				"Digit": "Mindestens eine Ziffer",
+				"Uppercase": "Mindestens ein Großbuchstabe"
+			}
+		},
+		"TrustNote": {
+			"Text": "Ihr Passwort wird automatisch mit dem Unternehmens-Single-Sign-on (SSO) und den Drehkreuz-Kiosks synchronisiert."
+		},
+		"SaveButton": {
+			"Save": "Passwort speichern",
+			"Note": "Nach dem Speichern werden Sie zu den ersten Einrichtungsschritten weitergeleitet."
+		}
+	},
+	"Modals": {
+		"CheckInFailedModal": {
+			"Title": "Einstempeln fehlgeschlagen",
+			"Message": "Halten Sie das Telefon etwas näher an das Terminal und versuchen Sie es erneut.",
+			"HintTitle": "Abstand",
+			"HintText": "Halten Sie Ihr Gerät ruhig 2–3 cm vor das Logo",
+			"UseCode": "Mit Code einstempeln",
+			"Support": "Wenn das Problem weiterhin besteht, melden Sie es der Personalabteilung."
+		},
+		"CheckInSuccessModal": {
+			"Title": "Einstempeln erfasst",
+			"Subtitle": "Gutes Gelingen, {{name}}.",
+			"RecordTime": "ERFASST UM",
+			"Synced": "An Odoo übertragen",
+			"ShiftStatus": "Schichtstatus",
+			"EarlyStart": "Früher Beginn",
+			"LateStart": "Später Beginn",
+			"OnTimeStart": "Pünktlicher Beginn"
+		},
+		"CodeScannerModal": {
+			"CameraActive": "Kamera aktiv",
+			"Flash": "Blitz",
+			"Title": "Code am Terminal scannen",
+			"Subtitle": "Code in den Rahmen bringen",
+			"AutoDetecting": "Automatische Erkennung",
+			"PermissionTitle": "Kamerazugriff erforderlich",
+			"PermissionText": "Erlauben Sie den Kamerazugriff, um den Code am Terminal zu scannen.",
+			"GrantPermission": "Erlauben",
+			"Help": "Funktioniert nicht? Hilfe erhalten",
+			"HelpTitle": "Hilfe & Tipps",
+			"HelpCaption": "Tipps für schnelleres Scannen",
+			"Tips": {
+				"Reflection": "Bei Spiegelungen den Winkel leicht ändern",
+				"Closer": "Gerät etwas näher an das Terminal halten"
+			},
+			"GotIt": "Verstanden"
+		},
+		"NfcPromptModal": {
+			"Ready": "Bereit",
+			"KeypadTitle": "Schnellzugriffscode",
+			"BackToNfc": "Zurück zum NFC-Scan",
+			"DigitsEntered": "{{count}} von {{total}} Ziffern eingegeben",
+			"Delete": "Löschen",
+			"Confirm": "Bestätigen",
+			"Scan": "SCANNEN",
+			"Title": "Telefon an das Terminal halten",
+			"Subtitle": "Zur Bestätigung kann ein Fingerabdruck nötig sein",
+			"UseCode": "Funktioniert nicht? Mit Code einstempeln"
+		}
+	},
+	"ExtraConstants": {
+		"Days": {
+			"Sunday": "Sonntag",
+			"Monday": "Montag",
+			"Tuesday": "Dienstag",
+			"Wednesday": "Mittwoch",
+			"Thursday": "Donnerstag",
+			"Friday": "Freitag",
+			"Saturday": "Samstag"
+		},
+		"ShortDays": {
+			"Sunday": "So.",
+			"Monday": "Mo.",
+			"Tuesday": "Di.",
+			"Wednesday": "Mi.",
+			"Thursday": "Do.",
+			"Friday": "Fr.",
+			"Saturday": "Sa."
+		},
+		"Months": {
+			"January": "Januar",
+			"February": "Februar",
+			"March": "März",
+			"April": "April",
+			"May": "Mai",
+			"June": "Juni",
+			"July": "Juli",
+			"August": "August",
+			"September": "September",
+			"October": "Oktober",
+			"November": "November",
+			"December": "Dezember"
+		},
+		"DateFormats": {
+			"Long": "{{weekday}}, {{day}}. {{month}} {{year}}",
+			"Short": "{{weekday}}, {{day}}. {{month}}",
+			"Compact": "{{weekday}}, {{day}}. {{month}}",
+			"DayMonth": "{{day}}. {{month}}",
+			"DayMonthYear": "{{day}}. {{month}} {{year}}"
+		},
+		"Duration": {
+			"HoursMinutes": "{{hours}} Std. {{minutes}} Min.",
+			"Minutes": "{{minutes}} Min."
+		},
+		"Greetings": {
+			"Morning": "Guten Morgen",
+			"Afternoon": "Guten Tag",
+			"Evening": "Guten Abend"
+		},
+		"RelativeTime": {
+			"JustNow": "Gerade eben",
+			"MinutesAgo": "vor {{minutes}} Min.",
+			"HoursAgo": "vor {{hours}} Std.",
+			"Yesterday": "Gestern {{time}}"
+		},
+		"Departments": {
+			"Arge": "F&E & Engineering",
+			"Satis": "Vertrieb",
+			"Ik": "Personalwesen",
+			"Uretim": "Produktion & Logistik",
+			"Pazarlama": "Marketing"
+		},
+		"DepartmentsShort": {
+			"Arge": "F&E",
+			"Satis": "Vertrieb",
+			"Ik": "HR",
+			"Uretim": "Produktion",
+			"Pazarlama": "Marketing"
+		},
+		"Companies": {
+			"OdooTr": "Odoo Kurumsal A.Ş.",
+			"OdooArge": "Odoo İleri Teknolojiler Ltd."
+		},
+		"ShiftTemplates": {
+			"Standard": "Standardschicht (09:00 – 18:00)",
+			"Flexible": "Gleitzeit (09:30 – 18:30)",
+			"Second": "Spätschicht (16:00 – 00:30)"
+		},
+		"AttendanceStatus": {
+			"Inside": "Anwesend",
+			"OnBreak": "In Pause",
+			"Outside": "Abwesend",
+			"Absent": "Nicht erschienen"
+		},
+		"RecordTypes": {
+			"Entry": "Kommen",
+			"Break": "Pause",
+			"Exit": "Gehen"
+		},
+		"RequestStatus": {
+			"Pending": "Wartet auf Genehmigung",
+			"Approved": "Genehmigt",
+			"Rejected": "Abgelehnt"
+		}
+	},
+	"UI": {
+		"Buttons": {
+			"Back": "Zurück",
+			"Close": "Schließen",
+			"Login": "Anmelden",
+			"ClearSearch": "Suche löschen",
+			"Retry": "Erneut versuchen",
+			"Ok": "OK",
+			"MarkAllRead": "Alle als gesehen markieren"
+		},
+		"Accessibility": {
+			"Notifications": "Benachrichtigungen",
+			"Profile": "Profil"
+		},
+		"Tabs": {
+			"Home": "Start",
+			"Schedule": "Statistik",
+			"Profile": "Profil",
+			"Admin": "Verwaltung"
+		},
+		"NotFound": {
+			"Title": "Hoppla!",
+			"Text": "Dieser Bildschirm existiert nicht.",
+			"GoHome": "Zur Startseite"
+		},
+		"Common": {
+			"Percent": "{{value}} %"
+		}
+	}
+}

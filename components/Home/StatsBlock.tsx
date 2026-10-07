@@ -12,6 +12,7 @@ import { ProgressRing } from './ProgressRing';
 import { Stat } from './Stat';
 import { styles } from './styles';
 import { Session, Status } from './types';
+import { useTranslation } from 'react-i18next';
 
 export function StatsBlock({
 	status,
@@ -25,12 +26,15 @@ export function StatsBlock({
 	now: number;
 }) {
 	const colors = theme();
+	const { t } = useTranslation();
 	const workEnd = session.checkOutAt ?? session.breakStartedAt ?? now;
 	const workedSeconds = session.checkInAt
 		? Math.max(0, (workEnd - session.checkInAt) / 1000 - finishedBreakSeconds)
 		: 0;
 	const progress = workedSeconds / TARGET_SECONDS;
-	const percent = `%${Math.floor(progress * 100)}`;
+	const percent = t('UI.Common.Percent', {
+		value: Math.floor(progress * 100),
+	});
 	const remainingSeconds = Math.max(0, TARGET_SECONDS - workedSeconds);
 	const overtimeSeconds = workedSeconds - TARGET_SECONDS;
 	const currentBreakSeconds = session.breakStartedAt
@@ -60,7 +64,7 @@ export function StatsBlock({
 				<MaterialIcons color={colors.tertiary} name='task-alt' size={32} />
 			</View>
 			<Text style={[styles.overline, { color: colors.onSurfaceVariant }]}>
-				TOPLAM NET ÇALIŞMA
+				{t('Home.StatsBlock.TotalNetWork')}
 			</Text>
 			<Text style={[styles.total, { color: colors.primary }]}>
 				{formatDuration(workedSeconds)}
@@ -80,14 +84,28 @@ export function StatsBlock({
 					style={[styles.overtimeLabel, { color: colors.onSecondaryContainer }]}
 				>
 					{overtimeSeconds >= 0
-						? `+${formatMinutes(overtimeSeconds)} fazla mesai`
-						: `${formatMinutes(-overtimeSeconds)} eksik mesai`}
+						? t('Home.StatsBlock.Overtime', {
+								duration: formatMinutes(overtimeSeconds),
+							})
+						: t('Home.StatsBlock.Undertime', {
+								duration: formatMinutes(-overtimeSeconds),
+							})}
 				</Text>
 			</View>
 			<View style={styles.statsRow}>
-				<Stat label='Hedef' value='8 Saat' />
-				<Stat label='Tamamlanan' value={percent} valueColor={colors.tertiary} />
-				<Stat label='Toplam Mola' value={formatMinutes(usedBreakSeconds)} />
+				<Stat
+					label={t('Home.StatsBlock.Target')}
+					value={t('Home.StatsBlock.TargetHours')}
+				/>
+				<Stat
+					label={t('Home.StatsBlock.Completed')}
+					value={percent}
+					valueColor={colors.tertiary}
+				/>
+				<Stat
+					label={t('Home.StatsBlock.TotalBreak')}
+					value={formatMinutes(usedBreakSeconds)}
+				/>
 			</View>
 		</View>
 	) : (
@@ -111,7 +129,9 @@ export function StatsBlock({
 						size={16}
 					/>
 					<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
-						Çalışma süresi duraklatıldı: {formatDuration(workedSeconds)}
+						{t('Home.StatsBlock.WorkPaused', {
+							duration: formatDuration(workedSeconds),
+						})}
 					</Text>
 				</View>
 			) : null}
@@ -125,7 +145,9 @@ export function StatsBlock({
 				}
 			>
 				<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
-					{status === 'onBreak' ? 'Mola Süresi' : 'Geçen Süre'}
+					{status === 'onBreak'
+						? t('Home.StatsBlock.BreakTime')
+						: t('Home.StatsBlock.ElapsedTime')}
 				</Text>
 				<Text
 					style={[
@@ -140,20 +162,32 @@ export function StatsBlock({
 				</Text>
 				<Text style={[styles.ringNote, { color: colors.tertiary }]}>
 					{status === 'notCheckedIn'
-						? `Hedef: ${formatDuration(TARGET_SECONDS)}`
+						? t('Home.StatsBlock.TargetValue', {
+								duration: formatDuration(TARGET_SECONDS),
+							})
 						: null}
-					{status === 'working' ? `${percent} tamamlandı` : null}
+					{status === 'working'
+						? t('Home.StatsBlock.PercentCompleted', { percent })
+						: null}
 					{status === 'onBreak' && session.breakStartedAt
-						? `Başlangıç ${formatTime(session.breakStartedAt)}`
+						? t('Home.StatsBlock.BreakStartedAt', {
+								time: formatTime(session.breakStartedAt),
+							})
 						: null}
 				</Text>
 			</ProgressRing>
 
 			<View style={styles.statsRow}>
-				<Stat label='Hedef Mesai' value='8 Saat' />
-				<Stat label='Kalan Süre' value={formatClock(remainingSeconds)} />
 				<Stat
-					label='Mola Hakkı'
+					label={t('Home.StatsBlock.TargetShift')}
+					value={t('Home.StatsBlock.TargetHours')}
+				/>
+				<Stat
+					label={t('Home.StatsBlock.RemainingTime')}
+					value={formatClock(remainingSeconds)}
+				/>
+				<Stat
+					label={t('Home.StatsBlock.BreakAllowance')}
 					value={formatMinutes(breakLeftSeconds)}
 					valueColor={isBreakOverLimit ? colors.error : colors.secondary}
 				/>

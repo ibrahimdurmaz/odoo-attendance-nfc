@@ -6,6 +6,7 @@ import { fonts, theme, ThemeColors } from '@/assets/theme';
 import { AttendanceStatus, AttendanceSummary } from '@/store/types';
 import { ATTENDANCE_LABELS } from '@/store/useEmployeeStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
+import { useTranslation } from 'react-i18next';
 type AttendanceTileProps = {
 	status: AttendanceStatus;
 	label: string;
@@ -21,6 +22,7 @@ const AttendanceTile: FC<AttendanceTileProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createTileStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	const captionColors: Record<AttendanceStatus, ColorValue> = {
 		inside: colors.tertiary,
@@ -31,7 +33,7 @@ const AttendanceTile: FC<AttendanceTileProps> = ({
 
 	return (
 		<View
-			accessibilityLabel={`${label}: ${count} kişi, ${caption}`}
+			accessibilityLabel={t('Admin.AttendanceTile.A11y', { label, count, caption })}
 			accessible
 			style={styles.tile}
 		>
@@ -47,7 +49,7 @@ const AttendanceTile: FC<AttendanceTileProps> = ({
 			</View>
 			<View style={styles.countRow}>
 				<Text style={styles.count}>{count}</Text>
-				<Text style={styles.unit}>kişi</Text>
+				<Text style={styles.unit}>{t('Admin.AttendanceTile.Persons')}</Text>
 			</View>
 			<Text
 				numberOfLines={1}
@@ -112,6 +114,7 @@ export const AttendanceCard: FC<AttendanceCardProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createAttendanceStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.card}>
@@ -119,19 +122,27 @@ export const AttendanceCard: FC<AttendanceCardProps> = ({
 				<View style={styles.titleRow}>
 					<MaterialIcons color={colors.primary} name='analytics' size={20} />
 					<Text numberOfLines={1} style={styles.title}>
-						Bugünkü Katılım Durumu
+						{t('Admin.AttendanceCard.Title')}
 					</Text>
 				</View>
-				<Text style={styles.shift}>Vardiya: {shiftHours}</Text>
+				<Text style={styles.shift}>
+					{t('Admin.AttendanceCard.Shift', { hours: shiftHours })}
+				</Text>
 			</View>
 
 			<View style={styles.rate}>
 				<View style={styles.rateRow}>
-					<Text style={styles.rateLabel}>Katılım Oranı</Text>
-					<Text style={styles.rateValue}>%{summary.rate}</Text>
+					<Text style={styles.rateLabel}>
+						{t('Admin.AttendanceCard.AttendanceRate')}
+					</Text>
+					<Text style={styles.rateValue}>
+						{t('UI.Common.Percent', { value: summary.rate })}
+					</Text>
 				</View>
 				<View
-					accessibilityLabel={`Katılım oranı yüzde ${summary.rate}`}
+					accessibilityLabel={t('Admin.AttendanceCard.AttendanceRateA11y', {
+						rate: summary.rate,
+					})}
 					accessible
 					style={styles.track}
 				>
@@ -139,30 +150,35 @@ export const AttendanceCard: FC<AttendanceCardProps> = ({
 					<View style={{ flex: 100 - summary.rate }} />
 				</View>
 				<View style={styles.rateRow}>
-					<Text style={styles.meta}>Hedef: %{targetPercent}</Text>
 					<Text style={styles.meta}>
-						{summary.present} / {summary.total} Personel
+						{t('Admin.AttendanceCard.Target', { percent: targetPercent })}
+					</Text>
+					<Text style={styles.meta}>
+						{t('Admin.AttendanceCard.Staff', {
+							present: summary.present,
+							total: summary.total,
+						})}
 					</Text>
 				</View>
 			</View>
 
 			<View style={styles.tiles}>
 				<AttendanceTile
-					caption='Onaylandı'
+					caption={t('Admin.AttendanceCard.Approved')}
 					count={summary.inside}
-					label={ATTENDANCE_LABELS.inside}
+					label={t(ATTENDANCE_LABELS.inside)}
 					status='inside'
 				/>
 				<AttendanceTile
-					caption='Bekleniyor'
+					caption={t('Admin.AttendanceCard.Waiting')}
 					count={summary.outside}
-					label='Giriş Yok'
+					label={t('Admin.AttendanceCard.NoEntry')}
 					status='outside'
 				/>
 				<AttendanceTile
-					caption='Aktif Mola'
+					caption={t('Admin.AttendanceCard.ActiveBreak')}
 					count={summary.onBreak}
-					label={ATTENDANCE_LABELS.onBreak}
+					label={t(ATTENDANCE_LABELS.onBreak)}
 					status='onBreak'
 				/>
 			</View>

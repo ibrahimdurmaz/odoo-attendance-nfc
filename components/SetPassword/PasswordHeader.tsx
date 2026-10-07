@@ -3,11 +3,13 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { FC } from 'react';
 import { Text, View } from 'react-native';
 import { headerStyles } from './styles';
+import { Trans, useTranslation } from 'react-i18next';
 
 type PasswordHeaderProps = { name: string };
 
 export const PasswordHeader: FC<PasswordHeaderProps> = ({ name }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	return (
 		<View style={headerStyles.container}>
 			<View
@@ -29,14 +31,16 @@ export const PasswordHeader: FC<PasswordHeaderProps> = ({ name }) => {
 				accessibilityRole='header'
 				style={[headerStyles.title, { color: colors.onSurface }]}
 			>
-				Şifrenizi Belirleyin
+				{t('SetPassword.PasswordHeader.Title')}
 			</Text>
 			<Text style={[headerStyles.text, { color: colors.onSurfaceVariant }]}>
-				Hoş geldiniz,{' '}
-				<Text style={[headerStyles.name, { color: colors.primary }]}>
-					{name}
-				</Text>
-				. İlk girişiniz için güvenli ve kalıcı şifrenizi oluşturun.
+				<Trans
+					components={{
+						name: <Text style={[headerStyles.name, { color: colors.primary }]} />,
+					}}
+					i18nKey='SetPassword.PasswordHeader.Welcome'
+					values={{ name }}
+				/>
 			</Text>
 		</View>
 	);

@@ -21,6 +21,7 @@ import { ErrorBanner } from './ErrorBanner';
 import { SubmitButton } from './SubmitButton';
 import { SupportNote } from './SupportNote';
 import { screenStyles } from './styles';
+import { useTranslation } from 'react-i18next';
 
 const DEMO_PASSWORD = 'Selim2024';
 
@@ -44,6 +45,7 @@ export const LoginScreen = ({ serverUrl }: { serverUrl: string }) => {
 	const passwordRef = useRef<TextInput>(null);
 	const shake = useRef(new Animated.Value(0)).current;
 	const router = useRouter();
+	const { t } = useTranslation();
 	const colors = theme();
 	// Yalnızca bu ekranda sayılır; ekran yeniden açılınca sıfırlanır.
 	const isFilled = identifier.trim().length > 0 && password.length > 0;
@@ -112,10 +114,10 @@ export const LoginScreen = ({ serverUrl }: { serverUrl: string }) => {
 							editable={!isSubmitting}
 							icon='account-circle'
 							keyboardType='email-address'
-							label='Sicil No veya E-posta'
+							label={t('Login.LoginScreen.IdentifierLabel')}
 							onChangeText={changeIdentifier}
 							onSubmitEditing={() => passwordRef.current?.focus()}
-							placeholder='EMP-8042 veya ad@sirket.com'
+							placeholder={t('Login.LoginScreen.IdentifierPlaceholder')}
 							returnKeyType='next'
 							textContentType='username'
 							value={identifier}
@@ -128,7 +130,7 @@ export const LoginScreen = ({ serverUrl }: { serverUrl: string }) => {
 								hasError={error === 'credentials'}
 								icon='lock'
 								isPassword
-								label='Şifre'
+								label={t('Login.LoginScreen.PasswordLabel')}
 								onChangeText={changePassword}
 								onSubmitEditing={handleSubmit}
 								placeholder='••••••••'
@@ -141,13 +143,13 @@ export const LoginScreen = ({ serverUrl }: { serverUrl: string }) => {
 
 						{error === 'credentials' ? (
 							<ErrorBanner
-								message='Bilgilerinizi kontrol edip tekrar deneyin.'
-								title='Sicil no veya şifre hatalı.'
+								message={t('Login.LoginScreen.CredentialsErrorMessage')}
+								title={t('Login.LoginScreen.CredentialsErrorTitle')}
 							/>
 						) : error === 'connection' ? (
 							<ErrorBanner
-								message='İnternet bağlantınızı kontrol edip tekrar deneyin.'
-								title='Sunucuya ulaşılamadı.'
+								message={t('Login.LoginScreen.ConnectionErrorMessage')}
+								title={t('Login.LoginScreen.ConnectionErrorTitle')}
 							/>
 						) : null}
 
@@ -158,7 +160,7 @@ export const LoginScreen = ({ serverUrl }: { serverUrl: string }) => {
 						/>
 
 						<Pressable
-							accessibilityLabel='Şifremi unuttum'
+							accessibilityLabel={t('Login.LoginScreen.ForgotPassword')}
 							accessibilityRole='button'
 							hitSlop={8}
 							onPress={onForgotPassword}
@@ -167,7 +169,7 @@ export const LoginScreen = ({ serverUrl }: { serverUrl: string }) => {
 							<Text
 								style={[screenStyles.forgotLabel, { color: colors.primary }]}
 							>
-								Şifremi unuttum
+								{t('Login.LoginScreen.ForgotPassword')}
 							</Text>
 						</Pressable>
 					</View>

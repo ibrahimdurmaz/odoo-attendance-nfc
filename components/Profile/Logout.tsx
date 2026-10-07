@@ -2,6 +2,7 @@ import { fonts, theme } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { FC } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 type LogoutSectionProps = { fullName: string; onLogout: () => void };
 
@@ -10,10 +11,11 @@ export const LogoutSection: FC<LogoutSectionProps> = ({
 	onLogout,
 }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	return (
 		<View style={logoutStyles.section}>
 			<Pressable
-				accessibilityLabel='Oturumu Kapat'
+				accessibilityLabel={t('Profile.LogoutSection.Logout')}
 				accessibilityRole='button'
 				onPress={onLogout}
 				style={({ pressed }) => [
@@ -28,11 +30,11 @@ export const LogoutSection: FC<LogoutSectionProps> = ({
 					size={20}
 				/>
 				<Text style={[logoutStyles.label, { color: colors.onErrorContainer }]}>
-					Oturumu Kapat
+					{t('Profile.LogoutSection.Logout')}
 				</Text>
 			</Pressable>
 			<Text style={[logoutStyles.caption, { color: colors.onSurfaceVariant }]}>
-				{fullName} olarak oturum açık
+				{t('Profile.LogoutSection.SignedInAs', { name: fullName })}
 			</Text>
 		</View>
 	);
@@ -68,6 +70,7 @@ type LoggedOutViewProps = { onLogin: () => void };
 
 export const LoggedOutView: FC<LoggedOutViewProps> = ({ onLogin }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	return (
 		<View style={loggedOutStyles.container}>
 			<MaterialIcons
@@ -76,13 +79,13 @@ export const LoggedOutView: FC<LoggedOutViewProps> = ({ onLogin }) => {
 				size={56}
 			/>
 			<Text style={[loggedOutStyles.title, { color: colors.onSurface }]}>
-				Oturum kapalı
+				{t('Profile.LoggedOutView.Title')}
 			</Text>
 			<Text style={[loggedOutStyles.text, { color: colors.onSurfaceVariant }]}>
-				Profilinizi görmek için giriş yapın.
+				{t('Profile.LoggedOutView.Text')}
 			</Text>
 			<Pressable
-				accessibilityLabel='Giriş Yap'
+				accessibilityLabel={t('UI.Buttons.Login')}
 				accessibilityRole='button'
 				onPress={onLogin}
 				style={({ pressed }) => [
@@ -93,7 +96,7 @@ export const LoggedOutView: FC<LoggedOutViewProps> = ({ onLogin }) => {
 			>
 				<MaterialIcons color={colors.onPrimary} name='login' size={20} />
 				<Text style={[loggedOutStyles.buttonLabel, { color: colors.onPrimary }]}>
-					Giriş Yap
+					{t('UI.Buttons.Login')}
 				</Text>
 			</Pressable>
 		</View>

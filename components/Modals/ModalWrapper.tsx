@@ -2,6 +2,7 @@ import { BlurView } from 'expo-blur';
 import { useNavigation } from 'expo-router';
 import type { FC, ReactNode } from 'react';
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BackHandler, Pressable, View } from 'react-native';
 import { ModalWrapperStyles } from './styles';
 
@@ -17,6 +18,7 @@ export const ModalWrapper: FC<ModalWrapperProps> = ({
 	children,
 }) => {
 	const navigation = useNavigation();
+	const { t } = useTranslation();
 	const onCloseRef = useRef(onClose);
 	useEffect(() => {
 		onCloseRef.current = onClose;
@@ -46,7 +48,7 @@ export const ModalWrapper: FC<ModalWrapperProps> = ({
 	return (
 		<View style={styles.overlay}>
 			<Pressable
-				accessibilityLabel='Kapat'
+				accessibilityLabel={t('UI.Buttons.Close')}
 				accessibilityRole='button'
 				disabled={!onClose}
 				onPress={onClose}
@@ -59,12 +61,7 @@ export const ModalWrapper: FC<ModalWrapperProps> = ({
 			>
 				{children}
 			</View>
-			<BlurView
-				intensity={10}
-				blurMethod='dimezisBlurView'
-				style={styles.fill}
-				tint='dark'
-			/>
+			<BlurView intensity={10} style={styles.fill} tint='dark' />
 		</View>
 	);
 };

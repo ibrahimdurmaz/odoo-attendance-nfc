@@ -14,6 +14,7 @@ import { ATTENDANCE_LABELS } from '@/store/useEmployeeStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { EmployeeAvatar } from './EmployeeAvatar';
 import { StatusPill } from './StatusPill';
+import { useTranslation } from 'react-i18next';
 
 type EmployeeCardProps = {
 	employee: Employee;
@@ -23,10 +24,11 @@ type EmployeeCardProps = {
 export const EmployeeCard: FC<EmployeeCardProps> = ({ employee, onPress }) => {
 	const colors = theme();
 	const styles = useMemo(() => createCardStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<Pressable
-			accessibilityLabel={`${employee.fullName}, ${employee.jobTitle}, ${employee.employeeId}, ${ATTENDANCE_LABELS[employee.status]}`}
+			accessibilityLabel={`${employee.fullName}, ${employee.jobTitle}, ${employee.employeeId}, ${t(ATTENDANCE_LABELS[employee.status])}`}
 			accessibilityRole={onPress ? 'button' : 'text'}
 			disabled={!onPress}
 			onPress={onPress}

@@ -6,6 +6,7 @@ import { AttendanceStatus } from '@/store/types';
 import { ATTENDANCE_LABELS } from '@/store/useEmployeeStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { IconName } from '../Home/types';
+import { useTranslation } from 'react-i18next';
 
 const STATUS_ICONS: Record<AttendanceStatus, IconName> = {
 	inside: 'check',
@@ -18,6 +19,7 @@ type StatusPillProps = { status: AttendanceStatus };
 
 export const StatusPill: FC<StatusPillProps> = ({ status }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 
 	const tones: Record<
 		AttendanceStatus,
@@ -47,7 +49,7 @@ export const StatusPill: FC<StatusPillProps> = ({ status }) => {
 				size={14}
 			/>
 			<Text style={[pillStyles.label, { color: tone.foreground }]}>
-				{ATTENDANCE_LABELS[status]}
+				{t(ATTENDANCE_LABELS[status])}
 			</Text>
 		</View>
 	);

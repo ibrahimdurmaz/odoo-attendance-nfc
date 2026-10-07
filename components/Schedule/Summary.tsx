@@ -4,6 +4,7 @@ import { DayRecord } from '@/store/useDayStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { Text, View } from 'react-native';
 import { SummaryStyles } from './styles';
+import { useTranslation } from 'react-i18next';
 
 export function Summary({ day }: { day: DayRecord }) {
 	const overtimeSeconds = day.workedSeconds - day.targetSeconds;
@@ -17,6 +18,7 @@ export function Summary({ day }: { day: DayRecord }) {
 	const overtimeFlex = Math.max(0, overtimeSeconds);
 	const missingFlex = Math.max(0, -overtimeSeconds);
 	const colors = theme();
+	const { t } = useTranslation();
 	const styles = SummaryStyles;
 	return (
 		<View
@@ -28,7 +30,7 @@ export function Summary({ day }: { day: DayRecord }) {
 		>
 			<View style={styles.spread}>
 				<Text style={[styles.overline, { color: colors.onSurfaceVariant }]}>
-					TOPLAM NET ÇALIŞMA
+					{t('DayDetails.Summary.TotalNetWork')}
 				</Text>
 				<View
 					style={[
@@ -48,24 +50,29 @@ export function Summary({ day }: { day: DayRecord }) {
 						]}
 					>
 						{overtimeSeconds >= 0
-							? `+${formatMinutes(overtimeSeconds)} fazla mesai`
-							: `${formatMinutes(-overtimeSeconds)} eksik`}
+							? t('DayDetails.Summary.Overtime', {
+									duration: formatMinutes(overtimeSeconds),
+								})
+							: t('DayDetails.Summary.Undertime', {
+									duration: formatMinutes(-overtimeSeconds),
+								})}
 					</Text>
 				</View>
 			</View>
 			<Text
-				accessibilityLabel={`${workedHours} saat ${workedMinutes} dakika`}
+				accessibilityLabel={t('DayDetails.Summary.WorkedA11y', {
+					hours: workedHours,
+					minutes: workedMinutes,
+				})}
 				style={[styles.total, { color: colors.onSurface }]}
 			>
 				{pad(workedHours)}
 				<Text style={[styles.totalUnit, { color: colors.onSurfaceVariant }]}>
-					{' '}
-					saat{' '}
+					{` ${t('DayDetails.Summary.Hours')} `}
 				</Text>
 				{pad(workedMinutes)}
 				<Text style={[styles.totalUnit, { color: colors.onSurfaceVariant }]}>
-					{' '}
-					dakika
+					{` ${t('DayDetails.Summary.Minutes')}`}
 				</Text>
 			</Text>
 			<View
@@ -92,11 +99,14 @@ export function Summary({ day }: { day: DayRecord }) {
 						numberOfLines={1}
 						style={[styles.caption, { color: colors.onSurfaceVariant }]}
 					>
-						Planlanan: {day.shiftHours} ({formatDuration(day.targetSeconds)})
+						{t('DayDetails.Summary.Planned', {
+							hours: day.shiftHours,
+							duration: formatDuration(day.targetSeconds),
+						})}
 					</Text>
 				</View>
 				<Text style={[styles.percent, { color: colors.secondary }]}>
-					%{Math.floor(percent)}
+					{t('UI.Common.Percent', { value: Math.floor(percent) })}
 				</Text>
 			</View>
 		</View>

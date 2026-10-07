@@ -7,6 +7,7 @@ import { fonts, theme, ThemeColors } from '@/assets/theme';
 import { useEmployeeStore } from '@/store/useEmployeeStore';
 import { AdminHeader } from '../../Admin/AdminHeader';
 import { EditEmployeeForm } from './EditEmployeeForm';
+import { useTranslation } from 'react-i18next';
 
 type EditEmployeeScreenProps = {
 	/** Düzenlenecek çalışanın sicil numarası; bilgiler store'dan okunur. */
@@ -18,6 +19,7 @@ export const EditEmployeeScreen: FC<EditEmployeeScreenProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createScreenStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	const employee = useEmployeeStore((state) =>
 		state.employees.find((item) => item.employeeId === employeeId),
@@ -25,11 +27,13 @@ export const EditEmployeeScreen: FC<EditEmployeeScreenProps> = ({
 	const onSaved = () => {};
 	return (
 		<SafeAreaView edges={['top']} style={styles.screen}>
-			<AdminHeader title='Personel Düzenle' />
+			<AdminHeader title={t('EditEmployee.EditEmployeeScreen.Title')} />
 			{employee ? (
 				<EditEmployeeForm employee={employee} onSaved={onSaved} />
 			) : (
-				<Text style={styles.notFound}>Çalışan bulunamadı.</Text>
+				<Text style={styles.notFound}>
+					{t('EditEmployee.EditEmployeeScreen.NotFound')}
+				</Text>
 			)}
 		</SafeAreaView>
 	);

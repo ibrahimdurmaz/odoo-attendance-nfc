@@ -1,4 +1,5 @@
 import { ThemeColors } from '@/assets/theme';
+import i18n from '@/i18n';
 import { ColorValue } from 'react-native';
 import { IconName, Status } from './types';
 
@@ -13,25 +14,25 @@ export const getStatusBadges = (
 	colors: ThemeColors,
 ): Record<Status, StatusBadge> => ({
 	notCheckedIn: {
-		label: 'Giriş yapılmadı',
+		label: i18n.t('Home.StatusBadge.NotCheckedIn'),
 		icon: 'bedtime',
 		background: colors.surfaceContainerHigh,
 		foreground: colors.onSurfaceVariant,
 	},
 	working: {
-		label: 'Çalışıyorsunuz',
+		label: i18n.t('Home.StatusBadge.Working'),
 		icon: 'check-circle',
 		background: colors.tertiaryFixed,
 		foreground: colors.tertiary,
 	},
 	onBreak: {
-		label: 'Moladasınız',
+		label: i18n.t('Home.StatusBadge.OnBreak'),
 		icon: 'coffee',
 		background: colors.secondaryContainer,
 		foreground: colors.onSecondaryContainer,
 	},
 	completed: {
-		label: 'Gün Tamamlandı',
+		label: i18n.t('Home.StatusBadge.Completed'),
 		icon: 'check-circle',
 		background: colors.surfaceContainerHigh,
 		foreground: colors.tertiary,

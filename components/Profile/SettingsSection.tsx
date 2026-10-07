@@ -9,10 +9,12 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { FC } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { IconName } from '../Home/types';
+import { useTranslation } from 'react-i18next';
 
+// label değerleri çeviri anahtarıdır.
 const THEME_OPTIONS: { key: ThemeMode; label: string }[] = [
-	{ key: 'light', label: 'Açık' },
-	{ key: 'dark', label: 'Koyu' },
+	{ key: 'light', label: 'Profile.SettingsSection.Light' },
+	{ key: 'dark', label: 'Profile.SettingsSection.Dark' },
 ];
 
 type ThemeSegmentsProps = {
@@ -22,6 +24,7 @@ type ThemeSegmentsProps = {
 
 const ThemeSegments: FC<ThemeSegmentsProps> = ({ value, onChange }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	return (
 		<View
 			style={[
@@ -33,7 +36,7 @@ const ThemeSegments: FC<ThemeSegmentsProps> = ({ value, onChange }) => {
 				const isSelected = option.key === value;
 				return (
 					<Pressable
-						accessibilityLabel={option.label}
+						accessibilityLabel={t(option.label)}
 						accessibilityRole='button'
 						accessibilityState={{ selected: isSelected }}
 						key={option.key}
@@ -53,7 +56,7 @@ const ThemeSegments: FC<ThemeSegmentsProps> = ({ value, onChange }) => {
 								},
 							]}
 						>
-							{option.label}
+							{t(option.label)}
 						</Text>
 					</Pressable>
 				);
@@ -85,6 +88,7 @@ export const SettingsSection: FC = () => {
 	);
 	const setTheme = useProfileStore((state) => state.setTheme);
 	const colors = theme();
+	const { t } = useTranslation();
 
 	const languageLabel =
 		LANGUAGE_OPTIONS.find((option) => option.code === language)?.label ??
@@ -93,7 +97,7 @@ export const SettingsSection: FC = () => {
 	return (
 		<View style={settingsStyles.section}>
 			<Text style={[settingsStyles.sectionTitle, { color: colors.onSurface }]}>
-				Ayarlar
+				{t('Profile.SettingsSection.Title')}
 			</Text>
 			<View
 				style={[
@@ -102,7 +106,9 @@ export const SettingsSection: FC = () => {
 				]}
 			>
 				<Pressable
-					accessibilityLabel={`Dil: ${languageLabel}`}
+					accessibilityLabel={t('Profile.SettingsSection.LanguageA11y', {
+						language: languageLabel,
+					})}
 					accessibilityRole='button'
 					onPress={() => triggerModal('language')}
 					style={({ pressed }) => [
@@ -112,7 +118,7 @@ export const SettingsSection: FC = () => {
 				>
 					<SettingIcon name='language' />
 					<Text style={[settingsStyles.rowLabel, { color: colors.onSurface }]}>
-						Dil
+						{t('Profile.SettingsSection.Language')}
 					</Text>
 					<Text
 						style={[
@@ -139,7 +145,7 @@ export const SettingsSection: FC = () => {
 				<View style={settingsStyles.row}>
 					<SettingIcon name='light-mode' />
 					<Text style={[settingsStyles.rowLabel, { color: colors.onSurface }]}>
-						Görünüm
+						{t('Profile.SettingsSection.Appearance')}
 					</Text>
 					<ThemeSegments onChange={setTheme} value={themeMode} />
 				</View>

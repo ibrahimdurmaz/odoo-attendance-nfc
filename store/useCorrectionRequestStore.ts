@@ -2,13 +2,15 @@ import { create } from 'zustand';
 
 import {
 	addDays,
-	DAYS_SHORT,
+	formatDayMonth,
 	formatShortDate,
 	formatTime,
-	MONTHS,
+	getMonthName,
+	getShortDayName,
 	parseDateKey,
 	toDateKey,
 } from '@/helper/dateHelpers';
+import i18n from '@/i18n';
 import type { CorrectionRecordType, DayRecord } from '@/store/useDayStore';
 import { createDayRecord } from '@/store/useDayStore';
 
@@ -49,19 +51,19 @@ export type EmployeeCorrectionRequest = {
 };
 
 // ---------------------------------------------------------------------------
-// Etiketler
+// Etiketler (değerler çeviri anahtarıdır; ekranda t() ile çevrilir)
 // ---------------------------------------------------------------------------
 
 export const RECORD_TYPE_LABELS: Record<CorrectionRecordType, string> = {
-	entry: 'Giriş',
-	break: 'Mola',
-	exit: 'Çıkış',
+	entry: 'ExtraConstants.RecordTypes.Entry',
+	break: 'ExtraConstants.RecordTypes.Break',
+	exit: 'ExtraConstants.RecordTypes.Exit',
 };
 
 export const REQUEST_STATUS_LABELS: Record<RequestStatus, string> = {
-	pending: 'Onay bekliyor',
-	approved: 'Onaylandı',
-	rejected: 'Reddedildi',
+	pending: 'ExtraConstants.RequestStatus.Pending',
+	approved: 'ExtraConstants.RequestStatus.Approved',
+	rejected: 'ExtraConstants.RequestStatus.Rejected',
 };
 
 // ---------------------------------------------------------------------------
@@ -71,22 +73,30 @@ export const REQUEST_STATUS_LABELS: Record<RequestStatus, string> = {
 /** "2026-09-28" → "Pzt, 28 Eylül" */
 export const formatCompactDate = (dateKey: string): string => {
 	const date = parseDateKey(dateKey);
-	return `${DAYS_SHORT[date.getDay()] ?? ''}, ${date.getDate()} ${MONTHS[date.getMonth()] ?? ''}`;
+	return i18n.t('ExtraConstants.DateFormats.Compact', {
+		weekday: getShortDayName(date.getDay()),
+		day: date.getDate(),
+		month: getMonthName(date.getMonth()),
+	});
 };
 
 /** "Az önce", "12 dk önce", "2 saat önce", "Dün 18:20", daha eskiyse "28 Eylül". */
 export const formatRelativeTime = (timestamp: number, now: number): string => {
 	const minutes = Math.floor((now - timestamp) / 60000);
-	if (minutes < 1) return 'Az önce';
-	if (minutes < 60) return `${minutes} dk önce`;
+	if (minutes < 1) return i18n.t('ExtraConstants.RelativeTime.JustNow');
+	if (minutes < 60)
+		return i18n.t('ExtraConstants.RelativeTime.MinutesAgo', { minutes });
 	if (toDateKey(timestamp) === toDateKey(now))
-		return `${Math.floor(minutes / 60)} saat önce`;
+		return i18n.t('ExtraConstants.RelativeTime.HoursAgo', {
+			hours: Math.floor(minutes / 60),
+		});
 	if (toDateKey(timestamp) === toDateKey(addDays(new Date(now), -1))) {
-		return `Dün ${formatTime(timestamp)}`;
+		return i18n.t('ExtraConstants.RelativeTime.Yesterday', {
+			time: formatTime(timestamp),
+		});
 	}
 
-	const date = new Date(timestamp);
-	return `${date.getDate()} ${MONTHS[date.getMonth()] ?? ''}`;
+	return formatDayMonth(new Date(timestamp));
 };
 
 // ---------------------------------------------------------------------------

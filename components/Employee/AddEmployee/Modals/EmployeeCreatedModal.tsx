@@ -11,6 +11,7 @@ import { EmployeeSummaryCard } from './EmployeeSummary';
 import { InfoTile } from './InfoTile';
 import { SuccessHero } from './SuccessHero';
 import { TemporaryPasswordCard } from './TemporaryPasswordCard';
+import { useTranslation } from 'react-i18next';
 
 type EmployeeCreatedModalProps = {
 	/** Az önce eklenen çalışanın sicil numarası; bilgiler store'dan okunur. */
@@ -23,6 +24,7 @@ export const EmployeeCreatedModal: FC<EmployeeCreatedModalProps> = ({
 	const colors = theme();
 
 	const styles = useMemo(() => createScreenStyles(colors), [colors]);
+	const { t } = useTranslation();
 	const { visible, props } = useModalStore().modals.employeeCreated;
 	const employeeStore = useEmployeeStore();
 	const employeeId = props?.employeeId;
@@ -42,10 +44,14 @@ export const EmployeeCreatedModal: FC<EmployeeCreatedModalProps> = ({
 					<InfoTile
 						icon='badge'
 						isAccent
-						label='NFC / RFID Kart'
-						value='Eşleştirme Bekliyor'
+						label={t('AddEmployee.EmployeeCreatedModal.NfcCard')}
+						value={t('AddEmployee.EmployeeCreatedModal.AwaitingPairing')}
 					/>
-					<InfoTile icon='mail' label='E-posta Daveti' value='Gönderildi' />
+					<InfoTile
+						icon='mail'
+						label={t('AddEmployee.EmployeeCreatedModal.EmailInvite')}
+						value={t('AddEmployee.EmployeeCreatedModal.Sent')}
+					/>
 				</View>
 				<CreatedActions />
 			</View>

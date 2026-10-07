@@ -5,15 +5,17 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 export const HelperNote: FC = () => {
 	const colors = theme();
 	const styles = useMemo(() => createNoteStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.row}>
 			<MaterialIcons color={colors.onPrimary} name='info' size={16} />
 			<Text style={styles.text}>
-				Sunucu adresini yöneticinizden öğrenebilirsiniz
+				{t('ServerSetup.HelperNote.Text')}
 			</Text>
 		</View>
 	);

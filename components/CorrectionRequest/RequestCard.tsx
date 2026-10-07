@@ -14,6 +14,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { EmployeeAvatar } from '../Admin/EmployeeAvatar';
 import { RequestStatusPill } from './RequestStatusPill';
 import { TimeChange } from './TimeChange';
+import { useTranslation } from 'react-i18next';
 type RequestCardProps = {
 	request: EmployeeCorrectionRequest;
 	/** Talebi gönderen çalışan; listeden silinmişse undefined. */
@@ -28,13 +29,17 @@ export const RequestCard: FC<RequestCardProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createCardStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	const name = employee?.fullName ?? request.employeeId;
-	const summary = `${formatCompactDate(request.dateKey)} • ${RECORD_TYPE_LABELS[request.recordType]} kaydı`;
+	const summary = t('CorrectionRequest.RequestCard.Summary', {
+		date: formatCompactDate(request.dateKey),
+		recordType: t(RECORD_TYPE_LABELS[request.recordType]),
+	});
 
 	return (
 		<Pressable
-			accessibilityLabel={`${name}, ${summary}, ${REQUEST_STATUS_LABELS[request.status]}`}
+			accessibilityLabel={`${name}, ${summary}, ${t(REQUEST_STATUS_LABELS[request.status])}`}
 			accessibilityRole='button'
 			onPress={() => onPress(request.id)}
 			style={({ pressed }) => [styles.card, pressed && styles.pressed]}

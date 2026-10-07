@@ -3,9 +3,11 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 export const IntegrationCard: FC = () => {
 	const colors = theme();
 	const styles = useMemo(() => createIntegrationStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.card}>
@@ -13,9 +15,11 @@ export const IntegrationCard: FC = () => {
 				<MaterialIcons color={colors.primary} name='contactless' size={28} />
 			</View>
 			<View style={styles.texts}>
-				<Text style={styles.title}>Odoo Turnike & Kiosk Entegrasyonu</Text>
+				<Text style={styles.title}>
+					{t('AddEmployee.IntegrationCard.Title')}
+				</Text>
 				<Text style={styles.text}>
-					Kayıt sonrası NFC/RFID kart tanımlama hazır hale gelir.
+					{t('AddEmployee.IntegrationCard.Text')}
 				</Text>
 			</View>
 		</View>

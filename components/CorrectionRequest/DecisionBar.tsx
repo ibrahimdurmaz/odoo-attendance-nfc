@@ -4,12 +4,14 @@ import type { FC } from 'react';
 import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 
 type DecisionBarProps = { onReject: () => void; onApprove: () => void };
 
 export const DecisionBar: FC<DecisionBarProps> = ({ onReject, onApprove }) => {
 	const colors = theme();
 	const styles = useMemo(() => createBarStyles(colors), [colors]);
+	const { t } = useTranslation();
 	const insets = useSafeAreaInsets();
 
 	return (
@@ -28,7 +30,9 @@ export const DecisionBar: FC<DecisionBarProps> = ({ onReject, onApprove }) => {
 					name='cancel'
 					size={20}
 				/>
-				<Text style={[styles.label, styles.rejectLabel]}>Reddet</Text>
+				<Text style={[styles.label, styles.rejectLabel]}>
+					{t('CorrectionRequestDetail.DecisionBar.Reject')}
+				</Text>
 			</Pressable>
 			<Pressable
 				accessibilityRole='button'
@@ -44,7 +48,9 @@ export const DecisionBar: FC<DecisionBarProps> = ({ onReject, onApprove }) => {
 					name='check-circle'
 					size={20}
 				/>
-				<Text style={[styles.label, styles.approveLabel]}>Onayla</Text>
+				<Text style={[styles.label, styles.approveLabel]}>
+					{t('CorrectionRequestDetail.DecisionBar.Approve')}
+				</Text>
 			</Pressable>
 		</View>
 	);

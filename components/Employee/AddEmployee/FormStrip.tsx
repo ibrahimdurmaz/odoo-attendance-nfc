@@ -3,17 +3,19 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 export const FormStrip: FC = () => {
 	const colors = theme();
 	const styles = useMemo(() => createStripStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.strip}>
 			<View style={styles.overlineRow}>
 				<View style={styles.dot} />
 				<Text numberOfLines={1} style={styles.overline}>
-					İK MODÜLÜ • YENİ PROFİL
+					{t('AddEmployee.FormStrip.Overline')}
 				</Text>
 			</View>
 			<View style={styles.pill}>
@@ -22,7 +24,9 @@ export const FormStrip: FC = () => {
 					name='admin-panel-settings'
 					size={14}
 				/>
-				<Text style={styles.pillText}>Yönetici Yetkisi</Text>
+				<Text style={styles.pillText}>
+					{t('AddEmployee.FormStrip.AdminPermission')}
+				</Text>
 			</View>
 		</View>
 	);

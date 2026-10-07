@@ -6,6 +6,7 @@ import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { IconName } from '../../Home/types';
+import { useTranslation } from 'react-i18next';
 type BottomActionBarProps = {
 	hasErrors: boolean;
 	onSubmit: () => void;
@@ -16,11 +17,12 @@ type BottomActionBarProps = {
 export const BottomActionBar: FC<BottomActionBarProps> = ({
 	hasErrors,
 	onSubmit,
-	submitLabel = 'Çalışanı Oluştur',
+	submitLabel,
 	submitIcon = 'person-add',
 }) => {
 	const colors = theme();
 	const router = useRouter();
+	const { t } = useTranslation();
 	const styles = useMemo(() => createBarStyles(colors), [colors]);
 	const insets = useSafeAreaInsets();
 	const onCancel = () => {
@@ -32,7 +34,7 @@ export const BottomActionBar: FC<BottomActionBarProps> = ({
 				<View accessibilityLiveRegion='polite' style={styles.errorRow}>
 					<MaterialIcons color={colors.error} name='error' size={16} />
 					<Text style={styles.errorText}>
-						Eksik veya hatalı alanlar var. Lütfen kontrol edin.
+						{t('AddEmployee.BottomActionBar.Errors')}
 					</Text>
 				</View>
 			) : null}
@@ -42,7 +44,9 @@ export const BottomActionBar: FC<BottomActionBarProps> = ({
 					onPress={onCancel}
 					style={({ pressed }) => [styles.cancel, pressed && styles.pressed]}
 				>
-					<Text style={styles.cancelLabel}>Vazgeç</Text>
+					<Text style={styles.cancelLabel}>
+						{t('AddEmployee.BottomActionBar.Cancel')}
+					</Text>
 				</Pressable>
 				<Pressable
 					accessibilityRole='button'
@@ -50,7 +54,9 @@ export const BottomActionBar: FC<BottomActionBarProps> = ({
 					style={({ pressed }) => [styles.submit, pressed && styles.pressed]}
 				>
 					<MaterialIcons color={colors.onPrimary} name={submitIcon} size={20} />
-					<Text style={styles.submitLabel}>{submitLabel}</Text>
+					<Text style={styles.submitLabel}>
+						{submitLabel ?? t('AddEmployee.BottomActionBar.CreateEmployee')}
+					</Text>
 				</Pressable>
 			</View>
 		</View>

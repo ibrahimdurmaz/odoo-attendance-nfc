@@ -15,21 +15,31 @@ import { Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { DayCard } from './DayCard';
 import { styles } from './styles';
-import { WeeklySummary } from './WeeklySummary';
+import { WEEKLY_TARGET_HOURS, WeeklySummary } from './WeeklySummary';
 import { WeeksDays } from './WeeksDays';
+import { useTranslation } from 'react-i18next';
 
 type IconName = ComponentProps<typeof MaterialIcons>['name'];
 
 type Filter = 'week' | 'month' | 'overtime' | 'undertime';
 
+// label değerleri çeviri anahtarıdır.
 const FILTERS: { key: Filter; label: string; icon: IconName }[] = [
-	{ key: 'week', label: 'Bu Hafta', icon: 'calendar-today' },
-	{ key: 'month', label: 'Son 30 Gün', icon: 'date-range' },
-	{ key: 'overtime', label: 'Fazla Mesai', icon: 'more-time' },
-	{ key: 'undertime', label: 'Eksik Süre', icon: 'timelapse' },
+	{ key: 'week', label: 'Schedule.ScheduleScreen.Filters.Week', icon: 'calendar-today' },
+	{ key: 'month', label: 'Schedule.ScheduleScreen.Filters.Month', icon: 'date-range' },
+	{
+		key: 'overtime',
+		label: 'Schedule.ScheduleScreen.Filters.Overtime',
+		icon: 'more-time',
+	},
+	{
+		key: 'undertime',
+		label: 'Schedule.ScheduleScreen.Filters.Undertime',
+		icon: 'timelapse',
+	},
 ];
 
-const WEEKLY_TARGET_SECONDS = 40 * 3600;
+const WEEKLY_TARGET_SECONDS = WEEKLY_TARGET_HOURS * 3600;
 
 /** İçinde bulunulan haftanın pazartesisi. */
 const getMonday = (today: Date): Date => {
@@ -53,6 +63,7 @@ export const ScheduleScreen = ({ id }: ScheduleScreenProps) => {
 		state.employees.find((item) => item.employeeId === id),
 	);
 	const router = useRouter();
+	const { t } = useTranslation();
 	const [filter, setFilter] = useState<Filter>('week');
 
 	// Ekrandaki bütün veri buradan çıkar: alt bileşenler store okumaz, `days`
@@ -99,7 +110,7 @@ export const ScheduleScreen = ({ id }: ScheduleScreenProps) => {
 			<View style={styles.header}>
 				{id ? (
 					<Pressable
-						accessibilityLabel='Geri'
+						accessibilityLabel={t('UI.Buttons.Back')}
 						accessibilityRole='button'
 						hitSlop={8}
 						onPress={() => router.back()}
@@ -124,10 +135,12 @@ export const ScheduleScreen = ({ id }: ScheduleScreenProps) => {
 				)}
 				<View>
 					<Text style={[styles.brand, { color: colors.primaryContainer }]}>
-						{id ? 'ÇALIŞAN ÇİZELGESİ' : 'ODOO'}
+						{id
+							? t('EmployeeSchedule.ScheduleScreen.Overline')
+							: t('Schedule.ScheduleScreen.Brand')}
 					</Text>
 					<Text style={[styles.headerTitle, { color: colors.onSurface }]}>
-						{id ? (employee?.fullName ?? id) : 'Çizelge'}
+						{id ? (employee?.fullName ?? id) : t('Schedule.ScheduleScreen.Title')}
 					</Text>
 				</View>
 			</View>
@@ -159,7 +172,7 @@ export const ScheduleScreen = ({ id }: ScheduleScreenProps) => {
 							: colors.onSurfaceVariant;
 						return (
 							<Pressable
-								accessibilityLabel={item.label}
+								accessibilityLabel={t(item.label)}
 								accessibilityRole='button'
 								accessibilityState={{ selected: isSelected }}
 								key={item.key}
@@ -172,7 +185,7 @@ export const ScheduleScreen = ({ id }: ScheduleScreenProps) => {
 							>
 								<MaterialIcons color={tint} name={item.icon} size={16} />
 								<Text style={[styles.chipLabel, { color: tint }]}>
-									{item.label}
+									{t(item.label)}
 								</Text>
 							</Pressable>
 						);
@@ -183,10 +196,10 @@ export const ScheduleScreen = ({ id }: ScheduleScreenProps) => {
 				<View style={styles.section}>
 					<View style={styles.spread}>
 						<Text style={[styles.sectionTitle, { color: colors.onSurface }]}>
-							Kayıt Detayları
+							{t('Schedule.ScheduleScreen.RecordDetails')}
 						</Text>
 						<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
-							{visibleDays.length} Kayıt
+							{t('Schedule.ScheduleScreen.RecordCount', { count: visibleDays.length })}
 						</Text>
 					</View>
 					{visibleDays.length === 0 ? (
@@ -203,7 +216,7 @@ export const ScheduleScreen = ({ id }: ScheduleScreenProps) => {
 								size={32}
 							/>
 							<Text style={[styles.emptyTitle, { color: colors.onSurface }]}>
-								Kayıt bulunamadı
+								{t('Schedule.ScheduleScreen.EmptyTitle')}
 							</Text>
 							<Text
 								style={[
@@ -213,8 +226,8 @@ export const ScheduleScreen = ({ id }: ScheduleScreenProps) => {
 								]}
 							>
 								{id
-									? 'Çalışanın mesaiyi bitirdiği günler burada listelenir.'
-									: 'Mesaiyi bitirdiğiniz günler burada listelenir.'}
+									? t('EmployeeSchedule.ScheduleScreen.EmptyText')
+									: t('Schedule.ScheduleScreen.EmptyText')}
 							</Text>
 						</View>
 					) : (

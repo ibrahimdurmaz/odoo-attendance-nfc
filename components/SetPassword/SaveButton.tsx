@@ -3,15 +3,17 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { FC } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { saveStyles } from './styles';
+import { useTranslation } from 'react-i18next';
 
 type SaveButtonProps = { isDisabled: boolean; onPress: () => void };
 
 export const SaveButton: FC<SaveButtonProps> = ({ isDisabled, onPress }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	return (
 		<View style={saveStyles.container}>
 			<Pressable
-				accessibilityLabel='Şifreyi Kaydet'
+				accessibilityLabel={t('SetPassword.SaveButton.Save')}
 				accessibilityRole='button'
 				accessibilityState={{ disabled: isDisabled }}
 				disabled={isDisabled}
@@ -24,7 +26,7 @@ export const SaveButton: FC<SaveButtonProps> = ({ isDisabled, onPress }) => {
 				]}
 			>
 				<Text style={[saveStyles.label, { color: colors.onPrimary }]}>
-					Şifreyi Kaydet
+					{t('SetPassword.SaveButton.Save')}
 				</Text>
 				<MaterialIcons
 					color={colors.onPrimary}
@@ -35,8 +37,7 @@ export const SaveButton: FC<SaveButtonProps> = ({ isDisabled, onPress }) => {
 			<View style={saveStyles.note}>
 				<MaterialIcons color={colors.outline} name='info-outline' size={16} />
 				<Text style={[saveStyles.noteText, { color: colors.outline }]}>
-					Şifrenizi kaydettikten sonra ilk kurulum adımlarına
-					yönlendirileceksiniz.
+					{t('SetPassword.SaveButton.Note')}
 				</Text>
 			</View>
 		</View>

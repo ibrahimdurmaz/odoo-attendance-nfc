@@ -2,10 +2,12 @@ import { fonts, theme } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 type ResultBadgeProps = { isApproved: boolean };
 
 export const ResultBadge: FC<ResultBadgeProps> = ({ isApproved }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	const background = isApproved ? colors.tertiaryFixed : colors.errorContainer;
 	const foreground = isApproved ? colors.tertiary : colors.onErrorContainer;
 
@@ -17,7 +19,9 @@ export const ResultBadge: FC<ResultBadgeProps> = ({ isApproved }) => {
 				size={15}
 			/>
 			<Text style={[badgeStyles.label, { color: foreground }]}>
-				{isApproved ? 'Onaylandı' : 'Reddedildi'}
+				{isApproved
+					? t('Notification.ResultBadge.Approved')
+					: t('Notification.ResultBadge.Rejected')}
 			</Text>
 		</View>
 	);

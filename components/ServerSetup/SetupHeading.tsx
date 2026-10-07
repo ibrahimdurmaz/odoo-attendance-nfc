@@ -4,17 +4,21 @@ import { fonts, theme } from '@/assets/theme';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 export const SetupHeading: FC = () => {
 	const colors = theme();
 	const styles = useMemo(() => createHeadingStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.container}>
 			<Text accessibilityRole='header' style={styles.title}>
-				Giriş Yap
+				{t('ServerSetup.SetupHeading.Title')}
 			</Text>
-			<Text style={styles.subtitle}>Sunucu bağlantınızı yapılandırın</Text>
+			<Text style={styles.subtitle}>
+				{t('ServerSetup.SetupHeading.Subtitle')}
+			</Text>
 		</View>
 	);
 };

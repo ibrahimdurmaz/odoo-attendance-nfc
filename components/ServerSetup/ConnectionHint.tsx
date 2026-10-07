@@ -6,12 +6,14 @@ import type { FC } from 'react';
 import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Protocol } from './serverAddress';
+import { useTranslation } from 'react-i18next';
 
 type ConnectionHintProps = { protocol: Protocol; port: string };
 
 export const ConnectionHint: FC<ConnectionHintProps> = ({ protocol, port }) => {
 	const colors = theme();
 	const styles = useMemo(() => createHintStyles(colors), [colors]);
+	const { t } = useTranslation();
 	const isSecure = protocol === 'https://';
 
 	return (
@@ -23,10 +25,14 @@ export const ConnectionHint: FC<ConnectionHintProps> = ({ protocol, port }) => {
 					size={14}
 				/>
 				<Text style={styles.text}>
-					{isSecure ? 'Şifreli bağlantı (HTTPS)' : 'Şifresiz bağlantı (HTTP)'}
+					{isSecure
+						? t('ServerSetup.ConnectionHint.Secure')
+						: t('ServerSetup.ConnectionHint.Insecure')}
 				</Text>
 			</View>
-			<Text style={styles.text}>Port {port}</Text>
+			<Text style={styles.text}>
+				{t('ServerSetup.ConnectionHint.Port', { port })}
+			</Text>
 		</View>
 	);
 };

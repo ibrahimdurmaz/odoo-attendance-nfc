@@ -6,6 +6,7 @@ import {
 } from '@/store/employeeScheduleStore';
 import { useModalStore } from '@/store/modalStore';
 import { DayRecord, useDayStore } from '@/store/useDayStore';
+import i18n from '@/i18n';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { ComponentProps, FC } from 'react';
 import { ColorValue, Pressable, ScrollView, Text, View } from 'react-native';
@@ -16,6 +17,7 @@ import { StateBand } from './StateBand';
 import { DayDetailsStyles } from './styles';
 import { Summary } from './Summary';
 import { TimelineItem } from './TimelineItem';
+import { useTranslation } from 'react-i18next';
 
 type IconName = ComponentProps<typeof MaterialIcons>['name'];
 
@@ -46,8 +48,10 @@ const buildTimeline = (
 			icon: 'local-cafe',
 			nodeColor: colors.secondaryFixed,
 			iconColor: colors.onSecondaryFixed,
-			title: 'Mola',
-			description: `${formatMinutes((item.end - item.start) / 1000)} dinlenme`,
+			title: i18n.t('DayDetails.DayDetailScreen.Events.Break'),
+			description: i18n.t('DayDetails.DayDetailScreen.Events.BreakDuration', {
+				duration: formatMinutes((item.end - item.start) / 1000),
+			}),
 			time: `${formatTime(item.start)} – ${formatTime(item.end)}`,
 			timeColor: colors.onSurfaceVariant,
 		}),
@@ -59,8 +63,8 @@ const buildTimeline = (
 			icon: 'check',
 			nodeColor: colors.tertiaryContainer,
 			iconColor: colors.onTertiary,
-			title: 'Mesai Başlangıcı',
-			description: 'Giriş kaydedildi',
+			title: i18n.t('DayDetails.DayDetailScreen.Events.ShiftStart'),
+			description: i18n.t('DayDetails.DayDetailScreen.Events.CheckInRecorded'),
 			time: formatTime(day.checkInAt),
 			timeColor: colors.tertiary,
 		},
@@ -70,8 +74,8 @@ const buildTimeline = (
 			icon: 'logout',
 			nodeColor: colors.primaryContainer,
 			iconColor: colors.onPrimaryContainer,
-			title: 'Mesai Sonu',
-			description: 'Günlük mesai tamamlandı',
+			title: i18n.t('DayDetails.DayDetailScreen.Events.ShiftEnd'),
+			description: i18n.t('DayDetails.DayDetailScreen.Events.ShiftCompleted'),
 			time: formatTime(day.checkOutAt),
 			timeColor: colors.primary,
 		},
@@ -89,6 +93,7 @@ export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey, id }) => {
 	const styles = DayDetailsStyles;
 	// Hook olduğu için erken return'den önce çağrılmalı.
 	const colors = theme();
+	const { t } = useTranslation();
 
 	if (!day) {
 		return (
@@ -104,7 +109,7 @@ export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey, id }) => {
 						size={32}
 					/>
 					<Text style={[styles.eventTitle, { color: colors.onSurface }]}>
-						Bu güne ait kayıt bulunamadı
+						{t('DayDetails.DayDetailScreen.NotFound')}
 					</Text>
 				</View>
 			</SafeAreaView>
@@ -154,7 +159,9 @@ export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey, id }) => {
 							]}
 						/>
 						<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
-							{day.correction ? 'Düzeltme Bekliyor' : 'Tamamlandı'}
+							{day.correction
+							? t('DayDetails.DayDetailScreen.PendingCorrection')
+							: t('DayDetails.DayDetailScreen.Completed')}
 						</Text>
 					</View>
 				</View>
@@ -163,10 +170,12 @@ export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey, id }) => {
 				{/* Zaman çizelgesi */}
 				<View style={styles.spread}>
 					<Text style={[styles.sectionTitle, { color: colors.onSurface }]}>
-						Zaman Çizelgesi
+						{t('DayDetails.DayDetailScreen.Timeline')}
 					</Text>
 					<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
-						{timeline.length} Olay Kaydedildi
+						{t('DayDetails.DayDetailScreen.EventCount', {
+							count: timeline.length,
+						})}
 					</Text>
 				</View>
 				<View style={styles.timeline}>
@@ -203,7 +212,7 @@ export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey, id }) => {
 					</View>
 					<View style={styles.flex}>
 						<Text style={[styles.overline, { color: colors.onSurfaceVariant }]}>
-							LOKASYON & TERMİNAL
+							{t('DayDetails.DayDetailScreen.LocationTerminal')}
 						</Text>
 						<Text
 							numberOfLines={1}
@@ -225,7 +234,7 @@ export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey, id }) => {
 				</View>
 
 				<Pressable
-					accessibilityLabel='Düzeltme Talep Et'
+					accessibilityLabel={t('DayDetails.DayDetailScreen.RequestCorrection')}
 					accessibilityRole='button'
 					onPress={() => {
 						triggerModal('correctionRequest');
@@ -238,7 +247,7 @@ export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey, id }) => {
 				>
 					<MaterialIcons color={colors.primary} name='edit-note' size={20} />
 					<Text style={[styles.correctionLabel, { color: colors.primary }]}>
-						Düzeltme Talep Et
+						{t('DayDetails.DayDetailScreen.RequestCorrection')}
 					</Text>
 				</Pressable>
 			</ScrollView>

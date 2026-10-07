@@ -18,11 +18,13 @@ import { EmployeeCard } from './EmployeeCard';
 import { ListStrip } from './EmployeeListStrip';
 import { EmptyState } from './EmptyState';
 import { MetricBar } from './MetricBars';
+import { useTranslation } from 'react-i18next';
 
 export const EmployeeListScreen = () => {
 	const colors = theme();
 	const styles = useMemo(() => createScreenStyles(colors), [colors]);
 	const router = useRouter();
+	const { t } = useTranslation();
 	const employees = useEmployeeStore((state) => state.employees);
 	const [query, setQuery] = useState('');
 	const searchRef = useRef<SearchBarCommands>(null);
@@ -45,7 +47,7 @@ export const EmployeeListScreen = () => {
 
 	return (
 		<SafeAreaView edges={['top']} style={styles.screen}>
-			<AdminHeader title='Çalışan Listesi' />
+			<AdminHeader title={t('EmployeeList.EmployeeListScreen.Title')} />
 			<FlatList
 				contentContainerStyle={styles.content}
 				data={visibleEmployees}
@@ -55,14 +57,14 @@ export const EmployeeListScreen = () => {
 					employees.length === 0 ? (
 						<EmptyState
 							icon='groups'
-							text='Yeni Ekle butonuyla ilk çalışanı oluşturun.'
-							title='Henüz Çalışan Yok'
+							text={t('EmployeeList.EmployeeListScreen.EmptyText')}
+							title={t('EmployeeList.EmployeeListScreen.EmptyTitle')}
 						/>
 					) : (
 						<EmptyState
 							icon='search-off'
-							text='Aradığınız isim ya da sicil numarasına ait kayıt bulunamadı. Filtreleri temizlemeyi deneyin.'
-							title='Eşleşen Çalışan Bulunamadı'
+							text={t('EmployeeList.EmployeeListScreen.NoMatchText')}
+							title={t('EmployeeList.EmployeeListScreen.NoMatchTitle')}
 						/>
 					)
 				}
@@ -70,6 +72,7 @@ export const EmployeeListScreen = () => {
 					<View style={styles.header}>
 						<ListStrip onAddEmployee={onAddEmployee} />
 						<SearchBar
+							placeholder={t('EmployeeList.SearchBar.Placeholder')}
 							ref={searchRef}
 							onChangeText={(e) => setQuery(e.nativeEvent.text)}
 						/>

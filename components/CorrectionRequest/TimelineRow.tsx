@@ -4,6 +4,7 @@ import type { FC } from 'react';
 import { useMemo } from 'react';
 import { ColorValue, StyleSheet, Text, View } from 'react-native';
 import { IconName } from '../Home/types';
+import { useTranslation } from 'react-i18next';
 type TimelineRowProps = {
 	icon: IconName;
 	title: string;
@@ -27,6 +28,7 @@ export const TimelineRow: FC<TimelineRowProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createRowStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	const tones: Record<
 		TimelineRowProps['tone'],
@@ -48,7 +50,7 @@ export const TimelineRow: FC<TimelineRowProps> = ({
 
 	return (
 		<View
-			accessibilityLabel={`${title}, ${time}. ${subtitle}${isUnderReview ? '. Düzeltme isteniyor' : ''}`}
+			accessibilityLabel={`${title}, ${time}. ${subtitle}${isUnderReview ? `. ${t('CorrectionRequestDetail.TimelineRow.UnderReview')}` : ''}`}
 			accessible
 			style={styles.row}
 		>
@@ -67,7 +69,9 @@ export const TimelineRow: FC<TimelineRowProps> = ({
 					) : null}
 					{isUnderReview ? (
 						<View style={styles.reviewTag}>
-							<Text style={styles.reviewTagText}>Düzeltme isteniyor</Text>
+							<Text style={styles.reviewTagText}>
+								{t('CorrectionRequestDetail.TimelineRow.UnderReview')}
+							</Text>
 						</View>
 					) : null}
 				</View>

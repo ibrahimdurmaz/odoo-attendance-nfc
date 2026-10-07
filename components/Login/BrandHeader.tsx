@@ -3,9 +3,11 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { FC } from 'react';
 import { Text, View } from 'react-native';
 import { brandStyles } from './styles';
+import { useTranslation } from 'react-i18next';
 
 export const BrandHeader: FC = () => {
 	const colors = theme();
+	const { t } = useTranslation();
 	return (
 		<View style={brandStyles.container}>
 			<View
@@ -22,10 +24,10 @@ export const BrandHeader: FC = () => {
 				accessibilityRole='header'
 				style={[brandStyles.title, { color: colors.onSurface }]}
 			>
-				Odoo Katılım
+				{t('Login.BrandHeader.Title')}
 			</Text>
 			<Text style={[brandStyles.subtitle, { color: colors.onSurfaceVariant }]}>
-				Hesabınıza giriş yapın
+				{t('Login.BrandHeader.Subtitle')}
 			</Text>
 		</View>
 	);

@@ -5,9 +5,11 @@ import { useModalStore } from '@/store/modalStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { ModalWrapper } from './ModalWrapper';
 import { CheckInFailedModalStyles } from './styles';
+import { useTranslation } from 'react-i18next';
 
 export const CheckInFailedModal = () => {
 	const colors = theme();
+	const { t } = useTranslation();
 	const { modals, closeModal } = useModalStore();
 	const { visible } = modals.checkInFailed;
 	const terminalName = 'terminal 001';
@@ -82,10 +84,10 @@ export const CheckInFailedModal = () => {
 				</View>
 
 				<Text style={[styles.title, { color: colors.onSurface }]}>
-					Giriş kaydedilemedi
+					{t('Modals.CheckInFailedModal.Title')}
 				</Text>
 				<Text style={[styles.message, { color: colors.onSurfaceVariant }]}>
-					Telefonu panele biraz daha yaklaştırın ve tekrar deneyin.
+					{t('Modals.CheckInFailedModal.Message')}
 				</Text>
 
 				<View
@@ -105,16 +107,16 @@ export const CheckInFailedModal = () => {
 					</View>
 					<View style={styles.hintTexts}>
 						<Text style={[styles.label, { color: colors.onSurface }]}>
-							Temas Mesafesi
+							{t('Modals.CheckInFailedModal.HintTitle')}
 						</Text>
 						<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
-							Cihazınızı logonun 2-3 cm yakınına sabit tutun
+							{t('Modals.CheckInFailedModal.HintText')}
 						</Text>
 					</View>
 				</View>
 
 				<Pressable
-					accessibilityLabel='Tekrar Dene'
+					accessibilityLabel={t('UI.Buttons.Retry')}
 					accessibilityRole='button'
 					onPress={onRetry}
 					style={({ pressed }) => [
@@ -130,12 +132,12 @@ export const CheckInFailedModal = () => {
 							{ color: colors.onPrimary },
 						]}
 					>
-						Tekrar Dene
+						{t('UI.Buttons.Retry')}
 					</Text>
 				</Pressable>
 
 				<Pressable
-					accessibilityLabel='Kodla Giriş Yap'
+					accessibilityLabel={t('Modals.CheckInFailedModal.UseCode')}
 					accessibilityRole='button'
 					onPress={onUseCode}
 					style={({ pressed }) => [
@@ -147,14 +149,14 @@ export const CheckInFailedModal = () => {
 				>
 					<MaterialIcons color={colors.primary} name='dialpad' size={22} />
 					<Text style={[styles.buttonLabel, { color: colors.onSurface }]}>
-						Kodla Giriş Yap
+						{t('Modals.CheckInFailedModal.UseCode')}
 					</Text>
 				</Pressable>
 
 				<View style={styles.supportRow}>
 					<MaterialIcons color={colors.outline} name='info-outline' size={16} />
 					<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
-						Sorun devam ederse İK'ya bildirin.
+						{t('Modals.CheckInFailedModal.Support')}
 					</Text>
 				</View>
 			</View>

@@ -32,19 +32,20 @@ import { ServerBadge } from './ServerBadge';
 import { ServerInputCard } from './ServerInputCard';
 import { SetupHeading } from './SetupHeading';
 import { SubmitButton } from './SubmitButton';
+import { useTranslation } from 'react-i18next';
 
 type ConnectionError = 'invalidAddress' | 'unreachable';
 
+// Değerler çeviri anahtarıdır.
 const ERROR_TEXTS: Record<ConnectionError, { title: string; message: string }> =
 	{
 		invalidAddress: {
-			title: 'Geçersiz sunucu adresi',
-			message:
-				'Adresi "odoo.sirket.com" biçiminde, boşluk ve yol olmadan girin.',
+			title: 'ServerSetup.ServerSetupScreen.Errors.InvalidAddressTitle',
+			message: 'ServerSetup.ServerSetupScreen.Errors.InvalidAddressMessage',
 		},
 		unreachable: {
-			title: 'Sunucuya bağlanılamadı',
-			message: 'Lütfen adresinizi ve internet bağlantınızı kontrol edin.',
+			title: 'ServerSetup.ServerSetupScreen.Errors.UnreachableTitle',
+			message: 'ServerSetup.ServerSetupScreen.Errors.UnreachableMessage',
 		},
 	};
 
@@ -57,6 +58,7 @@ export const ServerSetupScreen: FC = () => {
 	const colors = theme();
 	const styles = useMemo(() => createScreenStyles(colors), [colors]);
 	const router = useRouter();
+	const { t } = useTranslation();
 
 	const [protocol, setProtocol] = useState<Protocol>(DEFAULT_PROTOCOL);
 	const [address, setAddress] = useState('');
@@ -142,7 +144,9 @@ export const ServerSetupScreen: FC = () => {
 								onLayout={(event) => setFieldTop(event.nativeEvent.layout.y)}
 								style={styles.field}
 							>
-								<Text style={styles.label}>Sunucu Alan Adı</Text>
+								<Text style={styles.label}>
+									{t('ServerSetup.ServerSetupScreen.ServerDomain')}
+								</Text>
 								<View
 									onLayout={(event) => setCardTop(event.nativeEvent.layout.y)}
 								>
@@ -166,8 +170,8 @@ export const ServerSetupScreen: FC = () => {
 
 							{error ? (
 								<ErrorBanner
-									message={ERROR_TEXTS[error].message}
-									title={ERROR_TEXTS[error].title}
+									message={t(ERROR_TEXTS[error].message)}
+									title={t(ERROR_TEXTS[error].title)}
 								/>
 							) : null}
 

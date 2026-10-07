@@ -13,10 +13,12 @@ import { AdminHeader } from './AdminHeader';
 import { AttendanceCard } from './Attendance';
 import { NavCard } from './NavCard';
 import { SectionIntro } from './SectionIntro';
+import { useTranslation } from 'react-i18next';
 
 export const AdminScreen = () => {
 	const colors = theme();
 	const router = useRouter();
+	const { t } = useTranslation();
 	const styles = useMemo(() => createScreenStyles(colors), [colors]);
 	const onOpenEmployees = () => {
 		router.navigate('/employee_list');
@@ -38,7 +40,7 @@ export const AdminScreen = () => {
 
 	return (
 		<SafeAreaView edges={['top']} style={styles.screen}>
-			<AdminHeader title='Yönetim' />
+			<AdminHeader title={t('Admin.AdminScreen.Title')} />
 			<ScrollView
 				contentContainerStyle={styles.content}
 				showsVerticalScrollIndicator={false}
@@ -49,21 +51,25 @@ export const AdminScreen = () => {
 					<NavCard
 						icon='groups'
 						onPress={onOpenEmployees}
-						subtitle={`${summary.total} aktif çalışan`}
-						title='Çalışanlar'
+						subtitle={t('Admin.AdminScreen.ActiveEmployees', {
+							count: summary.total,
+						})}
+						title={t('Admin.AdminScreen.Employees')}
 					/>
 					<NavCard
 						badge={
 							pendingCorrectionCount > 0
-								? `${pendingCorrectionCount} bekleyen`
+								? t('Admin.AdminScreen.PendingBadge', {
+										count: pendingCorrectionCount,
+									})
 								: undefined
 						}
 						icon='edit-calendar'
 						isAccent
 						isChevronHighlighted={pendingCorrectionCount > 0}
 						onPress={onOpenCorrections}
-						subtitle='Mesai & log incelemeleri'
-						title='Düzeltme Talepleri'
+						subtitle={t('Admin.AdminScreen.CorrectionRequestsSubtitle')}
+						title={t('Admin.AdminScreen.CorrectionRequests')}
 					/>
 				</View>
 

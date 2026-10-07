@@ -9,6 +9,7 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { FC } from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { styles } from './styles';
+import { useTranslation } from 'react-i18next';
 
 type DayCardProps = { day: DayRecord; onPress: (dateKey: string) => void };
 
@@ -16,12 +17,15 @@ export const DayCard: FC<DayCardProps> = ({ day, onPress }) => {
 	const hasPendingCorrection = day.correction !== null;
 	const isUnderTarget = day.workedSeconds < day.targetSeconds;
 	const colors = theme();
+	const { t } = useTranslation();
 	const accent = hasPendingCorrection
 		? colors.secondary
 		: colors.tertiaryContainer;
 	return (
 		<Pressable
-			accessibilityLabel={`${formatShortDate(day.dateKey)}, gün detayı`}
+			accessibilityLabel={t('Schedule.DayCard.A11y', {
+				date: formatShortDate(day.dateKey),
+			})}
 			accessibilityRole='button'
 			onPress={() => onPress(day.dateKey)}
 			style={({ pressed }) => [
@@ -73,7 +77,7 @@ export const DayCard: FC<DayCardProps> = ({ day, onPress }) => {
 								{ color: colors.onSecondaryContainer },
 							]}
 						>
-							Düzeltme Bekliyor
+							{t('Schedule.DayCard.PendingCorrection')}
 						</Text>
 					</View>
 				) : (
@@ -85,7 +89,7 @@ export const DayCard: FC<DayCardProps> = ({ day, onPress }) => {
 					>
 						<MaterialIcons color={colors.tertiary} name='done-all' size={14} />
 						<Text style={[styles.badgeLabel, { color: colors.tertiary }]}>
-							Tamamlandı
+							{t('Schedule.DayCard.Completed')}
 						</Text>
 					</View>
 				)}
@@ -106,7 +110,7 @@ export const DayCard: FC<DayCardProps> = ({ day, onPress }) => {
 				</View>
 				<View style={styles.row}>
 					<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
-						Net:
+						{t('Schedule.DayCard.Net')}
 					</Text>
 					<Text
 						style={[

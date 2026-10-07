@@ -3,6 +3,7 @@ import type { FC } from 'react';
 import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { EmployeeRole, ROLES } from '../../Admin/employeeForm';
+import { useTranslation } from 'react-i18next';
 type RoleSegmentProps = {
 	value: EmployeeRole;
 	onChange: (role: EmployeeRole) => void;
@@ -11,6 +12,7 @@ type RoleSegmentProps = {
 export const RoleSegment: FC<RoleSegmentProps> = ({ value, onChange }) => {
 	const colors = theme();
 	const styles = useMemo(() => createSegmentStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View accessibilityRole='radiogroup' style={styles.track}>
@@ -25,7 +27,7 @@ export const RoleSegment: FC<RoleSegmentProps> = ({ value, onChange }) => {
 						style={[styles.segment, isSelected && styles.segmentSelected]}
 					>
 						<Text style={[styles.label, isSelected && styles.labelSelected]}>
-							{role.label}
+							{t(role.label)}
 						</Text>
 					</Pressable>
 				);

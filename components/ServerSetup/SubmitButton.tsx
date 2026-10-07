@@ -11,6 +11,7 @@ import {
 	Text,
 	View,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 type SubmitButtonProps = {
 	isDisabled: boolean;
@@ -27,12 +28,13 @@ export const SubmitButton: FC<SubmitButtonProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createSubmitStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	const label = isConnecting
-		? 'Bağlanıyor...'
+		? t('ServerSetup.SubmitButton.Connecting')
 		: isRetry
-			? 'Tekrar Dene'
-			: 'İleri';
+			? t('ServerSetup.SubmitButton.Retry')
+			: t('ServerSetup.SubmitButton.Next');
 	const foreground = isDisabled
 		? colors.onPrimary
 		: isRetry

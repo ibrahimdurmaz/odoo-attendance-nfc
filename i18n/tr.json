@@ -1,0 +1,855 @@
+{
+	"Admin": {
+		"AdminScreen": {
+			"Title": "Yönetim",
+			"Employees": "Çalışanlar",
+			"ActiveEmployees": "{{count}} aktif çalışan",
+			"PendingBadge": "{{count}} bekleyen",
+			"CorrectionRequests": "Düzeltme Talepleri",
+			"CorrectionRequestsSubtitle": "Mesai & log incelemeleri"
+		},
+		"SectionIntro": {
+			"Overline": "ODOO YÖNETİM KONSOLU",
+			"Title": "Operasyon & Katılım"
+		},
+		"AttendanceCard": {
+			"Title": "Bugünkü Katılım Durumu",
+			"Shift": "Vardiya: {{hours}}",
+			"AttendanceRate": "Katılım Oranı",
+			"AttendanceRateA11y": "Katılım oranı yüzde {{rate}}",
+			"Target": "Hedef: %{{percent}}",
+			"Staff": "{{present}} / {{total}} Personel",
+			"Approved": "Onaylandı",
+			"Waiting": "Bekleniyor",
+			"NoEntry": "Giriş Yok",
+			"ActiveBreak": "Aktif Mola"
+		},
+		"AttendanceTile": {
+			"Persons": "kişi",
+			"A11y": "{{label}}: {{count}} kişi, {{caption}}"
+		},
+		"AddEmployeeButton": {
+			"Label": "Yeni Çalışan Ekle"
+		}
+	},
+	"Home": {
+		"Header": {
+			"Brand": "ODOO",
+			"Title": "Ana Sayfa"
+		},
+		"StatusBadge": {
+			"NotCheckedIn": "Giriş yapılmadı",
+			"Working": "Çalışıyorsunuz",
+			"OnBreak": "Moladasınız",
+			"Completed": "Gün Tamamlandı"
+		},
+		"Activities": {
+			"CheckIn": "Giriş Kaydı",
+			"Break": "Mola",
+			"BreakDuration": "{{duration}} dinlenme",
+			"InProgress": "Devam ediyor",
+			"ActiveWork": "Aktif Mesai",
+			"Now": "Şimdi",
+			"CheckOut": "Çıkış Kaydı"
+		},
+		"Actions": {
+			"CheckIn": "Giriş Yap",
+			"StartBreak": "Mola Başlat",
+			"CheckOut": "Çıkış Yap",
+			"EndBreak": "Moladan Dön",
+			"FinishAndCheckOut": "Mesaiyi Bitir ve Çıkış Yap"
+		},
+		"InfoTiles": {
+			"PlannedShift": "Planlanan Vardiya",
+			"UsedBreak": "Kullanılan Mola",
+			"LimitExceeded": "Limit aşıldı",
+			"WithinLimit": "Limit dahilinde"
+		},
+		"TodaysActivities": {
+			"Title": "Bugünkü Hareketler",
+			"RecordCount": "{{count}} Kayıt",
+			"EmptyTitle": "Henüz hareket yok",
+			"EmptyText": "Giriş yaptığınızda mesai başlangıcı, molalar ve süreler burada listelenir."
+		},
+		"StatsBlock": {
+			"TotalNetWork": "TOPLAM NET ÇALIŞMA",
+			"Overtime": "+{{duration}} fazla mesai",
+			"Undertime": "{{duration}} eksik mesai",
+			"Target": "Hedef",
+			"TargetHours": "8 Saat",
+			"Completed": "Tamamlanan",
+			"TotalBreak": "Toplam Mola",
+			"WorkPaused": "Çalışma süresi duraklatıldı: {{duration}}",
+			"BreakTime": "Mola Süresi",
+			"ElapsedTime": "Geçen Süre",
+			"TargetValue": "Hedef: {{duration}}",
+			"PercentCompleted": "{{percent}} tamamlandı",
+			"BreakStartedAt": "Başlangıç {{time}}",
+			"TargetShift": "Hedef Mesai",
+			"RemainingTime": "Kalan Süre",
+			"BreakAllowance": "Mola Hakkı"
+		},
+		"FarewellCard": {
+			"Title": "Yarın görüşmek üzere, {{name}}.",
+			"Text": "Bugünkü temponuz için teşekkürler. Dinlenmeyi unutmayın!"
+		}
+	},
+	"Profile": {
+		"Header": {
+			"Title": "Profil"
+		},
+		"IdCard": {
+			"Active": "AKTİF",
+			"EmployeeIdLabel": "SİCİL NUMARASI",
+			"StaffId": "Personel Kimliği"
+		},
+		"SecurityNote": {
+			"Text": "Kimliğiniz yalnızca bu telefonda geçerlidir"
+		},
+		"StatsSection": {
+			"Title": "Mesai & İzin Durumu",
+			"RemainingLeave": "Kalan Yıllık İzin",
+			"AnnualEntitlement": "Yıllık hak ediş",
+			"Days": "Gün",
+			"OvertimeThisMonth": "Bu Ay Fazla Mesai",
+			"RecordedThisMonth": "Bu ay {{count}} gün kayıtlı"
+		},
+		"SettingsSection": {
+			"Title": "Ayarlar",
+			"Language": "Dil",
+			"LanguageA11y": "Dil: {{language}}",
+			"Appearance": "Görünüm",
+			"Light": "Açık",
+			"Dark": "Koyu"
+		},
+		"LogoutSection": {
+			"Logout": "Oturumu Kapat",
+			"SignedInAs": "{{name}} olarak oturum açık"
+		},
+		"LoggedOutView": {
+			"Title": "Oturum kapalı",
+			"Text": "Profilinizi görmek için giriş yapın."
+		},
+		"LanguageModal": {
+			"Title": "Dil Seçimi",
+			"AvailableLanguages": "Kullanılabilir Diller",
+			"AppliedImmediately": "Seçiminiz hemen uygulanır."
+		}
+	},
+	"Schedule": {
+		"ScheduleScreen": {
+			"Brand": "ODOO",
+			"Title": "Çizelge",
+			"Filters": {
+				"Week": "Bu Hafta",
+				"Month": "Son 30 Gün",
+				"Overtime": "Fazla Mesai",
+				"Undertime": "Eksik Süre"
+			},
+			"RecordDetails": "Kayıt Detayları",
+			"RecordCount": "{{count}} Kayıt",
+			"EmptyTitle": "Kayıt bulunamadı",
+			"EmptyText": "Mesaiyi bitirdiğiniz günler burada listelenir."
+		},
+		"WeeklySummary": {
+			"Title": "Haftalık Çalışma Durumu",
+			"Target": "/ {{hours}}s",
+			"Remaining": "Kalan {{duration}}",
+			"DaysRecorded": "{{count}} gün kaydedildi",
+			"WeeklyQuota": "Haftalık Kota: {{hours}}s"
+		},
+		"WeeksDays": {
+			"Title": "Bu Haftanın Seyri",
+			"Today": "Bugün",
+			"SameMonthRange": "{{start}} - {{end}}"
+		},
+		"DayCard": {
+			"A11y": "{{date}}, gün detayı",
+			"PendingCorrection": "Düzeltme Bekliyor",
+			"Completed": "Tamamlandı",
+			"Net": "Net:"
+		}
+	},
+	"AddEmployee": {
+		"AddEmployeeScreen": {
+			"Title": "Yeni Çalışan Oluştur",
+			"PersonalInfo": "Kişisel Bilgiler",
+			"FirstName": "Ad",
+			"FirstNamePlaceholder": "örn. Ayşe",
+			"LastName": "Soyad",
+			"LastNamePlaceholder": "örn. Kaya",
+			"CorporateEmail": "Kurumsal E-posta",
+			"EmailPlaceholder": "ornek@odoo.com.tr",
+			"PhoneNumber": "Telefon Numarası",
+			"PhonePlaceholder": "5XX XXX XX XX",
+			"JobInfo": "İş Bilgileri",
+			"EmployeeId": "Sicil No",
+			"AutoGenerated": "Otomatik Üretildi",
+			"JobTitle": "Ünvan",
+			"JobTitlePlaceholder": "örn. Kıdemli Yazılım Mühendisi",
+			"Department": "Departman",
+			"Company": "Şirket",
+			"StartDate": "İşe Başlama Tarihi",
+			"DatePlaceholder": "GG.AA.YYYY",
+			"WorkSchedule": "Çalışma Düzeni",
+			"ShiftTemplate": "Vardiya Şablonu",
+			"AnnualLeave": "Yıllık İzin Hakkı (Gün)",
+			"WorkDays": "İş Günü",
+			"AccessAndRole": "Erişim & Rol",
+			"PasswordInfo": "Hesap oluşturulduğunda sistem tarafından tek kullanımlık geçici bir şifre üretilecek ve çalışanın e-posta adresine otomatik SMS/ileti olarak gönderilecektir."
+		},
+		"FormStrip": {
+			"Overline": "İK MODÜLÜ • YENİ PROFİL",
+			"AdminPermission": "Yönetici Yetkisi"
+		},
+		"PhotoPicker": {
+			"AddPhoto": "Fotoğraf Ekle",
+			"ChangePhoto": "Fotoğrafı Değiştir",
+			"SelectImage": "Görsel Seç",
+			"Remove": "Kaldır",
+			"Failed": "Fotoğraf seçilemedi. Lütfen tekrar deneyin.",
+			"Hint": "Cihaz galerisinden portre seçin (PNG, JPG)"
+		},
+		"RoleSegment": {
+			"Employee": "Çalışan",
+			"Admin": "Admin"
+		},
+		"IntegrationCard": {
+			"Title": "Odoo Turnike & Kiosk Entegrasyonu",
+			"Text": "Kayıt sonrası NFC/RFID kart tanımlama hazır hale gelir."
+		},
+		"BottomActionBar": {
+			"Errors": "Eksik veya hatalı alanlar var. Lütfen kontrol edin.",
+			"Cancel": "Vazgeç",
+			"CreateEmployee": "Çalışanı Oluştur"
+		},
+		"Validation": {
+			"Required": "Bu alan zorunludur",
+			"InvalidEmail": "Geçerli bir e-posta girin",
+			"PhoneLength": "{{length}} haneli olmalı",
+			"EmployeeIdTaken": "Bu sicil no kullanılıyor",
+			"DateFormat": "GG.AA.YYYY biçiminde girin",
+			"LeaveRange": "0-{{max}} arası olmalı"
+		},
+		"EmployeeCreatedModal": {
+			"NfcCard": "NFC / RFID Kart",
+			"AwaitingPairing": "Eşleştirme Bekliyor",
+			"EmailInvite": "E-posta Daveti",
+			"Sent": "Gönderildi"
+		},
+		"SuccessHero": {
+			"Pill": "Odoo İK Dizini Güncellendi",
+			"Title": "Çalışan Başarıyla Oluşturuldu",
+			"Text": "Sistem kaydı tamamlandı ve kimlik doğrulama anahtarları üretildi."
+		},
+		"TemporaryPasswordCard": {
+			"Title": "Geçici Şifre",
+			"FirstLoginTag": "İlk Giriş İçin",
+			"OneTimeCode": "Tek Kullanımlık Kod",
+			"Copy": "Kopyala",
+			"CopyA11y": "Şifreyi kopyala",
+			"Copied": "Kopyalandı",
+			"Notice": "Bu şifreyi çalışana güvenli şekilde iletin. Kullanıcı ilk giriş yaptığında yeni bir parola belirlemek zorundadır."
+		},
+		"CreatedActions": {
+			"AddAnother": "Yeni Çalışan Ekle",
+			"BackToList": "Çalışan Listesine Dön"
+		}
+	},
+	"CorrectionRequest": {
+		"CorrectionRequestsScreen": {
+			"Title": "Düzeltme Talepleri",
+			"NoMatchTitle": "Eşleşen Talep Yok",
+			"NoMatchText": "Aradığınız çalışan ya da tarihe ait talep bulunamadı.",
+			"EmptyTitle": "{{status}} Talep Yok",
+			"EmptyText": "Çalışanların gönderdiği düzeltme talepleri burada listelenir."
+		},
+		"StatusSegments": {
+			"Pending": "Bekleyen",
+			"Approved": "Onaylanan",
+			"Rejected": "Reddedilen",
+			"SegmentA11y": "{{label}}, {{count}} talep"
+		},
+		"RequestSearchBar": {
+			"Placeholder": "Çalışan adı veya tarih ara...",
+			"A11y": "Çalışan adı veya tarih ara"
+		},
+		"RequestCard": {
+			"Summary": "{{date}} • {{recordType}} kaydı"
+		},
+		"TimeChange": {
+			"A11y": "Mevcut: {{current}}, talep edilen: {{requested}}",
+			"NoRecord": "Kayıt yok"
+		},
+		"ResultBanner": {
+			"Approved": "Talep onaylandı",
+			"Rejected": "Talep reddedildi",
+			"Text": "{{name}} için sonuç bildirimi oluşturuldu.",
+			"DismissA11y": "Bildirimi Kapat"
+		}
+	},
+	"CorrectionRequestDetail": {
+		"CorrectionRequestDetailScreen": {
+			"Title": "Talep Detayı",
+			"NotFound": "Talep bulunamadı."
+		},
+		"RequestSummaryCard": {
+			"ToCorrect": "Düzeltilecek: {{recordType}}",
+			"CurrentStatus": "Mevcut Durum",
+			"RecordedTime": "Kayıtlı saat",
+			"MissingTimestamp": "Eksik zaman damgası",
+			"NoRecord": "Kayıt yok",
+			"Requested": "Talep Edilen",
+			"RequestedCaptions": {
+				"Entry": "Mesai başlangıç saati",
+				"Break": "Mola başlangıç saati",
+				"Exit": "Mesai bitiş saati"
+			}
+		},
+		"ReasonQuote": {
+			"Label": "Neden?"
+		},
+		"ImpactNote": {
+			"Title": "Etki Analizi",
+			"Text": "Onaylarsanız net süre <strong>{{duration}}</strong> olur. {{conclusion}}",
+			"CompletesTarget": "{{duration}} hedefini tamamlar.",
+			"BelowTarget": "Hedefin {{duration}} altında kalır.",
+			"NoRecord": "Bu güne ait kayıt bulunamadığı için etki hesaplanamıyor."
+		},
+		"ResolvedNote": {
+			"Title": "Sonuç",
+			"ManagerNote": "Yönetici notu: {{note}}"
+		},
+		"DayTimelineCard": {
+			"Title": "O Günün Kayıtları",
+			"CheckIn": "Giriş Kaydı",
+			"Break": "Mola",
+			"CheckOut": "Çıkış Kaydı",
+			"RecordNotFound": "Kayıt bulunamadı",
+			"Empty": "Bu güne ait kayıt bulunamadı."
+		},
+		"TimelineRow": {
+			"UnderReview": "Düzeltme isteniyor"
+		},
+		"DecisionBar": {
+			"Reject": "Reddet",
+			"Approve": "Onayla"
+		},
+		"RejectModalHeader": {
+			"Title": "Talebi Reddet",
+			"Info": "Reddetme nedeni personele bildirim olarak iletilecektir."
+		},
+		"TemplateChips": {
+			"Label": "Hızlı Şablonlar:",
+			"AddA11y": "Şablon ekle: {{template}}",
+			"Templates": {
+				"Mismatch": "Kayıtla uyuşmuyor.",
+				"MoreInfo": "Daha fazla bilgi gerekli.",
+				"Timeout": "Süre aşımı."
+			}
+		},
+		"RejectReasonField": {
+			"Label": "Neden",
+			"A11y": "Ret nedeni",
+			"Placeholder": "Çalışana iletilecek ret gerekçesini yazın..."
+		},
+		"RejectActions": {
+			"Submit": "Reddi Gönder",
+			"Cancel": "Vazgeç"
+		}
+	},
+	"DayDetails": {
+		"DayDetailHeader": {
+			"Title": "Gün Detayı"
+		},
+		"DayDetailScreen": {
+			"NotFound": "Bu güne ait kayıt bulunamadı",
+			"PendingCorrection": "Düzeltme Bekliyor",
+			"Completed": "Tamamlandı",
+			"Timeline": "Zaman Çizelgesi",
+			"EventCount": "{{count}} Olay Kaydedildi",
+			"LocationTerminal": "LOKASYON & TERMİNAL",
+			"RequestCorrection": "Düzeltme Talep Et",
+			"Events": {
+				"Break": "Mola",
+				"BreakDuration": "{{duration}} dinlenme",
+				"ShiftStart": "Mesai Başlangıcı",
+				"CheckInRecorded": "Giriş kaydedildi",
+				"ShiftEnd": "Mesai Sonu",
+				"ShiftCompleted": "Günlük mesai tamamlandı"
+			}
+		},
+		"StateBand": {
+			"Pending": "Düzeltme talebi onay bekliyor: {{recordType}} → {{time}}",
+			"Complete": "Günlük hareketler eksiksiz tamamlandı"
+		},
+		"Summary": {
+			"TotalNetWork": "TOPLAM NET ÇALIŞMA",
+			"Overtime": "+{{duration}} fazla mesai",
+			"Undertime": "{{duration}} eksik",
+			"WorkedA11y": "{{hours}} saat {{minutes}} dakika",
+			"Hours": "saat",
+			"Minutes": "dakika",
+			"Planned": "Planlanan: {{hours}} ({{duration}})"
+		},
+		"CorrectionRequestModal": {
+			"Title": "Düzeltme Talep Et",
+			"Description": "Kayıtlarda eksiklik veya hata olduğunu düşünüyorsanız talep oluşturun.",
+			"WhichRecord": "Hangi kayıt?",
+			"CorrectTime": "Doğru saat",
+			"OriginalRecord": "Orijinal kayıt: ",
+			"None": "yok",
+			"SuggestedCorrection": "Önerilen Düzeltme",
+			"Hour": "Saat",
+			"Minute": "Dk",
+			"Increase": "{{label}} artır",
+			"Decrease": "{{label}} azalt",
+			"Reason": "Neden?",
+			"ReasonA11y": "Düzeltme gerekçesi",
+			"ReasonPlaceholder": "Kısa bir gerekçe belirtin...",
+			"Note": "Talebiniz yöneticinize gönderilir. Onaylandığında çalışma çizelgeniz otomatik güncellenir.",
+			"Submit": "Talebi Gönder",
+			"Cancel": "Vazgeç"
+		}
+	},
+	"EditEmployee": {
+		"EditEmployeeScreen": {
+			"Title": "Personel Düzenle",
+			"NotFound": "Çalışan bulunamadı."
+		},
+		"EditEmployeeForm": {
+			"PersonalInfo": "Kişisel Bilgiler",
+			"FirstName": "Ad",
+			"LastName": "Soyad",
+			"Email": "E-posta",
+			"Phone": "Telefon",
+			"PhonePlaceholder": "5XX XXX XX XX",
+			"JobInfo": "İş Bilgileri",
+			"EmployeeId": "Sicil No",
+			"EmployeeIdLocked": "Sicil no değiştirilemez",
+			"JobTitle": "Ünvan",
+			"Department": "Departman",
+			"Company": "Şirket",
+			"StartDate": "İşe Başlama Tarihi",
+			"DatePlaceholder": "GG.AA.YYYY",
+			"WorkSchedule": "Çalışma Düzeni",
+			"Shift": "Vardiya",
+			"AnnualLeave": "Yıllık İzin Hakkı",
+			"WorkDays": "İş Günü",
+			"Account": "Hesap",
+			"SaveChanges": "Değişiklikleri Kaydet"
+		},
+		"AccountStatusSwitch": {
+			"Title": "Hesap Durumu",
+			"Active": "Aktif",
+			"Passive": "Pasif"
+		},
+		"DangerZone": {
+			"Title": "Hesap Devre Dışı Bırakma",
+			"Text": "Çalışan pasife alındığında sisteme erişemez ve vardiya listelerinden gizlenir.",
+			"Deactivate": "Çalışanı Pasife Al"
+		},
+		"DeactivateEmployeeModal": {
+			"Title": "{{name}} pasife alınsın mı?",
+			"Text": "Uygulamaya giriş yapamaz ve panelde giriş-çıkış kaydı oluşturamaz. Geçmiş kayıtları korunur.",
+			"Confirm": "Pasife Al",
+			"Cancel": "Vazgeç",
+			"Note": "Dilediğiniz an tekrar aktif edebilirsiniz"
+		}
+	},
+	"EmployeeDetail": {
+		"EmployeeDetailScreen": {
+			"Title": "Personel Detayı",
+			"NotFound": "Çalışan bulunamadı."
+		},
+		"DetailStrip": {
+			"Overline": "PROFİL YÖNETİMİ",
+			"EditA11y": "Profili Düzenle",
+			"Edit": "Düzenle"
+		},
+		"PresencePill": {
+			"Passive": "Pasif"
+		},
+		"AccountStatePill": {
+			"Active": "Aktif",
+			"Passive": "Pasif"
+		},
+		"TodaySection": {
+			"Title": "Bugün",
+			"CheckIn": "Giriş",
+			"NetWork": "Net Çalışma",
+			"WorkStatus": "Çalışma Durumu",
+			"Passive": "Pasif"
+		},
+		"WorkStates": {
+			"Inside": "Çalışıyor",
+			"OnBreak": "Molada",
+			"Outside": "Mesai Dışı",
+			"Absent": "Gelmemiş"
+		},
+		"PersonalSection": {
+			"Title": "Kişisel Bilgiler",
+			"Email": "E-posta",
+			"Phone": "Telefon"
+		},
+		"JobSection": {
+			"Title": "İş Bilgileri",
+			"EmployeeId": "Sicil No",
+			"Department": "Departman",
+			"Company": "Şirket",
+			"StartDate": "İşe Başlama"
+		},
+		"ScheduleSection": {
+			"Title": "Çalışma Düzeni",
+			"Shift": "Vardiya",
+			"AnnualLeave": "Yıllık İzin Hakkı",
+			"RemainingLeave": "Kalan İzin",
+			"Days": "{{count}} Gün"
+		},
+		"AccountSection": {
+			"Title": "Hesap",
+			"UserRole": "Kullanıcı Rolü",
+			"Admin": "Admin",
+			"Employee": "Çalışan",
+			"AccountStatus": "Hesap Durumu"
+		},
+		"DetailActions": {
+			"ResetPassword": "Şifreyi Sıfırla",
+			"ViewSchedule": "Çizelgeyi Görüntüle"
+		}
+	},
+	"EmployeeList": {
+		"EmployeeListScreen": {
+			"Title": "Çalışan Listesi",
+			"EmptyTitle": "Henüz Çalışan Yok",
+			"EmptyText": "Yeni Ekle butonuyla ilk çalışanı oluşturun.",
+			"NoMatchTitle": "Eşleşen Çalışan Bulunamadı",
+			"NoMatchText": "Aradığınız isim ya da sicil numarasına ait kayıt bulunamadı. Filtreleri temizlemeyi deneyin."
+		},
+		"ListStrip": {
+			"Overline": "REHBER VE CANLI YOKLAMA",
+			"AddNew": "Yeni Ekle",
+			"AddEmployeeA11y": "Yeni Çalışan Ekle"
+		},
+		"SearchBar": {
+			"Placeholder": "Ad veya sicil no ara...",
+			"A11y": "Ad veya sicil no ara"
+		},
+		"DepartmentChips": {
+			"All": "Tümü",
+			"ChipA11y": "{{label}}, {{count}} çalışan"
+		},
+		"MetricBar": {
+			"ActivePresence": "Aktif Varlık",
+			"TotalPersons": "/ {{total}} Kişi"
+		}
+	},
+	"Login": {
+		"BrandHeader": {
+			"Title": "Odoo Katılım",
+			"Subtitle": "Hesabınıza giriş yapın"
+		},
+		"LoginScreen": {
+			"IdentifierLabel": "Sicil No veya E-posta",
+			"IdentifierPlaceholder": "EMP-8042 veya ad@sirket.com",
+			"PasswordLabel": "Şifre",
+			"CredentialsErrorTitle": "Sicil no veya şifre hatalı.",
+			"CredentialsErrorMessage": "Bilgilerinizi kontrol edip tekrar deneyin.",
+			"ConnectionErrorTitle": "Sunucuya ulaşılamadı.",
+			"ConnectionErrorMessage": "İnternet bağlantınızı kontrol edip tekrar deneyin.",
+			"ForgotPassword": "Şifremi unuttum"
+		},
+		"AuthTextField": {
+			"ShowPassword": "Şifreyi göster",
+			"HidePassword": "Şifreyi gizle"
+		},
+		"SubmitButton": {
+			"LoggingIn": "Giriş yapılıyor..."
+		},
+		"SupportNote": {
+			"Text": "Hesabınız yok mu? İK biriminizle iletişime geçin."
+		}
+	},
+	"Notification": {
+		"NotificationsHeader": {
+			"Title": "Bildirimler"
+		},
+		"NotificationsScreen": {
+			"Count": "{{count}} yeni bildirim"
+		},
+		"NotificationsEmptyState": {
+			"Title": "Yeni bildiriminiz yok",
+			"Text": "Düzeltme talepleriniz onaylandığında ya da reddedildiğinde sonucu burada görürsünüz."
+		},
+		"NotificationCard": {
+			"A11y": "{{date}}, {{recordType}} kaydı düzeltme talebi {{result}}",
+			"ApprovedResult": "onaylandı",
+			"RejectedResult": "reddedildi",
+			"Updated": "{{recordType}} saati {{time}} olarak güncellendi",
+			"ManagerNote": "Yönetici notu: {{note}}",
+			"NotSpecified": "Belirtilmedi"
+		},
+		"ResultBadge": {
+			"Approved": "Onaylandı",
+			"Rejected": "Reddedildi"
+		},
+		"Pagination": {
+			"Previous": "Önceki",
+			"Next": "Sonraki",
+			"PreviousA11y": "Önceki sayfa",
+			"NextA11y": "Sonraki sayfa"
+		}
+	},
+	"EmployeeSchedule": {
+		"ScheduleScreen": {
+			"Overline": "ÇALIŞAN ÇİZELGESİ",
+			"EmptyText": "Çalışanın mesaiyi bitirdiği günler burada listelenir."
+		}
+	},
+	"ServerSetup": {
+		"SetupHeading": {
+			"Title": "Giriş Yap",
+			"Subtitle": "Sunucu bağlantınızı yapılandırın"
+		},
+		"ServerSetupScreen": {
+			"ServerDomain": "Sunucu Alan Adı",
+			"Errors": {
+				"InvalidAddressTitle": "Geçersiz sunucu adresi",
+				"InvalidAddressMessage": "Adresi \"odoo.sirket.com\" biçiminde, boşluk ve yol olmadan girin.",
+				"UnreachableTitle": "Sunucuya bağlanılamadı",
+				"UnreachableMessage": "Lütfen adresinizi ve internet bağlantınızı kontrol edin."
+			}
+		},
+		"ServerInputCard": {
+			"ProtocolA11y": "Protokol seçimi: {{protocol}}",
+			"AddressA11y": "Sunucu adresi",
+			"Placeholder": "Sunucu adresini girin",
+			"ClearA11y": "Girişi temizle"
+		},
+		"ConnectionHint": {
+			"Secure": "Şifreli bağlantı (HTTPS)",
+			"Insecure": "Şifresiz bağlantı (HTTP)",
+			"Port": "Port {{port}}"
+		},
+		"SubmitButton": {
+			"Connecting": "Bağlanıyor...",
+			"Retry": "Tekrar Dene",
+			"Next": "İleri"
+		},
+		"HelperNote": {
+			"Text": "Sunucu adresini yöneticinizden öğrenebilirsiniz"
+		}
+	},
+	"SetPassword": {
+		"PasswordHeader": {
+			"Title": "Şifrenizi Belirleyin",
+			"Welcome": "Hoş geldiniz, <name>{{name}}</name>. İlk girişiniz için güvenli ve kalıcı şifrenizi oluşturun."
+		},
+		"SetPasswordScreen": {
+			"NewPassword": "Yeni Şifre",
+			"NewPasswordPlaceholder": "Yeni şifrenizi girin",
+			"ConfirmPassword": "Şifre Tekrar",
+			"ConfirmPasswordPlaceholder": "Şifrenizi tekrar girin",
+			"Matched": "Eşleşti",
+			"Mismatch": "Uyuşmuyor"
+		},
+		"StatusLabel": {
+			"Weak": "Zayıf",
+			"Medium": "Orta Seviye",
+			"Strong": "Güçlü"
+		},
+		"CriteriaCard": {
+			"Overline": "GÜVENLİK KRİTERLERİ",
+			"Counter": "{{met}}/{{total}} Sağlandı",
+			"RuleA11y": "{{label}}: {{state}}",
+			"Met": "sağlandı",
+			"NotMet": "sağlanmadı",
+			"Rules": {
+				"MinLength": "En az {{count}} karakter",
+				"Digit": "En az bir rakam",
+				"Uppercase": "En az bir büyük harf"
+			}
+		},
+		"TrustNote": {
+			"Text": "Şifreniz kurumsal tekli oturum açma (SSO) ve turnike kiosklarında otomatik senkronize edilir."
+		},
+		"SaveButton": {
+			"Save": "Şifreyi Kaydet",
+			"Note": "Şifrenizi kaydettikten sonra ilk kurulum adımlarına yönlendirileceksiniz."
+		}
+	},
+	"Modals": {
+		"CheckInFailedModal": {
+			"Title": "Giriş kaydedilemedi",
+			"Message": "Telefonu panele biraz daha yaklaştırın ve tekrar deneyin.",
+			"HintTitle": "Temas Mesafesi",
+			"HintText": "Cihazınızı logonun 2-3 cm yakınına sabit tutun",
+			"UseCode": "Kodla Giriş Yap",
+			"Support": "Sorun devam ederse İK'ya bildirin."
+		},
+		"CheckInSuccessModal": {
+			"Title": "Giriş kaydedildi",
+			"Subtitle": "İyi çalışmalar, {{name}}.",
+			"RecordTime": "KAYIT SAATİ",
+			"Synced": "Odoo'ya aktarıldı",
+			"ShiftStatus": "Vardiya Durumu",
+			"EarlyStart": "Erken Başlangıç",
+			"LateStart": "Geç Başlangıç",
+			"OnTimeStart": "Zamanında Başlangıç"
+		},
+		"CodeScannerModal": {
+			"CameraActive": "Kamera Aktif",
+			"Flash": "Flaş",
+			"Title": "Panelin kodunu okutun",
+			"Subtitle": "Kodu çerçevenin içine getirin",
+			"AutoDetecting": "Otomatik Algılanıyor",
+			"PermissionTitle": "Kamera izni gerekiyor",
+			"PermissionText": "Paneldeki kodu okutmak için kameraya erişim verin.",
+			"GrantPermission": "İzin Ver",
+			"Help": "Çalışmıyor mu? Yardım al",
+			"HelpTitle": "Yardım ve İpuçları",
+			"HelpCaption": "Hızlı okuma için tavsiyeler",
+			"Tips": {
+				"Reflection": "Yansıma varsa açınızı hafifçe değiştirin",
+				"Closer": "Cihazınızı panele biraz daha yaklaştırın"
+			},
+			"GotIt": "Anladım"
+		},
+		"NfcPromptModal": {
+			"Ready": "Hazır",
+			"KeypadTitle": "Hızlı Erişim Kodu",
+			"BackToNfc": "NFC ile okutmaya dön",
+			"DigitsEntered": "{{count}} / {{total}} hane girildi",
+			"Delete": "Sil",
+			"Confirm": "Onayla",
+			"Scan": "OKUTUN",
+			"Title": "Telefonu panele yaklaştırın",
+			"Subtitle": "Doğrulama için parmak izi gerekebilir",
+			"UseCode": "Çalışmıyor mu? Kodla giriş yap"
+		}
+	},
+	"ExtraConstants": {
+		"Days": {
+			"Sunday": "Pazar",
+			"Monday": "Pazartesi",
+			"Tuesday": "Salı",
+			"Wednesday": "Çarşamba",
+			"Thursday": "Perşembe",
+			"Friday": "Cuma",
+			"Saturday": "Cumartesi"
+		},
+		"ShortDays": {
+			"Sunday": "Paz",
+			"Monday": "Pzt",
+			"Tuesday": "Sal",
+			"Wednesday": "Çar",
+			"Thursday": "Per",
+			"Friday": "Cum",
+			"Saturday": "Cmt"
+		},
+		"Months": {
+			"January": "Ocak",
+			"February": "Şubat",
+			"March": "Mart",
+			"April": "Nisan",
+			"May": "Mayıs",
+			"June": "Haziran",
+			"July": "Temmuz",
+			"August": "Ağustos",
+			"September": "Eylül",
+			"October": "Ekim",
+			"November": "Kasım",
+			"December": "Aralık"
+		},
+		"DateFormats": {
+			"Long": "{{day}} {{month}} {{year}}, {{weekday}}",
+			"Short": "{{day}} {{month}}, {{weekday}}",
+			"Compact": "{{weekday}}, {{day}} {{month}}",
+			"DayMonth": "{{day}} {{month}}",
+			"DayMonthYear": "{{day}} {{month}} {{year}}"
+		},
+		"Duration": {
+			"HoursMinutes": "{{hours}}s {{minutes}}dk",
+			"Minutes": "{{minutes}} dk"
+		},
+		"Greetings": {
+			"Morning": "Günaydın",
+			"Afternoon": "İyi günler",
+			"Evening": "İyi akşamlar"
+		},
+		"RelativeTime": {
+			"JustNow": "Az önce",
+			"MinutesAgo": "{{minutes}} dk önce",
+			"HoursAgo": "{{hours}} saat önce",
+			"Yesterday": "Dün {{time}}"
+		},
+		"Departments": {
+			"Arge": "Ar-Ge & Mühendislik",
+			"Satis": "Satış",
+			"Ik": "İnsan Kaynakları",
+			"Uretim": "Üretim & Lojistik",
+			"Pazarlama": "Pazarlama"
+		},
+		"DepartmentsShort": {
+			"Arge": "Ar-Ge",
+			"Satis": "Satış",
+			"Ik": "İK",
+			"Uretim": "Üretim",
+			"Pazarlama": "Pazarlama"
+		},
+		"Companies": {
+			"OdooTr": "Odoo Kurumsal A.Ş.",
+			"OdooArge": "Odoo İleri Teknolojiler Ltd."
+		},
+		"ShiftTemplates": {
+			"Standard": "Standart Vardiya (09:00 – 18:00)",
+			"Flexible": "Esnek Çalışma (09:30 – 18:30)",
+			"Second": "İkinci Vardiya (16:00 – 00:30)"
+		},
+		"AttendanceStatus": {
+			"Inside": "İçeride",
+			"OnBreak": "Molada",
+			"Outside": "Dışarıda",
+			"Absent": "Gelmedi"
+		},
+		"RecordTypes": {
+			"Entry": "Giriş",
+			"Break": "Mola",
+			"Exit": "Çıkış"
+		},
+		"RequestStatus": {
+			"Pending": "Onay bekliyor",
+			"Approved": "Onaylandı",
+			"Rejected": "Reddedildi"
+		}
+	},
+	"UI": {
+		"Buttons": {
+			"Back": "Geri",
+			"Close": "Kapat",
+			"Login": "Giriş Yap",
+			"ClearSearch": "Aramayı Temizle",
+			"Retry": "Tekrar Dene",
+			"Ok": "Tamam",
+			"MarkAllRead": "Hepsini Gördüm"
+		},
+		"Accessibility": {
+			"Notifications": "Bildirimler",
+			"Profile": "Profil"
+		},
+		"Tabs": {
+			"Home": "Ana Ekran",
+			"Schedule": "İstatistik",
+			"Profile": "Profil",
+			"Admin": "Yönetim"
+		},
+		"NotFound": {
+			"Title": "Hata!",
+			"Text": "Bu ekran mevcut değil.",
+			"GoHome": "Ana ekrana dön"
+		},
+		"Common": {
+			"Percent": "%{{value}}"
+		}
+	}
+}

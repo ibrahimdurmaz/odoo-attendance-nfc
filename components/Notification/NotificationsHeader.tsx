@@ -3,6 +3,7 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 type NotificationsHeaderProps = {
 	onBack: () => void;
 	/** Verilmezse buton görünmez (gösterilecek bildirim yokken). */
@@ -15,11 +16,12 @@ export const NotificationsHeader: FC<NotificationsHeaderProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createHeaderStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.header}>
 			<Pressable
-				accessibilityLabel='Geri'
+				accessibilityLabel={t('UI.Buttons.Back')}
 				accessibilityRole='button'
 				hitSlop={8}
 				onPress={onBack}
@@ -28,7 +30,7 @@ export const NotificationsHeader: FC<NotificationsHeaderProps> = ({
 				<MaterialIcons color={colors.onSurface} name='arrow-back' size={24} />
 			</Pressable>
 			<Text accessibilityRole='header' numberOfLines={1} style={styles.title}>
-				Bildirimler
+				{t('Notification.NotificationsHeader.Title')}
 			</Text>
 			{onMarkAllSeen ? (
 				<Pressable
@@ -37,7 +39,7 @@ export const NotificationsHeader: FC<NotificationsHeaderProps> = ({
 					style={({ pressed }) => [styles.action, pressed && styles.pressed]}
 				>
 					<MaterialIcons color={colors.primary} name='done-all' size={18} />
-					<Text style={styles.actionLabel}>Hepsini Gördüm</Text>
+					<Text style={styles.actionLabel}>{t('UI.Buttons.MarkAllRead')}</Text>
 				</Pressable>
 			) : null}
 		</View>

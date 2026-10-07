@@ -2,10 +2,12 @@ import { fonts, theme } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 export const ProfileHeader = () => {
 	const colors = theme();
 	const router = useRouter();
+	const { t } = useTranslation();
 	return (
 		<View style={headerStyles.bar}>
 			<View
@@ -17,10 +19,10 @@ export const ProfileHeader = () => {
 				<MaterialIcons color={colors.primary} name='fingerprint' size={22} />
 			</View>
 			<Text style={[headerStyles.title, { color: colors.onSurface }]}>
-				Profil
+				{t('Profile.Header.Title')}
 			</Text>
 			<Pressable
-				accessibilityLabel='Bildirimler'
+				accessibilityLabel={t('UI.Accessibility.Notifications')}
 				accessibilityRole='button'
 				hitSlop={8}
 				onPress={() => {

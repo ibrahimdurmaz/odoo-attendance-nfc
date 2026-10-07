@@ -6,12 +6,14 @@ import { fonts, theme, ThemeColors } from '@/assets/theme';
 import { AttendanceSummary } from '@/store/types';
 import { ATTENDANCE_LABELS } from '@/store/useEmployeeStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
+import { useTranslation } from 'react-i18next';
 
 type MetricBarProps = { summary: AttendanceSummary };
 
 export const MetricBar: FC<MetricBarProps> = ({ summary }) => {
 	const colors = theme();
 	const styles = useMemo(() => createMetricStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.bar}>
@@ -20,10 +22,16 @@ export const MetricBar: FC<MetricBarProps> = ({ summary }) => {
 					<MaterialIcons color={colors.primary} name='donut-large' size={18} />
 				</View>
 				<View>
-					<Text style={styles.caption}>Aktif Varlık</Text>
+					<Text style={styles.caption}>
+						{t('EmployeeList.MetricBar.ActivePresence')}
+					</Text>
 					<Text style={styles.value}>
 						{summary.present}{' '}
-						<Text style={styles.total}>/ {summary.total} Kişi</Text>
+						<Text style={styles.total}>
+							{t('EmployeeList.MetricBar.TotalPersons', {
+								total: summary.total,
+							})}
+						</Text>
 					</Text>
 				</View>
 			</View>
@@ -31,13 +39,13 @@ export const MetricBar: FC<MetricBarProps> = ({ summary }) => {
 				<View style={styles.statusRow}>
 					<View style={[styles.dot, { backgroundColor: colors.tertiary }]} />
 					<Text style={[styles.status, { color: colors.tertiary }]}>
-						{summary.inside} {ATTENDANCE_LABELS.inside}
+						{summary.inside} {t(ATTENDANCE_LABELS.inside)}
 					</Text>
 				</View>
 				<View style={styles.statusRow}>
 					<View style={[styles.dot, { backgroundColor: colors.secondary }]} />
 					<Text style={[styles.status, { color: colors.secondary }]}>
-						{summary.onBreak} {ATTENDANCE_LABELS.onBreak}
+						{summary.onBreak} {t(ATTENDANCE_LABELS.onBreak)}
 					</Text>
 				</View>
 			</View>

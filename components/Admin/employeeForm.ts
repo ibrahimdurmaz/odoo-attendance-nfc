@@ -1,4 +1,5 @@
 import { pad, toDateKey } from '@/helper/dateHelpers';
+import i18n from '@/i18n';
 import {
 	CompanyKey,
 	DepartmentKey,
@@ -8,9 +9,10 @@ import {
 
 export type EmployeeRole = 'employee' | 'admin';
 
+// label değerleri çeviri anahtarıdır.
 export const ROLES: { key: EmployeeRole; label: string }[] = [
-	{ key: 'employee', label: 'Çalışan' },
-	{ key: 'admin', label: 'Admin' },
+	{ key: 'employee', label: 'AddEmployee.RoleSegment.Employee' },
+	{ key: 'admin', label: 'AddEmployee.RoleSegment.Admin' },
 ];
 
 /** Formdaki alanlar. Metin kutuları yazıldığı gibi (metin olarak) tutulur. */
@@ -38,7 +40,6 @@ export type EmployeeFormErrors = Partial<Record<EmployeeFormField, string>>;
 const PHONE_LENGTH = 10;
 const MAX_LEAVE_DAYS = 60;
 const DEFAULT_LEAVE_DAYS = 20;
-const REQUIRED_MESSAGE = 'Bu alan zorunludur';
 
 export const createInitialFormValues = (
 	employeeId: string,
@@ -125,6 +126,7 @@ export const validateEmployeeForm = (
 	existingEmployeeIds: string[],
 ): EmployeeFormErrors => {
 	const errors: EmployeeFormErrors = {};
+	const REQUIRED_MESSAGE = i18n.t('AddEmployee.Validation.Required');
 
 	if (!values.firstName.trim()) errors.firstName = REQUIRED_MESSAGE;
 	if (!values.lastName.trim()) errors.lastName = REQUIRED_MESSAGE;
@@ -133,23 +135,27 @@ export const validateEmployeeForm = (
 	const email = values.email.trim();
 	if (!email) errors.email = REQUIRED_MESSAGE;
 	else if (!EMAIL_PATTERN.test(email))
-		errors.email = 'Geçerli bir e-posta girin';
+		errors.email = i18n.t('AddEmployee.Validation.InvalidEmail');
 
 	if (values.phone.length > 0 && values.phone.length !== PHONE_LENGTH) {
-		errors.phone = '10 haneli olmalı';
+		errors.phone = i18n.t('AddEmployee.Validation.PhoneLength', {
+			length: PHONE_LENGTH,
+		});
 	}
 
 	const employeeId = normalizeEmployeeId(values.employeeId);
 	if (!employeeId) errors.employeeId = REQUIRED_MESSAGE;
 	else if (existingEmployeeIds.includes(employeeId))
-		errors.employeeId = 'Bu sicil no kullanılıyor';
+		errors.employeeId = i18n.t('AddEmployee.Validation.EmployeeIdTaken');
 
 	if (!parseDisplayDate(values.startDate))
-		errors.startDate = 'GG.AA.YYYY biçiminde girin';
+		errors.startDate = i18n.t('AddEmployee.Validation.DateFormat');
 
 	const leaveDays = values.annualLeaveDays.trim();
 	if (!/^\d+$/.test(leaveDays) || Number(leaveDays) > MAX_LEAVE_DAYS) {
-		errors.annualLeaveDays = `0-${MAX_LEAVE_DAYS} arası olmalı`;
+		errors.annualLeaveDays = i18n.t('AddEmployee.Validation.LeaveRange', {
+			max: MAX_LEAVE_DAYS,
+		});
 	}
 
 	return errors;

@@ -4,14 +4,21 @@ import { FC } from 'react';
 import { Text, View } from 'react-native';
 import { PasswordRuleResult } from '../Login/passwordRules';
 import { criteriaStyles } from './styles';
+import { useTranslation } from 'react-i18next';
 
 type RuleRowProps = { rule: PasswordRuleResult };
 
 const RuleRow: FC<RuleRowProps> = ({ rule }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	return (
 		<View
-			accessibilityLabel={`${rule.label}: ${rule.isMet ? 'sağlandı' : 'sağlanmadı'}`}
+			accessibilityLabel={t('SetPassword.CriteriaCard.RuleA11y', {
+				label: rule.label,
+				state: rule.isMet
+					? t('SetPassword.CriteriaCard.Met')
+					: t('SetPassword.CriteriaCard.NotMet'),
+			})}
 			accessible
 			style={criteriaStyles.rule}
 		>
@@ -48,6 +55,7 @@ type CriteriaCardProps = { rules: PasswordRuleResult[]; metCount: number };
 
 export const CriteriaCard: FC<CriteriaCardProps> = ({ rules, metCount }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	return (
 		<View
 			style={[
@@ -59,10 +67,13 @@ export const CriteriaCard: FC<CriteriaCardProps> = ({ rules, metCount }) => {
 				<Text
 					style={[criteriaStyles.overline, { color: colors.onSurfaceVariant }]}
 				>
-					GÜVENLİK KRİTERLERİ
+					{t('SetPassword.CriteriaCard.Overline')}
 				</Text>
 				<Text style={[criteriaStyles.counter, { color: colors.primary }]}>
-					{metCount}/{rules.length} Sağlandı
+					{t('SetPassword.CriteriaCard.Counter', {
+						met: metCount,
+						total: rules.length,
+					})}
 				</Text>
 			</View>
 			{rules.map((rule) => (

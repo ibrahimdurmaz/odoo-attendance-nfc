@@ -3,6 +3,7 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 type ResultBannerProps = {
 	isApproved: boolean;
 	employeeName: string;
@@ -16,6 +17,7 @@ export const ResultBanner: FC<ResultBannerProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createBannerStyles(colors), [colors]);
+	const { t } = useTranslation();
 	const foreground = isApproved ? colors.onTertiary : colors.onErrorContainer;
 
 	return (
@@ -30,14 +32,16 @@ export const ResultBanner: FC<ResultBannerProps> = ({
 			/>
 			<View style={styles.texts}>
 				<Text numberOfLines={1} style={[styles.title, { color: foreground }]}>
-					{isApproved ? 'Talep onaylandı' : 'Talep reddedildi'}
+					{isApproved
+						? t('CorrectionRequest.ResultBanner.Approved')
+						: t('CorrectionRequest.ResultBanner.Rejected')}
 				</Text>
 				<Text numberOfLines={1} style={[styles.text, { color: foreground }]}>
-					{employeeName} için sonuç bildirimi oluşturuldu.
+					{t('CorrectionRequest.ResultBanner.Text', { name: employeeName })}
 				</Text>
 			</View>
 			<Pressable
-				accessibilityLabel='Bildirimi Kapat'
+				accessibilityLabel={t('CorrectionRequest.ResultBanner.DismissA11y')}
 				accessibilityRole='button'
 				hitSlop={10}
 				onPress={onDismiss}

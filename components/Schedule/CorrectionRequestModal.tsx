@@ -20,6 +20,7 @@ import {
 	View,
 } from 'react-native';
 import { ModalWrapper } from '../Modals/ModalWrapper';
+import { useTranslation } from 'react-i18next';
 
 type IconName = ComponentProps<typeof MaterialIcons>['name'];
 
@@ -40,9 +41,9 @@ const RECORD_TYPES: {
 	label: string;
 	icon: IconName;
 }[] = [
-	{ key: 'entry', label: 'Giriş', icon: 'login' },
-	{ key: 'break', label: 'Mola', icon: 'coffee' },
-	{ key: 'exit', label: 'Çıkış', icon: 'logout' },
+	{ key: 'entry', label: 'ExtraConstants.RecordTypes.Entry', icon: 'login' },
+	{ key: 'break', label: 'ExtraConstants.RecordTypes.Break', icon: 'coffee' },
+	{ key: 'exit', label: 'ExtraConstants.RecordTypes.Exit', icon: 'logout' },
 ];
 
 /** Seçilen kayıt türünün gündeki mevcut saati; o gün mola yoksa null. */
@@ -89,10 +90,11 @@ type StepperProps = { label: string; onStep: (direction: 1 | -1) => void };
 
 const Stepper: FC<StepperProps> = ({ label, onStep }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	return (
 		<View style={styles.stepper}>
 			<Pressable
-				accessibilityLabel={`${label} artır`}
+				accessibilityLabel={t('DayDetails.CorrectionRequestModal.Increase', { label })}
 				accessibilityRole='button'
 				hitSlop={6}
 				onPress={() => onStep(1)}
@@ -112,7 +114,7 @@ const Stepper: FC<StepperProps> = ({ label, onStep }) => {
 				{label}
 			</Text>
 			<Pressable
-				accessibilityLabel={`${label} azalt`}
+				accessibilityLabel={t('DayDetails.CorrectionRequestModal.Decrease', { label })}
 				accessibilityRole='button'
 				hitSlop={6}
 				onPress={() => onStep(-1)}
@@ -142,6 +144,7 @@ const Form: FC<FormProps> = ({ day }) => {
 	const { closeModal } = useModalStore();
 	const requestCorrection = useDayStore((state) => state.requestCorrection);
 	const colors = theme();
+	const { t } = useTranslation();
 
 	const originalTimestamp = getOriginalTimestamp(day, recordType);
 	const canSubmit = reason.trim().length > 0;
@@ -186,19 +189,18 @@ const Form: FC<FormProps> = ({ day }) => {
 			>
 				<View>
 					<Text style={[styles.title, { color: colors.onSurface }]}>
-						Düzeltme Talep Et
+						{t('DayDetails.CorrectionRequestModal.Title')}
 					</Text>
 					<Text
 						style={[styles.description, { color: colors.onSurfaceVariant }]}
 					>
-						Kayıtlarda eksiklik veya hata olduğunu düşünüyorsanız talep
-						oluşturun.
+						{t('DayDetails.CorrectionRequestModal.Description')}
 					</Text>
 				</View>
 
 				<View style={styles.field}>
 					<Text style={[styles.label, { color: colors.onSurface }]}>
-						Hangi kayıt?
+						{t('DayDetails.CorrectionRequestModal.WhichRecord')}
 					</Text>
 					<View
 						style={[
@@ -213,7 +215,7 @@ const Form: FC<FormProps> = ({ day }) => {
 								: colors.onSurfaceVariant;
 							return (
 								<Pressable
-									accessibilityLabel={type.label}
+									accessibilityLabel={t(type.label)}
 									accessibilityRole='button'
 									accessibilityState={{ selected: isSelected }}
 									key={type.key}
@@ -227,7 +229,7 @@ const Form: FC<FormProps> = ({ day }) => {
 								>
 									<MaterialIcons color={tint} name={type.icon} size={18} />
 									<Text style={[styles.segmentLabel, { color: tint }]}>
-										{type.label}
+										{t(type.label)}
 									</Text>
 								</Pressable>
 							);
@@ -238,7 +240,7 @@ const Form: FC<FormProps> = ({ day }) => {
 				<View style={styles.field}>
 					<View style={styles.labelRow}>
 						<Text style={[styles.label, { color: colors.onSurface }]}>
-							Doğru saat
+							{t('DayDetails.CorrectionRequestModal.CorrectTime')}
 						</Text>
 						<View style={styles.originalRow}>
 							<MaterialIcons
@@ -249,12 +251,12 @@ const Form: FC<FormProps> = ({ day }) => {
 							<Text
 								style={[styles.caption, { color: colors.onSurfaceVariant }]}
 							>
-								Orijinal kayıt:{' '}
+								{t('DayDetails.CorrectionRequestModal.OriginalRecord')}
 								<Text
 									style={[styles.originalTime, { color: colors.onSurface }]}
 								>
 									{originalTimestamp === null
-										? 'yok'
+										? t('DayDetails.CorrectionRequestModal.None')
 										: formatTime(originalTimestamp)}
 								</Text>
 							</Text>
@@ -282,35 +284,35 @@ const Form: FC<FormProps> = ({ day }) => {
 							<Text
 								style={[styles.caption, { color: colors.onSurfaceVariant }]}
 							>
-								Önerilen Düzeltme
+								{t('DayDetails.CorrectionRequestModal.SuggestedCorrection')}
 							</Text>
 							<Text style={[styles.time, { color: colors.onSurface }]}>
 								{formatMinutesOfDay(minutesOfDay)}
 							</Text>
 						</View>
 						<Stepper
-							label='Saat'
+							label={t('DayDetails.CorrectionRequestModal.Hour')}
 							onStep={(direction) => shiftTime(direction * 60)}
 						/>
-						<Stepper label='Dk' onStep={shiftTime} />
+						<Stepper label={t('DayDetails.CorrectionRequestModal.Minute')} onStep={shiftTime} />
 					</View>
 				</View>
 
 				<View style={styles.field}>
 					<View style={styles.labelRow}>
 						<Text style={[styles.label, { color: colors.onSurface }]}>
-							Neden?
+							{t('DayDetails.CorrectionRequestModal.Reason')}
 						</Text>
 						<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
 							{reason.length}/{REASON_MAX_LENGTH}
 						</Text>
 					</View>
 					<TextInput
-						accessibilityLabel='Düzeltme gerekçesi'
+						accessibilityLabel={t('DayDetails.CorrectionRequestModal.ReasonA11y')}
 						maxLength={REASON_MAX_LENGTH}
 						multiline
 						onChangeText={setReason}
-						placeholder='Kısa bir gerekçe belirtin...'
+						placeholder={t('DayDetails.CorrectionRequestModal.ReasonPlaceholder')}
 						placeholderTextColor={colors.outline}
 						style={[
 							styles.reasonInput,
@@ -339,14 +341,13 @@ const Form: FC<FormProps> = ({ day }) => {
 							{ color: colors.onSurfaceVariant },
 						]}
 					>
-						Talebiniz yöneticinize gönderilir. Onaylandığında çalışma çizelgeniz
-						otomatik güncellenir.
+						{t('DayDetails.CorrectionRequestModal.Note')}
 					</Text>
 				</View>
 
 				<View>
 					<Pressable
-						accessibilityLabel='Talebi Gönder'
+						accessibilityLabel={t('DayDetails.CorrectionRequestModal.Submit')}
 						accessibilityRole='button'
 						accessibilityState={{ disabled: !canSubmit }}
 						disabled={!canSubmit}
@@ -360,11 +361,11 @@ const Form: FC<FormProps> = ({ day }) => {
 					>
 						<MaterialIcons color={colors.onPrimary} name='send' size={20} />
 						<Text style={[styles.submitLabel, { color: colors.onPrimary }]}>
-							Talebi Gönder
+							{t('DayDetails.CorrectionRequestModal.Submit')}
 						</Text>
 					</Pressable>
 					<Pressable
-						accessibilityLabel='Vazgeç'
+						accessibilityLabel={t('DayDetails.CorrectionRequestModal.Cancel')}
 						accessibilityRole='button'
 						onPress={() => {
 							closeModal('correctionRequest');
@@ -377,7 +378,7 @@ const Form: FC<FormProps> = ({ day }) => {
 						<Text
 							style={[styles.cancelLabel, { color: colors.onSurfaceVariant }]}
 						>
-							Vazgeç
+							{t('DayDetails.CorrectionRequestModal.Cancel')}
 						</Text>
 					</Pressable>
 				</View>

@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Animated, Easing, Pressable, Text, View } from 'react-native';
 import { ModalWrapper } from './ModalWrapper';
 import { CodeScannerModalStyles } from './styles';
+import { useTranslation } from 'react-i18next';
 
 type CodeScannerModalProps = {
 	visible: boolean;
@@ -22,13 +23,15 @@ const SCAN_LINE_HEIGHT = 3;
 const SCAN_SWEEP_MS = 1400;
 const BARCODE_SETTINGS = { barcodeTypes: ['qr' as const] };
 
+// text değerleri çeviri anahtarıdır.
 const HELP_TIPS = [
-	{ icon: 'brightness-high', text: 'Yansıma varsa açınızı hafifçe değiştirin' },
-	{ icon: 'zoom-in', text: 'Cihazınızı panele biraz daha yaklaştırın' },
+	{ icon: 'brightness-high', text: 'Modals.CodeScannerModal.Tips.Reflection' },
+	{ icon: 'zoom-in', text: 'Modals.CodeScannerModal.Tips.Closer' },
 ] as const;
 
 const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	const [permission, requestPermission] = useCameraPermissions();
 	const [isTorchOn, setIsTorchOn] = useState(false);
 	const [isHelpOpen, setIsHelpOpen] = useState(false);
@@ -88,7 +91,7 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 
 			<View style={styles.topBar}>
 				<Pressable
-					accessibilityLabel='Kapat'
+					accessibilityLabel={t('UI.Buttons.Close')}
 					accessibilityRole='button'
 					onPress={onClose}
 					style={({ pressed }) => [
@@ -114,13 +117,13 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 						<Text
 							style={[styles.pillLabel, { color: colors.inverseOnSurface }]}
 						>
-							Kamera Aktif
+							{t('Modals.CodeScannerModal.CameraActive')}
 						</Text>
 					</View>
 				) : null}
 
 				<Pressable
-					accessibilityLabel='Flaş'
+					accessibilityLabel={t('Modals.CodeScannerModal.Flash')}
 					accessibilityRole='button'
 					accessibilityState={{ selected: isTorchOn }}
 					disabled={!isCameraReady}
@@ -144,10 +147,10 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 			{isCameraReady ? (
 				<View style={styles.middle}>
 					<Text style={[styles.title, { color: colors.inverseOnSurface }]}>
-						Panelin kodunu okutun
+						{t('Modals.CodeScannerModal.Title')}
 					</Text>
 					<Text style={[styles.subtitle, { color: colors.inverseOnSurface }]}>
-						Kodu çerçevenin içine getirin
+						{t('Modals.CodeScannerModal.Subtitle')}
 					</Text>
 
 					<View style={styles.viewfinder}>
@@ -197,7 +200,7 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 						<Text
 							style={[styles.pillLabel, { color: colors.inverseOnSurface }]}
 						>
-							Otomatik Algılanıyor
+							{t('Modals.CodeScannerModal.AutoDetecting')}
 						</Text>
 					</View>
 				</View>
@@ -209,15 +212,15 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 						size={40}
 					/>
 					<Text style={[styles.title, { color: colors.inverseOnSurface }]}>
-						Kamera izni gerekiyor
+						{t('Modals.CodeScannerModal.PermissionTitle')}
 					</Text>
 					<Text style={[styles.subtitle, { color: colors.inverseOnSurface }]}>
-						Paneldeki kodu okutmak için kameraya erişim verin.
+						{t('Modals.CodeScannerModal.PermissionText')}
 					</Text>
 					{/* `permission` is null while the status is still loading. */}
 					{permission ? (
 						<Pressable
-							accessibilityLabel='İzin Ver'
+							accessibilityLabel={t('Modals.CodeScannerModal.GrantPermission')}
 							accessibilityRole='button'
 							onPress={askForPermission}
 							style={({ pressed }) => [
@@ -232,7 +235,7 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 									{ color: colors.onSecondaryFixed },
 								]}
 							>
-								İzin Ver
+								{t('Modals.CodeScannerModal.GrantPermission')}
 							</Text>
 						</Pressable>
 					) : null}
@@ -240,7 +243,7 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 			)}
 
 			<Pressable
-				accessibilityLabel='Çalışmıyor mu? Yardım al'
+				accessibilityLabel={t('Modals.CodeScannerModal.Help')}
 				accessibilityRole='button'
 				onPress={() => setIsHelpOpen(true)}
 				style={({ pressed }) => [styles.helpButton, pressed && styles.pressed]}
@@ -251,7 +254,7 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 					size={20}
 				/>
 				<Text style={[styles.helpLabel, { color: colors.inverseOnSurface }]}>
-					Çalışmıyor mu? Yardım al
+					{t('Modals.CodeScannerModal.Help')}
 				</Text>
 			</Pressable>
 
@@ -277,12 +280,12 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 						</View>
 						<View style={styles.helpTitles}>
 							<Text style={[styles.helpTitle, { color: colors.onSurface }]}>
-								Yardım ve İpuçları
+								{t('Modals.CodeScannerModal.HelpTitle')}
 							</Text>
 							<Text
 								style={[styles.helpCaption, { color: colors.onSurfaceVariant }]}
 							>
-								Hızlı okuma için tavsiyeler
+								{t('Modals.CodeScannerModal.HelpCaption')}
 							</Text>
 						</View>
 					</View>
@@ -300,12 +303,12 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 								size={20}
 							/>
 							<Text style={[styles.tipText, { color: colors.onSurface }]}>
-								{tip.text}
+								{t(tip.text)}
 							</Text>
 						</View>
 					))}
 					<Pressable
-						accessibilityLabel='Anladım'
+						accessibilityLabel={t('Modals.CodeScannerModal.GotIt')}
 						accessibilityRole='button'
 						onPress={() => setIsHelpOpen(false)}
 						style={({ pressed }) => [
@@ -317,7 +320,7 @@ const Scanner: FC<ScannerProps> = ({ onClose, onScanned }) => {
 						<Text
 							style={[styles.helpDismissLabel, { color: colors.onPrimary }]}
 						>
-							Anladım
+							{t('Modals.CodeScannerModal.GotIt')}
 						</Text>
 					</Pressable>
 				</View>

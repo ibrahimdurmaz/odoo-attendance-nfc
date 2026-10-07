@@ -13,11 +13,13 @@ import { NotificationCard } from './NotificationCard';
 import { NotificationsEmptyState } from './NotificationsEmptyState';
 import { NotificationsHeader } from './NotificationsHeader';
 import { Pagination } from './Pagination';
+import { useTranslation } from 'react-i18next';
 
 export const NotificationsScreen: FC = () => {
 	const colors = theme();
 	const styles = useMemo(() => createScreenStyles(colors), [colors]);
 	const router = useRouter();
+	const { t } = useTranslation();
 
 	const notifications = useNotificationStore((state) => state.notifications);
 	const markSeen = useNotificationStore((state) => state.markSeen);
@@ -71,7 +73,9 @@ export const NotificationsScreen: FC = () => {
 				) : (
 					<>
 						<Text style={styles.count}>
-							{notifications.length} yeni bildirim
+							{t('Notification.NotificationsScreen.Count', {
+								count: notifications.length,
+							})}
 						</Text>
 						{visibleNotifications.map((notification) => (
 							<NotificationCard

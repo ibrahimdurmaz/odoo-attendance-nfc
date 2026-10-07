@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 
-import { MONTHS, parseDateKey } from '@/helper/dateHelpers';
+import { formatDayMonthYear, parseDateKey } from '@/helper/dateHelpers';
 import { Employee } from '@/store/types';
 
 import { formatPhone } from '@/components/Admin/employeeForm';
@@ -15,18 +15,18 @@ import { FormSection } from '../AddEmployee/FormSection';
 import { AccountStatePill } from './AccountStatePill';
 import { DetailRow } from './DetailRow';
 import { EMPTY_VALUE } from './constants';
+import { useTranslation } from 'react-i18next';
 type EmployeeSectionProps = { employee: Employee };
 /** "2021-03-12" → "12 Mart 2021" */
-const formatStartDate = (dateKey: string): string => {
-	const date = parseDateKey(dateKey);
-	return `${date.getDate()} ${MONTHS[date.getMonth()] ?? ''} ${date.getFullYear()}`;
-};
+const formatStartDate = (dateKey: string): string =>
+	formatDayMonthYear(parseDateKey(dateKey));
 export const PersonalSection: FC<EmployeeSectionProps> = ({ employee }) => {
+	const { t } = useTranslation();
 	return (
-		<FormSection icon='badge' title='Kişisel Bilgiler'>
-			<DetailRow label='E-posta' value={employee.email} />
+		<FormSection icon='badge' title={t('EmployeeDetail.PersonalSection.Title')}>
+			<DetailRow label={t('EmployeeDetail.PersonalSection.Email')} value={employee.email} />
 			<DetailRow
-				label='Telefon'
+				label={t('EmployeeDetail.PersonalSection.Phone')}
 				value={
 					employee.phone ? `+90 ${formatPhone(employee.phone)}` : EMPTY_VALUE
 				}
@@ -36,19 +36,20 @@ export const PersonalSection: FC<EmployeeSectionProps> = ({ employee }) => {
 };
 
 export const JobSection: FC<EmployeeSectionProps> = ({ employee }) => {
+	const { t } = useTranslation();
 	return (
-		<FormSection icon='domain' title='İş Bilgileri'>
-			<DetailRow label='Sicil No' value={employee.employeeId} />
+		<FormSection icon='domain' title={t('EmployeeDetail.JobSection.Title')}>
+			<DetailRow label={t('EmployeeDetail.JobSection.EmployeeId')} value={employee.employeeId} />
 			<DetailRow
-				label='Departman'
-				value={getOptionLabel(DEPARTMENTS, employee.department)}
+				label={t('EmployeeDetail.JobSection.Department')}
+				value={t(getOptionLabel(DEPARTMENTS, employee.department))}
 			/>
 			<DetailRow
-				label='Şirket'
-				value={getOptionLabel(COMPANIES, employee.company)}
+				label={t('EmployeeDetail.JobSection.Company')}
+				value={t(getOptionLabel(COMPANIES, employee.company))}
 			/>
 			<DetailRow
-				label='İşe Başlama'
+				label={t('EmployeeDetail.JobSection.StartDate')}
 				value={formatStartDate(employee.startDateKey)}
 			/>
 		</FormSection>
@@ -56,33 +57,43 @@ export const JobSection: FC<EmployeeSectionProps> = ({ employee }) => {
 };
 
 export const ScheduleSection: FC<EmployeeSectionProps> = ({ employee }) => {
+	const { t } = useTranslation();
 	return (
-		<FormSection icon='schedule' title='Çalışma Düzeni'>
+		<FormSection icon='schedule' title={t('EmployeeDetail.ScheduleSection.Title')}>
 			<DetailRow
-				label='Vardiya'
-				value={getOptionLabel(SHIFT_TEMPLATES, employee.shiftTemplate)}
+				label={t('EmployeeDetail.ScheduleSection.Shift')}
+				value={t(getOptionLabel(SHIFT_TEMPLATES, employee.shiftTemplate))}
 			/>
 			<DetailRow
-				label='Yıllık İzin Hakkı'
-				value={`${employee.annualLeaveDays} Gün`}
+				label={t('EmployeeDetail.ScheduleSection.AnnualLeave')}
+				value={t('EmployeeDetail.ScheduleSection.Days', {
+					count: employee.annualLeaveDays,
+				})}
 			/>
 			<DetailRow
 				isAccent
-				label='Kalan İzin'
-				value={`${employee.remainingLeaveDays} Gün`}
+				label={t('EmployeeDetail.ScheduleSection.RemainingLeave')}
+				value={t('EmployeeDetail.ScheduleSection.Days', {
+					count: employee.remainingLeaveDays,
+				})}
 			/>
 		</FormSection>
 	);
 };
 
 export const AccountSection: FC<EmployeeSectionProps> = ({ employee }) => {
+	const { t } = useTranslation();
 	return (
-		<FormSection icon='admin-panel-settings' title='Hesap'>
+		<FormSection icon='admin-panel-settings' title={t('EmployeeDetail.AccountSection.Title')}>
 			<DetailRow
-				label='Kullanıcı Rolü'
-				value={employee.admin ? 'Admin' : 'Çalışan'}
+				label={t('EmployeeDetail.AccountSection.UserRole')}
+				value={
+					employee.admin
+						? t('EmployeeDetail.AccountSection.Admin')
+						: t('EmployeeDetail.AccountSection.Employee')
+				}
 			/>
-			<DetailRow label='Hesap Durumu'>
+			<DetailRow label={t('EmployeeDetail.AccountSection.AccountStatus')}>
 				<AccountStatePill isActive={isEmployeeActive(employee)} />
 			</DetailRow>
 		</FormSection>

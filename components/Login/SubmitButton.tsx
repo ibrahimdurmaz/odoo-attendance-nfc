@@ -3,6 +3,7 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { FC } from 'react';
 import { ActivityIndicator, Pressable, Text } from 'react-native';
 import { submitStyles } from './styles';
+import { useTranslation } from 'react-i18next';
 
 type SubmitButtonProps = {
 	isLoading: boolean;
@@ -16,9 +17,10 @@ export const SubmitButton: FC<SubmitButtonProps> = ({
 	onPress,
 }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	return (
 		<Pressable
-			accessibilityLabel='Giriş Yap'
+			accessibilityLabel={t('UI.Buttons.Login')}
 			accessibilityRole='button'
 			accessibilityState={{ disabled: isDisabled, busy: isLoading }}
 			disabled={isDisabled}
@@ -31,7 +33,7 @@ export const SubmitButton: FC<SubmitButtonProps> = ({
 			]}
 		>
 			<Text style={[submitStyles.label, { color: colors.onPrimary }]}>
-				{isLoading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
+				{isLoading ? t('Login.SubmitButton.LoggingIn') : t('UI.Buttons.Login')}
 			</Text>
 			{isLoading ? (
 				<ActivityIndicator color={colors.onPrimary} size='small' />

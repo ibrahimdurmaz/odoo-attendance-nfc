@@ -4,6 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import type { FC } from 'react';
 import { useMemo, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 type PhotoPickerProps = {
 	uri: string | null;
 	onChange: (uri: string | null) => void;
@@ -12,6 +13,7 @@ type PhotoPickerProps = {
 export const PhotoPicker: FC<PhotoPickerProps> = ({ uri, onChange }) => {
 	const colors = theme();
 	const styles = useMemo(() => createPhotoStyles(colors), [colors]);
+	const { t } = useTranslation();
 	const [hasFailed, setHasFailed] = useState(false);
 
 	const pickPhoto = async () => {
@@ -32,7 +34,11 @@ export const PhotoPicker: FC<PhotoPickerProps> = ({ uri, onChange }) => {
 	return (
 		<View style={styles.card}>
 			<Pressable
-				accessibilityLabel={uri ? 'Fotoğrafı Değiştir' : 'Fotoğraf Ekle'}
+				accessibilityLabel={
+					uri
+						? t('AddEmployee.PhotoPicker.ChangePhoto')
+						: t('AddEmployee.PhotoPicker.AddPhoto')
+				}
 				accessibilityRole='button'
 				onPress={() => void pickPhoto()}
 				style={({ pressed }) => pressed && styles.pressed}
@@ -46,7 +52,9 @@ export const PhotoPicker: FC<PhotoPickerProps> = ({ uri, onChange }) => {
 							name='add-a-photo'
 							size={36}
 						/>
-						<Text style={styles.circleLabel}>Görsel Seç</Text>
+						<Text style={styles.circleLabel}>
+							{t('AddEmployee.PhotoPicker.SelectImage')}
+						</Text>
 					</View>
 				)}
 				<View style={styles.cameraBadge}>
@@ -65,7 +73,9 @@ export const PhotoPicker: FC<PhotoPickerProps> = ({ uri, onChange }) => {
 					onPress={() => void pickPhoto()}
 				>
 					<Text style={styles.action}>
-						{uri ? 'Fotoğrafı Değiştir' : 'Fotoğraf Ekle'}
+						{uri
+							? t('AddEmployee.PhotoPicker.ChangePhoto')
+							: t('AddEmployee.PhotoPicker.AddPhoto')}
 					</Text>
 				</Pressable>
 				{uri ? (
@@ -74,7 +84,9 @@ export const PhotoPicker: FC<PhotoPickerProps> = ({ uri, onChange }) => {
 						hitSlop={8}
 						onPress={() => onChange(null)}
 					>
-						<Text style={styles.remove}>Kaldır</Text>
+						<Text style={styles.remove}>
+							{t('AddEmployee.PhotoPicker.Remove')}
+						</Text>
 					</Pressable>
 				) : null}
 			</View>
@@ -83,8 +95,8 @@ export const PhotoPicker: FC<PhotoPickerProps> = ({ uri, onChange }) => {
 				style={[styles.hint, hasFailed && styles.hintError]}
 			>
 				{hasFailed
-					? 'Fotoğraf seçilemedi. Lütfen tekrar deneyin.'
-					: 'Cihaz galerisinden portre seçin (PNG, JPG)'}
+					? t('AddEmployee.PhotoPicker.Failed')
+					: t('AddEmployee.PhotoPicker.Hint')}
 			</Text>
 		</View>
 	);

@@ -5,6 +5,7 @@ import { Pressable, ScrollView, StyleSheet, Text } from 'react-native';
 import { fonts, theme, ThemeColors } from '@/assets/theme';
 import { DepartmentFilter } from '@/store/types';
 import { DEPARTMENTS } from '@/store/useEmployeeStore';
+import { useTranslation } from 'react-i18next';
 
 type FilterChipProps = {
 	label: string;
@@ -21,10 +22,14 @@ const FilterChip: FC<FilterChipProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createChipStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<Pressable
-			accessibilityLabel={`${label}, ${count} çalışan`}
+			accessibilityLabel={t('EmployeeList.DepartmentChips.ChipA11y', {
+				label,
+				count,
+			})}
 			accessibilityRole='button'
 			accessibilityState={{ selected: isSelected }}
 			onPress={onPress}
@@ -53,6 +58,7 @@ export const DepartmentChips: FC<DepartmentChipsProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createChipStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<ScrollView
@@ -64,7 +70,7 @@ export const DepartmentChips: FC<DepartmentChipsProps> = ({
 			<FilterChip
 				count={counts.all}
 				isSelected={selected === 'all'}
-				label='Tümü'
+				label={t('EmployeeList.DepartmentChips.All')}
 				onPress={() => onSelect('all')}
 			/>
 			{DEPARTMENTS.map((department) => (
@@ -72,7 +78,7 @@ export const DepartmentChips: FC<DepartmentChipsProps> = ({
 					count={counts[department.key]}
 					isSelected={selected === department.key}
 					key={department.key}
-					label={department.shortLabel}
+					label={t(department.shortLabel)}
 					onPress={() => onSelect(department.key)}
 				/>
 			))}

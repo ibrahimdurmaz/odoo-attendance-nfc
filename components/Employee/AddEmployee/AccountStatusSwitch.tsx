@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { fonts, theme, ThemeColors } from '@/assets/theme';
+import { useTranslation } from 'react-i18next';
 
 type AccountStatusSwitchProps = {
 	isActive: boolean;
@@ -15,17 +16,22 @@ export const AccountStatusSwitch: FC<AccountStatusSwitchProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createSwitchStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.row}>
 			<View>
-				<Text style={styles.title}>Hesap Durumu</Text>
+				<Text style={styles.title}>
+					{t('EditEmployee.AccountStatusSwitch.Title')}
+				</Text>
 				<Text style={[styles.state, isActive && styles.stateActive]}>
-					{isActive ? 'Aktif' : 'Pasif'}
+					{isActive
+						? t('EditEmployee.AccountStatusSwitch.Active')
+						: t('EditEmployee.AccountStatusSwitch.Passive')}
 				</Text>
 			</View>
 			<Pressable
-				accessibilityLabel='Hesap Durumu'
+				accessibilityLabel={t('EditEmployee.AccountStatusSwitch.Title')}
 				accessibilityRole='switch'
 				accessibilityState={{ checked: isActive }}
 				hitSlop={8}

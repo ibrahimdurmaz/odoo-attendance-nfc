@@ -1,0 +1,865 @@
+{
+	"Admin": {
+		"AdminScreen": {
+			"Title": "Management",
+			"Employees": "Employees",
+			"ActiveEmployees_one": "{{count}} active employee",
+			"ActiveEmployees_other": "{{count}} active employees",
+			"PendingBadge": "{{count}} pending",
+			"CorrectionRequests": "Correction Requests",
+			"CorrectionRequestsSubtitle": "Shift & log reviews"
+		},
+		"SectionIntro": {
+			"Overline": "ODOO MANAGEMENT CONSOLE",
+			"Title": "Operations & Attendance"
+		},
+		"AttendanceCard": {
+			"Title": "Today's Attendance",
+			"Shift": "Shift: {{hours}}",
+			"AttendanceRate": "Attendance Rate",
+			"AttendanceRateA11y": "Attendance rate {{rate}} percent",
+			"Target": "Target: {{percent}}%",
+			"Staff": "{{present}} / {{total}} Staff",
+			"Approved": "Confirmed",
+			"Waiting": "Expected",
+			"NoEntry": "Not Checked In",
+			"ActiveBreak": "Active Break"
+		},
+		"AttendanceTile": {
+			"Persons": "people",
+			"A11y": "{{label}}: {{count}} people, {{caption}}"
+		},
+		"AddEmployeeButton": {
+			"Label": "Add New Employee"
+		}
+	},
+	"Home": {
+		"Header": {
+			"Brand": "ODOO",
+			"Title": "Home"
+		},
+		"StatusBadge": {
+			"NotCheckedIn": "Not checked in",
+			"Working": "Working",
+			"OnBreak": "On break",
+			"Completed": "Day Completed"
+		},
+		"Activities": {
+			"CheckIn": "Check-in",
+			"Break": "Break",
+			"BreakDuration": "{{duration}} rest",
+			"InProgress": "In progress",
+			"ActiveWork": "Active Shift",
+			"Now": "Now",
+			"CheckOut": "Check-out"
+		},
+		"Actions": {
+			"CheckIn": "Check In",
+			"StartBreak": "Start Break",
+			"CheckOut": "Check Out",
+			"EndBreak": "End Break",
+			"FinishAndCheckOut": "End Shift and Check Out"
+		},
+		"InfoTiles": {
+			"PlannedShift": "Planned Shift",
+			"UsedBreak": "Break Used",
+			"LimitExceeded": "Limit exceeded",
+			"WithinLimit": "Within limit"
+		},
+		"TodaysActivities": {
+			"Title": "Today's Activity",
+			"RecordCount_one": "{{count}} Record",
+			"RecordCount_other": "{{count}} Records",
+			"EmptyTitle": "No activity yet",
+			"EmptyText": "Once you check in, your shift start, breaks and durations will be listed here."
+		},
+		"StatsBlock": {
+			"TotalNetWork": "TOTAL NET WORK",
+			"Overtime": "+{{duration}} overtime",
+			"Undertime": "{{duration}} short",
+			"Target": "Target",
+			"TargetHours": "8 Hours",
+			"Completed": "Completed",
+			"TotalBreak": "Total Break",
+			"WorkPaused": "Work time paused: {{duration}}",
+			"BreakTime": "Break Time",
+			"ElapsedTime": "Elapsed Time",
+			"TargetValue": "Target: {{duration}}",
+			"PercentCompleted": "{{percent}} completed",
+			"BreakStartedAt": "Started {{time}}",
+			"TargetShift": "Target Shift",
+			"RemainingTime": "Remaining",
+			"BreakAllowance": "Break Allowance"
+		},
+		"FarewellCard": {
+			"Title": "See you tomorrow, {{name}}.",
+			"Text": "Thanks for your effort today. Don't forget to rest!"
+		}
+	},
+	"Profile": {
+		"Header": {
+			"Title": "Profile"
+		},
+		"IdCard": {
+			"Active": "ACTIVE",
+			"EmployeeIdLabel": "EMPLOYEE ID",
+			"StaffId": "Staff ID"
+		},
+		"SecurityNote": {
+			"Text": "Your ID is only valid on this phone"
+		},
+		"StatsSection": {
+			"Title": "Hours & Leave",
+			"RemainingLeave": "Remaining Annual Leave",
+			"AnnualEntitlement": "Annual entitlement",
+			"Days": "Days",
+			"OvertimeThisMonth": "Overtime This Month",
+			"RecordedThisMonth_one": "{{count}} day recorded this month",
+			"RecordedThisMonth_other": "{{count}} days recorded this month"
+		},
+		"SettingsSection": {
+			"Title": "Settings",
+			"Language": "Language",
+			"LanguageA11y": "Language: {{language}}",
+			"Appearance": "Appearance",
+			"Light": "Light",
+			"Dark": "Dark"
+		},
+		"LogoutSection": {
+			"Logout": "Sign Out",
+			"SignedInAs": "Signed in as {{name}}"
+		},
+		"LoggedOutView": {
+			"Title": "Signed out",
+			"Text": "Sign in to see your profile."
+		},
+		"LanguageModal": {
+			"Title": "Language",
+			"AvailableLanguages": "Available Languages",
+			"AppliedImmediately": "Your choice is applied immediately."
+		}
+	},
+	"Schedule": {
+		"ScheduleScreen": {
+			"Brand": "ODOO",
+			"Title": "Schedule",
+			"Filters": {
+				"Week": "This Week",
+				"Month": "Last 30 Days",
+				"Overtime": "Overtime",
+				"Undertime": "Short Time"
+			},
+			"RecordDetails": "Record Details",
+			"RecordCount_one": "{{count}} Record",
+			"RecordCount_other": "{{count}} Records",
+			"EmptyTitle": "No records found",
+			"EmptyText": "Days on which you finish your shift are listed here."
+		},
+		"WeeklySummary": {
+			"Title": "Weekly Work Status",
+			"Target": "/ {{hours}}h",
+			"Remaining": "{{duration}} left",
+			"DaysRecorded_one": "{{count}} day recorded",
+			"DaysRecorded_other": "{{count}} days recorded",
+			"WeeklyQuota": "Weekly Quota: {{hours}}h"
+		},
+		"WeeksDays": {
+			"Title": "This Week",
+			"Today": "Today",
+			"SameMonthRange": "{{start}} - {{end}}"
+		},
+		"DayCard": {
+			"A11y": "{{date}}, day details",
+			"PendingCorrection": "Correction Pending",
+			"Completed": "Completed",
+			"Net": "Net:"
+		}
+	},
+	"AddEmployee": {
+		"AddEmployeeScreen": {
+			"Title": "Create New Employee",
+			"PersonalInfo": "Personal Information",
+			"FirstName": "First Name",
+			"FirstNamePlaceholder": "e.g. Jane",
+			"LastName": "Last Name",
+			"LastNamePlaceholder": "e.g. Smith",
+			"CorporateEmail": "Corporate Email",
+			"EmailPlaceholder": "name@odoo.com",
+			"PhoneNumber": "Phone Number",
+			"PhonePlaceholder": "5XX XXX XX XX",
+			"JobInfo": "Job Information",
+			"EmployeeId": "Employee ID",
+			"AutoGenerated": "Auto-generated",
+			"JobTitle": "Job Title",
+			"JobTitlePlaceholder": "e.g. Senior Software Engineer",
+			"Department": "Department",
+			"Company": "Company",
+			"StartDate": "Start Date",
+			"DatePlaceholder": "DD.MM.YYYY",
+			"WorkSchedule": "Work Schedule",
+			"ShiftTemplate": "Shift Template",
+			"AnnualLeave": "Annual Leave (Days)",
+			"WorkDays": "Work Days",
+			"AccessAndRole": "Access & Role",
+			"PasswordInfo": "When the account is created, the system will generate a one-time temporary password and send it automatically to the employee's email address via SMS/message."
+		},
+		"FormStrip": {
+			"Overline": "HR MODULE • NEW PROFILE",
+			"AdminPermission": "Admin Permission"
+		},
+		"PhotoPicker": {
+			"AddPhoto": "Add Photo",
+			"ChangePhoto": "Change Photo",
+			"SelectImage": "Select Image",
+			"Remove": "Remove",
+			"Failed": "Couldn't select the photo. Please try again.",
+			"Hint": "Choose a portrait from the device gallery (PNG, JPG)"
+		},
+		"RoleSegment": {
+			"Employee": "Employee",
+			"Admin": "Admin"
+		},
+		"IntegrationCard": {
+			"Title": "Odoo Turnstile & Kiosk Integration",
+			"Text": "NFC/RFID card registration becomes available after saving."
+		},
+		"BottomActionBar": {
+			"Errors": "Some fields are missing or invalid. Please check them.",
+			"Cancel": "Cancel",
+			"CreateEmployee": "Create Employee"
+		},
+		"Validation": {
+			"Required": "This field is required",
+			"InvalidEmail": "Enter a valid email",
+			"PhoneLength": "Must be {{length}} digits",
+			"EmployeeIdTaken": "This employee ID is already in use",
+			"DateFormat": "Use the DD.MM.YYYY format",
+			"LeaveRange": "Must be between 0 and {{max}}"
+		},
+		"EmployeeCreatedModal": {
+			"NfcCard": "NFC / RFID Card",
+			"AwaitingPairing": "Awaiting Pairing",
+			"EmailInvite": "Email Invitation",
+			"Sent": "Sent"
+		},
+		"SuccessHero": {
+			"Pill": "Odoo HR Directory Updated",
+			"Title": "Employee Created Successfully",
+			"Text": "The system record is complete and authentication keys have been generated."
+		},
+		"TemporaryPasswordCard": {
+			"Title": "Temporary Password",
+			"FirstLoginTag": "For First Sign-in",
+			"OneTimeCode": "One-time Code",
+			"Copy": "Copy",
+			"CopyA11y": "Copy password",
+			"Copied": "Copied",
+			"Notice": "Share this password with the employee securely. They must set a new password on their first sign-in."
+		},
+		"CreatedActions": {
+			"AddAnother": "Add New Employee",
+			"BackToList": "Back to Employee List"
+		}
+	},
+	"CorrectionRequest": {
+		"CorrectionRequestsScreen": {
+			"Title": "Correction Requests",
+			"NoMatchTitle": "No Matching Requests",
+			"NoMatchText": "No requests found for the employee or date you searched.",
+			"EmptyTitle": "No {{status}} Requests",
+			"EmptyText": "Correction requests sent by employees are listed here."
+		},
+		"StatusSegments": {
+			"Pending": "Pending",
+			"Approved": "Approved",
+			"Rejected": "Rejected",
+			"SegmentA11y_one": "{{label}}, {{count}} request",
+			"SegmentA11y_other": "{{label}}, {{count}} requests"
+		},
+		"RequestSearchBar": {
+			"Placeholder": "Search employee name or date...",
+			"A11y": "Search employee name or date"
+		},
+		"RequestCard": {
+			"Summary": "{{date}} • {{recordType}} record"
+		},
+		"TimeChange": {
+			"A11y": "Current: {{current}}, requested: {{requested}}",
+			"NoRecord": "No record"
+		},
+		"ResultBanner": {
+			"Approved": "Request approved",
+			"Rejected": "Request rejected",
+			"Text": "A result notification was created for {{name}}.",
+			"DismissA11y": "Dismiss notification"
+		}
+	},
+	"CorrectionRequestDetail": {
+		"CorrectionRequestDetailScreen": {
+			"Title": "Request Details",
+			"NotFound": "Request not found."
+		},
+		"RequestSummaryCard": {
+			"ToCorrect": "To correct: {{recordType}}",
+			"CurrentStatus": "Current Status",
+			"RecordedTime": "Recorded time",
+			"MissingTimestamp": "Missing timestamp",
+			"NoRecord": "No record",
+			"Requested": "Requested",
+			"RequestedCaptions": {
+				"Entry": "Shift start time",
+				"Break": "Break start time",
+				"Exit": "Shift end time"
+			}
+		},
+		"ReasonQuote": {
+			"Label": "Reason"
+		},
+		"ImpactNote": {
+			"Title": "Impact Analysis",
+			"Text": "If approved, the net time becomes <strong>{{duration}}</strong>. {{conclusion}}",
+			"CompletesTarget": "This meets the {{duration}} target.",
+			"BelowTarget": "This stays {{duration}} below the target.",
+			"NoRecord": "The impact can't be calculated because there is no record for this day."
+		},
+		"ResolvedNote": {
+			"Title": "Result",
+			"ManagerNote": "Manager note: {{note}}"
+		},
+		"DayTimelineCard": {
+			"Title": "Records for That Day",
+			"CheckIn": "Check-in",
+			"Break": "Break",
+			"CheckOut": "Check-out",
+			"RecordNotFound": "Record not found",
+			"Empty": "No records found for this day."
+		},
+		"TimelineRow": {
+			"UnderReview": "Correction requested"
+		},
+		"DecisionBar": {
+			"Reject": "Reject",
+			"Approve": "Approve"
+		},
+		"RejectModalHeader": {
+			"Title": "Reject Request",
+			"Info": "The rejection reason will be sent to the employee as a notification."
+		},
+		"TemplateChips": {
+			"Label": "Quick Templates:",
+			"AddA11y": "Add template: {{template}}",
+			"Templates": {
+				"Mismatch": "Doesn't match the records.",
+				"MoreInfo": "More information needed.",
+				"Timeout": "Deadline passed."
+			}
+		},
+		"RejectReasonField": {
+			"Label": "Reason",
+			"A11y": "Rejection reason",
+			"Placeholder": "Write the rejection reason to send to the employee..."
+		},
+		"RejectActions": {
+			"Submit": "Send Rejection",
+			"Cancel": "Cancel"
+		}
+	},
+	"DayDetails": {
+		"DayDetailHeader": {
+			"Title": "Day Details"
+		},
+		"DayDetailScreen": {
+			"NotFound": "No record found for this day",
+			"PendingCorrection": "Correction Pending",
+			"Completed": "Completed",
+			"Timeline": "Timeline",
+			"EventCount_one": "{{count}} Event Recorded",
+			"EventCount_other": "{{count}} Events Recorded",
+			"LocationTerminal": "LOCATION & TERMINAL",
+			"RequestCorrection": "Request Correction",
+			"Events": {
+				"Break": "Break",
+				"BreakDuration": "{{duration}} rest",
+				"ShiftStart": "Shift Start",
+				"CheckInRecorded": "Check-in recorded",
+				"ShiftEnd": "Shift End",
+				"ShiftCompleted": "Daily shift completed"
+			}
+		},
+		"StateBand": {
+			"Pending": "Correction request awaiting approval: {{recordType}} → {{time}}",
+			"Complete": "All daily activity completed"
+		},
+		"Summary": {
+			"TotalNetWork": "TOTAL NET WORK",
+			"Overtime": "+{{duration}} overtime",
+			"Undertime": "{{duration}} short",
+			"WorkedA11y": "{{hours}} hours {{minutes}} minutes",
+			"Hours": "hrs",
+			"Minutes": "min",
+			"Planned": "Planned: {{hours}} ({{duration}})"
+		},
+		"CorrectionRequestModal": {
+			"Title": "Request Correction",
+			"Description": "If you think your records are missing something or incorrect, create a request.",
+			"WhichRecord": "Which record?",
+			"CorrectTime": "Correct time",
+			"OriginalRecord": "Original record: ",
+			"None": "none",
+			"SuggestedCorrection": "Suggested Correction",
+			"Hour": "Hour",
+			"Minute": "Min",
+			"Increase": "Increase {{label}}",
+			"Decrease": "Decrease {{label}}",
+			"Reason": "Reason",
+			"ReasonA11y": "Correction reason",
+			"ReasonPlaceholder": "Give a short reason...",
+			"Note": "Your request is sent to your manager. Once approved, your schedule is updated automatically.",
+			"Submit": "Send Request",
+			"Cancel": "Cancel"
+		}
+	},
+	"EditEmployee": {
+		"EditEmployeeScreen": {
+			"Title": "Edit Employee",
+			"NotFound": "Employee not found."
+		},
+		"EditEmployeeForm": {
+			"PersonalInfo": "Personal Information",
+			"FirstName": "First Name",
+			"LastName": "Last Name",
+			"Email": "Email",
+			"Phone": "Phone",
+			"PhonePlaceholder": "5XX XXX XX XX",
+			"JobInfo": "Job Information",
+			"EmployeeId": "Employee ID",
+			"EmployeeIdLocked": "Employee ID can't be changed",
+			"JobTitle": "Job Title",
+			"Department": "Department",
+			"Company": "Company",
+			"StartDate": "Start Date",
+			"DatePlaceholder": "DD.MM.YYYY",
+			"WorkSchedule": "Work Schedule",
+			"Shift": "Shift",
+			"AnnualLeave": "Annual Leave",
+			"WorkDays": "Work Days",
+			"Account": "Account",
+			"SaveChanges": "Save Changes"
+		},
+		"AccountStatusSwitch": {
+			"Title": "Account Status",
+			"Active": "Active",
+			"Passive": "Inactive"
+		},
+		"DangerZone": {
+			"Title": "Deactivate Account",
+			"Text": "Once deactivated, the employee can't access the system and is hidden from shift lists.",
+			"Deactivate": "Deactivate Employee"
+		},
+		"DeactivateEmployeeModal": {
+			"Title": "Deactivate {{name}}?",
+			"Text": "They won't be able to sign in to the app or create check-in/out records at the panel. Past records are kept.",
+			"Confirm": "Deactivate",
+			"Cancel": "Cancel",
+			"Note": "You can reactivate them at any time"
+		}
+	},
+	"EmployeeDetail": {
+		"EmployeeDetailScreen": {
+			"Title": "Employee Details",
+			"NotFound": "Employee not found."
+		},
+		"DetailStrip": {
+			"Overline": "PROFILE MANAGEMENT",
+			"EditA11y": "Edit Profile",
+			"Edit": "Edit"
+		},
+		"PresencePill": {
+			"Passive": "Inactive"
+		},
+		"AccountStatePill": {
+			"Active": "Active",
+			"Passive": "Inactive"
+		},
+		"TodaySection": {
+			"Title": "Today",
+			"CheckIn": "Check-in",
+			"NetWork": "Net Work",
+			"WorkStatus": "Work Status",
+			"Passive": "Inactive"
+		},
+		"WorkStates": {
+			"Inside": "Working",
+			"OnBreak": "On break",
+			"Outside": "Off shift",
+			"Absent": "Absent"
+		},
+		"PersonalSection": {
+			"Title": "Personal Information",
+			"Email": "Email",
+			"Phone": "Phone"
+		},
+		"JobSection": {
+			"Title": "Job Information",
+			"EmployeeId": "Employee ID",
+			"Department": "Department",
+			"Company": "Company",
+			"StartDate": "Start Date"
+		},
+		"ScheduleSection": {
+			"Title": "Work Schedule",
+			"Shift": "Shift",
+			"AnnualLeave": "Annual Leave",
+			"RemainingLeave": "Remaining Leave",
+			"Days_one": "{{count}} Day",
+			"Days_other": "{{count}} Days"
+		},
+		"AccountSection": {
+			"Title": "Account",
+			"UserRole": "User Role",
+			"Admin": "Admin",
+			"Employee": "Employee",
+			"AccountStatus": "Account Status"
+		},
+		"DetailActions": {
+			"ResetPassword": "Reset Password",
+			"ViewSchedule": "View Schedule"
+		}
+	},
+	"EmployeeList": {
+		"EmployeeListScreen": {
+			"Title": "Employee List",
+			"EmptyTitle": "No Employees Yet",
+			"EmptyText": "Create the first employee with the Add New button.",
+			"NoMatchTitle": "No Matching Employees",
+			"NoMatchText": "No records found for the name or employee ID you searched. Try clearing the filters."
+		},
+		"ListStrip": {
+			"Overline": "DIRECTORY & LIVE ATTENDANCE",
+			"AddNew": "Add New",
+			"AddEmployeeA11y": "Add New Employee"
+		},
+		"SearchBar": {
+			"Placeholder": "Search name or employee ID...",
+			"A11y": "Search name or employee ID"
+		},
+		"DepartmentChips": {
+			"All": "All",
+			"ChipA11y_one": "{{label}}, {{count}} employee",
+			"ChipA11y_other": "{{label}}, {{count}} employees"
+		},
+		"MetricBar": {
+			"ActivePresence": "Currently Present",
+			"TotalPersons": "/ {{total}} People"
+		}
+	},
+	"Login": {
+		"BrandHeader": {
+			"Title": "Odoo Attendance",
+			"Subtitle": "Sign in to your account"
+		},
+		"LoginScreen": {
+			"IdentifierLabel": "Employee ID or Email",
+			"IdentifierPlaceholder": "EMP-8042 or name@company.com",
+			"PasswordLabel": "Password",
+			"CredentialsErrorTitle": "Incorrect employee ID or password.",
+			"CredentialsErrorMessage": "Check your details and try again.",
+			"ConnectionErrorTitle": "Couldn't reach the server.",
+			"ConnectionErrorMessage": "Check your internet connection and try again.",
+			"ForgotPassword": "Forgot password"
+		},
+		"AuthTextField": {
+			"ShowPassword": "Show password",
+			"HidePassword": "Hide password"
+		},
+		"SubmitButton": {
+			"LoggingIn": "Signing in..."
+		},
+		"SupportNote": {
+			"Text": "Don't have an account? Contact your HR department."
+		}
+	},
+	"Notification": {
+		"NotificationsHeader": {
+			"Title": "Notifications"
+		},
+		"NotificationsScreen": {
+			"Count_one": "{{count}} new notification",
+			"Count_other": "{{count}} new notifications"
+		},
+		"NotificationsEmptyState": {
+			"Title": "No new notifications",
+			"Text": "When your correction requests are approved or rejected, you'll see the result here."
+		},
+		"NotificationCard": {
+			"A11y": "{{date}}, {{recordType}} record correction request {{result}}",
+			"ApprovedResult": "approved",
+			"RejectedResult": "rejected",
+			"Updated": "{{recordType}} time updated to {{time}}",
+			"ManagerNote": "Manager note: {{note}}",
+			"NotSpecified": "Not specified"
+		},
+		"ResultBadge": {
+			"Approved": "Approved",
+			"Rejected": "Rejected"
+		},
+		"Pagination": {
+			"Previous": "Previous",
+			"Next": "Next",
+			"PreviousA11y": "Previous page",
+			"NextA11y": "Next page"
+		}
+	},
+	"EmployeeSchedule": {
+		"ScheduleScreen": {
+			"Overline": "EMPLOYEE SCHEDULE",
+			"EmptyText": "Days on which the employee finished their shift are listed here."
+		}
+	},
+	"ServerSetup": {
+		"SetupHeading": {
+			"Title": "Sign In",
+			"Subtitle": "Configure your server connection"
+		},
+		"ServerSetupScreen": {
+			"ServerDomain": "Server Domain",
+			"Errors": {
+				"InvalidAddressTitle": "Invalid server address",
+				"InvalidAddressMessage": "Enter the address as \"odoo.company.com\", without spaces or a path.",
+				"UnreachableTitle": "Couldn't connect to the server",
+				"UnreachableMessage": "Please check the address and your internet connection."
+			}
+		},
+		"ServerInputCard": {
+			"ProtocolA11y": "Protocol: {{protocol}}",
+			"AddressA11y": "Server address",
+			"Placeholder": "Enter server address",
+			"ClearA11y": "Clear input"
+		},
+		"ConnectionHint": {
+			"Secure": "Encrypted connection (HTTPS)",
+			"Insecure": "Unencrypted connection (HTTP)",
+			"Port": "Port {{port}}"
+		},
+		"SubmitButton": {
+			"Connecting": "Connecting...",
+			"Retry": "Try Again",
+			"Next": "Next"
+		},
+		"HelperNote": {
+			"Text": "Ask your administrator for the server address"
+		}
+	},
+	"SetPassword": {
+		"PasswordHeader": {
+			"Title": "Set Your Password",
+			"Welcome": "Welcome, <name>{{name}}</name>. Create a secure, permanent password for your first sign-in."
+		},
+		"SetPasswordScreen": {
+			"NewPassword": "New Password",
+			"NewPasswordPlaceholder": "Enter your new password",
+			"ConfirmPassword": "Confirm Password",
+			"ConfirmPasswordPlaceholder": "Enter your password again",
+			"Matched": "Matches",
+			"Mismatch": "Doesn't match"
+		},
+		"StatusLabel": {
+			"Weak": "Weak",
+			"Medium": "Medium",
+			"Strong": "Strong"
+		},
+		"CriteriaCard": {
+			"Overline": "SECURITY CRITERIA",
+			"Counter": "{{met}}/{{total}} Met",
+			"RuleA11y": "{{label}}: {{state}}",
+			"Met": "met",
+			"NotMet": "not met",
+			"Rules": {
+				"MinLength": "At least {{count}} characters",
+				"Digit": "At least one number",
+				"Uppercase": "At least one uppercase letter"
+			}
+		},
+		"TrustNote": {
+			"Text": "Your password is synced automatically with corporate single sign-on (SSO) and turnstile kiosks."
+		},
+		"SaveButton": {
+			"Save": "Save Password",
+			"Note": "After saving your password, you'll be taken to the initial setup steps."
+		}
+	},
+	"Modals": {
+		"CheckInFailedModal": {
+			"Title": "Check-in failed",
+			"Message": "Hold your phone a little closer to the panel and try again.",
+			"HintTitle": "Contact Distance",
+			"HintText": "Hold your device steady 2-3 cm from the logo",
+			"UseCode": "Check In with Code",
+			"Support": "If the problem continues, report it to HR."
+		},
+		"CheckInSuccessModal": {
+			"Title": "Check-in recorded",
+			"Subtitle": "Have a good day, {{name}}.",
+			"RecordTime": "RECORDED AT",
+			"Synced": "Synced to Odoo",
+			"ShiftStatus": "Shift Status",
+			"EarlyStart": "Early Start",
+			"LateStart": "Late Start",
+			"OnTimeStart": "On-time Start"
+		},
+		"CodeScannerModal": {
+			"CameraActive": "Camera Active",
+			"Flash": "Flash",
+			"Title": "Scan the panel's code",
+			"Subtitle": "Place the code inside the frame",
+			"AutoDetecting": "Detecting Automatically",
+			"PermissionTitle": "Camera permission required",
+			"PermissionText": "Allow camera access to scan the code on the panel.",
+			"GrantPermission": "Allow",
+			"Help": "Not working? Get help",
+			"HelpTitle": "Help & Tips",
+			"HelpCaption": "Tips for faster scanning",
+			"Tips": {
+				"Reflection": "If there's glare, tilt your device slightly",
+				"Closer": "Hold your device a little closer to the panel"
+			},
+			"GotIt": "Got It"
+		},
+		"NfcPromptModal": {
+			"Ready": "Ready",
+			"KeypadTitle": "Quick Access Code",
+			"BackToNfc": "Back to NFC scanning",
+			"DigitsEntered": "{{count}} of {{total}} digits entered",
+			"Delete": "Delete",
+			"Confirm": "Confirm",
+			"Scan": "TAP",
+			"Title": "Hold your phone near the panel",
+			"Subtitle": "Fingerprint verification may be required",
+			"UseCode": "Not working? Check in with a code"
+		}
+	},
+	"ExtraConstants": {
+		"Days": {
+			"Sunday": "Sunday",
+			"Monday": "Monday",
+			"Tuesday": "Tuesday",
+			"Wednesday": "Wednesday",
+			"Thursday": "Thursday",
+			"Friday": "Friday",
+			"Saturday": "Saturday"
+		},
+		"ShortDays": {
+			"Sunday": "Sun",
+			"Monday": "Mon",
+			"Tuesday": "Tue",
+			"Wednesday": "Wed",
+			"Thursday": "Thu",
+			"Friday": "Fri",
+			"Saturday": "Sat"
+		},
+		"Months": {
+			"January": "January",
+			"February": "February",
+			"March": "March",
+			"April": "April",
+			"May": "May",
+			"June": "June",
+			"July": "July",
+			"August": "August",
+			"September": "September",
+			"October": "October",
+			"November": "November",
+			"December": "December"
+		},
+		"DateFormats": {
+			"Long": "{{weekday}}, {{day}} {{month}} {{year}}",
+			"Short": "{{weekday}}, {{day}} {{month}}",
+			"Compact": "{{weekday}}, {{day}} {{month}}",
+			"DayMonth": "{{day}} {{month}}",
+			"DayMonthYear": "{{day}} {{month}} {{year}}"
+		},
+		"Duration": {
+			"HoursMinutes": "{{hours}}h {{minutes}}m",
+			"Minutes": "{{minutes}} min"
+		},
+		"Greetings": {
+			"Morning": "Good morning",
+			"Afternoon": "Good afternoon",
+			"Evening": "Good evening"
+		},
+		"RelativeTime": {
+			"JustNow": "Just now",
+			"MinutesAgo": "{{minutes}} min ago",
+			"HoursAgo": "{{hours}} h ago",
+			"Yesterday": "Yesterday {{time}}"
+		},
+		"Departments": {
+			"Arge": "R&D & Engineering",
+			"Satis": "Sales",
+			"Ik": "Human Resources",
+			"Uretim": "Production & Logistics",
+			"Pazarlama": "Marketing"
+		},
+		"DepartmentsShort": {
+			"Arge": "R&D",
+			"Satis": "Sales",
+			"Ik": "HR",
+			"Uretim": "Production",
+			"Pazarlama": "Marketing"
+		},
+		"Companies": {
+			"OdooTr": "Odoo Kurumsal A.Ş.",
+			"OdooArge": "Odoo İleri Teknolojiler Ltd."
+		},
+		"ShiftTemplates": {
+			"Standard": "Standard Shift (09:00 – 18:00)",
+			"Flexible": "Flexible Hours (09:30 – 18:30)",
+			"Second": "Second Shift (16:00 – 00:30)"
+		},
+		"AttendanceStatus": {
+			"Inside": "Inside",
+			"OnBreak": "On break",
+			"Outside": "Outside",
+			"Absent": "Absent"
+		},
+		"RecordTypes": {
+			"Entry": "Check-in",
+			"Break": "Break",
+			"Exit": "Check-out"
+		},
+		"RequestStatus": {
+			"Pending": "Awaiting approval",
+			"Approved": "Approved",
+			"Rejected": "Rejected"
+		}
+	},
+	"UI": {
+		"Buttons": {
+			"Back": "Back",
+			"Close": "Close",
+			"Login": "Sign In",
+			"ClearSearch": "Clear Search",
+			"Retry": "Try Again",
+			"Ok": "OK",
+			"MarkAllRead": "Mark All as Seen"
+		},
+		"Accessibility": {
+			"Notifications": "Notifications",
+			"Profile": "Profile"
+		},
+		"Tabs": {
+			"Home": "Home",
+			"Schedule": "Statistics",
+			"Profile": "Profile",
+			"Admin": "Management"
+		},
+		"NotFound": {
+			"Title": "Oops!",
+			"Text": "This screen doesn't exist.",
+			"GoHome": "Go to home screen"
+		},
+		"Common": {
+			"Percent": "{{value}}%"
+		}
+	}
+}

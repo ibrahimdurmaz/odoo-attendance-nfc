@@ -11,6 +11,7 @@ import {
 	getOptionLabel,
 } from '../../../../store/useEmployeeStore';
 import { EmployeeAvatar } from '../../../Admin/EmployeeAvatar';
+import { useTranslation } from 'react-i18next';
 
 type EmployeeSummaryCardProps = { employee: Employee };
 
@@ -19,6 +20,7 @@ export const EmployeeSummaryCard: FC<EmployeeSummaryCardProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createSummaryStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.card}>
@@ -41,13 +43,13 @@ export const EmployeeSummaryCard: FC<EmployeeSummaryCardProps> = ({
 					</View>
 					<Text style={styles.separator}>•</Text>
 					<Text numberOfLines={1} style={styles.department}>
-						{getOptionLabel(DEPARTMENTS, employee.department)}
+						{t(getOptionLabel(DEPARTMENTS, employee.department))}
 					</Text>
 				</View>
 				<View style={styles.companyRow}>
 					<MaterialIcons color={colors.tertiary} name='apartment' size={14} />
 					<Text numberOfLines={1} style={styles.company}>
-						{getOptionLabel(COMPANIES, employee.company)} • {employee.jobTitle}
+						{t(getOptionLabel(COMPANIES, employee.company))} • {employee.jobTitle}
 					</Text>
 				</View>
 			</View>

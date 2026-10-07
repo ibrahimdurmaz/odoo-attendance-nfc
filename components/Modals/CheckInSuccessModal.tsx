@@ -6,13 +6,15 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { SHIFT_HOURS } from '../Home/constants';
 import { ModalWrapper } from './ModalWrapper';
 import { CheckInSuccessModalStyles } from './styles';
+import { useTranslation } from 'react-i18next';
 
 export const CheckInSuccessModal = () => {
 	const colors = theme();
+	const { t } = useTranslation();
 	const { modals, closeModal } = useModalStore();
 	const { visible, props } = modals.checkInSuccessful;
-	const toMinutes = (t: string) => {
-		const [h, m] = t.split(':').map(Number);
+	const toMinutes = (value: string) => {
+		const [h, m] = value.split(':').map(Number);
 		return h * 60 + m;
 	};
 	if (!visible) null;
@@ -23,9 +25,9 @@ export const CheckInSuccessModal = () => {
 		const start = toMinutes('08:40');
 		const end = toMinutes('09:20');
 
-		if (minutes < start) return 'Erken Başlangıç';
-		if (minutes > end) return 'Geç Başlangıç';
-		return 'Zamanında Başlangıç'; // 08:40 - 09:20 arası (dahil)
+		if (minutes < start) return t('Modals.CheckInSuccessModal.EarlyStart');
+		if (minutes > end) return t('Modals.CheckInSuccessModal.LateStart');
+		return t('Modals.CheckInSuccessModal.OnTimeStart'); // 08:40 - 09:20 arası (dahil)
 	};
 	const shiftStatus = getShiftStatus(time);
 	const userName = 'Selim';
@@ -59,10 +61,10 @@ export const CheckInSuccessModal = () => {
 				</View>
 
 				<Text style={[styles.title, { color: colors.onSurface }]}>
-					Giriş kaydedildi
+					{t('Modals.CheckInSuccessModal.Title')}
 				</Text>
 				<Text style={[styles.subtitle, { color: colors.onSurfaceVariant }]}>
-					İyi çalışmalar, {userName}.
+					{t('Modals.CheckInSuccessModal.Subtitle', { name: userName })}
 				</Text>
 
 				<View
@@ -72,7 +74,7 @@ export const CheckInSuccessModal = () => {
 					]}
 				>
 					<Text style={[styles.overline, { color: colors.onSurfaceVariant }]}>
-						KAYIT SAATİ
+						{t('Modals.CheckInSuccessModal.RecordTime')}
 					</Text>
 					<Text style={[styles.time, { color: colors.onSurface }]}>{time}</Text>
 				</View>
@@ -84,7 +86,7 @@ export const CheckInSuccessModal = () => {
 						size={16}
 					/>
 					<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
-						Odoo'ya aktarıldı
+						{t('Modals.CheckInSuccessModal.Synced')}
 					</Text>
 				</View>
 
@@ -108,7 +110,7 @@ export const CheckInSuccessModal = () => {
 					</View>
 					<View style={styles.shiftTexts}>
 						<Text style={[styles.label, { color: colors.onSurface }]}>
-							Vardiya Durumu
+							{t('Modals.CheckInSuccessModal.ShiftStatus')}
 						</Text>
 						<Text
 							numberOfLines={1}
@@ -131,7 +133,7 @@ export const CheckInSuccessModal = () => {
 				</View>
 
 				<Pressable
-					accessibilityLabel='Tamam'
+					accessibilityLabel={t('UI.Buttons.Ok')}
 					accessibilityRole='button'
 					onPress={onClose}
 					style={({ pressed }) => [
@@ -141,7 +143,7 @@ export const CheckInSuccessModal = () => {
 					]}
 				>
 					<Text style={[styles.buttonLabel, { color: colors.onPrimary }]}>
-						Tamam
+						{t('UI.Buttons.Ok')}
 					</Text>
 					<MaterialIcons
 						color={colors.onPrimary}

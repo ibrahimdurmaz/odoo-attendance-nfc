@@ -5,6 +5,7 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Trans, useTranslation } from 'react-i18next';
 type ImpactNoteProps = {
 	/** O güne ait kayıt yoksa null; etki hesaplanamaz. */
 	impact: CorrectionImpact | null;
@@ -14,11 +15,16 @@ type ImpactNoteProps = {
 export const ImpactNote: FC<ImpactNoteProps> = ({ impact, targetSeconds }) => {
 	const colors = theme();
 	const styles = useMemo(() => createImpactStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	const conclusion =
 		impact && impact.differenceSeconds >= 0
-			? `${formatDuration(targetSeconds)} hedefini tamamlar.`
-			: `Hedefin ${formatDuration(-(impact?.differenceSeconds ?? 0))} altında kalır.`;
+			? t('CorrectionRequestDetail.ImpactNote.CompletesTarget', {
+					duration: formatDuration(targetSeconds),
+				})
+			: t('CorrectionRequestDetail.ImpactNote.BelowTarget', {
+					duration: formatDuration(-(impact?.differenceSeconds ?? 0)),
+				});
 
 	return (
 		<View style={styles.box}>
@@ -26,18 +32,23 @@ export const ImpactNote: FC<ImpactNoteProps> = ({ impact, targetSeconds }) => {
 				<MaterialIcons color={colors.onPrimary} name='insights' size={18} />
 			</View>
 			<View style={styles.texts}>
-				<Text style={styles.title}>Etki Analizi</Text>
+				<Text style={styles.title}>
+					{t('CorrectionRequestDetail.ImpactNote.Title')}
+				</Text>
 				{impact ? (
 					<Text style={styles.text}>
-						Onaylarsanız net süre{' '}
-						<Text style={styles.strong}>
-							{formatDuration(impact.workedSeconds)}
-						</Text>{' '}
-						olur. {conclusion}
+						<Trans
+							components={{ strong: <Text style={styles.strong} /> }}
+							i18nKey='CorrectionRequestDetail.ImpactNote.Text'
+							values={{
+								duration: formatDuration(impact.workedSeconds),
+								conclusion,
+							}}
+						/>
 					</Text>
 				) : (
 					<Text style={styles.text}>
-						Bu güne ait kayıt bulunamadığı için etki hesaplanamıyor.
+						{t('CorrectionRequestDetail.ImpactNote.NoRecord')}
 					</Text>
 				)}
 			</View>

@@ -4,6 +4,7 @@ import { Clipboard, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { fonts, theme, ThemeColors } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
+import { useTranslation } from 'react-i18next';
 
 type TemporaryPasswordCardProps = { password: string };
 const COPIED_FEEDBACK_MS = 2200;
@@ -12,6 +13,7 @@ export const TemporaryPasswordCard: FC<TemporaryPasswordCardProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createPasswordStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	const [isCopied, setIsCopied] = useState(false);
 	const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -43,22 +45,32 @@ export const TemporaryPasswordCard: FC<TemporaryPasswordCardProps> = ({
 			<View style={styles.header}>
 				<View style={styles.titleRow}>
 					<MaterialIcons color={colors.primary} name='vpn-key' size={20} />
-					<Text style={styles.title}>Geçici Şifre</Text>
+					<Text style={styles.title}>
+						{t('AddEmployee.TemporaryPasswordCard.Title')}
+					</Text>
 				</View>
 				<View style={styles.tag}>
-					<Text style={styles.tagText}>İlk Giriş İçin</Text>
+					<Text style={styles.tagText}>
+						{t('AddEmployee.TemporaryPasswordCard.FirstLoginTag')}
+					</Text>
 				</View>
 			</View>
 
 			<View style={styles.codeBar}>
 				<View style={styles.codeTexts}>
-					<Text style={styles.codeLabel}>Tek Kullanımlık Kod</Text>
+					<Text style={styles.codeLabel}>
+						{t('AddEmployee.TemporaryPasswordCard.OneTimeCode')}
+					</Text>
 					<Text selectable style={styles.code}>
 						{password}
 					</Text>
 				</View>
 				<Pressable
-					accessibilityLabel={isCopied ? 'Kopyalandı' : 'Şifreyi kopyala'}
+					accessibilityLabel={
+						isCopied
+							? t('AddEmployee.TemporaryPasswordCard.Copied')
+							: t('AddEmployee.TemporaryPasswordCard.CopyA11y')
+					}
 					accessibilityLiveRegion='polite'
 					accessibilityRole='button'
 					onPress={() => void copy()}
@@ -74,7 +86,9 @@ export const TemporaryPasswordCard: FC<TemporaryPasswordCardProps> = ({
 						size={20}
 					/>
 					<Text style={[styles.copyLabel, isCopied && styles.copyLabelDone]}>
-						{isCopied ? 'Kopyalandı' : 'Kopyala'}
+						{isCopied
+							? t('AddEmployee.TemporaryPasswordCard.Copied')
+							: t('AddEmployee.TemporaryPasswordCard.Copy')}
 					</Text>
 				</Pressable>
 			</View>
@@ -82,8 +96,7 @@ export const TemporaryPasswordCard: FC<TemporaryPasswordCardProps> = ({
 			<View style={styles.notice}>
 				<MaterialIcons color={colors.secondary} name='security' size={20} />
 				<Text style={styles.noticeText}>
-					Bu şifreyi çalışana güvenli şekilde iletin. Kullanıcı ilk giriş
-					yaptığında yeni bir parola belirlemek zorundadır.
+					{t('AddEmployee.TemporaryPasswordCard.Notice')}
 				</Text>
 			</View>
 		</View>

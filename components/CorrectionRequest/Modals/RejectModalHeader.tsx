@@ -3,11 +3,13 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 type RejectModalHeaderProps = { onClose: () => void };
 
 export const RejectModalHeader: FC<RejectModalHeaderProps> = ({ onClose }) => {
 	const colors = theme();
 	const styles = useMemo(() => createHeaderStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.container}>
@@ -16,10 +18,10 @@ export const RejectModalHeader: FC<RejectModalHeaderProps> = ({ onClose }) => {
 					<MaterialIcons color={colors.error} name='cancel' size={20} />
 				</View>
 				<Text accessibilityRole='header' style={styles.title}>
-					Talebi Reddet
+					{t('CorrectionRequestDetail.RejectModalHeader.Title')}
 				</Text>
 				<Pressable
-					accessibilityLabel='Kapat'
+					accessibilityLabel={t('UI.Buttons.Close')}
 					accessibilityRole='button'
 					hitSlop={10}
 					onPress={onClose}
@@ -34,7 +36,7 @@ export const RejectModalHeader: FC<RejectModalHeaderProps> = ({ onClose }) => {
 			<View style={styles.infoRow}>
 				<MaterialIcons color={colors.primary} name='info' size={16} />
 				<Text style={styles.info}>
-					Reddetme nedeni personele bildirim olarak iletilecektir.
+					{t('CorrectionRequestDetail.RejectModalHeader.Info')}
 				</Text>
 			</View>
 		</View>

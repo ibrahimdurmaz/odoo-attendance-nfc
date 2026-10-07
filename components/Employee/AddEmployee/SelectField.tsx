@@ -3,6 +3,7 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { FieldLabel } from './FieldLabel';
+import { useTranslation } from 'react-i18next';
 
 type SelectOption<Key extends string> = { key: Key; label: string };
 
@@ -23,10 +24,12 @@ export const SelectField = <Key extends string>({
 }: SelectFieldProps<Key>) => {
 	const colors = theme();
 	const styles = useMemo(() => createSelectStyles(colors), [colors]);
+	const { t } = useTranslation();
 	const [isOpen, setIsOpen] = useState(false);
 
-	const selectedLabel =
-		options.find((option) => option.key === value)?.label ?? '';
+	// Seçenek etiketleri çeviri anahtarıdır.
+	const selectedLabelKey = options.find((option) => option.key === value)?.label;
+	const selectedLabel = selectedLabelKey ? t(selectedLabelKey) : '';
 
 	const select = (key: Key) => {
 		onChange(key);
@@ -75,7 +78,7 @@ export const SelectField = <Key extends string>({
 										isSelected && styles.optionLabelSelected,
 									]}
 								>
-									{option.label}
+									{t(option.label)}
 								</Text>
 								{isSelected ? (
 									<MaterialIcons

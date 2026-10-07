@@ -4,11 +4,13 @@ import { ColorValue, StyleSheet, Text, View } from 'react-native';
 import { fonts, theme } from '@/assets/theme';
 import { AttendanceStatus } from '@/store/types';
 import { ATTENDANCE_LABELS } from '@/store/useEmployeeStore';
+import { useTranslation } from 'react-i18next';
 
 type PresencePillProps = { status: AttendanceStatus; isActive: boolean };
 
 export const PresencePill: FC<PresencePillProps> = ({ status, isActive }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 
 	const tones: Record<
 		AttendanceStatus,
@@ -36,7 +38,9 @@ export const PresencePill: FC<PresencePillProps> = ({ status, isActive }) => {
 				style={[presenceStyles.dot, { backgroundColor: tone.foreground }]}
 			/>
 			<Text style={[presenceStyles.label, { color: tone.foreground }]}>
-				{isActive ? ATTENDANCE_LABELS[status] : 'Pasif'}
+				{isActive
+					? t(ATTENDANCE_LABELS[status])
+					: t('EmployeeDetail.PresencePill.Passive')}
 			</Text>
 		</View>
 	);

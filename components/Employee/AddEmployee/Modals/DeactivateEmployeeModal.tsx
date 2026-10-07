@@ -6,6 +6,7 @@ import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { EmployeeAvatar } from '../../../Admin/EmployeeAvatar';
 import { ModalWrapper } from '../../../Modals/ModalWrapper';
+import { useTranslation } from 'react-i18next';
 
 const WarningBadge: FC = () => {
 	const colors = theme();
@@ -59,18 +60,18 @@ const DeactivateMessage: FC<DeactivateMessageProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createMessageStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.container}>
 			<View style={styles.titleRow}>
 				<EmployeeAvatar avatarUrl={avatarUrl} fullName={fullName} size={24} />
 				<Text accessibilityRole='header' style={styles.title}>
-					{fullName} pasife alınsın mı?
+					{t('EditEmployee.DeactivateEmployeeModal.Title', { name: fullName })}
 				</Text>
 			</View>
 			<Text style={styles.text}>
-				Uygulamaya giriş yapamaz ve panelde giriş-çıkış kaydı oluşturamaz.
-				Geçmiş kayıtları korunur.
+				{t('EditEmployee.DeactivateEmployeeModal.Text')}
 			</Text>
 		</View>
 	);
@@ -115,6 +116,7 @@ const DeactivateActions: FC<DeactivateActionsProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createActionStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.container}>
@@ -132,7 +134,9 @@ const DeactivateActions: FC<DeactivateActionsProps> = ({
 					name='person-off'
 					size={20}
 				/>
-				<Text style={[styles.label, styles.confirmLabel]}>Pasife Al</Text>
+				<Text style={[styles.label, styles.confirmLabel]}>
+					{t('EditEmployee.DeactivateEmployeeModal.Confirm')}
+				</Text>
 			</Pressable>
 			<Pressable
 				accessibilityRole='button'
@@ -143,12 +147,14 @@ const DeactivateActions: FC<DeactivateActionsProps> = ({
 					pressed && styles.pressed,
 				]}
 			>
-				<Text style={[styles.label, styles.cancelLabel]}>Vazgeç</Text>
+				<Text style={[styles.label, styles.cancelLabel]}>
+					{t('EditEmployee.DeactivateEmployeeModal.Cancel')}
+				</Text>
 			</Pressable>
 			<View style={styles.note}>
 				<MaterialIcons color={colors.onSurfaceVariant} name='info' size={14} />
 				<Text style={styles.noteText}>
-					Dilediğiniz an tekrar aktif edebilirsiniz
+					{t('EditEmployee.DeactivateEmployeeModal.Note')}
 				</Text>
 			</View>
 		</View>

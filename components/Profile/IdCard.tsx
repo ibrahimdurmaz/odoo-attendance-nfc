@@ -1,8 +1,14 @@
 import { fonts, theme } from '@/assets/theme';
 import { Employee } from '@/store/types';
+import {
+	COMPANIES,
+	DEPARTMENTS,
+	getOptionLabel,
+} from '@/store/useEmployeeStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { FC } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 /** "Selim Kaya" → "SK" */
 const getInitials = (fullName: string): string => {
@@ -17,6 +23,7 @@ type IdCardProps = { profile: Employee };
 
 export const IdCard: FC<IdCardProps> = ({ profile }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	return (
 		<View style={[idCardStyles.card, { backgroundColor: colors.primary }]}>
 			<View
@@ -46,7 +53,7 @@ export const IdCard: FC<IdCardProps> = ({ profile }) => {
 					numberOfLines={1}
 					style={[idCardStyles.company, { color: colors.onPrimary }]}
 				>
-					{profile.company}
+					{t(getOptionLabel(COMPANIES, profile.company))}
 				</Text>
 				<View style={idCardStyles.statusPill}>
 					<View
@@ -56,7 +63,7 @@ export const IdCard: FC<IdCardProps> = ({ profile }) => {
 						]}
 					/>
 					<Text style={[idCardStyles.statusLabel, { color: colors.onPrimary }]}>
-						AKTİF
+						{t('Profile.IdCard.Active')}
 					</Text>
 				</View>
 			</View>
@@ -97,7 +104,7 @@ export const IdCard: FC<IdCardProps> = ({ profile }) => {
 						numberOfLines={1}
 						style={[idCardStyles.department, { color: colors.onPrimary }]}
 					>
-						{profile.department}
+						{t(getOptionLabel(DEPARTMENTS, profile.department))}
 					</Text>
 				</View>
 			</View>
@@ -105,7 +112,7 @@ export const IdCard: FC<IdCardProps> = ({ profile }) => {
 			<View style={idCardStyles.bottomRow}>
 				<View>
 					<Text style={[idCardStyles.overline, { color: colors.onPrimary }]}>
-						SİCİL NUMARASI
+						{t('Profile.IdCard.EmployeeIdLabel')}
 					</Text>
 					<Text
 						style={[idCardStyles.employeeId, { color: colors.secondaryFixed }]}
@@ -116,7 +123,7 @@ export const IdCard: FC<IdCardProps> = ({ profile }) => {
 				<View style={idCardStyles.badge}>
 					<MaterialIcons color={colors.onPrimary} name='badge' size={18} />
 					<Text style={[idCardStyles.badgeLabel, { color: colors.onPrimary }]}>
-						Personel Kimliği
+						{t('Profile.IdCard.StaffId')}
 					</Text>
 				</View>
 			</View>

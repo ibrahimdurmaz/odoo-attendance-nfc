@@ -2,9 +2,11 @@ import { fonts, theme } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { FC } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 export const SecurityNote: FC = () => {
 	const colors = theme();
+	const { t } = useTranslation();
 	return (
 		<View
 			style={[
@@ -14,7 +16,7 @@ export const SecurityNote: FC = () => {
 		>
 			<MaterialIcons color={colors.onSurfaceVariant} name='lock' size={14} />
 			<Text style={[securityStyles.text, { color: colors.onSurfaceVariant }]}>
-				Kimliğiniz yalnızca bu telefonda geçerlidir
+				{t('Profile.SecurityNote.Text')}
 			</Text>
 		</View>
 	);

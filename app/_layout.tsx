@@ -1,3 +1,4 @@
+import '@/i18n';
 import { useProfileStore } from '@/store/useProfileStore';
 import { useFonts } from 'expo-font';
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
@@ -51,7 +52,8 @@ function RootLayoutNav() {
 		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
 			<Stack
 				screenOptions={{ headerShown: false }}
-				initialRouteName={isLoggedIn ? '(tabs)' : 'server_setup'}
+				//initialRouteName={isLoggedIn ? '(tabs)' : 'server_setup'}
+				initialRouteName={isLoggedIn ? '(tabs)' : 'login'}
 			>
 				<Stack.Protected guard={isLoggedIn}>
 					<Stack.Screen name='(tabs)' />

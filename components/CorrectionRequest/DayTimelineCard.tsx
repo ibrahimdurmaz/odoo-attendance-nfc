@@ -1,11 +1,12 @@
 import { fonts, theme, ThemeColors } from '@/assets/theme';
-import { EMPTY_TIME, formatTime } from '@/helper/dateHelpers';
+import { EMPTY_TIME, formatMinutes, formatTime } from '@/helper/dateHelpers';
 import type { EmployeeCorrectionRequest } from '@/store/useCorrectionRequestStore';
 import type { DayRecord } from '@/store/useDayStore';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TimelineRow } from './TimelineRow';
+import { useTranslation } from 'react-i18next';
 
 type DayTimelineCardProps = {
 	/** Çalışanın o güne ait kaydı; yoksa undefined. */
@@ -16,11 +17,14 @@ type DayTimelineCardProps = {
 export const DayTimelineCard: FC<DayTimelineCardProps> = ({ day, request }) => {
 	const colors = theme();
 	const styles = useMemo(() => createTimelineStyles(colors), [colors]);
+	const { t } = useTranslation();
 	const isMissing = request.currentTime === null;
 
 	return (
 		<View style={styles.card}>
-			<Text style={styles.title}>O Günün Kayıtları</Text>
+			<Text style={styles.title}>
+				{t('CorrectionRequestDetail.DayTimelineCard.Title')}
+			</Text>
 			{day ? (
 				<View style={styles.rows}>
 					<View style={styles.line} />
@@ -33,7 +37,7 @@ export const DayTimelineCard: FC<DayTimelineCardProps> = ({ day, request }) => {
 								? EMPTY_TIME
 								: formatTime(day.checkInAt)
 						}
-						title='Giriş Kaydı'
+						title={t('CorrectionRequestDetail.DayTimelineCard.CheckIn')}
 						tone={
 							request.recordType === 'entry' && isMissing ? 'missing' : 'entry'
 						}
@@ -44,9 +48,9 @@ export const DayTimelineCard: FC<DayTimelineCardProps> = ({ day, request }) => {
 							isUnderReview={request.recordType === 'break' && index === 0}
 							key={item.start}
 							subtitle={day.location}
-							tag={`${Math.round((item.end - item.start) / 60000)} dk`}
+							tag={formatMinutes(Math.round((item.end - item.start) / 60000) * 60)}
 							time={`${formatTime(item.start)} – ${formatTime(item.end)}`}
-							title='Mola'
+							title={t('CorrectionRequestDetail.DayTimelineCard.Break')}
 							tone='break'
 						/>
 					))}
@@ -57,7 +61,7 @@ export const DayTimelineCard: FC<DayTimelineCardProps> = ({ day, request }) => {
 						isUnderReview={request.recordType === 'exit'}
 						subtitle={
 							request.recordType === 'exit' && isMissing
-								? 'Kayıt bulunamadı'
+								? t('CorrectionRequestDetail.DayTimelineCard.RecordNotFound')
 								: day.checkpoint
 						}
 						time={
@@ -65,14 +69,16 @@ export const DayTimelineCard: FC<DayTimelineCardProps> = ({ day, request }) => {
 								? EMPTY_TIME
 								: formatTime(day.checkOutAt)
 						}
-						title='Çıkış Kaydı'
+						title={t('CorrectionRequestDetail.DayTimelineCard.CheckOut')}
 						tone={
 							request.recordType === 'exit' && isMissing ? 'missing' : 'exit'
 						}
 					/>
 				</View>
 			) : (
-				<Text style={styles.empty}>Bu güne ait kayıt bulunamadı.</Text>
+				<Text style={styles.empty}>
+					{t('CorrectionRequestDetail.DayTimelineCard.Empty')}
+				</Text>
 			)}
 		</View>
 	);

@@ -6,6 +6,7 @@ import type { FC } from 'react';
 import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { EmployeeAvatar } from '../Admin/EmployeeAvatar';
+import { useTranslation } from 'react-i18next';
 type RequestEmployeeCardProps = {
 	employeeId: string;
 	/** Çalışan listeden silinmişse undefined; o zaman yalnızca sicil no gösterilir. */
@@ -21,10 +22,11 @@ export const RequestEmployeeCard: FC<RequestEmployeeCardProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createEmployeeCardStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	const name = employee?.fullName ?? employeeId;
 	const detail = employee
-		? `${employeeId} • ${getOptionLabel(DEPARTMENTS, employee.department)}`
+		? `${employeeId} • ${t(getOptionLabel(DEPARTMENTS, employee.department))}`
 		: employeeId;
 
 	return (

@@ -7,6 +7,7 @@ import { useMemo, useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { INPUT_HEIGHT } from './ServerSetupScreen';
 import { Protocol } from './serverAddress';
+import { useTranslation } from 'react-i18next';
 
 type ServerInputCardProps = {
 	protocol: Protocol;
@@ -29,6 +30,7 @@ export const ServerInputCard: FC<ServerInputCardProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createInputStyles(colors), [colors]);
+	const { t } = useTranslation();
 	const inputRef = useRef<TextInput>(null);
 	const [isFocused, setIsFocused] = useState(false);
 
@@ -52,7 +54,9 @@ export const ServerInputCard: FC<ServerInputCardProps> = ({
 			/>
 
 			<Pressable
-				accessibilityLabel={`Protokol seçimi: ${protocol}`}
+				accessibilityLabel={t('ServerSetup.ServerInputCard.ProtocolA11y', {
+					protocol,
+				})}
 				accessibilityRole='button'
 				accessibilityState={{ expanded: isProtocolOpen }}
 				hitSlop={6}
@@ -70,7 +74,7 @@ export const ServerInputCard: FC<ServerInputCardProps> = ({
 			<View style={styles.divider} />
 
 			<TextInput
-				accessibilityLabel='Sunucu adresi'
+				accessibilityLabel={t('ServerSetup.ServerInputCard.AddressA11y')}
 				autoCapitalize='none'
 				autoCorrect={false}
 				keyboardType='url'
@@ -78,7 +82,7 @@ export const ServerInputCard: FC<ServerInputCardProps> = ({
 				onChangeText={onChangeText}
 				onFocus={() => setIsFocused(true)}
 				onSubmitEditing={onSubmit}
-				placeholder='Sunucu adresini girin'
+				placeholder={t('ServerSetup.ServerInputCard.Placeholder')}
 				placeholderTextColor={colors.outline}
 				ref={inputRef}
 				returnKeyType='go'
@@ -88,7 +92,7 @@ export const ServerInputCard: FC<ServerInputCardProps> = ({
 
 			{address.length > 0 ? (
 				<Pressable
-					accessibilityLabel='Girişi temizle'
+					accessibilityLabel={t('ServerSetup.ServerInputCard.ClearA11y')}
 					accessibilityRole='button'
 					hitSlop={10}
 					onPress={clear}

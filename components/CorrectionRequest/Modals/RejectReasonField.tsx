@@ -3,6 +3,7 @@ import type { FC } from 'react';
 import { useMemo } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { MAX_REASON_LENGTH, WARNING_LENGTH } from './constants';
+import { useTranslation } from 'react-i18next';
 type RejectReasonFieldProps = {
 	value: string;
 	onChangeText: (text: string) => void;
@@ -14,12 +15,14 @@ export const RejectReasonField: FC<RejectReasonFieldProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createFieldStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.field}>
 			<View style={styles.labelRow}>
 				<Text style={styles.label}>
-					Neden<Text style={styles.required}> *</Text>
+					{t('CorrectionRequestDetail.RejectReasonField.Label')}
+					<Text style={styles.required}> *</Text>
 				</Text>
 				<Text
 					style={[
@@ -31,11 +34,11 @@ export const RejectReasonField: FC<RejectReasonFieldProps> = ({
 				</Text>
 			</View>
 			<TextInput
-				accessibilityLabel='Ret nedeni'
+				accessibilityLabel={t('CorrectionRequestDetail.RejectReasonField.A11y')}
 				maxLength={MAX_REASON_LENGTH}
 				multiline
 				onChangeText={onChangeText}
-				placeholder='Çalışana iletilecek ret gerekçesini yazın...'
+				placeholder={t('CorrectionRequestDetail.RejectReasonField.Placeholder')}
 				placeholderTextColor={colors.outline}
 				style={styles.input}
 				textAlignVertical='top'

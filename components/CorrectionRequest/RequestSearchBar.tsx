@@ -3,6 +3,7 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 type RequestSearchBarProps = {
 	value: string;
 	onChangeText: (text: string) => void;
@@ -14,16 +15,17 @@ export const RequestSearchBar: FC<RequestSearchBarProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createSearchStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.box}>
 			<MaterialIcons color={colors.outline} name='search' size={20} />
 			<TextInput
-				accessibilityLabel='Çalışan adı veya tarih ara'
+				accessibilityLabel={t('CorrectionRequest.RequestSearchBar.A11y')}
 				autoCapitalize='none'
 				autoCorrect={false}
 				onChangeText={onChangeText}
-				placeholder='Çalışan adı veya tarih ara...'
+				placeholder={t('CorrectionRequest.RequestSearchBar.Placeholder')}
 				placeholderTextColor={colors.outline}
 				returnKeyType='search'
 				style={styles.input}
@@ -31,7 +33,7 @@ export const RequestSearchBar: FC<RequestSearchBarProps> = ({
 			/>
 			{value.length > 0 ? (
 				<Pressable
-					accessibilityLabel='Aramayı Temizle'
+					accessibilityLabel={t('UI.Buttons.ClearSearch')}
 					accessibilityRole='button'
 					hitSlop={10}
 					onPress={() => onChangeText('')}

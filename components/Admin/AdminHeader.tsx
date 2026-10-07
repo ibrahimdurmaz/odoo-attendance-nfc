@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 type AdminHeaderProps = {
 	title: string;
@@ -13,6 +14,7 @@ type AdminHeaderProps = {
 export const AdminHeader: FC<AdminHeaderProps> = ({ title }) => {
 	const colors = theme();
 	const router = useRouter();
+	const { t } = useTranslation();
 	const styles = useMemo(() => createStyles(colors), [colors]);
 	const onBack = () => {
 		router.navigate('/(tabs)');
@@ -28,7 +30,7 @@ export const AdminHeader: FC<AdminHeaderProps> = ({ title }) => {
 			<View style={styles.left}>
 				{onBack ? (
 					<Pressable
-						accessibilityLabel='Geri'
+						accessibilityLabel={t('UI.Buttons.Back')}
 						accessibilityRole='button'
 						hitSlop={8}
 						onPress={onBack}
@@ -60,7 +62,7 @@ export const AdminHeader: FC<AdminHeaderProps> = ({ title }) => {
 			<View style={styles.right}>
 				{onNotificationsPress ? (
 					<Pressable
-						accessibilityLabel='Bildirimler'
+						accessibilityLabel={t('UI.Accessibility.Notifications')}
 						accessibilityRole='button'
 						hitSlop={8}
 						onPress={onNotificationsPress}
@@ -76,7 +78,12 @@ export const AdminHeader: FC<AdminHeaderProps> = ({ title }) => {
 						/>
 					</Pressable>
 				) : null}
-				<Pressable onPress={onProfilePress} style={styles.avatar}>
+				<Pressable
+					accessibilityLabel={t('UI.Accessibility.Profile')}
+					accessibilityRole='button'
+					onPress={onProfilePress}
+					style={styles.avatar}
+				>
 					<MaterialIcons color={colors.onPrimary} name='person' size={18} />
 				</Pressable>
 			</View>

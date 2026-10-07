@@ -3,7 +3,10 @@ import { formatDuration } from '@/helper/dateHelpers';
 import { DayRecord } from '@/store/useDayStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
+
+export const WEEKLY_TARGET_HOURS = 40;
 
 export function WeeklySummary({
 	weeklyProgress,
@@ -17,6 +20,7 @@ export function WeeklySummary({
 	thisWeekDays: DayRecord[];
 }) {
 	const colors = theme();
+	const { t } = useTranslation();
 	return (
 		<View
 			style={[
@@ -29,7 +33,7 @@ export function WeeklySummary({
 				<View style={styles.row}>
 					<View style={[styles.dot, { backgroundColor: colors.secondary }]} />
 					<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
-						Haftalık Çalışma Durumu
+						{t('Schedule.WeeklySummary.Title')}
 					</Text>
 				</View>
 				<View
@@ -47,7 +51,9 @@ export function WeeklySummary({
 					<Text
 						style={[styles.badgeLabel, { color: colors.onSecondaryContainer }]}
 					>
-						%{Math.floor(weeklyProgress * 100)}
+						{t('UI.Common.Percent', {
+							value: Math.floor(weeklyProgress * 100),
+						})}
 					</Text>
 				</View>
 			</View>
@@ -58,11 +64,13 @@ export function WeeklySummary({
 						style={[styles.weeklyTarget, { color: colors.onSurfaceVariant }]}
 					>
 						{' '}
-						/ 40s
+						{t('Schedule.WeeklySummary.Target', { hours: WEEKLY_TARGET_HOURS })}
 					</Text>
 				</Text>
 				<Text style={[styles.remaining, { color: colors.primary }]}>
-					Kalan {formatDuration(weeklyRemaining)}
+					{t('Schedule.WeeklySummary.Remaining', {
+						duration: formatDuration(weeklyRemaining),
+					})}
 				</Text>
 			</View>
 			<View
@@ -81,10 +89,10 @@ export function WeeklySummary({
 			</View>
 			<View style={styles.spread}>
 				<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
-					{thisWeekDays.length} gün kaydedildi
+					{t('Schedule.WeeklySummary.DaysRecorded', { count: thisWeekDays.length })}
 				</Text>
 				<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
-					Haftalık Kota: 40s
+					{t('Schedule.WeeklySummary.WeeklyQuota', { hours: WEEKLY_TARGET_HOURS })}
 				</Text>
 			</View>
 		</View>

@@ -5,6 +5,7 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { FC, useMemo } from 'react';
 import { ColorValue, StyleSheet, Text, View } from 'react-native';
 import { IconName } from '../Home/types';
+import { useTranslation } from 'react-i18next';
 
 type StatCardProps = {
 	label: string;
@@ -75,28 +76,31 @@ type StatsSectionProps = { remainingLeaveDays: number };
 export const StatsSection: FC<StatsSectionProps> = ({ remainingLeaveDays }) => {
 	const { overtimeSeconds, dayCount } = useMonthlyOvertime();
 	const colors = theme();
+	const { t } = useTranslation();
 
 	return (
 		<View style={statStyles.section}>
 			<Text style={[statStyles.sectionTitle, { color: colors.onSurface }]}>
-				Mesai & İzin Durumu
+				{t('Profile.StatsSection.Title')}
 			</Text>
 			<View style={statStyles.row}>
 				<StatCard
 					accent={colors.secondary}
-					caption='Yıllık hak ediş'
+					caption={t('Profile.StatsSection.AnnualEntitlement')}
 					icon='calendar-today'
 					iconBackground={colors.secondaryContainer}
-					label='Kalan Yıllık İzin'
-					unit='Gün'
+					label={t('Profile.StatsSection.RemainingLeave')}
+					unit={t('Profile.StatsSection.Days')}
 					value={String(remainingLeaveDays)}
 				/>
 				<StatCard
 					accent={colors.primary}
-					caption={`Bu ay ${dayCount} gün kayıtlı`}
+					caption={t('Profile.StatsSection.RecordedThisMonth', {
+						count: dayCount,
+					})}
 					icon='schedule'
 					iconBackground={colors.primaryFixed}
-					label='Bu Ay Fazla Mesai'
+					label={t('Profile.StatsSection.OvertimeThisMonth')}
 					value={formatDuration(overtimeSeconds)}
 				/>
 			</View>

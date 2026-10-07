@@ -4,24 +4,30 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { fonts, theme, ThemeColors } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
+import { useTranslation } from 'react-i18next';
 
 type DetailStripProps = { onEdit: () => void };
 
 export const DetailStrip: FC<DetailStripProps> = ({ onEdit }) => {
 	const colors = theme();
 	const styles = useMemo(() => createStripStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.strip}>
-			<Text style={styles.overline}>PROFİL YÖNETİMİ</Text>
+			<Text style={styles.overline}>
+				{t('EmployeeDetail.DetailStrip.Overline')}
+			</Text>
 			<Pressable
-				accessibilityLabel='Profili Düzenle'
+				accessibilityLabel={t('EmployeeDetail.DetailStrip.EditA11y')}
 				accessibilityRole='button'
 				onPress={onEdit}
 				style={({ pressed }) => [styles.button, pressed && styles.pressed]}
 			>
 				<MaterialIcons color={colors.primary} name='edit' size={18} />
-				<Text style={styles.buttonLabel}>Düzenle</Text>
+				<Text style={styles.buttonLabel}>
+					{t('EmployeeDetail.DetailStrip.Edit')}
+				</Text>
 			</Pressable>
 		</View>
 	);

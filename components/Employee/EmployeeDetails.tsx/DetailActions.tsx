@@ -5,6 +5,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { fonts, theme, ThemeColors } from '@/assets/theme';
 
 import MaterialIcons from '@react-native-vector-icons/material-icons';
+import { useTranslation } from 'react-i18next';
 type DetailActionsProps = {
 	onResetPassword: () => void;
 	onViewSchedule: () => void;
@@ -16,6 +17,7 @@ export const DetailActions: FC<DetailActionsProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createActionStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.container}>
@@ -25,7 +27,9 @@ export const DetailActions: FC<DetailActionsProps> = ({
 				style={({ pressed }) => [styles.button, pressed && styles.pressed]}
 			>
 				<MaterialIcons color={colors.primary} name='vpn-key' size={20} />
-				<Text style={styles.buttonLabel}>Şifreyi Sıfırla</Text>
+				<Text style={styles.buttonLabel}>
+					{t('EmployeeDetail.DetailActions.ResetPassword')}
+				</Text>
 			</Pressable>
 			<Pressable
 				accessibilityRole='button'
@@ -33,7 +37,9 @@ export const DetailActions: FC<DetailActionsProps> = ({
 				style={({ pressed }) => [styles.link, pressed && styles.pressed]}
 			>
 				<MaterialIcons color={colors.primary} name='calendar-month' size={20} />
-				<Text style={styles.linkLabel}>Çizelgeyi Görüntüle</Text>
+				<Text style={styles.linkLabel}>
+					{t('EmployeeDetail.DetailActions.ViewSchedule')}
+				</Text>
 				<MaterialIcons color={colors.primary} name='arrow-forward' size={18} />
 			</Pressable>
 		</View>

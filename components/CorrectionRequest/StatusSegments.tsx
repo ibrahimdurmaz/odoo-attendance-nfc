@@ -4,6 +4,7 @@ import type { RequestStatus } from '@/store/useCorrectionRequestStore';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 type StatusSegmentsProps = {
 	selected: RequestStatus;
 	counts: Record<RequestStatus, number>;
@@ -17,6 +18,7 @@ export const StatusSegments: FC<StatusSegmentsProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createSegmentStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View accessibilityRole='tablist' style={styles.track}>
@@ -24,7 +26,10 @@ export const StatusSegments: FC<StatusSegmentsProps> = ({
 				const isSelected = status === selected;
 				return (
 					<Pressable
-						accessibilityLabel={`${TAB_LABELS[status]}, ${counts[status]} talep`}
+						accessibilityLabel={t('CorrectionRequest.StatusSegments.SegmentA11y', {
+							label: t(TAB_LABELS[status]),
+							count: counts[status],
+						})}
 						accessibilityRole='tab'
 						accessibilityState={{ selected: isSelected }}
 						key={status}
@@ -35,7 +40,7 @@ export const StatusSegments: FC<StatusSegmentsProps> = ({
 							numberOfLines={1}
 							style={[styles.label, isSelected && styles.labelSelected]}
 						>
-							{TAB_LABELS[status]}
+							{t(TAB_LABELS[status])}
 						</Text>
 						<View style={[styles.count, isSelected && styles.countSelected]}>
 							<Text

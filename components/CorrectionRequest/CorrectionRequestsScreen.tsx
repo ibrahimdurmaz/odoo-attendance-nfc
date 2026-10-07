@@ -19,11 +19,13 @@ import { RequestSearchBar } from './RequestSearchBar';
 import { RequestsEmptyState } from './RequestsEmptyState';
 import { ResultBanner } from './ResultBanner';
 import { StatusSegments } from './StatusSegments';
+import { useTranslation } from 'react-i18next';
 
 export const CorrectionRequestsScreen: FC = () => {
 	const colors = theme();
 	const styles = useMemo(() => createScreenStyles(colors), [colors]);
 	const router = useRouter();
+	const { t } = useTranslation();
 
 	const requests = useCorrectionRequestStore((state) => state.requests);
 	const lastResolvedId = useCorrectionRequestStore(
@@ -64,7 +66,7 @@ export const CorrectionRequestsScreen: FC = () => {
 
 	return (
 		<SafeAreaView edges={['top']} style={styles.screen}>
-			<AdminHeader title='Düzeltme Talepleri' />
+			<AdminHeader title={t('CorrectionRequest.CorrectionRequestsScreen.Title')} />
 			<FlatList
 				contentContainerStyle={styles.content}
 				data={visibleRequests}
@@ -73,13 +75,15 @@ export const CorrectionRequestsScreen: FC = () => {
 				ListEmptyComponent={
 					query.trim().length > 0 ? (
 						<RequestsEmptyState
-							text='Aradığınız çalışan ya da tarihe ait talep bulunamadı.'
-							title='Eşleşen Talep Yok'
+							text={t('CorrectionRequest.CorrectionRequestsScreen.NoMatchText')}
+							title={t('CorrectionRequest.CorrectionRequestsScreen.NoMatchTitle')}
 						/>
 					) : (
 						<RequestsEmptyState
-							text='Çalışanların gönderdiği düzeltme talepleri burada listelenir.'
-							title={`${TAB_LABELS[status]} Talep Yok`}
+							text={t('CorrectionRequest.CorrectionRequestsScreen.EmptyText')}
+							title={t('CorrectionRequest.CorrectionRequestsScreen.EmptyTitle', {
+								status: t(TAB_LABELS[status]),
+							})}
 						/>
 					)
 				}

@@ -3,6 +3,7 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 type PaginationProps = {
 	/** Sıfırdan başlar. */
 	page: number;
@@ -17,6 +18,7 @@ export const Pagination: FC<PaginationProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createPaginationStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	const isFirst = page === 0;
 	const isLast = page >= pageCount - 1;
@@ -24,7 +26,7 @@ export const Pagination: FC<PaginationProps> = ({
 	return (
 		<View style={styles.row}>
 			<Pressable
-				accessibilityLabel='Önceki sayfa'
+				accessibilityLabel={t('Notification.Pagination.PreviousA11y')}
 				accessibilityRole='button'
 				accessibilityState={{ disabled: isFirst }}
 				disabled={isFirst}
@@ -36,13 +38,15 @@ export const Pagination: FC<PaginationProps> = ({
 				]}
 			>
 				<MaterialIcons color={colors.onSurface} name='chevron-left' size={20} />
-				<Text style={styles.buttonLabel}>Önceki</Text>
+				<Text style={styles.buttonLabel}>
+					{t('Notification.Pagination.Previous')}
+				</Text>
 			</Pressable>
 			<Text accessibilityLiveRegion='polite' style={styles.position}>
 				{page + 1} / {pageCount}
 			</Text>
 			<Pressable
-				accessibilityLabel='Sonraki sayfa'
+				accessibilityLabel={t('Notification.Pagination.NextA11y')}
 				accessibilityRole='button'
 				accessibilityState={{ disabled: isLast }}
 				disabled={isLast}
@@ -53,7 +57,9 @@ export const Pagination: FC<PaginationProps> = ({
 					pressed && styles.pressed,
 				]}
 			>
-				<Text style={styles.buttonLabel}>Sonraki</Text>
+				<Text style={styles.buttonLabel}>
+					{t('Notification.Pagination.Next')}
+				</Text>
 				<MaterialIcons
 					color={colors.onSurface}
 					name='chevron-right'

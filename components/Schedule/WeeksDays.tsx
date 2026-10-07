@@ -1,11 +1,12 @@
 import { theme } from '@/assets/theme';
 import {
 	addDays,
-	DAYS_SHORT,
+	formatDayMonth,
 	formatDuration,
-	MONTHS,
+	getShortDayName,
 	toDateKey,
 } from '@/helper/dateHelpers';
+import i18n from '@/i18n';
 import {
 	getEmployeeDays,
 	useEmployeeScheduleStore,
@@ -13,14 +14,18 @@ import {
 import { useDayStore } from '@/store/useDayStore';
 import { Pressable, Text, View } from 'react-native';
 import { WeeksDaysStyles } from './styles';
+import { useTranslation } from 'react-i18next';
 const WORK_DAYS_PER_WEEK = 5;
 /** "13 - 17 Mayıs" ya da ay değişiyorsa "29 Eylül - 3 Ekim". */
 const formatWeekRange = (monday: Date, friday: Date): string => {
-	const endLabel = `${friday.getDate()} ${MONTHS[friday.getMonth()] ?? ''}`;
-	if (monday.getMonth() === friday.getMonth()) {
-		return `${monday.getDate()} - ${endLabel}`;
-	}
-	return `${monday.getDate()} ${MONTHS[monday.getMonth()] ?? ''} - ${endLabel}`;
+	const start =
+		monday.getMonth() === friday.getMonth()
+			? String(monday.getDate())
+			: formatDayMonth(monday);
+	return i18n.t('Schedule.WeeksDays.SameMonthRange', {
+		start,
+		end: formatDayMonth(friday),
+	});
 };
 export function WeeksDays({
 	onPress,
@@ -41,11 +46,12 @@ export function WeeksDays({
 	);
 	const styles = WeeksDaysStyles;
 	const colors = theme();
+	const { t } = useTranslation();
 	return (
 		<View style={styles.section}>
 			<View style={styles.spread}>
 				<Text style={[styles.sectionTitle, { color: colors.onSurface }]}>
-					Bu Haftanın Seyri
+					{t('Schedule.WeeksDays.Title')}
 				</Text>
 				<Text
 					style={[
@@ -62,7 +68,7 @@ export function WeeksDays({
 					const dateKey = toDateKey(date);
 					const record = days[dateKey];
 					const isToday = dateKey === todayKey;
-					const dayName = DAYS_SHORT[date.getDay()] ?? '';
+					const dayName = getShortDayName(date.getDay());
 					return (
 						<Pressable
 							accessibilityLabel={`${dayName} ${date.getDate()}`}
@@ -85,7 +91,7 @@ export function WeeksDays({
 									isToday && { color: colors.primaryFixed },
 								]}
 							>
-								{isToday ? 'Bugün' : dayName}
+								{isToday ? t('Schedule.WeeksDays.Today') : dayName}
 							</Text>
 							<Text
 								style={[

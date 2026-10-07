@@ -1,3 +1,5 @@
+import i18n from '@/i18n';
+
 export type PasswordStrength = 'weak' | 'medium' | 'strong';
 
 export type PasswordRuleResult = {
@@ -19,22 +21,23 @@ const LONG_LENGTH = 12;
 
 const RULES: {
 	key: string;
-	label: string;
+	/** Çeviri anahtarı; metin değerlendirme anında çevrilir. */
+	labelKey: string;
 	test: (password: string) => boolean;
 }[] = [
 	{
 		key: 'length',
-		label: `En az ${MIN_LENGTH} karakter`,
+		labelKey: 'SetPassword.CriteriaCard.Rules.MinLength',
 		test: (password) => password.length >= MIN_LENGTH,
 	},
 	{
 		key: 'digit',
-		label: 'En az bir rakam',
+		labelKey: 'SetPassword.CriteriaCard.Rules.Digit',
 		test: (password) => /\d/.test(password),
 	},
 	{
 		key: 'uppercase',
-		label: 'En az bir büyük harf',
+		labelKey: 'SetPassword.CriteriaCard.Rules.Uppercase',
 		test: (password) => /[A-ZÇĞİÖŞÜ]/.test(password),
 	},
 ];
@@ -60,7 +63,7 @@ const getStrength = (
 export const evaluatePassword = (password: string): PasswordEvaluation => {
 	const rules = RULES.map((rule) => ({
 		key: rule.key,
-		label: rule.label,
+		label: i18n.t(rule.labelKey, { count: MIN_LENGTH }),
 		isMet: rule.test(password),
 	}));
 	const metCount = rules.filter((rule) => rule.isMet).length;

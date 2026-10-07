@@ -1,16 +1,14 @@
 import { theme } from '@/assets/theme';
-import { CorrectionRecordType, DayRecord } from '@/store/useDayStore';
+import { RECORD_TYPE_LABELS } from '@/store/useCorrectionRequestStore';
+import { DayRecord } from '@/store/useDayStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { Text, View } from 'react-native';
 import { DayDetailsStyles } from './styles';
-const RECORD_TYPE_LABELS: Record<CorrectionRecordType, string> = {
-	entry: 'Giriş',
-	break: 'Mola',
-	exit: 'Çıkış',
-};
+import { useTranslation } from 'react-i18next';
 export function StateBand({ day }: { day: DayRecord }) {
 	const styles = DayDetailsStyles;
 	const colors = theme();
+	const { t } = useTranslation();
 	return day.correction ? (
 		<View
 			style={[styles.banner, { backgroundColor: colors.surfaceContainerLow }]}
@@ -23,8 +21,10 @@ export function StateBand({ day }: { day: DayRecord }) {
 				/>
 			</View>
 			<Text style={[styles.bannerText, { color: colors.onSurface }]}>
-				Düzeltme talebi onay bekliyor:{' '}
-				{RECORD_TYPE_LABELS[day.correction.recordType]} → {day.correction.time}
+				{t('DayDetails.StateBand.Pending', {
+					recordType: t(RECORD_TYPE_LABELS[day.correction.recordType]),
+					time: day.correction.time,
+				})}
 			</Text>
 		</View>
 	) : (
@@ -44,7 +44,7 @@ export function StateBand({ day }: { day: DayRecord }) {
 				/>
 			</View>
 			<Text style={[styles.bannerText, { color: colors.onSurface }]}>
-				Günlük hareketler eksiksiz tamamlandı
+				{t('DayDetails.StateBand.Complete')}
 			</Text>
 		</View>
 	);

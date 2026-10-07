@@ -13,10 +13,12 @@ import { StyleSheet, Text, View } from 'react-native';
 import { ComparisonTile } from './ComparisonTile';
 import { ImpactNote } from './ImpactNote';
 import { ReasonQuote } from './ReasonQuote';
+import { useTranslation } from 'react-i18next';
+// Değerler çeviri anahtarıdır.
 const REQUESTED_CAPTIONS: Record<CorrectionRecordType, string> = {
-	entry: 'Mesai başlangıç saati',
-	break: 'Mola başlangıç saati',
-	exit: 'Mesai bitiş saati',
+	entry: 'CorrectionRequestDetail.RequestSummaryCard.RequestedCaptions.Entry',
+	break: 'CorrectionRequestDetail.RequestSummaryCard.RequestedCaptions.Break',
+	exit: 'CorrectionRequestDetail.RequestSummaryCard.RequestedCaptions.Exit',
 };
 
 type RequestSummaryCardProps = {
@@ -32,6 +34,7 @@ export const RequestSummaryCard: FC<RequestSummaryCardProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createSummaryStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.card}>
@@ -49,7 +52,9 @@ export const RequestSummaryCard: FC<RequestSummaryCardProps> = ({
 				<View style={styles.typePill}>
 					<View style={styles.typeDot} />
 					<Text style={styles.typeText}>
-						Düzeltilecek: {RECORD_TYPE_LABELS[request.recordType]}
+						{t('CorrectionRequestDetail.RequestSummaryCard.ToCorrect', {
+							recordType: t(RECORD_TYPE_LABELS[request.recordType]),
+						})}
 					</Text>
 				</View>
 			</View>
@@ -57,25 +62,25 @@ export const RequestSummaryCard: FC<RequestSummaryCardProps> = ({
 			<View style={styles.comparison}>
 				{request.currentTime ? (
 					<ComparisonTile
-						caption='Kayıtlı saat'
+						caption={t('CorrectionRequestDetail.RequestSummaryCard.RecordedTime')}
 						icon='history'
-						label='Mevcut Durum'
+						label={t('CorrectionRequestDetail.RequestSummaryCard.CurrentStatus')}
 						tone='current'
 						value={request.currentTime}
 					/>
 				) : (
 					<ComparisonTile
-						caption='Eksik zaman damgası'
+						caption={t('CorrectionRequestDetail.RequestSummaryCard.MissingTimestamp')}
 						icon='error'
-						label='Mevcut Durum'
+						label={t('CorrectionRequestDetail.RequestSummaryCard.CurrentStatus')}
 						tone='missing'
-						value='Kayıt yok'
+						value={t('CorrectionRequestDetail.RequestSummaryCard.NoRecord')}
 					/>
 				)}
 				<ComparisonTile
-					caption={REQUESTED_CAPTIONS[request.recordType]}
+					caption={t(REQUESTED_CAPTIONS[request.recordType])}
 					icon='schedule'
-					label='Talep Edilen'
+					label={t('CorrectionRequestDetail.RequestSummaryCard.Requested')}
 					tone='requested'
 					value={request.requestedTime}
 				/>
