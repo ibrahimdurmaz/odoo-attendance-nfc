@@ -7,6 +7,7 @@ import {
 } from '@/helper/dateHelpers';
 import { useModalStore } from '@/store/modalStore';
 import { createDayRecord, useDayStore } from '@/store/useDayStore';
+import { useProfileStore } from '@/store/useProfileStore';
 import { MaterialIcons } from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
@@ -37,13 +38,11 @@ import { Activity, Session } from './types';
 // Android NFC okur, iOS paneldeki kodu kamerayla okutur.
 const CHECK_IN_MODAL = Platform.OS === 'android' ? 'nfcPrompt' : 'codeScanner';
 // Örnek veriler;
-const USER_NAME = 'Selim';
-export const LOCATION = 'Merkez Ofis';
 
 export const HomeScreen: FC = () => {
 	const [session, setSession] = useState<Session>(INITIAL_SESSION);
 	const [now, setNow] = useState(Date.now());
-
+	const profile = useProfileStore((state) => state.profile);
 	const { status } = session;
 	const isRunning = status === 'working' || status === 'onBreak';
 
@@ -102,7 +101,7 @@ export const HomeScreen: FC = () => {
 				targetSeconds: TARGET_SECONDS,
 				shiftHours: SHIFT_HOURS,
 				checkpoint: CHECKPOINT,
-				location: LOCATION,
+				location: profile.department,
 			}),
 		);
 
@@ -213,7 +212,7 @@ export const HomeScreen: FC = () => {
 							numberOfLines={1}
 							style={[styles.greetingTitle, { color: colors.onSurface }]}
 						>
-							{getGreeting(now)}, {USER_NAME}
+							{getGreeting(now)}, {profile.fullName.split(' ')[0]}
 						</Text>
 					</View>
 					<View style={[styles.badge, { backgroundColor: badge.background }]}>
@@ -290,7 +289,7 @@ export const HomeScreen: FC = () => {
 					<InfoTile
 						icon='event-note'
 						label={t('Home.InfoTiles.PlannedShift')}
-						note={LOCATION}
+						note={profile.department}
 						value={SHIFT_HOURS}
 					/>
 					<InfoTile

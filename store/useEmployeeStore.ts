@@ -1,8 +1,6 @@
 import { create } from 'zustand';
 import {
 	AttendanceStatus,
-	CompanyKey,
-	DepartmentKey,
 	Employee,
 	NewEmployee,
 	Option,
@@ -10,7 +8,7 @@ import {
 } from './types';
 
 // label / shortLabel değerleri çeviri anahtarıdır; ekranda t() ile çevrilir.
-export const DEPARTMENTS: (Option<DepartmentKey> & { shortLabel: string })[] = [
+export const DEPARTMENTS: (Option<string> & { shortLabel: string })[] = [
 	{
 		key: 'arge',
 		label: 'ExtraConstants.Departments.Arge',
@@ -38,7 +36,7 @@ export const DEPARTMENTS: (Option<DepartmentKey> & { shortLabel: string })[] = [
 	},
 ];
 
-export const COMPANIES: Option<CompanyKey>[] = [
+export const COMPANIES: Option<string>[] = [
 	{ key: 'odoo_tr', label: 'ExtraConstants.Companies.OdooTr' },
 	{ key: 'odoo_arge', label: 'ExtraConstants.Companies.OdooArge' },
 ];
@@ -75,7 +73,7 @@ export const useEmployeeStore = create<EmployeeStore>()((set, get) => ({
 
 	addEmployee: (input) => {
 		const isTaken = get().employees.some(
-			(employee) => employee.employeeId === input.employeeId,
+			(employee) => employee.fullName === input.fullName,
 		);
 		if (isTaken) return null;
 

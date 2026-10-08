@@ -1,8 +1,9 @@
 import { fonts, theme } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
+import { useRouter } from 'expo-router';
 import { FC } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 type LogoutSectionProps = { fullName: string; onLogout: () => void };
 
@@ -62,15 +63,13 @@ const logoutStyles = StyleSheet.create({
 	},
 });
 
-// ---------------------------------------------------------------------------
-// LoggedOutView: oturum kapalıyken görünen içerik
-// ---------------------------------------------------------------------------
-
-type LoggedOutViewProps = { onLogin: () => void };
-
-export const LoggedOutView: FC<LoggedOutViewProps> = ({ onLogin }) => {
+export const LoggedOutView: FC = () => {
 	const colors = theme();
+	const router = useRouter();
 	const { t } = useTranslation();
+	const onLogin = () => {
+		router.navigate('/login');
+	};
 	return (
 		<View style={loggedOutStyles.container}>
 			<MaterialIcons
@@ -95,7 +94,9 @@ export const LoggedOutView: FC<LoggedOutViewProps> = ({ onLogin }) => {
 				]}
 			>
 				<MaterialIcons color={colors.onPrimary} name='login' size={20} />
-				<Text style={[loggedOutStyles.buttonLabel, { color: colors.onPrimary }]}>
+				<Text
+					style={[loggedOutStyles.buttonLabel, { color: colors.onPrimary }]}
+				>
 					{t('UI.Buttons.Login')}
 				</Text>
 			</Pressable>

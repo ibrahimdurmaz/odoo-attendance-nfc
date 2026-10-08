@@ -1,17 +1,15 @@
 import { CorrectionRecordType } from './useDayStore';
 
-export type DepartmentKey = 'arge' | 'satis' | 'ik' | 'uretim' | 'pazarlama';
-export type CompanyKey = 'odoo_tr' | 'odoo_arge';
 export type ShiftTemplateKey = 'standard' | 'flexible' | 'second';
 export type AttendanceStatus = 'inside' | 'onBreak' | 'outside' | 'absent';
 
 export type Employee = {
 	fullName: string;
 	jobTitle: string;
-	department: DepartmentKey;
+	department: string;
 	/** Sicil no ("EMP-8044"). Listede tekildir, anahtar olarak kullanılır. */
 	employeeId: string;
-	company: CompanyKey;
+	company: string;
 	avatarUrl: string | null;
 	remainingLeaveDays: number;
 	hasPassword: boolean;
@@ -32,7 +30,7 @@ export type Employee = {
 /** Formdan gelen veri: durum ve oluşturulma zamanı store tarafından eklenir. */
 export type NewEmployee = Omit<Employee, 'status' | 'createdAt'>;
 
-export type DepartmentFilter = DepartmentKey | 'all';
+export type DepartmentFilter = string;
 
 export type AttendanceSummary = {
 	total: number;

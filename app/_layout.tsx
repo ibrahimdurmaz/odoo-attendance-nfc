@@ -52,8 +52,7 @@ function RootLayoutNav() {
 		<ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
 			<Stack
 				screenOptions={{ headerShown: false }}
-				//initialRouteName={isLoggedIn ? '(tabs)' : 'server_setup'}
-				initialRouteName={isLoggedIn ? '(tabs)' : 'login'}
+				initialRouteName={isLoggedIn ? '(tabs)' : 'server_setup'}
 			>
 				<Stack.Protected guard={isLoggedIn}>
 					<Stack.Screen name='(tabs)' />

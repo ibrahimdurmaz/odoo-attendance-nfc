@@ -2,16 +2,18 @@ import { Pressable, Text, View } from 'react-native';
 
 import { theme } from '@/assets/theme';
 import { useModalStore } from '@/store/modalStore';
+import { useProfileStore } from '@/store/useProfileStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
+import { useTranslation } from 'react-i18next';
 import { SHIFT_HOURS } from '../Home/constants';
 import { ModalWrapper } from './ModalWrapper';
 import { CheckInSuccessModalStyles } from './styles';
-import { useTranslation } from 'react-i18next';
 
 export const CheckInSuccessModal = () => {
 	const colors = theme();
 	const { t } = useTranslation();
 	const { modals, closeModal } = useModalStore();
+	const profile = useProfileStore((state) => state.profile);
 	const { visible, props } = modals.checkInSuccessful;
 	const toMinutes = (value: string) => {
 		const [h, m] = value.split(':').map(Number);
@@ -30,7 +32,7 @@ export const CheckInSuccessModal = () => {
 		return t('Modals.CheckInSuccessModal.OnTimeStart'); // 08:40 - 09:20 arası (dahil)
 	};
 	const shiftStatus = getShiftStatus(time);
-	const userName = 'Selim';
+	const userName = profile.fullName.split(' ')[0];
 	const onClose = () => {
 		closeModal('checkInSuccessful');
 	};

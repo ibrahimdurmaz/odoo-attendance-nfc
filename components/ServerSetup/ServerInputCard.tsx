@@ -4,10 +4,10 @@ import { fonts, theme } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { INPUT_HEIGHT } from './ServerSetupScreen';
 import { Protocol } from './serverAddress';
-import { useTranslation } from 'react-i18next';
 
 type ServerInputCardProps = {
 	protocol: Protocol;

@@ -1,5 +1,5 @@
 import { theme } from '@/assets/theme';
-import { PLACEHOLDER_PROFILE, useProfileStore } from '@/store/useProfileStore';
+import { useProfileStore } from '@/store/useProfileStore';
 import type { FC } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -12,13 +12,8 @@ import { SettingsSection } from './SettingsSection';
 import { StatsSection } from './StatsSection';
 export const ProfileScreen: FC = () => {
 	const profile = useProfileStore((state) => state.profile);
-	const { login, logout } = useProfileStore();
+	const { logout } = useProfileStore();
 	const colors = theme();
-
-	// to do
-	const openLogin = () => {
-		login(PLACEHOLDER_PROFILE);
-	};
 
 	return (
 		<SafeAreaView
@@ -39,7 +34,7 @@ export const ProfileScreen: FC = () => {
 					<LogoutSection fullName={profile.fullName} onLogout={logout} />
 				</ScrollView>
 			) : (
-				<LoggedOutView onLogin={openLogin} />
+				<LoggedOutView />
 			)}
 			<LanguageModal />
 		</SafeAreaView>

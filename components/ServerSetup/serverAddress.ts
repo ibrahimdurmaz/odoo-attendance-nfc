@@ -6,13 +6,19 @@ export type Protocol = 'https://' | 'http://';
 export const PROTOCOLS: Protocol[] = ['http://', 'https://'];
 export const DEFAULT_PROTOCOL: Protocol = 'https://';
 
-const DEFAULT_PORTS: Record<Protocol, string> = { 'https://': '443', 'http://': '80' };
+const DEFAULT_PORTS: Record<Protocol, string> = {
+	'https://': '443',
+	'http://': '80',
+};
 const MAX_PORT = 65535;
 
 const DOMAIN = '(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z]{2,63}';
 const IPV4 = '(?:\\d{1,3}\\.){3}\\d{1,3}';
 /** Alan adı, IPv4 ya da "localhost"; sonunda isteğe bağlı ":port". */
-const ADDRESS_PATTERN = new RegExp(`^(${DOMAIN}|${IPV4}|localhost)(?::(\\d{1,5}))?$`, 'i');
+const ADDRESS_PATTERN = new RegExp(
+	`^(${DOMAIN}|${IPV4}|localhost)(?::(\\d{1,5}))?$`,
+	'i',
+);
 const IPV4_PATTERN = new RegExp(`^${IPV4}$`);
 
 /**
@@ -20,7 +26,9 @@ const IPV4_PATTERN = new RegExp(`^${IPV4}$`);
  * "https://Odoo.Sirket.com/" → protokol "https://", adres "odoo.sirket.com".
  * Metinde protokol yoksa `protocol` null döner (seçili olan değişmez).
  */
-export const splitServerInput = (text: string): { protocol: Protocol | null; address: string } => {
+export const splitServerInput = (
+	text: string,
+): { protocol: Protocol | null; address: string } => {
 	const compact = text.replace(/\s+/g, '').toLowerCase();
 	const match = /^(https?:\/\/)(.*)$/.exec(compact);
 	const protocol: Protocol | null =
@@ -41,7 +49,8 @@ export const isValidServerAddress = (address: string): boolean => {
 	if (!host) return false;
 
 	const port = match[2];
-	if (port !== undefined && (Number(port) < 1 || Number(port) > MAX_PORT)) return false;
+	if (port !== undefined && (Number(port) < 1 || Number(port) > MAX_PORT))
+		return false;
 
 	if (IPV4_PATTERN.test(host)) {
 		return host.split('.').every((part) => Number(part) <= 255);

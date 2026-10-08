@@ -12,31 +12,72 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { theme } from '@/assets/theme';
+import {
+	fetchOwnEmployee,
+	loginWithPassword,
+	toLocalPhone,
+} from '@/helper/odooApi';
 import { Employee } from '@/store/types';
-import { PLACEHOLDER_PROFILE, useProfileStore } from '@/store/useProfileStore';
+import { useProfileStore } from '@/store/useProfileStore';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { AuthTextField } from './AuthTextField';
 import { BrandHeader } from './BrandHeader';
 import { ErrorBanner } from './ErrorBanner';
 import { SubmitButton } from './SubmitButton';
 import { SupportNote } from './SupportNote';
 import { screenStyles } from './styles';
-import { useTranslation } from 'react-i18next';
-
-const DEMO_PASSWORD = 'Selim2024';
-
 const authenticate = async (
+	serverUrl: string,
+	database: string,
 	identifier: string,
 	password: string,
 ): Promise<Employee | null> => {
-	const isKnownUser =
-		identifier.trim().toUpperCase() === PLACEHOLDER_PROFILE.employeeId;
-	return isKnownUser && password === DEMO_PASSWORD ? PLACEHOLDER_PROFILE : null;
-};
+	const session = await loginWithPassword({
+		serverUrl,
+		database,
+		login: identifier.trim(),
+		password,
+	});
+	if (!session.ok) {
+		// Yanlış e-posta ya da şifre: null. Diğer her şey bağlantı hatası sayılır.
+		if (session.kind === 'unauthorized') return null;
+		throw new Error(session.message);
+	}
 
+	const user = session.data;
+	const employee = await fetchOwnEmployee();
+	if (!employee.ok) throw new Error(employee.message);
+	const profile = employee.data;
+
+	return {
+		fullName: profile?.name ?? user.name,
+		jobTitle: profile?.jobTitle ?? '',
+		department: profile?.department ?? '',
+		employeeId: profile ? String(profile.id) : '',
+		company: profile?.company ?? '',
+		avatarUrl: profile?.avatarUrl ?? null,
+		remainingLeaveDays: profile?.remainingLeaveDays ?? 0,
+		hasPassword: true,
+		admin: user.isAdmin,
+		email: user.login,
+		phone: toLocalPhone(profile?.phone ?? null),
+		startDateKey: profile?.startDateKey ?? '',
+		shiftTemplate: 'standard',
+		annualLeaveDays: profile?.annualLeaveDays ?? 0,
+		status: profile?.isCheckedIn ? 'inside' : 'outside',
+		createdAt: Date.now(),
+	};
+};
 type LoginError = 'credentials' | 'connection';
 
-export const LoginScreen = ({ serverUrl }: { serverUrl: string }) => {
+export const LoginScreen = ({
+	serverUrl,
+	database,
+}: {
+	serverUrl: string;
+	database: string;
+}) => {
 	const login = useProfileStore((state) => state.login);
 	const [identifier, setIdentifier] = useState('');
 	const [password, setPassword] = useState('');
@@ -72,7 +113,12 @@ export const LoginScreen = ({ serverUrl }: { serverUrl: string }) => {
 
 		setIsSubmitting(true);
 		try {
-			const profile = await authenticate(identifier, password);
+			const profile = await authenticate(
+				serverUrl,
+				database,
+				identifier,
+				password,
+			);
 
 			if (!profile) {
 				setError('credentials');
@@ -80,18 +126,15 @@ export const LoginScreen = ({ serverUrl }: { serverUrl: string }) => {
 				return;
 			}
 
+			console.log('LOGIN', profile);
 			login(profile);
-			router.navigate('/set_password');
-		} catch {
-			// Sunucuya ulaşılamadı; bu bir hatalı deneme sayılmaz.
+			router.navigate('/(tabs)');
+		} catch (error) {
+			console.log('LOGIN ERROR', error);
 			setError('connection');
 		} finally {
 			setIsSubmitting(false);
 		}
-	};
-
-	const handleSubmit = () => {
-		void submit();
 	};
 	return (
 		<SafeAreaView
@@ -107,7 +150,6 @@ export const LoginScreen = ({ serverUrl }: { serverUrl: string }) => {
 					showsVerticalScrollIndicator={false}
 				>
 					<BrandHeader />
-
 					<View style={screenStyles.form}>
 						<AuthTextField
 							autoComplete='username'
@@ -132,7 +174,7 @@ export const LoginScreen = ({ serverUrl }: { serverUrl: string }) => {
 								isPassword
 								label={t('Login.LoginScreen.PasswordLabel')}
 								onChangeText={changePassword}
-								onSubmitEditing={handleSubmit}
+								onSubmitEditing={submit}
 								placeholder='••••••••'
 								ref={passwordRef}
 								returnKeyType='go'
@@ -156,7 +198,7 @@ export const LoginScreen = ({ serverUrl }: { serverUrl: string }) => {
 						<SubmitButton
 							isDisabled={!canSubmit}
 							isLoading={isSubmitting}
-							onPress={handleSubmit}
+							onPress={submit}
 						/>
 
 						<Pressable

@@ -1,6 +1,7 @@
 import { addDays, toDateKey } from '@/helper/dateHelpers';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
-
+import { createJSONStorage, persist } from 'zustand/middleware';
 export type BreakRecord = { start: number; end: number };
 
 export type CorrectionRecordType = 'entry' | 'break' | 'exit';
@@ -61,32 +62,31 @@ const keepLastMonth = (
 };
 
 export const useDayStore = create<DayStore>()(
-	// persist(
-	(set) => ({
-		...initialState,
-		// Aynı gün ikinci kez kaydedilirse üzerine yazılır; bir aydan eski günler atılır.
-		saveDay: (day) =>
-			set((state) => ({
-				days: keepLastMonth({ ...state.days, [day.dateKey]: day }),
-			})),
-		requestCorrection: (dateKey, request) =>
-			set((state) => {
-				const day = state.days[dateKey];
-				if (!day) {
-					return state;
-				}
-				return {
-					days: { ...state.days, [dateKey]: { ...day, correction: request } },
-				};
-			}),
-		resetStore: () => set(() => initialState),
-	}),
-	//   {
-	//     name: 'day-store',
-	//     storage: createJSONStorage(() => AsyncStorage),
-	//     partialize: (state) => ({ days: state.days }),
-	//   },
-	// ),
+	persist(
+		(set) => ({
+			...initialState,
+			// Aynı gün ikinci kez kaydedilirse üzerine yazılır; bir aydan eski günler atılır.
+			saveDay: (day) =>
+				set((state) => ({
+					days: keepLastMonth({ ...state.days, [day.dateKey]: day }),
+				})),
+			requestCorrection: (dateKey, request) =>
+				set((state) => {
+					const day = state.days[dateKey];
+					if (!day) {
+						return state;
+					}
+					return {
+						days: { ...state.days, [dateKey]: { ...day, correction: request } },
+					};
+				}),
+			resetStore: () => set(() => initialState),
+		}),
+		{
+			name: 'schedule-storage',
+			storage: createJSONStorage(() => AsyncStorage),
+		},
+	),
 );
 
 type DayRecordInput = Pick<

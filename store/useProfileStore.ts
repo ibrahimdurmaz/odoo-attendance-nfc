@@ -1,4 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 import { Employee } from './types';
 
 export type Language = 'tr' | 'en' | 'de';
@@ -37,26 +39,6 @@ export const LANGUAGE_OPTIONS: {
 	{ code: 'de', label: 'Deutsch', description: 'Deutschland', flag: '🇩🇪' },
 ];
 
-// Login sayfası gelene kadar uygulama bu kullanıcıyla açılır.
-export const PLACEHOLDER_PROFILE: Employee = {
-	fullName: 'Selim Kaya',
-	jobTitle: 'Kıdemli Yazılım Mühendisi',
-	department: 'ik', // gerçek DepartmentKey
-	employeeId: 'EMP-8042',
-	company: 'odoo_tr', // gerçek CompanyKey
-	avatarUrl: null,
-	remainingLeaveDays: 14,
-	hasPassword: false,
-	admin: true,
-	email: 'selim.kaya@odoo-kurumsal.com',
-	phone: '5321234567',
-	startDateKey: '2021-03-15',
-	shiftTemplate: 'standard',
-	annualLeaveDays: 20,
-	status: 'inside',
-	createdAt: Date.parse('2021-03-15T09:00:00+03:00'),
-} as const;
-
 export const initialProfile: Employee = {
 	fullName: '',
 	jobTitle: '',
@@ -82,28 +64,26 @@ const initialState: ProfileState = {
 };
 
 export const useProfileStore = create<ProfileStore>()(
-	// persist(
-	(set) => ({
-		...initialState,
-		login: (data) =>
-			//set((state) => ({ profile: { ...state.profile, ...data } })),
-			set((state) => ({
-				profile: { ...state.profile, ...PLACEHOLDER_PROFILE },
-			})),
-		// Dil ve görünüm cihazın tercihidir; çıkış yapınca silinmez.
-		logout: () => set(() => ({ profile: initialProfile })),
-		setLanguage: (language) =>
-			set((state) => ({ preferences: { ...state.preferences, language } })),
-		setPasswordHasBeenSet: () =>
-			set((state) => ({ profile: { ...state.profile, hasPassword: true } })),
-		setTheme: (theme) =>
-			set((state) => ({ preferences: { ...state.preferences, theme } })),
-		resetStore: () => set(() => initialState),
-	}),
-	//   {
-	//     name: 'day-store',
-	//     storage: createJSONStorage(() => AsyncStorage),
-	//     partialize: (state) => ({ days: state.days }),
-	//   },
-	// ),
+	persist(
+		(set) => ({
+			...initialState,
+			login: (data) =>
+				set((state) => ({
+					profile: { ...state.profile, ...data },
+				})),
+			// Dil ve görünüm cihazın tercihidir; çıkış yapınca silinmez.
+			logout: () => set(() => ({ profile: initialProfile })),
+			setLanguage: (language) =>
+				set((state) => ({ preferences: { ...state.preferences, language } })),
+			setPasswordHasBeenSet: () =>
+				set((state) => ({ profile: { ...state.profile, hasPassword: true } })),
+			setTheme: (theme) =>
+				set((state) => ({ preferences: { ...state.preferences, theme } })),
+			resetStore: () => set(() => initialState),
+		}),
+		{
+			name: 'profile-storage',
+			storage: createJSONStorage(() => AsyncStorage),
+		},
+	),
 );

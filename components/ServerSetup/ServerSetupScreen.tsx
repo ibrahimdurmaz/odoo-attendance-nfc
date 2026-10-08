@@ -1,9 +1,10 @@
 import type { ThemeColors } from '@/assets/theme';
 import { fonts, theme } from '@/assets/theme';
 
+import { fetchDatabases } from '@/helper/odooApi';
 import { useRouter } from 'expo-router';
 import type { FC } from 'react';
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import {
 	Keyboard,
 	KeyboardAvoidingView,
@@ -17,6 +18,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BackgroundPattern } from './BackgroundPattern';
 import { ConnectionHint } from './ConnectionHint';
+import { DatabaseField } from './DatabaseField';
+import { DatabaseList } from './DatabaseList';
 import { ErrorBanner } from './ErrorBanner';
 import { HelperNote } from './HelperNote';
 import { ProtocolDropdown } from './ProtocolDropdown';
@@ -32,8 +35,6 @@ import { ServerBadge } from './ServerBadge';
 import { ServerInputCard } from './ServerInputCard';
 import { SetupHeading } from './SetupHeading';
 import { SubmitButton } from './SubmitButton';
-import { useTranslation } from 'react-i18next';
-
 type ConnectionError = 'invalidAddress' | 'unreachable';
 
 // Değerler çeviri anahtarıdır.
@@ -51,72 +52,109 @@ const ERROR_TEXTS: Record<ConnectionError, { title: string; message: string }> =
 
 export const INPUT_HEIGHT = 56;
 const DROPDOWN_GAP = 8;
-
-const testConnection = async (_serverUrl: string): Promise<boolean> => true;
+export const VISIBLE_DATABASE_ROWS = 4;
+export const OPTION_HEIGHT = 44;
 
 export const ServerSetupScreen: FC = () => {
 	const colors = theme();
 	const styles = useMemo(() => createScreenStyles(colors), [colors]);
 	const router = useRouter();
-	const { t } = useTranslation();
 
 	const [protocol, setProtocol] = useState<Protocol>(DEFAULT_PROTOCOL);
 	const [address, setAddress] = useState('');
 	const [isProtocolOpen, setIsProtocolOpen] = useState(false);
-	const [isConnecting, setIsConnecting] = useState(false);
+	/** Yazılı sunucudan gelen veritabanları; henüz istenmediyse null. */
+	const [databases, setDatabases] = useState<string[] | null>(null);
+	const [database, setDatabase] = useState<string | null>(null);
+	const [isDatabaseOpen, setIsDatabaseOpen] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<ConnectionError | null>(null);
 	// Protokol listesi formun çocuğu olarak çizilir; yeri bu iki ölçümden hesaplanır.
 	const [fieldTop, setFieldTop] = useState(0);
 	const [cardTop, setCardTop] = useState(0);
+	// Sunucu değişince yoldaki eski isteğin cevabı yok sayılsın diye istek sayacı.
+	const requestNumber = useRef(0);
 
 	const hasAddress = address.length > 0;
 	const serverUrl = buildServerUrl(protocol, address);
 
-	// Tam adres yapıştırılırsa ("https://...") protokol de ondan alınır.
+	const closeLists = () => {
+		setIsProtocolOpen(false);
+		setIsDatabaseOpen(false);
+	};
+
+	// Sunucu değişince önceki sunucunun veritabanları ve seçimi geçersiz olur.
+	const resetDatabases = () => {
+		requestNumber.current += 1;
+		setDatabases(null);
+		setDatabase(null);
+		setIsLoading(false);
+		setError(null);
+		closeLists();
+	};
+
+	// Tam adres yapıştırılırsa ("http://...") protokol de ondan alınır.
 	const changeAddress = (text: string) => {
 		const input = splitServerInput(text);
 		if (input.protocol) setProtocol(input.protocol);
 		setAddress(input.address);
-		setError(null);
-		setIsProtocolOpen(false);
-	};
-
-	const closeProtocolList = () => {
-		setIsProtocolOpen(false);
+		resetDatabases();
 	};
 
 	const selectProtocol = (nextProtocol: Protocol) => {
 		setProtocol(nextProtocol);
-		setIsProtocolOpen(false);
-		setError(null);
+		resetDatabases();
 	};
 
-	const openLogin = () => {
-		// Seçilen sunucunun saklanması buraya gelecek.
-		router.navigate({ pathname: '/login', params: { serverUrl } });
-	};
-
-	const submit = async () => {
-		if (!hasAddress || isConnecting) return;
+	const loadDatabases = async () => {
+		if (!hasAddress || isLoading) return;
 
 		Keyboard.dismiss();
-		setIsProtocolOpen(false);
+		closeLists();
 		if (!isValidServerAddress(address)) {
 			setError('invalidAddress');
 			return;
 		}
 
+		requestNumber.current += 1;
+		const currentRequest = requestNumber.current;
 		setError(null);
-		setIsConnecting(true);
-		const isReachable = await testConnection(serverUrl);
-		setIsConnecting(false);
+		setIsLoading(true);
+		const result = await fetchDatabases(serverUrl);
+		if (currentRequest !== requestNumber.current) return;
 
-		if (!isReachable) {
+		setIsLoading(false);
+		if (!result) {
 			setError('unreachable');
 			return;
 		}
-		openLogin();
+		setDatabases(result);
+		setIsDatabaseOpen(true);
 	};
+
+	// İlk dokunuşta veritabanlarını getirir; sonrakilerde listeyi açıp kapatır.
+	const toggleDatabaseList = () => {
+		Keyboard.dismiss();
+		setIsProtocolOpen(false);
+		if (databases) {
+			setIsDatabaseOpen((previous) => !previous);
+			return;
+		}
+		void loadDatabases();
+	};
+
+	const selectDatabase = (nextDatabase: string) => {
+		setDatabase(nextDatabase);
+		setIsDatabaseOpen(false);
+	};
+
+	const openLogin = () => {
+		if (!database) return;
+		// Seçilen sunucu ve veritabanının saklanması buraya gelecek.
+		router.navigate({ pathname: '/login', params: { serverUrl, database } });
+	};
+
+	const isRetry = error === 'unreachable';
 
 	return (
 		<SafeAreaView style={styles.screen}>
@@ -130,13 +168,13 @@ export const ServerSetupScreen: FC = () => {
 					keyboardShouldPersistTaps='handled'
 					showsVerticalScrollIndicator={false}
 				>
+					{/* Boş bir yere dokunulunca açık listeler kapanır. */}
 					<Pressable
 						accessible={false}
-						onPress={closeProtocolList}
+						onPress={closeLists}
 						style={styles.content}
 					>
 						<ServerBadge />
-
 						<View style={styles.form}>
 							<SetupHeading />
 
@@ -144,9 +182,7 @@ export const ServerSetupScreen: FC = () => {
 								onLayout={(event) => setFieldTop(event.nativeEvent.layout.y)}
 								style={styles.field}
 							>
-								<Text style={styles.label}>
-									{t('ServerSetup.ServerSetupScreen.ServerDomain')}
-								</Text>
+								<Text style={styles.label}>Sunucu</Text>
 								<View
 									onLayout={(event) => setCardTop(event.nativeEvent.layout.y)}
 								>
@@ -155,13 +191,30 @@ export const ServerSetupScreen: FC = () => {
 										hasError={error !== null}
 										isProtocolOpen={isProtocolOpen}
 										onChangeText={changeAddress}
-										onSubmit={() => void submit()}
-										onToggleProtocol={() =>
-											setIsProtocolOpen((previous) => !previous)
-										}
+										onSubmit={() => void loadDatabases()}
+										onToggleProtocol={() => {
+											setIsDatabaseOpen(false);
+											setIsProtocolOpen((previous) => !previous);
+										}}
 										protocol={protocol}
 									/>
 								</View>
+
+								<DatabaseField
+									isDisabled={!hasAddress}
+									isLoading={isLoading}
+									isOpen={isDatabaseOpen}
+									onPress={toggleDatabaseList}
+									selected={database}
+								/>
+								{isDatabaseOpen && databases ? (
+									<DatabaseList
+										databases={databases}
+										onSelect={selectDatabase}
+										selected={database}
+									/>
+								) : null}
+
 								<ConnectionHint
 									port={getServerPort(protocol, address)}
 									protocol={protocol}
@@ -170,17 +223,22 @@ export const ServerSetupScreen: FC = () => {
 
 							{error ? (
 								<ErrorBanner
-									message={t(ERROR_TEXTS[error].message)}
-									title={t(ERROR_TEXTS[error].title)}
+									message={ERROR_TEXTS[error].message}
+									title={ERROR_TEXTS[error].title}
 								/>
 							) : null}
 
 							<SubmitButton
-								isConnecting={isConnecting}
-								isDisabled={!hasAddress}
-								isRetry={error === 'unreachable'}
-								onPress={() => void submit()}
+								isConnecting={isLoading}
+								isDisabled={isRetry ? false : database === null}
+								isRetry={isRetry}
+								onPress={isRetry ? () => void loadDatabases() : openLogin}
 							/>
+
+							{/*
+							  Protokol listesi kartın değil formun çocuğu: Android, bir görünümün sınırları
+							  dışına taşan çocuklara dokunmayı iletmez; form ise listenin tamamını içine alır.
+							*/}
 							{isProtocolOpen ? (
 								<ProtocolDropdown
 									onSelect={selectProtocol}
@@ -197,7 +255,6 @@ export const ServerSetupScreen: FC = () => {
 		</SafeAreaView>
 	);
 };
-
 const createScreenStyles = (colors: ThemeColors) =>
 	StyleSheet.create({
 		screen: { flex: 1, backgroundColor: colors.primaryContainer },

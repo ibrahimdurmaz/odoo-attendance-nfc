@@ -288,7 +288,7 @@ export const useCorrectionRequestStore = create<CorrectionRequestStore>()((
 			const scheduleStore = useEmployeeScheduleStore.getState();
 			const { employees } = useEmployeeStore.getState();
 			for (const employee of employees) {
-				scheduleStore.loadSchedule(employee.employeeId);
+				scheduleStore.loadSchedule(employee.fullName);
 			}
 
 			const { schedules } = useEmployeeScheduleStore.getState();
