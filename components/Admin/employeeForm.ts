@@ -1,11 +1,6 @@
 import { pad, toDateKey } from '@/helper/dateHelpers';
 import i18n from '@/i18n';
-import {
-	CompanyKey,
-	DepartmentKey,
-	NewEmployee,
-	ShiftTemplateKey,
-} from '@/store/types';
+import { NewEmployee } from '@/store/types';
 
 export type EmployeeRole = 'employee' | 'admin';
 
@@ -20,15 +15,15 @@ export type EmployeeFormValues = {
 	firstName: string;
 	lastName: string;
 	email: string;
-	/** Yalnızca rakamlar, en çok 10 hane. */
+	/** Ülke koduyla, boşluksuz: "+905321234567". Girilmediyse boş metin. */
 	phone: string;
 	employeeId: string;
 	jobTitle: string;
-	department: DepartmentKey;
-	company: CompanyKey;
+	department: string;
+	company: string;
 	/** "01.10.2026" */
 	startDate: string;
-	shiftTemplate: ShiftTemplateKey;
+	shiftTemplate: string;
 	annualLeaveDays: string;
 	role: EmployeeRole;
 	avatarUrl: string | null;
@@ -37,7 +32,12 @@ export type EmployeeFormValues = {
 export type EmployeeFormField = keyof EmployeeFormValues;
 export type EmployeeFormErrors = Partial<Record<EmployeeFormField, string>>;
 
-const PHONE_LENGTH = 10;
+// E.164: ülke kodu dahil en çok 15 rakam.
+const MAX_PHONE_DIGITS = 15;
+const TURKEY_CALLING_CODE = '+90';
+const TURKISH_PHONE_PATTERN = /^\+90\d{10}$/;
+// Ülke kodu 0 ile başlamaz; en kısa numaralar ülke koduyla birlikte 8 rakamdır.
+const INTERNATIONAL_PHONE_PATTERN = /^\+[1-9]\d{7,14}$/;
 const MAX_LEAVE_DAYS = 60;
 const DEFAULT_LEAVE_DAYS = 20;
 
@@ -51,10 +51,10 @@ export const createInitialFormValues = (
 	phone: '',
 	employeeId,
 	jobTitle: '',
-	department: 'arge',
-	company: 'odoo_tr',
+	department: '',
+	company: '',
 	startDate: formatDisplayDate(today),
-	shiftTemplate: 'standard',
+	shiftTemplate: '',
 	annualLeaveDays: String(DEFAULT_LEAVE_DAYS),
 	role: 'employee',
 	avatarUrl: null,
@@ -84,20 +84,46 @@ export const parseDisplayDate = (text: string): Date | null => {
 	return isSameDay ? date : null;
 };
 
-/** Yazılan metinden rakamları alır, baştaki 0'ı atar, 10 haneyle sınırlar. */
-export const toPhoneDigits = (text: string): string =>
-	text.replace(/\D/g, '').replace(/^0+/, '').slice(0, PHONE_LENGTH);
+/**
+ * Yazılan metni "+905321234567" biçimine getirir: başta "+", ardından en çok 15 rakam.
+ * "00" ile başlayan uluslararası yazım "+" sayılır. Rakam yoksa boş metin döner.
+ */
+export const normalizePhone = (text: string): string => {
+	const digits = text
+		.replace(/\D/g, '')
+		.replace(/^00/, '')
+		.slice(0, MAX_PHONE_DIGITS);
+	return digits ? `+${digits}` : '';
+};
 
-/** "5321234567" → "532 123 45 67" */
-export const formatPhone = (digits: string): string =>
+/** Türkiye numarasının ulusal kısmı: "5321234567" → "532 123 45 67" */
+const formatTurkishNational = (national: string): string =>
 	[
-		digits.slice(0, 3),
-		digits.slice(3, 6),
-		digits.slice(6, 8),
-		digits.slice(8, 10),
+		national.slice(0, 3),
+		national.slice(3, 6),
+		national.slice(6, 8),
+		national.slice(8, 10),
 	]
 		.filter((group) => group.length > 0)
 		.join(' ');
+
+/**
+ * "+905321234567" → "+90 532 123 45 67". Diğer ülkelerin hane gruplaması
+ * farklı olduğu için onlar yazıldığı gibi gösterilir.
+ */
+export const formatPhone = (phone: string): string => {
+	if (!phone.startsWith(TURKEY_CALLING_CODE)) return phone;
+	const national = phone.slice(TURKEY_CALLING_CODE.length);
+	return national
+		? `${TURKEY_CALLING_CODE} ${formatTurkishNational(national)}`
+		: TURKEY_CALLING_CODE;
+};
+
+/** Kaydedilebilir telefon mu: ülke koduyla E.164; Türkiye numarasında tam 10 hane. */
+export const isValidPhone = (phone: string): boolean =>
+	phone.startsWith(TURKEY_CALLING_CODE)
+		? TURKISH_PHONE_PATTERN.test(phone)
+		: INTERNATIONAL_PHONE_PATTERN.test(phone);
 
 // ---------------------------------------------------------------------------
 // Normalizasyon: kayıt store'a gitmeden önce burada son hâlini alır
@@ -117,13 +143,8 @@ export const toFullName = (firstName: string, lastName: string): string =>
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-/**
- * Hatalı alanları mesajlarıyla döndürür; form geçerliyse boş nesne döner.
- * `existingEmployeeIds`: sicil no çakışmasını yakalamak için listedeki sicil numaraları.
- */
 export const validateEmployeeForm = (
 	values: EmployeeFormValues,
-	existingEmployeeIds: string[],
 ): EmployeeFormErrors => {
 	const errors: EmployeeFormErrors = {};
 	const REQUIRED_MESSAGE = i18n.t('AddEmployee.Validation.Required');
@@ -137,16 +158,8 @@ export const validateEmployeeForm = (
 	else if (!EMAIL_PATTERN.test(email))
 		errors.email = i18n.t('AddEmployee.Validation.InvalidEmail');
 
-	if (values.phone.length > 0 && values.phone.length !== PHONE_LENGTH) {
-		errors.phone = i18n.t('AddEmployee.Validation.PhoneLength', {
-			length: PHONE_LENGTH,
-		});
-	}
-
-	const employeeId = normalizeEmployeeId(values.employeeId);
-	if (!employeeId) errors.employeeId = REQUIRED_MESSAGE;
-	else if (existingEmployeeIds.includes(employeeId))
-		errors.employeeId = i18n.t('AddEmployee.Validation.EmployeeIdTaken');
+	if (values.phone.length > 0 && !isValidPhone(values.phone))
+		errors.phone = i18n.t('AddEmployee.Validation.InvalidPhone');
 
 	if (!parseDisplayDate(values.startDate))
 		errors.startDate = i18n.t('AddEmployee.Validation.DateFormat');

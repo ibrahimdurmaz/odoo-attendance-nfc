@@ -1,15 +1,16 @@
 import { theme, ThemeColors } from '@/assets/theme';
 import { formatDateKey, formatMinutes, formatTime } from '@/helper/dateHelpers';
+import i18n from '@/i18n';
+import { useModalStore } from '@/store/modalStore';
+import { DayRecord, useDayStore } from '@/store/useDayStore';
 import {
 	getEmployeeDays,
 	useEmployeeScheduleStore,
-} from '@/store/employeeScheduleStore';
-import { useModalStore } from '@/store/modalStore';
-import { DayRecord, useDayStore } from '@/store/useDayStore';
-import i18n from '@/i18n';
+} from '@/store/useEmployeeScheduleStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { ComponentProps, FC } from 'react';
-import { ColorValue, Pressable, ScrollView, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { ColorValue, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CorrectionRequestModal } from './CorrectionRequestModal';
 import { DayDetailHeader } from './DayDetailHeader';
@@ -17,7 +18,6 @@ import { StateBand } from './StateBand';
 import { DayDetailsStyles } from './styles';
 import { Summary } from './Summary';
 import { TimelineItem } from './TimelineItem';
-import { useTranslation } from 'react-i18next';
 
 type IconName = ComponentProps<typeof MaterialIcons>['name'];
 
@@ -160,8 +160,8 @@ export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey, id }) => {
 						/>
 						<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
 							{day.correction
-							? t('DayDetails.DayDetailScreen.PendingCorrection')
-							: t('DayDetails.DayDetailScreen.Completed')}
+								? t('DayDetails.DayDetailScreen.PendingCorrection')
+								: t('DayDetails.DayDetailScreen.Completed')}
 						</Text>
 					</View>
 				</View>
@@ -218,22 +218,25 @@ export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey, id }) => {
 							numberOfLines={1}
 							style={[styles.locationName, { color: colors.onSurface }]}
 						>
-							{day.location}
+							{day.location ||
+								t('DayDetails.DayDetailScreen.UnknownLocation')}
 						</Text>
-						<Text
-							numberOfLines={1}
-							style={[
-								styles.caption,
-								{ color: colors.onSurfaceVariant },
-								{ color: colors.secondary },
-							]}
-						>
-							{day.checkpoint}
-						</Text>
+						{day.checkpoint ? (
+							<Text
+								numberOfLines={1}
+								style={[
+									styles.caption,
+									{ color: colors.onSurfaceVariant },
+									{ color: colors.secondary },
+								]}
+							>
+								{day.checkpoint}
+							</Text>
+						) : null}
 					</View>
 				</View>
 
-				<Pressable
+				{/* <Pressable
 					accessibilityLabel={t('DayDetails.DayDetailScreen.RequestCorrection')}
 					accessibilityRole='button'
 					onPress={() => {
@@ -249,7 +252,7 @@ export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey, id }) => {
 					<Text style={[styles.correctionLabel, { color: colors.primary }]}>
 						{t('DayDetails.DayDetailScreen.RequestCorrection')}
 					</Text>
-				</Pressable>
+				</Pressable> */}
 			</ScrollView>
 
 			<CorrectionRequestModal day={day} />

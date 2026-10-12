@@ -1,5 +1,7 @@
 import { theme } from '@/assets/theme';
+import { useOdooSessionStore } from '@/store/useOdooSessionStore';
 import { useProfileStore } from '@/store/useProfileStore';
+import { useRouter } from 'expo-router';
 import type { FC } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -7,12 +9,18 @@ import { ProfileHeader } from './Header';
 import { IdCard } from './IdCard';
 import { LanguageModal } from './LanguageModal';
 import { LoggedOutView, LogoutSection } from './Logout';
-import { SecurityNote } from './SecurityNote';
 import { SettingsSection } from './SettingsSection';
 import { StatsSection } from './StatsSection';
 export const ProfileScreen: FC = () => {
+	const router = useRouter();
 	const profile = useProfileStore((state) => state.profile);
+	const { clearSession } = useOdooSessionStore();
 	const { logout } = useProfileStore();
+	const logoutWithRedirect = () => {
+		logout();
+		clearSession();
+		router.navigate('/server_setup');
+	};
 	const colors = theme();
 
 	return (
@@ -28,10 +36,12 @@ export const ProfileScreen: FC = () => {
 					showsVerticalScrollIndicator={false}
 				>
 					<IdCard profile={profile} />
-					<SecurityNote />
 					<StatsSection remainingLeaveDays={profile.remainingLeaveDays} />
 					<SettingsSection />
-					<LogoutSection fullName={profile.fullName} onLogout={logout} />
+					<LogoutSection
+						fullName={profile.fullName}
+						onLogout={logoutWithRedirect}
+					/>
 				</ScrollView>
 			) : (
 				<LoggedOutView />

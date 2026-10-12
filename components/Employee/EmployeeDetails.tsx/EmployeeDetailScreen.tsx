@@ -1,12 +1,17 @@
 import type { FC } from 'react';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { ScrollView, StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { fonts, theme, ThemeColors } from '@/assets/theme';
 import { AdminHeader } from '@/components/Admin/AdminHeader';
+import {
+	useEmployeeScheduleStore,
+	useTodaySummary,
+} from '@/store/useEmployeeScheduleStore';
 import { useEmployeeStore } from '@/store/useEmployeeStore';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { DetailActions } from './DetailActions';
 import { DetailHero } from './DetailHero';
 import { DetailStrip } from './DetailStrip';
@@ -16,15 +21,13 @@ import {
 	PersonalSection,
 	ScheduleSection,
 } from './EmployeeSection';
-import { TodaySection, TodaySummary } from './TodaysSection';
-import { useTranslation } from 'react-i18next';
-
+import { TodaySection } from './TodaysSection';
 
 type EmployeeDetailScreenProps = {
 	/** Gösterilecek çalışanın sicil numarası; bilgiler store'dan okunur. */
 	employeeId: string;
 };
-const today: TodaySummary | undefined = undefined;
+
 export const EmployeeDetailScreen: FC<EmployeeDetailScreenProps> = ({
 	employeeId,
 }) => {
@@ -32,16 +35,22 @@ export const EmployeeDetailScreen: FC<EmployeeDetailScreenProps> = ({
 	const router = useRouter();
 	const styles = useMemo(() => createScreenStyles(colors), [colors]);
 	const { t } = useTranslation();
+	const today = useTodaySummary(employeeId);
+	const loadSchedule = useEmployeeScheduleStore((state) => state.loadSchedule);
 
+	// Sayfa her açıldığında çalışanın son 30 gününü ve bugününü Odoo'dan tazeler.
+	useFocusEffect(
+		useCallback(() => {
+			void loadSchedule(employeeId).then((result) => {
+				if (!result.ok) console.log('SCHEDULE', result.kind, result.message);
+			});
+		}, [employeeId, loadSchedule]),
+	);
 	const employee = useEmployeeStore((state) =>
 		state.employees.find((item) => item.employeeId === employeeId),
 	);
 	const onEdit = () => {
 		router.navigate({ pathname: '/edit_employee', params: { employeeId } });
-	};
-
-	const onResetPassword = () => {
-		// Şifre sıfırlama işlemi buraya gelecek.
 	};
 
 	const onViewSchedule = () => {
@@ -65,10 +74,7 @@ export const EmployeeDetailScreen: FC<EmployeeDetailScreenProps> = ({
 					<JobSection employee={employee} />
 					<ScheduleSection employee={employee} />
 					<AccountSection employee={employee} />
-					<DetailActions
-						onResetPassword={onResetPassword}
-						onViewSchedule={onViewSchedule}
-					/>
+					<DetailActions onViewSchedule={onViewSchedule} />
 				</ScrollView>
 			) : (
 				<Text style={styles.notFound}>

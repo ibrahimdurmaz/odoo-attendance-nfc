@@ -1,19 +1,20 @@
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { theme, ThemeColors } from '@/assets/theme';
 import { getAttendanceSummary } from '@/helper/employee';
+import { syncEmployeesFromOdoo } from '@/helper/odooEmployeeSync';
 import { useCorrectionRequestStore } from '@/store/useCorrectionRequestStore';
 import { useEmployeeStore } from '@/store/useEmployeeStore';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { ATTENDANCE_TARGET_PERCENT, SHIFT_HOURS } from '../Home/constants';
 import { AddEmployeeButton } from './AddEmployeeButton';
 import { AdminHeader } from './AdminHeader';
 import { AttendanceCard } from './Attendance';
 import { NavCard } from './NavCard';
 import { SectionIntro } from './SectionIntro';
-import { useTranslation } from 'react-i18next';
 
 export const AdminScreen = () => {
 	const colors = theme();
@@ -23,21 +24,29 @@ export const AdminScreen = () => {
 	const onOpenEmployees = () => {
 		router.navigate('/employee_list');
 	};
-	const onOpenCorrections = () => {
-		router.navigate('/correction_request');
-	};
+	// const onOpenCorrections = () => {
+	// 	router.navigate('/correction_request');
+	// };
 	const loadRequests = useCorrectionRequestStore((state) => state.loadRequests);
-	const pendingCorrectionCount = useCorrectionRequestStore(
-		(state) =>
-			state.requests.filter((request) => request.status === 'pending').length,
-	);
+	// const pendingCorrectionCount = useCorrectionRequestStore(
+	// 	(state) =>
+	// 		state.requests.filter((request) => request.status === 'pending').length,
+	// );
 	const employees = useEmployeeStore((state) => state.employees);
 	const summary = useMemo(() => getAttendanceSummary(employees), [employees]);
 
 	useEffect(() => {
 		loadRequests();
 	}, [loadRequests]);
-
+	// Ekran her açıldığında çalışanları ve giriş durumlarını Odoo'dan tazeler.
+	useFocusEffect(
+		useCallback(() => {
+			void syncEmployeesFromOdoo().then((result) => {
+				if (!result.ok)
+					console.log('EMPLOYEE SYNC', result.kind, result.message);
+			});
+		}, []),
+	);
 	return (
 		<SafeAreaView edges={['top']} style={styles.screen}>
 			<AdminHeader title={t('Admin.AdminScreen.Title')} />
@@ -56,7 +65,7 @@ export const AdminScreen = () => {
 						})}
 						title={t('Admin.AdminScreen.Employees')}
 					/>
-					<NavCard
+					{/* <NavCard
 						badge={
 							pendingCorrectionCount > 0
 								? t('Admin.AdminScreen.PendingBadge', {
@@ -70,7 +79,7 @@ export const AdminScreen = () => {
 						onPress={onOpenCorrections}
 						subtitle={t('Admin.AdminScreen.CorrectionRequestsSubtitle')}
 						title={t('Admin.AdminScreen.CorrectionRequests')}
-					/>
+					/> */}
 				</View>
 
 				<AttendanceCard

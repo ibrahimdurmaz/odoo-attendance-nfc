@@ -44,19 +44,22 @@ export const DayCard: FC<DayCardProps> = ({ day, onPress }) => {
 					>
 						{formatShortDate(day.dateKey)}
 					</Text>
-					<View style={styles.row}>
-						<MaterialIcons
-							color={colors.outline}
-							name='sensor-door'
-							size={15}
-						/>
-						<Text
-							numberOfLines={1}
-							style={[styles.caption, { color: colors.onSurfaceVariant }]}
-						>
-							{day.checkpoint}
-						</Text>
-					</View>
+					{/* Terminal bilinmiyorsa (Odoo kayıtları) giriş konumu gösterilir. */}
+					{day.checkpoint || day.location ? (
+						<View style={styles.row}>
+							<MaterialIcons
+								color={colors.outline}
+								name={day.checkpoint ? 'sensor-door' : 'place'}
+								size={15}
+							/>
+							<Text
+								numberOfLines={1}
+								style={[styles.caption, { color: colors.onSurfaceVariant }]}
+							>
+								{day.checkpoint || day.location}
+							</Text>
+						</View>
+					) : null}
 				</View>
 				{hasPendingCorrection ? (
 					<View

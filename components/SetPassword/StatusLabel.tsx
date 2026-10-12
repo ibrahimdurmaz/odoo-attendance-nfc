@@ -7,7 +7,7 @@ import { IconName } from '../Home/types';
 import { PasswordStrength } from '../Login/passwordRules';
 import { statusStyles } from './styles';
 
-type StatusLabelProps = { text: string; color: string; icon?: IconName };
+type StatusLabelProps = { text: string; color: ColorValue; icon?: IconName };
 
 export const StatusLabel: FC<StatusLabelProps> = ({ text, color, icon }) => {
 	return (

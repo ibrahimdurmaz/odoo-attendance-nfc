@@ -12,13 +12,10 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { theme } from '@/assets/theme';
-import {
-	fetchOwnEmployee,
-	loginWithPassword,
-	toLocalPhone,
-} from '@/helper/odooApi';
+import { fetchOwnEmployee, loginWithPassword } from '@/helper/odooApi';
+import { toAppPhone } from '@/helper/odooEmployeeSync';
 import { Employee } from '@/store/types';
-import { useProfileStore } from '@/store/useProfileStore';
+import { Language, useProfileStore } from '@/store/useProfileStore';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { AuthTextField } from './AuthTextField';
@@ -27,6 +24,11 @@ import { ErrorBanner } from './ErrorBanner';
 import { SubmitButton } from './SubmitButton';
 import { SupportNote } from './SupportNote';
 import { screenStyles } from './styles';
+
+const toAppLanguage = (odooLanguage: string | null): Language | null => {
+	const code = odooLanguage?.slice(0, 2).toLowerCase();
+	return code === 'tr' || code === 'en' || code === 'de' ? code : null;
+};
 const authenticate = async (
 	serverUrl: string,
 	database: string,
@@ -49,7 +51,8 @@ const authenticate = async (
 	const employee = await fetchOwnEmployee();
 	if (!employee.ok) throw new Error(employee.message);
 	const profile = employee.data;
-
+	const language = toAppLanguage(user.language);
+	if (language) useProfileStore.getState().setLanguage(language);
 	return {
 		fullName: profile?.name ?? user.name,
 		jobTitle: profile?.jobTitle ?? '',
@@ -61,7 +64,7 @@ const authenticate = async (
 		hasPassword: true,
 		admin: user.isAdmin,
 		email: user.login,
-		phone: toLocalPhone(profile?.phone ?? null),
+		phone: toAppPhone(profile?.phone ?? null),
 		startDateKey: profile?.startDateKey ?? '',
 		shiftTemplate: 'standard',
 		annualLeaveDays: profile?.annualLeaveDays ?? 0,

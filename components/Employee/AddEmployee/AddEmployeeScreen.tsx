@@ -1,5 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
+	Alert,
 	KeyboardAvoidingView,
 	Platform,
 	ScrollView,
@@ -10,13 +11,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { theme, ThemeColors } from '@/assets/theme';
 import { getNextEmployeeId } from '@/helper/employee';
+import { createEmployeeFromForm } from '@/helper/odooEmployeeSync';
 import { useModalStore } from '@/store/modalStore';
-import {
-	COMPANIES,
-	DEPARTMENTS,
-	SHIFT_TEMPLATES,
-	useEmployeeStore,
-} from '../../../store/useEmployeeStore';
+import { useEmployeeFormOptions } from '@/store/useEmployeeFormOptions';
+import { useTranslation } from 'react-i18next';
+import { useEmployeeStore } from '../../../store/useEmployeeStore';
 import { AdminHeader } from '../../Admin/AdminHeader';
 import type {
 	EmployeeFormErrors,
@@ -26,9 +25,7 @@ import type {
 import {
 	createInitialFormValues,
 	formatPhone,
-	generateTemporaryPassword,
-	toNewEmployee,
-	toPhoneDigits,
+	normalizePhone,
 	validateEmployeeForm,
 } from '../../Admin/employeeForm';
 import { BottomActionBar } from './BottomActionBar';
@@ -41,7 +38,6 @@ import { EmployeeCreatedModal } from './Modals/EmployeeCreatedModal';
 import { PhotoPicker } from './PhotoPicker';
 import { RoleSegment } from './RoleSegment';
 import { SelectField } from './SelectField';
-import { useTranslation } from 'react-i18next';
 
 export const AddEmployeeScreen = () => {
 	const colors = theme();
@@ -49,20 +45,14 @@ export const AddEmployeeScreen = () => {
 	const { t } = useTranslation();
 	const { triggerModal } = useModalStore();
 	const employees = useEmployeeStore((state) => state.employees);
-	const addEmployee = useEmployeeStore((state) => state.addEmployee);
 
 	const [values, setValues] = useState<EmployeeFormValues>(() =>
 		createInitialFormValues(getNextEmployeeId(employees), new Date()),
 	);
 	// Hatalar ilk "Çalışanı Oluştur" denemesinden sonra gösterilir, sonra yazdıkça güncellenir.
 	const [hasSubmitted, setHasSubmitted] = useState(false);
-
-	const existingIds = useMemo(
-		() => employees.map((employee) => employee.employeeId),
-		[employees],
-	);
 	const errors: EmployeeFormErrors = hasSubmitted
-		? validateEmployeeForm(values, existingIds)
+		? validateEmployeeForm(values)
 		: {};
 
 	const setField = <Field extends EmployeeFormField>(
@@ -71,19 +61,36 @@ export const AddEmployeeScreen = () => {
 	) => {
 		setValues((previous) => ({ ...previous, [field]: value }));
 	};
-	const tempPassword = generateTemporaryPassword();
-	const submit = () => {
-		setHasSubmitted(true);
-		const hasErrors =
-			Object.keys(validateEmployeeForm(values, existingIds)).length > 0;
-		if (hasErrors) return;
+	const options = useEmployeeFormOptions();
+	const [isSaving, setIsSaving] = useState(false);
 
-		const employee = addEmployee(toNewEmployee(values));
-		if (!employee) return;
-		triggerModal('employeeCreated', employee.employeeId);
-		// Ekran açık kalıp tekrar kullanılırsa temiz bir formla başlasın.
-		const nextId = getNextEmployeeId(useEmployeeStore.getState().employees);
-		setValues(createInitialFormValues(nextId, new Date()));
+	// Şirket seçenekleri gelince ilki seçili gelsin.
+	const firstCompany = options.companies[0]?.key;
+	useEffect(() => {
+		if (!firstCompany) return;
+		setValues((previous) =>
+			previous.company ? previous : { ...previous, company: firstCompany },
+		);
+	}, [firstCompany]);
+	const submit = async () => {
+		setHasSubmitted(true);
+		const hasErrors = Object.keys(validateEmployeeForm(values)).length > 0;
+		if (hasErrors || isSaving) return;
+
+		setIsSaving(true);
+		const result = await createEmployeeFromForm(values);
+		setIsSaving(false);
+		if (!result.ok) {
+			Alert.alert('Çalışan oluşturulamadı', result.message);
+			return;
+		}
+
+		triggerModal('employeeCreated', String(result.data));
+		// Ekran açık kalıp tekrar kullanılırsa temiz bir formla başlasın; seçili şirket kalsın.
+		setValues({
+			...createInitialFormValues('', new Date()),
+			company: values.company,
+		});
 		setHasSubmitted(false);
 	};
 
@@ -105,7 +112,10 @@ export const AddEmployeeScreen = () => {
 						uri={values.avatarUrl}
 					/>
 
-					<FormSection icon='badge' title={t('AddEmployee.AddEmployeeScreen.PersonalInfo')}>
+					<FormSection
+						icon='badge'
+						title={t('AddEmployee.AddEmployeeScreen.PersonalInfo')}
+					>
 						<View style={styles.columns}>
 							<View style={styles.column}>
 								<FormTextField
@@ -114,7 +124,9 @@ export const AddEmployeeScreen = () => {
 									isRequired
 									label={t('AddEmployee.AddEmployeeScreen.FirstName')}
 									onChangeText={(text) => setField('firstName', text)}
-									placeholder={t('AddEmployee.AddEmployeeScreen.FirstNamePlaceholder')}
+									placeholder={t(
+										'AddEmployee.AddEmployeeScreen.FirstNamePlaceholder',
+									)}
 									value={values.firstName}
 								/>
 							</View>
@@ -125,7 +137,9 @@ export const AddEmployeeScreen = () => {
 									isRequired
 									label={t('AddEmployee.AddEmployeeScreen.LastName')}
 									onChangeText={(text) => setField('lastName', text)}
-									placeholder={t('AddEmployee.AddEmployeeScreen.LastNamePlaceholder')}
+									placeholder={t(
+										'AddEmployee.AddEmployeeScreen.LastNamePlaceholder',
+									)}
 									value={values.lastName}
 								/>
 							</View>
@@ -144,47 +158,41 @@ export const AddEmployeeScreen = () => {
 							error={errors.phone}
 							keyboardType='phone-pad'
 							label={t('AddEmployee.AddEmployeeScreen.PhoneNumber')}
-							onChangeText={(text) => setField('phone', toPhoneDigits(text))}
+							onChangeText={(text) => setField('phone', normalizePhone(text))}
 							placeholder={t('AddEmployee.AddEmployeeScreen.PhonePlaceholder')}
-							prefix='+90'
 							value={formatPhone(values.phone)}
 						/>
 					</FormSection>
 
-					<FormSection icon='corporate-fare' title={t('AddEmployee.AddEmployeeScreen.JobInfo')}>
-						<FormTextField
-							autoCapitalize='characters'
-							error={errors.employeeId}
-							hint={t('AddEmployee.AddEmployeeScreen.AutoGenerated')}
-							isRequired
-							label={t('AddEmployee.AddEmployeeScreen.EmployeeId')}
-							onChangeText={(text) => setField('employeeId', text)}
-							trailingIcon='edit-note'
-							value={values.employeeId}
-						/>
+					<FormSection
+						icon='corporate-fare'
+						title={t('AddEmployee.AddEmployeeScreen.JobInfo')}
+					>
 						<FormTextField
 							autoCapitalize='words'
 							error={errors.jobTitle}
 							isRequired
 							label={t('AddEmployee.AddEmployeeScreen.JobTitle')}
 							onChangeText={(text) => setField('jobTitle', text)}
-							placeholder={t('AddEmployee.AddEmployeeScreen.JobTitlePlaceholder')}
+							placeholder={t(
+								'AddEmployee.AddEmployeeScreen.JobTitlePlaceholder',
+							)}
 							value={values.jobTitle}
 						/>
 						<SelectField
-							isRequired
 							label={t('AddEmployee.AddEmployeeScreen.Department')}
 							onChange={(key) => setField('department', key)}
-							options={DEPARTMENTS}
+							options={options.departments}
 							value={values.department}
 						/>
 						<SelectField
 							isRequired
 							label={t('AddEmployee.AddEmployeeScreen.Company')}
 							onChange={(key) => setField('company', key)}
-							options={COMPANIES}
+							options={options.companies}
 							value={values.company}
 						/>
+
 						<FormTextField
 							error={errors.startDate}
 							keyboardType='numbers-and-punctuation'
@@ -197,12 +205,14 @@ export const AddEmployeeScreen = () => {
 						/>
 					</FormSection>
 
-					<FormSection icon='schedule' title={t('AddEmployee.AddEmployeeScreen.WorkSchedule')}>
+					<FormSection
+						icon='schedule'
+						title={t('AddEmployee.AddEmployeeScreen.WorkSchedule')}
+					>
 						<SelectField
-							isRequired
 							label={t('AddEmployee.AddEmployeeScreen.ShiftTemplate')}
 							onChange={(key) => setField('shiftTemplate', key)}
-							options={SHIFT_TEMPLATES}
+							options={options.workSchedules}
 							value={values.shiftTemplate}
 						/>
 						<FormTextField
@@ -236,7 +246,7 @@ export const AddEmployeeScreen = () => {
 					onSubmit={submit}
 				/>
 			</KeyboardAvoidingView>
-			<EmployeeCreatedModal temporaryPassword={tempPassword} />
+			<EmployeeCreatedModal />
 		</SafeAreaView>
 	);
 };

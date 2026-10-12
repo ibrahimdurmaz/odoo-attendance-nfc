@@ -53,16 +53,18 @@ export const TimelineItem: FC<TimelineItemProps> = ({ event, checkpoint }) => {
 				<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
 					{event.description}
 				</Text>
-				<View style={styles.row}>
-					<MaterialIcons
-						color={colors.onSurfaceVariant}
-						name='door-front'
-						size={15}
-					/>
-					<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
-						{checkpoint}
-					</Text>
-				</View>
+				{checkpoint ? (
+					<View style={styles.row}>
+						<MaterialIcons
+							color={colors.onSurfaceVariant}
+							name='door-front'
+							size={15}
+						/>
+						<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
+							{checkpoint}
+						</Text>
+					</View>
+				) : null}
 			</View>
 		</View>
 	);

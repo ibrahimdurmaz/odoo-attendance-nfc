@@ -12,6 +12,10 @@ export type Session = {
 	status: Status;
 	checkInAt: number | null;
 	checkOutAt: number | null;
+	/** Odoo'nun girişte kaydettiği konum; bilinmiyorsa null. */
+	checkInLocation: string | null;
+	/** Odoo'nun çıkışta kaydettiği konum; bilinmiyorsa null. */
+	checkOutLocation: string | null;
 	breakStartedAt: number | null;
 	breaks: BreakRecord[];
 };

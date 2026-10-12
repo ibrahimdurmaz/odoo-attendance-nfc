@@ -1,13 +1,11 @@
 import { CorrectionRecordType } from './useDayStore';
 
-export type ShiftTemplateKey = 'standard' | 'flexible' | 'second';
 export type AttendanceStatus = 'inside' | 'onBreak' | 'outside' | 'absent';
 
 export type Employee = {
 	fullName: string;
 	jobTitle: string;
 	department: string;
-	/** Sicil no ("EMP-8044"). Listede tekildir, anahtar olarak kullanılır. */
 	employeeId: string;
 	company: string;
 	avatarUrl: string | null;
@@ -16,11 +14,11 @@ export type Employee = {
 	admin: boolean;
 
 	email: string;
-	/** Başında 0 ve ülke kodu olmadan 10 hane; girilmediyse boş metin. */
+	/** Ülke koduyla, boşluksuz: "+905321234567"; girilmediyse boş metin. */
 	phone: string;
 	/** İşe başlama tarihi, "2026-10-01" biçiminde. */
 	startDateKey: string;
-	shiftTemplate: ShiftTemplateKey;
+	shiftTemplate: string;
 	annualLeaveDays: number;
 	status: AttendanceStatus;
 	createdAt: number;

@@ -17,10 +17,11 @@ import {
 	useEmployeeStore,
 } from '@/store/useEmployeeStore';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import {
 	EmployeeFormErrors,
 	formatPhone,
-	toPhoneDigits,
+	normalizePhone,
 	validateEmployeeForm,
 } from '../../Admin/employeeForm';
 import { AccountStatusSwitch } from './AccountStatusSwitch';
@@ -44,7 +45,6 @@ import { DeactivateEmployeeModal } from './Modals/DeactivateEmployeeModal';
 import { PhotoPicker } from './PhotoPicker';
 import { RoleSegment } from './RoleSegment';
 import { SelectField } from './SelectField';
-import { useTranslation } from 'react-i18next';
 type EditEmployeeFormProps = {
 	employee: Employee;
 	onSaved: () => void;
@@ -79,7 +79,7 @@ export const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
 
 	const isDirty = isFormDirty(initialValues, values);
 	const errors: EmployeeFormErrors = hasSubmitted
-		? validateEmployeeForm(values, otherIds)
+		? validateEmployeeForm(values)
 		: {};
 
 	const setField = <Field extends EditEmployeeFormField>(
@@ -91,8 +91,7 @@ export const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
 
 	const save = () => {
 		setHasSubmitted(true);
-		const hasErrors =
-			Object.keys(validateEmployeeForm(values, otherIds)).length > 0;
+		const hasErrors = Object.keys(validateEmployeeForm(values)).length > 0;
 		if (hasErrors) return;
 
 		updateEmployee(employee.employeeId, toEmployeeChanges(values, employee));
@@ -124,7 +123,10 @@ export const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
 						uri={values.avatarUrl}
 					/>
 
-					<FormSection icon='badge' title={t('EditEmployee.EditEmployeeForm.PersonalInfo')}>
+					<FormSection
+						icon='badge'
+						title={t('EditEmployee.EditEmployeeForm.PersonalInfo')}
+					>
 						<View style={formStyles.columns}>
 							<View style={formStyles.column}>
 								<FormTextField
@@ -160,14 +162,16 @@ export const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
 							error={errors.phone}
 							keyboardType='phone-pad'
 							label={t('EditEmployee.EditEmployeeForm.Phone')}
-							onChangeText={(text) => setField('phone', toPhoneDigits(text))}
+							onChangeText={(text) => setField('phone', normalizePhone(text))}
 							placeholder={t('EditEmployee.EditEmployeeForm.PhonePlaceholder')}
-							prefix='+90'
 							value={formatPhone(values.phone)}
 						/>
 					</FormSection>
 
-					<FormSection icon='corporate-fare' title={t('EditEmployee.EditEmployeeForm.JobInfo')}>
+					<FormSection
+						icon='corporate-fare'
+						title={t('EditEmployee.EditEmployeeForm.JobInfo')}
+					>
 						<LockedField
 							label={t('EditEmployee.EditEmployeeForm.EmployeeId')}
 							note={t('EditEmployee.EditEmployeeForm.EmployeeIdLocked')}
@@ -208,7 +212,10 @@ export const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
 						/>
 					</FormSection>
 
-					<FormSection icon='schedule' title={t('EditEmployee.EditEmployeeForm.WorkSchedule')}>
+					<FormSection
+						icon='schedule'
+						title={t('EditEmployee.EditEmployeeForm.WorkSchedule')}
+					>
 						<SelectField
 							isRequired
 							label={t('EditEmployee.EditEmployeeForm.Shift')}
@@ -228,7 +235,10 @@ export const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
 						/>
 					</FormSection>
 
-					<FormSection icon='manage-accounts' title={t('EditEmployee.EditEmployeeForm.Account')}>
+					<FormSection
+						icon='manage-accounts'
+						title={t('EditEmployee.EditEmployeeForm.Account')}
+					>
 						<RoleSegment
 							onChange={(role) => setField('role', role)}
 							value={values.role}

@@ -1,6 +1,7 @@
 import { Pressable, Text, View } from 'react-native';
 
 import { theme } from '@/assets/theme';
+import { formatTime } from '@/helper/dateHelpers';
 import { useModalStore } from '@/store/modalStore';
 import { useProfileStore } from '@/store/useProfileStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
@@ -15,15 +16,18 @@ export const CheckInSuccessModal = () => {
 	const { modals, closeModal } = useModalStore();
 	const profile = useProfileStore((state) => state.profile);
 	const { visible, props } = modals.checkInSuccessful;
-	const toMinutes = (value: string) => {
-		const [h, m] = value.split(':').map(Number);
-		return h * 60 + m;
-	};
-	if (!visible) null;
-	const time = '09.00';
 
-	const getShiftStatus = (time: string) => {
-		const minutes = toMinutes(time);
+	// Giriş saati modalı açan yerden gelir (Odoo'nun kaydettiği saat); gelmezse şu anki saat.
+	const time = props?.time ?? formatTime(Date.now());
+
+	/** "09:12" ya da "09.12" → 552 */
+	const toMinutes = (value: string) => {
+		const [hours = 0, minutes = 0] = value.split(/[:.]/).map(Number);
+		return hours * 60 + minutes;
+	};
+
+	const getShiftStatus = (checkInTime: string) => {
+		const minutes = toMinutes(checkInTime);
 		const start = toMinutes('08:40');
 		const end = toMinutes('09:20');
 
@@ -32,7 +36,8 @@ export const CheckInSuccessModal = () => {
 		return t('Modals.CheckInSuccessModal.OnTimeStart'); // 08:40 - 09:20 arası (dahil)
 	};
 	const shiftStatus = getShiftStatus(time);
-	const userName = profile.fullName.split(' ')[0];
+	const userName = profile?.fullName.split(' ')[0] ?? '';
+
 	const onClose = () => {
 		closeModal('checkInSuccessful');
 	};

@@ -3,8 +3,8 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import * as ImagePicker from 'expo-image-picker';
 import type { FC } from 'react';
 import { useMemo, useState } from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 type PhotoPickerProps = {
 	uri: string | null;
 	onChange: (uri: string | null) => void;
@@ -21,10 +21,18 @@ export const PhotoPicker: FC<PhotoPickerProps> = ({ uri, onChange }) => {
 			const result = await ImagePicker.launchImageLibraryAsync({
 				allowsEditing: true,
 				aspect: [1, 1],
-				quality: 0.7,
+				quality: 0.5,
+				base64: true,
 			});
-			const pickedUri = result.canceled ? null : result.assets[0]?.uri;
-			if (pickedUri) onChange(pickedUri);
+			const asset = result.canceled ? null : result.assets[0];
+			if (asset) {
+				// Odoo'ya gönderilebilsin diye "data:" adresi olarak tutulur; ekranda da aynen görünür.
+				onChange(
+					asset.base64
+						? `data:${asset.mimeType ?? 'image/jpeg'};base64,${asset.base64}`
+						: asset.uri,
+				);
+			}
 			setHasFailed(false);
 		} catch {
 			setHasFailed(true);

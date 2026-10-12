@@ -33,7 +33,11 @@ const AttendanceTile: FC<AttendanceTileProps> = ({
 
 	return (
 		<View
-			accessibilityLabel={t('Admin.AttendanceTile.A11y', { label, count, caption })}
+			accessibilityLabel={t('Admin.AttendanceTile.A11y', {
+				label,
+				count,
+				caption,
+			})}
 			accessible
 			style={styles.tile}
 		>
@@ -174,12 +178,6 @@ export const AttendanceCard: FC<AttendanceCardProps> = ({
 					count={summary.outside}
 					label={t('Admin.AttendanceCard.NoEntry')}
 					status='outside'
-				/>
-				<AttendanceTile
-					caption={t('Admin.AttendanceCard.ActiveBreak')}
-					count={summary.onBreak}
-					label={t(ATTENDANCE_LABELS.onBreak)}
-					status='onBreak'
 				/>
 			</View>
 		</View>

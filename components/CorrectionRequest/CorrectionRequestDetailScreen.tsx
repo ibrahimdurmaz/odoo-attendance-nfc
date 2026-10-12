@@ -1,17 +1,18 @@
 import { fonts, theme, ThemeColors } from '@/assets/theme';
-import {
-	getEmployeeDays,
-	useEmployeeScheduleStore,
-} from '@/store/employeeScheduleStore';
 import { useModalStore } from '@/store/modalStore';
 import {
 	getCorrectionImpact,
 	useCorrectionRequestStore,
 } from '@/store/useCorrectionRequestStore';
+import {
+	getEmployeeDays,
+	useEmployeeScheduleStore,
+} from '@/store/useEmployeeScheduleStore';
 import { useEmployeeStore } from '@/store/useEmployeeStore';
 import { useRouter } from 'expo-router';
 import type { FC } from 'react';
 import { useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ScrollView, StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AdminHeader } from '../Admin/AdminHeader';
@@ -21,7 +22,6 @@ import { RejectRequestModal } from './Modals/RejectRequestModal';
 import { RequestEmployeeCard } from './RequestEmployeeCard';
 import { RequestSummaryCard } from './RequestSummaryCard';
 import { ResolvedNote } from './ResolvedNote';
-import { useTranslation } from 'react-i18next';
 
 type CorrectionRequestDetailScreenProps = {
 	/** Gösterilecek talebin kimliği; talep store'dan okunur. */
@@ -63,7 +63,9 @@ export const CorrectionRequestDetailScreen: FC<
 		return (
 			<SafeAreaView edges={['top']} style={styles.screen}>
 				<AdminHeader
-					title={t('CorrectionRequestDetail.CorrectionRequestDetailScreen.Title')}
+					title={t(
+						'CorrectionRequestDetail.CorrectionRequestDetailScreen.Title',
+					)}
 				/>
 				<Text style={styles.notFound}>
 					{t('CorrectionRequestDetail.CorrectionRequestDetailScreen.NotFound')}
@@ -90,8 +92,8 @@ export const CorrectionRequestDetailScreen: FC<
 	return (
 		<SafeAreaView edges={['top']} style={styles.screen}>
 			<AdminHeader
-					title={t('CorrectionRequestDetail.CorrectionRequestDetailScreen.Title')}
-				/>
+				title={t('CorrectionRequestDetail.CorrectionRequestDetailScreen.Title')}
+			/>
 			<ScrollView
 				contentContainerStyle={styles.content}
 				showsVerticalScrollIndicator={false}

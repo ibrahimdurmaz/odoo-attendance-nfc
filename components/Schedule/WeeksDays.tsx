@@ -7,14 +7,14 @@ import {
 	toDateKey,
 } from '@/helper/dateHelpers';
 import i18n from '@/i18n';
+import { useDayStore } from '@/store/useDayStore';
 import {
 	getEmployeeDays,
 	useEmployeeScheduleStore,
-} from '@/store/employeeScheduleStore';
-import { useDayStore } from '@/store/useDayStore';
+} from '@/store/useEmployeeScheduleStore';
+import { useTranslation } from 'react-i18next';
 import { Pressable, Text, View } from 'react-native';
 import { WeeksDaysStyles } from './styles';
-import { useTranslation } from 'react-i18next';
 const WORK_DAYS_PER_WEEK = 5;
 /** "13 - 17 Mayıs" ya da ay değişiyorsa "29 Eylül - 3 Ekim". */
 const formatWeekRange = (monday: Date, friday: Date): string => {

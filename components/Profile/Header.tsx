@@ -1,12 +1,11 @@
 import { fonts, theme } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
-import { useRouter } from 'expo-router';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { StyleSheet, Text, View } from 'react-native';
 
 export const ProfileHeader = () => {
 	const colors = theme();
-	const router = useRouter();
+	//const router = useRouter();
 	const { t } = useTranslation();
 	return (
 		<View style={headerStyles.bar}>
@@ -21,7 +20,7 @@ export const ProfileHeader = () => {
 			<Text style={[headerStyles.title, { color: colors.onSurface }]}>
 				{t('Profile.Header.Title')}
 			</Text>
-			<Pressable
+			{/* <Pressable
 				accessibilityLabel={t('UI.Accessibility.Notifications')}
 				accessibilityRole='button'
 				hitSlop={8}
@@ -34,7 +33,7 @@ export const ProfileHeader = () => {
 					name='notifications'
 					size={24}
 				/>
-			</Pressable>
+			</Pressable> */}
 		</View>
 	);
 };

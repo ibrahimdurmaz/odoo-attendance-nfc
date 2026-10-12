@@ -1,9 +1,9 @@
 import { theme } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { Pressable, Text, View } from 'react-native';
 import { headerStyles } from './styles';
-import { useTranslation } from 'react-i18next';
 
 export function Header() {
 	const styles = headerStyles;
@@ -28,7 +28,7 @@ export function Header() {
 				</View>
 			</View>
 			<View style={styles.row}>
-				<Pressable
+				{/* <Pressable
 					accessibilityLabel={t('UI.Accessibility.Notifications')}
 					accessibilityRole='button'
 					hitSlop={8}
@@ -41,7 +41,7 @@ export function Header() {
 						name='notifications'
 						size={24}
 					/>
-				</Pressable>
+				</Pressable> */}
 				<Pressable
 					accessibilityLabel={t('UI.Accessibility.Profile')}
 					accessibilityRole='button'

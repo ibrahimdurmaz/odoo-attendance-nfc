@@ -28,7 +28,7 @@ export const PersonalSection: FC<EmployeeSectionProps> = ({ employee }) => {
 			<DetailRow
 				label={t('EmployeeDetail.PersonalSection.Phone')}
 				value={
-					employee.phone ? `+90 ${formatPhone(employee.phone)}` : EMPTY_VALUE
+					employee.phone ? formatPhone(employee.phone) : EMPTY_VALUE
 				}
 			/>
 		</FormSection>

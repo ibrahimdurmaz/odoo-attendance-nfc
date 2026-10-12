@@ -1,9 +1,9 @@
 import { formatTime } from '@/helper/dateHelpers';
-import { EmployeeDays } from '@/store/employeeScheduleStore';
 import { Employee } from '@/store/types';
 import type { EmployeeCorrectionRequest } from '@/store/useCorrectionRequestStore';
 import type { CorrectionRecordType, DayRecord } from '@/store/useDayStore';
 import { getRecentDays } from '@/store/useDayStore';
+import { EmployeeDays } from '@/store/useEmployeeScheduleStore';
 
 // GEÇİCİ: yöneticinin göreceği düzeltme talepleri için örnek veri üretir. Gerçek
 // talepler sunucudan (Odoo) gelmeye başlayınca bu dosya kaldırılır.

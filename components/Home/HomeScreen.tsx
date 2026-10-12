@@ -5,6 +5,11 @@ import {
 	formatTime,
 	getGreeting,
 } from '@/helper/dateHelpers';
+import {
+	checkInAttendance,
+	checkOutAttendance,
+	fetchLastAttendance,
+} from '@/helper/odooApi';
 import { useModalStore } from '@/store/modalStore';
 import { createDayRecord, useDayStore } from '@/store/useDayStore';
 import { useProfileStore } from '@/store/useProfileStore';
@@ -12,7 +17,7 @@ import { MaterialIcons } from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Platform, ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CheckInFailedModal } from '../Modals/CheckInFailedModal';
 import { CheckInSuccessModal } from '../Modals/CheckInSuccessModal';
@@ -35,10 +40,6 @@ import { StatsBlock } from './StatsBlock';
 import { styles } from './styles';
 import { Activity, Session } from './types';
 
-// Android NFC okur, iOS paneldeki kodu kamerayla okutur.
-const CHECK_IN_MODAL = Platform.OS === 'android' ? 'nfcPrompt' : 'codeScanner';
-// Örnek veriler;
-
 export const HomeScreen: FC = () => {
 	const [session, setSession] = useState<Session>(INITIAL_SESSION);
 	const [now, setNow] = useState(Date.now());
@@ -58,13 +59,61 @@ export const HomeScreen: FC = () => {
 		return () => clearInterval(intervalId);
 	}, [isRunning]);
 
+	// Uygulama açılınca Odoo'daki son kayıttan bugünkü durumu geri yükler.
+	// Bu arada kullanıcı bir şeye bastıysa (giriş, mola) onun yaptığı ezilmez.
+	useEffect(() => {
+		void fetchLastAttendance().then((result) => {
+			if (!result.ok || !result.data) return;
+			const { checkInAt, checkOutAt, checkInLocation, checkOutLocation } =
+				result.data;
+			const isToday =
+				new Date(checkInAt).toDateString() === new Date().toDateString();
+			if (checkOutAt !== null && !isToday) return;
+
+			setSession((previous) =>
+				previous.status !== INITIAL_SESSION.status
+					? previous
+					: checkOutAt === null
+						? {
+								...INITIAL_SESSION,
+								status: 'working',
+								checkInAt,
+								checkInLocation,
+							}
+						: {
+								...INITIAL_SESSION,
+								status: 'completed',
+								checkInAt,
+								checkOutAt,
+								checkInLocation,
+								checkOutLocation,
+							},
+			);
+		});
+	}, []);
 	// --- Eylemler (Odoo / NFC çağrıları buraya eklenir) ---
 
 	const checkIn = () => {
-		triggerModal(CHECK_IN_MODAL);
+		triggerModal('nfcPrompt');
 		console.log(modals.nfcPrompt.visible);
 	};
-
+	// NFC okutma başarılı olunca çağrılır: girişi Odoo'ya yazar, giriş saatini döner (olmazsa null).
+	const confirmCheckIn = async (): Promise<number | null> => {
+		const result = await checkInAttendance();
+		if (!result.ok) {
+			console.log('CHECK IN', result.kind, result.message);
+			return null;
+		}
+		const { checkInAt, checkInLocation } = result.data;
+		setNow(Date.now());
+		setSession({
+			...INITIAL_SESSION,
+			status: 'working',
+			checkInAt,
+			checkInLocation,
+		});
+		return checkInAt;
+	};
 	const startBreak = () => {
 		const at = Date.now();
 		setNow(at);
@@ -85,31 +134,50 @@ export const HomeScreen: FC = () => {
 		}));
 	};
 
-	const checkOut = () => {
+	const checkOut = async () => {
 		if (!session.checkInAt) return;
 		const at = Date.now();
 		// Moladayken çıkış yapılırsa açık mola çıkış anında kapatılır.
 		const breaks = session.breakStartedAt
 			? [...session.breaks, { start: session.breakStartedAt, end: at }]
 			: session.breaks;
+		const breakSeconds = breaks.reduce(
+			(sum, item) => sum + (item.end - item.start) / 1000,
+			0,
+		);
+
+		const result = await checkOutAttendance(breakSeconds);
+		if (!result.ok) {
+			console.log('CHECK OUT', result.kind, result.message);
+			return;
+		}
+		if (!result.data.isBreakSaved)
+			console.log("CHECK OUT: mola Odoo'ya yazılamadı");
+		const { attendance } = result.data;
+		const checkOutAt = attendance.checkOutAt ?? at;
+		// Giriş konumu çıkış cevabında da gelir; gelmezse oturumdaki kullanılır.
+		const checkInLocation =
+			attendance.checkInLocation ?? session.checkInLocation;
 
 		saveDay(
 			createDayRecord({
 				checkInAt: session.checkInAt,
-				checkOutAt: at,
+				checkOutAt,
 				breaks,
 				targetSeconds: TARGET_SECONDS,
 				shiftHours: SHIFT_HOURS,
 				checkpoint: CHECKPOINT,
-				location: profile.department,
+				location: checkInLocation ?? '',
 			}),
 		);
 
-		setNow(at);
+		setNow(checkOutAt);
 		setSession({
 			...session,
 			status: 'completed',
-			checkOutAt: at,
+			checkOutAt,
+			checkInLocation,
+			checkOutLocation: attendance.checkOutLocation,
 			breakStartedAt: null,
 			breaks,
 		});
@@ -135,7 +203,7 @@ export const HomeScreen: FC = () => {
 			id: 'check-in',
 			icon: 'login',
 			title: t('Home.Activities.CheckIn'),
-			subtitle: CHECKPOINT,
+			subtitle: session.checkInLocation ?? CHECKPOINT,
 			time: formatTime(session.checkInAt),
 			background: colors.tertiaryFixed,
 			foreground: colors.tertiary,
@@ -181,7 +249,7 @@ export const HomeScreen: FC = () => {
 			id: 'check-out',
 			icon: 'logout',
 			title: t('Home.Activities.CheckOut'),
-			subtitle: CHECKPOINT,
+			subtitle: session.checkOutLocation ?? CHECKPOINT,
 			time: formatTime(session.checkOutAt),
 			background: colors.primaryFixed,
 			foreground: colors.primary,
@@ -196,7 +264,7 @@ export const HomeScreen: FC = () => {
 			<CheckInFailedModal />
 			<CheckInSuccessModal />
 			<CodeScannerModal />
-			<NfcPromptModal setNow={setNow} setSession={setSession} />
+			<NfcPromptModal confirmCheckIn={confirmCheckIn} />
 			<Header />
 			<ScrollView
 				contentContainerStyle={styles.content}

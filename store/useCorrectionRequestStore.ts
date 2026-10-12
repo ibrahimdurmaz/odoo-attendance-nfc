@@ -17,11 +17,12 @@ import { createDayRecord } from '@/store/useDayStore';
 import { createSampleRequests } from '@/components/CorrectionRequest/correctionRequestData';
 import { normalizeForSearch } from '@/helper/employee';
 import { useNotificationStore } from '@/store/useNotificationStore';
+
+import { Employee } from './types';
 import {
 	getEmployeeDays,
 	useEmployeeScheduleStore,
-} from './employeeScheduleStore';
-import { Employee } from './types';
+} from './useEmployeeScheduleStore';
 import { useEmployeeStore } from './useEmployeeStore';
 
 // ---------------------------------------------------------------------------

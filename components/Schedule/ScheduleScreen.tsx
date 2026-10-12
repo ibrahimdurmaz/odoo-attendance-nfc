@@ -5,19 +5,19 @@ import { getRecentDays, useDayStore } from '@/store/useDayStore';
 import {
 	getEmployeeDays,
 	useEmployeeScheduleStore,
-} from '@/store/employeeScheduleStore';
+} from '@/store/useEmployeeScheduleStore';
 import { useEmployeeStore } from '@/store/useEmployeeStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { useRouter } from 'expo-router';
 import type { ComponentProps } from 'react';
 import { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { DayCard } from './DayCard';
 import { styles } from './styles';
 import { WEEKLY_TARGET_HOURS, WeeklySummary } from './WeeklySummary';
 import { WeeksDays } from './WeeksDays';
-import { useTranslation } from 'react-i18next';
 
 type IconName = ComponentProps<typeof MaterialIcons>['name'];
 
@@ -25,8 +25,16 @@ type Filter = 'week' | 'month' | 'overtime' | 'undertime';
 
 // label değerleri çeviri anahtarıdır.
 const FILTERS: { key: Filter; label: string; icon: IconName }[] = [
-	{ key: 'week', label: 'Schedule.ScheduleScreen.Filters.Week', icon: 'calendar-today' },
-	{ key: 'month', label: 'Schedule.ScheduleScreen.Filters.Month', icon: 'date-range' },
+	{
+		key: 'week',
+		label: 'Schedule.ScheduleScreen.Filters.Week',
+		icon: 'calendar-today',
+	},
+	{
+		key: 'month',
+		label: 'Schedule.ScheduleScreen.Filters.Month',
+		icon: 'date-range',
+	},
 	{
 		key: 'overtime',
 		label: 'Schedule.ScheduleScreen.Filters.Overtime',
@@ -140,7 +148,9 @@ export const ScheduleScreen = ({ id }: ScheduleScreenProps) => {
 							: t('Schedule.ScheduleScreen.Brand')}
 					</Text>
 					<Text style={[styles.headerTitle, { color: colors.onSurface }]}>
-						{id ? (employee?.fullName ?? id) : t('Schedule.ScheduleScreen.Title')}
+						{id
+							? (employee?.fullName ?? id)
+							: t('Schedule.ScheduleScreen.Title')}
 					</Text>
 				</View>
 			</View>
@@ -199,7 +209,9 @@ export const ScheduleScreen = ({ id }: ScheduleScreenProps) => {
 							{t('Schedule.ScheduleScreen.RecordDetails')}
 						</Text>
 						<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
-							{t('Schedule.ScheduleScreen.RecordCount', { count: visibleDays.length })}
+							{t('Schedule.ScheduleScreen.RecordCount', {
+								count: visibleDays.length,
+							})}
 						</Text>
 					</View>
 					{visibleDays.length === 0 ? (

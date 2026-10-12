@@ -3,8 +3,8 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { useRouter } from 'expo-router';
 import type { FC } from 'react';
 import { useMemo } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 type AdminHeaderProps = {
 	title: string;
@@ -19,9 +19,9 @@ export const AdminHeader: FC<AdminHeaderProps> = ({ title }) => {
 	const onBack = () => {
 		router.navigate('/(tabs)');
 	};
-	const onNotificationsPress = () => {
-		router.navigate('/notification');
-	};
+	// const onNotificationsPress = () => {
+	// 	router.navigate('/notification');
+	// };
 	const onProfilePress = () => {
 		router.navigate('/profile');
 	};
@@ -60,8 +60,7 @@ export const AdminHeader: FC<AdminHeaderProps> = ({ title }) => {
 			</View>
 
 			<View style={styles.right}>
-				{onNotificationsPress ? (
-					<Pressable
+				{/* <Pressable
 						accessibilityLabel={t('UI.Accessibility.Notifications')}
 						accessibilityRole='button'
 						hitSlop={8}
@@ -76,8 +75,8 @@ export const AdminHeader: FC<AdminHeaderProps> = ({ title }) => {
 							name='notifications'
 							size={22}
 						/>
-					</Pressable>
-				) : null}
+					</Pressable> */}
+
 				<Pressable
 					accessibilityLabel={t('UI.Accessibility.Profile')}
 					accessibilityRole='button'

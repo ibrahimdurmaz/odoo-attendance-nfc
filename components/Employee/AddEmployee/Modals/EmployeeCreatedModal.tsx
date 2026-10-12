@@ -4,23 +4,15 @@ import { StyleSheet, View } from 'react-native';
 
 import { theme, ThemeColors } from '@/assets/theme';
 import { useModalStore } from '@/store/modalStore';
+import { useTranslation } from 'react-i18next';
 import { useEmployeeStore } from '../../../../store/useEmployeeStore';
 import { ModalWrapper } from '../../../Modals/ModalWrapper';
 import { CreatedActions } from './CreatedActions';
 import { EmployeeSummaryCard } from './EmployeeSummary';
 import { InfoTile } from './InfoTile';
 import { SuccessHero } from './SuccessHero';
-import { TemporaryPasswordCard } from './TemporaryPasswordCard';
-import { useTranslation } from 'react-i18next';
 
-type EmployeeCreatedModalProps = {
-	/** Az önce eklenen çalışanın sicil numarası; bilgiler store'dan okunur. */
-	temporaryPassword: string;
-};
-
-export const EmployeeCreatedModal: FC<EmployeeCreatedModalProps> = ({
-	temporaryPassword,
-}) => {
+export const EmployeeCreatedModal: FC = ({}) => {
 	const colors = theme();
 
 	const styles = useMemo(() => createScreenStyles(colors), [colors]);
@@ -39,7 +31,6 @@ export const EmployeeCreatedModal: FC<EmployeeCreatedModalProps> = ({
 			<View style={[styles.card, { backgroundColor: colors.surface }]}>
 				<SuccessHero />
 				{employee ? <EmployeeSummaryCard employee={employee} /> : null}
-				<TemporaryPasswordCard password={temporaryPassword} />
 				<View style={styles.tiles}>
 					<InfoTile
 						icon='badge'

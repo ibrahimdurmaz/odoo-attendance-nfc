@@ -12,9 +12,9 @@ import { fonts, theme, ThemeColors } from '@/assets/theme';
 import { Employee } from '@/store/types';
 import { ATTENDANCE_LABELS } from '@/store/useEmployeeStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
+import { useTranslation } from 'react-i18next';
 import { EmployeeAvatar } from './EmployeeAvatar';
 import { StatusPill } from './StatusPill';
-import { useTranslation } from 'react-i18next';
 
 type EmployeeCardProps = {
 	employee: Employee;
