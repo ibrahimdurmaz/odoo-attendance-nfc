@@ -5,12 +5,14 @@ import { formatShortDate, toDateKey } from '@/helper/dateHelpers';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 import { NotificationTab } from './AdminNotificationsScreen';
 type TabInfoProps = { tab: NotificationTab; pendingCount: number; now: number };
 
 export const TabInfo: FC<TabInfoProps> = ({ tab, pendingCount, now }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	const styles = useMemo(() => createInfoStyles(colors), [colors]);
 
 	if (tab === 'reviewedToday') {
@@ -18,8 +20,10 @@ export const TabInfo: FC<TabInfoProps> = ({ tab, pendingCount, now }) => {
 			<View style={styles.card}>
 				<MaterialIcons color={colors.secondary} name='info' size={18} />
 				<Text style={styles.cardText}>
-					Kararları yalnızca <Text style={styles.strong}>bugün</Text>{' '}
-					değiştirebilirsiniz.
+					<Trans
+						components={{ strong: <Text style={styles.strong} /> }}
+						i18nKey='Notification.TabInfo.ChangeOnlyToday'
+					/>
 				</Text>
 			</View>
 		);
@@ -35,7 +39,7 @@ export const TabInfo: FC<TabInfoProps> = ({ tab, pendingCount, now }) => {
 				<View style={styles.part}>
 					<View style={styles.dot} />
 					<Text style={styles.text}>
-						{pendingCount} talep inceleme bekliyor
+						{t('Notification.TabInfo.PendingCount', { count: pendingCount })}
 					</Text>
 				</View>
 			)}

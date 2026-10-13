@@ -1,10 +1,11 @@
 import type { ThemeColors } from '@/assets/theme';
 import { fonts, theme } from '@/assets/theme';
-import { MONTH_KEYS } from '@/helper/dateHelpers';
+import { formatDayMonth } from '@/helper/dateHelpers';
 import { useModalStore } from '@/store/modalStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { ComponentProps, FC } from 'react';
 import { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
 	ActivityIndicator,
 	Pressable,
@@ -27,10 +28,6 @@ export type Announcement = {
 	/** Kategori ikonu; verilmezse 'campaign'. */
 	icon?: IconName;
 };
-
-/** 1 Ekim */
-const formatShortDate = (date: Date): string =>
-	`${date.getDate()} ${MONTH_KEYS[date.getMonth()]}`;
 
 // ---------------------------------------------------------------------------
 // AnnouncementBadge: üstteki uyarı ikonu
@@ -97,12 +94,13 @@ const AnnouncementHeader: FC<AnnouncementHeaderProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createHeaderStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.container}>
 			<View style={styles.titleRow}>
 				<Text accessibilityRole='header' style={styles.title}>
-					Günün Duyurusu
+					{t('Modals.DailyAnnouncementModal.Title')}
 				</Text>
 				{total > 1 && (
 					<View style={styles.counter}>
@@ -119,7 +117,7 @@ const AnnouncementHeader: FC<AnnouncementHeaderProps> = ({
 					size={14}
 				/>
 				<Text style={styles.categoryText}>
-					{announcement.category} • {formatShortDate(announcement.date)}
+					{announcement.category} • {formatDayMonth(announcement.date)}
 				</Text>
 			</View>
 		</View>
@@ -227,10 +225,14 @@ type PageDotsProps = { index: number; total: number };
 const PageDots: FC<PageDotsProps> = ({ index, total }) => {
 	const colors = theme();
 	const styles = useMemo(() => createDotStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View
-			accessibilityLabel={`${total} duyurudan ${index + 1}.`}
+			accessibilityLabel={t('Modals.DailyAnnouncementModal.PageA11y', {
+				current: index + 1,
+				total,
+			})}
 			style={styles.container}
 		>
 			{Array.from({ length: total }, (_, dot) => (
@@ -269,13 +271,16 @@ const AnnouncementActions: FC<AnnouncementActionsProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createActionStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	const renderLabel = () => {
 		if (isSaving) {
 			return (
 				<>
 					<ActivityIndicator color={colors.onPrimary} size='small' />
-					<Text style={styles.label}>Kaydediliyor...</Text>
+					<Text style={styles.label}>
+						{t('Modals.DailyAnnouncementModal.Saving')}
+					</Text>
 				</>
 			);
 		}
@@ -283,7 +288,9 @@ const AnnouncementActions: FC<AnnouncementActionsProps> = ({
 		if (!isLast) {
 			return (
 				<>
-					<Text style={styles.label}>Sonraki</Text>
+					<Text style={styles.label}>
+						{t('Modals.DailyAnnouncementModal.Next')}
+					</Text>
 					<MaterialIcons
 						color={colors.onPrimary}
 						name='arrow-forward'
@@ -296,7 +303,9 @@ const AnnouncementActions: FC<AnnouncementActionsProps> = ({
 		return (
 			<>
 				<MaterialIcons color={colors.onPrimary} name='check-circle' size={20} />
-				<Text style={styles.label}>Okudum</Text>
+				<Text style={styles.label}>
+					{t('Modals.DailyAnnouncementModal.Read')}
+				</Text>
 			</>
 		);
 	};
@@ -314,7 +323,9 @@ const AnnouncementActions: FC<AnnouncementActionsProps> = ({
 			</Pressable>
 			<View style={styles.note}>
 				<MaterialIcons color={colors.outline} name='lock' size={14} />
-				<Text style={styles.noteText}>Devam etmek için duyuruyu onaylayın</Text>
+				<Text style={styles.noteText}>
+					{t('Modals.DailyAnnouncementModal.Note')}
+				</Text>
 			</View>
 		</View>
 	);

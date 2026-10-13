@@ -4,6 +4,7 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 
 import type { FC } from 'react';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, Pressable, StyleSheet, Text } from 'react-native';
 import { INPUT_HEIGHT } from './layout';
 type DatabaseFieldProps = {
@@ -24,15 +25,18 @@ export const DatabaseField: FC<DatabaseFieldProps> = ({
 	onPress,
 }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	const styles = useMemo(() => createDatabaseFieldStyles(colors), [colors]);
 
 	const label = isLoading
-		? 'Veritabanları yükleniyor...'
-		: (selected ?? 'Veritabanı seçin');
+		? t('ServerSetup.DatabaseField.Loading')
+		: (selected ?? t('ServerSetup.DatabaseField.Placeholder'));
 
 	return (
 		<Pressable
-			accessibilityLabel={`Veritabanı: ${selected ?? 'seçilmedi'}`}
+			accessibilityLabel={t('ServerSetup.DatabaseField.A11y', {
+				database: selected ?? t('ServerSetup.DatabaseField.NotSelected'),
+			})}
 			accessibilityRole='button'
 			accessibilityState={{
 				disabled: isDisabled,

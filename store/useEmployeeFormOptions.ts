@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import type { OdooOption } from '@/helper/odooApi';
 import { fetchEmployeeFormOptions } from '@/helper/odooApi';
+import i18n from '@/i18n';
 
 /** SelectField'in beklediği biçim; anahtar, Odoo kayıt numarasının metin hâli ("4"). */
 export type FormOption = { key: string; label: string };
@@ -16,26 +17,31 @@ export type EmployeeFormOptions = {
 };
 
 // Boş anahtar "seçilmedi" demek: Odoo departmanı boş bırakır, takvimde şirketin varsayılanını kullanır.
-const NO_DEPARTMENT: FormOption = { key: '', label: 'Departman yok' };
-const DEFAULT_WORK_SCHEDULE: FormOption = {
+// Etiketler çağrıldıkları andaki dile göre üretilir; bu yüzden sabit değil fonksiyon.
+const getNoDepartment = (): FormOption => ({
 	key: '',
-	label: 'Şirketin varsayılan takvimi',
-};
+	label: i18n.t('AddEmployee.AddEmployeeScreen.NoDepartment'),
+});
+const getDefaultWorkSchedule = (): FormOption => ({
+	key: '',
+	label: i18n.t('AddEmployee.AddEmployeeScreen.DefaultWorkSchedule'),
+});
 
 const toFormOptions = (options: OdooOption[]): FormOption[] =>
 	options.map((option) => ({ key: String(option.id), label: option.name }));
 
-const INITIAL_OPTIONS: EmployeeFormOptions = {
-	departments: [NO_DEPARTMENT],
+const createInitialOptions = (): EmployeeFormOptions => ({
+	departments: [getNoDepartment()],
 	companies: [],
-	workSchedules: [DEFAULT_WORK_SCHEDULE],
+	workSchedules: [getDefaultWorkSchedule()],
 	isLoading: true,
 	error: null,
-};
+});
 
 /** Çalışan formundaki departman, şirket ve çalışma takvimi seçeneklerini Odoo'dan yükler. */
 export const useEmployeeFormOptions = (): EmployeeFormOptions => {
-	const [options, setOptions] = useState<EmployeeFormOptions>(INITIAL_OPTIONS);
+	const [options, setOptions] =
+		useState<EmployeeFormOptions>(createInitialOptions);
 
 	useEffect(() => {
 		let isActive = true;
@@ -50,10 +56,13 @@ export const useEmployeeFormOptions = (): EmployeeFormOptions => {
 				return;
 			}
 			setOptions({
-				departments: [NO_DEPARTMENT, ...toFormOptions(result.data.departments)],
+				departments: [
+					getNoDepartment(),
+					...toFormOptions(result.data.departments),
+				],
 				companies: toFormOptions(result.data.companies),
 				workSchedules: [
-					DEFAULT_WORK_SCHEDULE,
+					getDefaultWorkSchedule(),
 					...toFormOptions(result.data.workSchedules),
 				],
 				isLoading: false,

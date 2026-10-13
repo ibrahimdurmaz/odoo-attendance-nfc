@@ -1,11 +1,17 @@
 import type { ThemeColors } from '@/assets/theme';
 import { fonts, theme } from '@/assets/theme';
-import { MONTH_KEYS, pad } from '@/helper/dateHelpers';
+import {
+	formatTime as formatTimestamp,
+	getDayName,
+	getMonthName,
+} from '@/helper/dateHelpers';
+import i18n from '@/i18n';
 import { useModalStore } from '@/store/modalStore';
 
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { ComponentProps, FC } from 'react';
 import { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ColorValue, Pressable, StyleSheet, Text, View } from 'react-native';
 import { ModalWrapper } from './ModalWrapper';
 
@@ -28,15 +34,6 @@ export type ProgramEvent = {
 type EventStatus = 'now' | 'next' | null;
 
 const EVENTS_PER_PAGE = 4;
-const WEEKDAYS = [
-	'Pazar',
-	'Pazartesi',
-	'Salı',
-	'Çarşamba',
-	'Perşembe',
-	'Cuma',
-	'Cumartesi',
-];
 
 const KIND_ICONS: Record<ProgramEventKind, IconName> = {
 	meeting: 'calendar-today',
@@ -60,10 +57,13 @@ const getKindAccent = (
 
 /** Perşembe, 1 Ekim */
 const formatLongDate = (date: Date): string =>
-	`${WEEKDAYS[date.getDay()]}, ${date.getDate()} ${MONTH_KEYS[date.getMonth()]}`;
+	i18n.t('ExtraConstants.DateFormats.Compact', {
+		weekday: getDayName(date.getDay()),
+		day: date.getDate(),
+		month: getMonthName(date.getMonth()),
+	});
 
-const formatTime = (date: Date): string =>
-	`${pad(date.getHours())}:${pad(date.getMinutes())}`;
+const formatTime = (date: Date): string => formatTimestamp(date.getTime());
 
 /** Şu an süren etkinlik "Şimdi", başlamamış ilk etkinlik "Sıradaki" olur. */
 const getStatuses = (
@@ -99,6 +99,7 @@ const ProgramHeader: FC<ProgramHeaderProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createHeaderStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.container}>
@@ -106,16 +107,17 @@ const ProgramHeader: FC<ProgramHeaderProps> = ({
 				<View style={styles.titleRow}>
 					<View style={styles.dot} />
 					<Text accessibilityRole='header' style={styles.title}>
-						Bugünkü Programınız
+						{t('Modals.TodayProgramModal.Title')}
 					</Text>
 				</View>
 				<Text style={styles.subtitle}>
 					{formatLongDate(date)}
-					{eventCount > 0 && ` • ${eventCount} etkinlik`}
+					{eventCount > 0 &&
+						` • ${t('Modals.TodayProgramModal.EventCount', { count: eventCount })}`}
 				</Text>
 			</View>
 			<Pressable
-				accessibilityLabel='Kapat'
+				accessibilityLabel={t('UI.Buttons.Close')}
 				accessibilityRole='button'
 				hitSlop={8}
 				onPress={onClose}
@@ -174,6 +176,7 @@ type StatusChipProps = { status: Exclude<EventStatus, null> };
 const StatusChip: FC<StatusChipProps> = ({ status }) => {
 	const colors = theme();
 	const styles = useMemo(() => createChipStyles(colors), [colors]);
+	const { t } = useTranslation();
 	const isNow = status === 'now';
 
 	return (
@@ -188,7 +191,9 @@ const StatusChip: FC<StatusChipProps> = ({ status }) => {
 				/>
 			)}
 			<Text style={[styles.label, isNow ? styles.nowLabel : styles.nextLabel]}>
-				{isNow ? 'Şimdi' : 'Sıradaki'}
+				{isNow
+					? t('Modals.TodayProgramModal.Now')
+					: t('Modals.TodayProgramModal.Next')}
 			</Text>
 		</View>
 	);
@@ -226,6 +231,7 @@ type ProgramEventCardProps = { event: ProgramEvent; status: EventStatus };
 const ProgramEventCard: FC<ProgramEventCardProps> = ({ event, status }) => {
 	const colors = theme();
 	const styles = useMemo(() => createCardStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={[styles.card, status === 'now' && styles.activeCard]}>
@@ -237,7 +243,9 @@ const ProgramEventCard: FC<ProgramEventCardProps> = ({ event, status }) => {
 			/>
 			<View style={styles.timeColumn}>
 				{event.isAllDay ? (
-					<Text style={styles.startTime}>Tüm gün</Text>
+					<Text style={styles.startTime}>
+						{t('Modals.TodayProgramModal.AllDay')}
+					</Text>
 				) : (
 					<>
 						<Text style={styles.startTime}>{formatTime(event.startAt)}</Text>
@@ -332,6 +340,7 @@ const ProgramPagination: FC<ProgramPaginationProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createPaginationStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	const isFirst = page === 0;
 	const isLast = page === pageCount - 1;
@@ -340,7 +349,7 @@ const ProgramPagination: FC<ProgramPaginationProps> = ({
 		<View style={styles.container}>
 			<View style={styles.row}>
 				<Pressable
-					accessibilityLabel='Önceki sayfa'
+					accessibilityLabel={t('Notification.Pagination.PreviousA11y')}
 					accessibilityRole='button'
 					accessibilityState={{ disabled: isFirst }}
 					disabled={isFirst}
@@ -367,7 +376,7 @@ const ProgramPagination: FC<ProgramPaginationProps> = ({
 					</Text>
 				</View>
 				<Pressable
-					accessibilityLabel='Sonraki sayfa'
+					accessibilityLabel={t('Notification.Pagination.NextA11y')}
 					accessibilityRole='button'
 					accessibilityState={{ disabled: isLast }}
 					disabled={isLast}
@@ -383,7 +392,9 @@ const ProgramPagination: FC<ProgramPaginationProps> = ({
 			</View>
 			{remainingCount > 0 && (
 				<Text style={styles.note}>
-					Sonraki sayfada {remainingCount} etkinlik daha var
+					{t('Modals.TodayProgramModal.RemainingEvents', {
+						count: remainingCount,
+					})}
 				</Text>
 			)}
 		</View>
@@ -441,6 +452,7 @@ type ProgramEmptyStateProps = { shiftStatus?: string };
 const ProgramEmptyState: FC<ProgramEmptyStateProps> = ({ shiftStatus }) => {
 	const colors = theme();
 	const styles = useMemo(() => createEmptyStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	return (
 		<View style={styles.container}>
@@ -457,10 +469,11 @@ const ProgramEmptyState: FC<ProgramEmptyStateProps> = ({ shiftStatus }) => {
 					</View>
 				</View>
 			</View>
-			<Text style={styles.title}>Bugün için planlı etkinlik yok</Text>
+			<Text style={styles.title}>
+				{t('Modals.TodayProgramModal.EmptyTitle')}
+			</Text>
 			<Text style={styles.text}>
-				Takviminizde kayıtlı herhangi bir toplantı, eğitim veya görev
-				bulunmuyor. İyi çalışmalar dileriz!
+				{t('Modals.TodayProgramModal.EmptyText')}
 			</Text>
 			{shiftStatus && (
 				<View style={styles.chip}>
@@ -469,7 +482,9 @@ const ProgramEmptyState: FC<ProgramEmptyStateProps> = ({ shiftStatus }) => {
 						name='check-circle'
 						size={16}
 					/>
-					<Text style={styles.chipText}>Vardiya Durumu: {shiftStatus}</Text>
+					<Text style={styles.chipText}>
+						{t('Modals.TodayProgramModal.ShiftStatus', { status: shiftStatus })}
+					</Text>
 				</View>
 			)}
 		</View>
@@ -571,6 +586,7 @@ export const TodayProgramModal: FC<TodayProgramModalProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createModalStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	const { modals, closeModal } = useModalStore();
 	const { visible } = modals.todayProgram;
@@ -648,7 +664,7 @@ export const TodayProgramModal: FC<TodayProgramModalProps> = ({
 					onPress={close}
 					style={({ pressed }) => [styles.button, pressed && styles.pressed]}
 				>
-					<Text style={styles.buttonLabel}>Tamam</Text>
+					<Text style={styles.buttonLabel}>{t('UI.Buttons.Ok')}</Text>
 				</Pressable>
 			</View>
 		</ModalWrapper>

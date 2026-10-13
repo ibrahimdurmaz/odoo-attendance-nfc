@@ -59,7 +59,7 @@ const INVALID_EMPLOYEE: OdooFailure = {
 	ok: false,
 	kind: 'notFound',
 	status: null,
-	message: 'Geçersiz çalışan numarası.',
+	message: 'Invalid employee ID.',
 };
 
 /** 8.5 → "08:30" */

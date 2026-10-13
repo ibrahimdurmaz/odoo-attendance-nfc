@@ -4,6 +4,7 @@ import { fonts, theme } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 type DecisionActionsProps = {
 	isRejecting: boolean;
@@ -19,6 +20,7 @@ export const DecisionActions: FC<DecisionActionsProps> = ({
 	onCancel,
 }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	const styles = useMemo(() => createActionStyles(colors), [colors]);
 
 	return (
@@ -41,7 +43,9 @@ export const DecisionActions: FC<DecisionActionsProps> = ({
 					size={20}
 				/>
 				<Text style={[styles.label, styles.confirmLabel]}>
-					{isRejecting ? 'Reddet' : 'Kararı Değiştir'}
+					{isRejecting
+						? t('Notification.DecisionActions.Reject')
+						: t('Notification.DecisionActions.ChangeDecision')}
 				</Text>
 			</Pressable>
 			<Pressable
@@ -53,7 +57,9 @@ export const DecisionActions: FC<DecisionActionsProps> = ({
 					pressed && styles.pressed,
 				]}
 			>
-				<Text style={[styles.label, styles.cancelLabel]}>Vazgeç</Text>
+				<Text style={[styles.label, styles.cancelLabel]}>
+					{t('Notification.DecisionActions.Cancel')}
+				</Text>
 			</Pressable>
 		</View>
 	);

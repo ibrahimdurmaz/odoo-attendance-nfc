@@ -4,6 +4,7 @@ import { fonts, theme } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 type ResultToastProps = { isApproved: boolean; onDismiss: () => void };
 
@@ -12,6 +13,7 @@ export const ResultToast: FC<ResultToastProps> = ({
 	onDismiss,
 }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	const styles = useMemo(() => createToastStyles(colors), [colors]);
 	const foreground = isApproved ? colors.onTertiary : colors.onErrorContainer;
 
@@ -26,10 +28,12 @@ export const ResultToast: FC<ResultToastProps> = ({
 				size={22}
 			/>
 			<Text numberOfLines={1} style={[styles.text, { color: foreground }]}>
-				{isApproved ? 'Talep onaylandı.' : 'Talep reddedildi.'}
+				{isApproved
+					? t('Notification.ResultToast.Approved')
+					: t('Notification.ResultToast.Rejected')}
 			</Text>
 			<Pressable
-				accessibilityLabel='Kapat'
+				accessibilityLabel={t('UI.Buttons.Close')}
 				accessibilityRole='button'
 				hitSlop={10}
 				onPress={onDismiss}

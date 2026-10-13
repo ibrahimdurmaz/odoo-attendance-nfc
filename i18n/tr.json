@@ -6,7 +6,9 @@
 			"ActiveEmployees": "{{count}} aktif çalışan",
 			"PendingBadge": "{{count}} bekleyen",
 			"CorrectionRequests": "Düzeltme Talepleri",
-			"CorrectionRequestsSubtitle": "Mesai & log incelemeleri"
+			"CorrectionRequestsSubtitle": "Mesai & log incelemeleri",
+			"ManualApproval": "Manuel Katılım Onayı",
+			"ManualApprovalSubtitle": "Mesai değerlendirmeleri."
 		},
 		"SectionIntro": {
 			"Overline": "ODOO YÖNETİM KONSOLU",
@@ -92,7 +94,8 @@
 		"FarewellCard": {
 			"Title": "Yarın görüşmek üzere, {{name}}.",
 			"Text": "Bugünkü temponuz için teşekkürler. Dinlenmeyi unutmayın!"
-		}
+		},
+		"Checkpoint": "Ana Giriş Paneli"
 	},
 	"Profile": {
 		"Header": {
@@ -196,7 +199,10 @@
 			"AnnualLeave": "Yıllık İzin Hakkı (Gün)",
 			"WorkDays": "İş Günü",
 			"AccessAndRole": "Erişim & Rol",
-			"PasswordInfo": "Hesap oluşturulduğunda sistem tarafından tek kullanımlık geçici bir şifre üretilecek ve çalışanın e-posta adresine otomatik SMS/ileti olarak gönderilecektir."
+			"PasswordInfo": "Hesap oluşturulduğunda sistem tarafından tek kullanımlık geçici bir şifre üretilecek ve çalışanın e-posta adresine otomatik SMS/ileti olarak gönderilecektir.",
+			"CreateFailedTitle": "Çalışan oluşturulamadı",
+			"NoDepartment": "Departman yok",
+			"DefaultWorkSchedule": "Şirketin varsayılan takvimi"
 		},
 		"FormStrip": {
 			"Overline": "İK MODÜLÜ • YENİ PROFİL",
@@ -580,7 +586,12 @@
 		},
 		"NotificationsEmptyState": {
 			"Title": "Yeni bildiriminiz yok",
-			"Text": "Düzeltme talepleriniz onaylandığında ya da reddedildiğinde sonucu burada görürsünüz."
+			"Text": "Düzeltme talepleriniz onaylandığında ya da reddedildiğinde sonucu burada görürsünüz.",
+			"PendingTitle": "Bekleyen talep yok",
+			"PendingText": "Çalışanlar yeni düzeltme talebi gönderdikçe burada listelenir.",
+			"ReviewedTitle": "Bugün değerlendirilen talep yok",
+			"ReviewedText": "Bugün onayladığınız ya da reddettiğiniz talepler burada görünür.",
+			"ShowReviewed": "Bugün Değerlendirilenleri Gör ({{count}})"
 		},
 		"NotificationCard": {
 			"A11y": "{{date}}, {{recordType}} kaydı düzeltme talebi {{result}}",
@@ -599,6 +610,58 @@
 			"Next": "Sonraki",
 			"PreviousA11y": "Önceki sayfa",
 			"NextA11y": "Sonraki sayfa"
+		},
+		"NotificationTabs": {
+			"Pending": "Bekleyen",
+			"ReviewedToday": "Bugün Değerlendirilen"
+		},
+		"TabInfo": {
+			"ChangeOnlyToday": "Kararları yalnızca <strong>bugün</strong> değiştirebilirsiniz.",
+			"PendingCount": "{{count}} talep inceleme bekliyor"
+		},
+		"RequestCard": {
+			"RejectionReason": "Neden: {{reason}}",
+			"Reject": "Reddet",
+			"Approve": "Onayla",
+			"Reviewed": "Değerlendirildi • {{time}}",
+			"ChangeDecision": "Kararı Değiştir"
+		},
+		"RecordChange": {
+			"Title": "{{recordType}} kaydı • {{date}}",
+			"A11y": "Mevcut: {{current}}, talep edilen: {{requested}}",
+			"NoRecord": "Kayıt yok"
+		},
+		"DecisionSummary": {
+			"RejectTitle": "Talep reddedilsin mi?",
+			"ChangeTitle": "Karar değiştirilsin mi?",
+			"RejectText": "<strong>{{name}}</strong> adlı çalışanın talebi <rejected>reddedilecek</rejected>.",
+			"ChangeText": "<strong>{{name}}</strong> adlı çalışanın talebi <from>{{from}}</from> durumundan <to>{{to}}</to> durumuna alınacak.",
+			"ShortStatus": {
+				"Pending": "Bekliyor",
+				"Approved": "Onay",
+				"Rejected": "Ret"
+			}
+		},
+		"DecisionActions": {
+			"Reject": "Reddet",
+			"ChangeDecision": "Kararı Değiştir",
+			"Cancel": "Vazgeç"
+		},
+		"ReasonField": {
+			"Label": "Gerekçe",
+			"Required": "Zorunlu",
+			"A11y": "Ret gerekçesi",
+			"Placeholder": "Ret gerekçesini yazın...",
+			"TemplatesLabel": "Hızlı Şablonlar",
+			"Templates": {
+				"Mismatch": "Kayıtla uyuşmuyor",
+				"WrongTime": "Hatalı saat girişi",
+				"MoreInfo": "Daha fazla bilgi gerekli"
+			}
+		},
+		"ResultToast": {
+			"Approved": "Talep onaylandı.",
+			"Rejected": "Talep reddedildi."
 		}
 	},
 	"EmployeeSchedule": {
@@ -619,7 +682,8 @@
 				"InvalidAddressMessage": "Adresi \"odoo.sirket.com\" biçiminde, boşluk ve yol olmadan girin.",
 				"UnreachableTitle": "Sunucuya bağlanılamadı",
 				"UnreachableMessage": "Lütfen adresinizi ve internet bağlantınızı kontrol edin."
-			}
+			},
+			"Server": "Sunucu"
 		},
 		"ServerInputCard": {
 			"ProtocolA11y": "Protokol seçimi: {{protocol}}",
@@ -639,6 +703,15 @@
 		},
 		"HelperNote": {
 			"Text": "Sunucu adresini yöneticinizden öğrenebilirsiniz"
+		},
+		"DatabaseField": {
+			"Loading": "Veritabanları yükleniyor...",
+			"Placeholder": "Veritabanı seçin",
+			"A11y": "Veritabanı: {{database}}",
+			"NotSelected": "seçilmedi"
+		},
+		"DatabaseList": {
+			"Empty": "Bu sunucuda veritabanı bulunamadı."
 		}
 	},
 	"SetPassword": {
@@ -727,6 +800,28 @@
 			"Title": "Telefonu panele yaklaştırın",
 			"Subtitle": "Doğrulama için parmak izi gerekebilir",
 			"UseCode": "Çalışmıyor mu? Kodla giriş yap"
+		},
+		"DailyAnnouncementModal": {
+			"Title": "Günün Duyurusu",
+			"DefaultCategory": "Duyuru",
+			"PageA11y": "{{total}} duyurudan {{current}}.",
+			"Saving": "Kaydediliyor...",
+			"Next": "Sonraki",
+			"Read": "Okudum",
+			"Note": "Devam etmek için duyuruyu onaylayın"
+		},
+		"TodayProgramModal": {
+			"Title": "Bugünkü Programınız",
+			"EventCount": "{{count}} etkinlik",
+			"Now": "Şimdi",
+			"Next": "Sıradaki",
+			"AllDay": "Tüm gün",
+			"RemainingEvents": "Sonraki sayfada {{count}} etkinlik daha var",
+			"EmptyTitle": "Bugün için planlı etkinlik yok",
+			"EmptyText": "Takviminizde kayıtlı herhangi bir toplantı, eğitim veya görev bulunmuyor. İyi çalışmalar dileriz!",
+			"ShiftStatus": "Vardiya Durumu: {{status}}",
+			"Online": "Online",
+			"Organizer": "Düzenleyen: {{name}}"
 		}
 	},
 	"ExtraConstants": {

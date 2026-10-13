@@ -59,8 +59,8 @@ export const AdminScreen = () => {
 					<NavCard
 						icon='calendar-month'
 						onPress={onOpenAdminNotification}
-						subtitle={'Mesai değerlendirmeleri.'}
-						title={'Manuel Katılım Onayı'}
+						subtitle={t('Admin.AdminScreen.ManualApprovalSubtitle')}
+						title={t('Admin.AdminScreen.ManualApproval')}
 					/>
 				</View>
 

@@ -4,6 +4,7 @@ import { fonts, theme } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ColorValue, StyleSheet, Text, View } from 'react-native';
 import { EmployeeAvatar } from '../Admin/EmployeeAvatar';
 import { IconName } from '../Home/types';
@@ -16,6 +17,7 @@ type RequesterRowProps = { request: ApprovalRequest };
 
 export const RequesterRow: FC<RequesterRowProps> = ({ request }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	const styles = useMemo(() => createRequesterStyles(colors), [colors]);
 
 	const statusTones: Record<
@@ -64,7 +66,7 @@ export const RequesterRow: FC<RequesterRowProps> = ({ request }) => {
 					size={14}
 				/>
 				<Text style={[styles.statusText, { color: statusStyle.color }]}>
-					{STATUS_LABELS[request.status]}
+					{t(STATUS_LABELS[request.status])}
 				</Text>
 			</View>
 		</View>

@@ -7,7 +7,9 @@
 			"ActiveEmployees_other": "{{count}} aktive Mitarbeitende",
 			"PendingBadge": "{{count}} offen",
 			"CorrectionRequests": "Korrekturanträge",
-			"CorrectionRequestsSubtitle": "Prüfung von Arbeitszeiten & Logs"
+			"CorrectionRequestsSubtitle": "Prüfung von Arbeitszeiten & Logs",
+			"ManualApproval": "Manuelle Anwesenheitsfreigabe",
+			"ManualApprovalSubtitle": "Arbeitszeitprüfungen."
 		},
 		"SectionIntro": {
 			"Overline": "ODOO VERWALTUNGSKONSOLE",
@@ -94,7 +96,8 @@
 		"FarewellCard": {
 			"Title": "Bis morgen, {{name}}.",
 			"Text": "Danke für Ihren Einsatz heute. Vergessen Sie nicht, sich zu erholen!"
-		}
+		},
+		"Checkpoint": "Haupteingangsterminal"
 	},
 	"Profile": {
 		"Header": {
@@ -201,7 +204,10 @@
 			"AnnualLeave": "Jahresurlaub (Tage)",
 			"WorkDays": "Arbeitstage",
 			"AccessAndRole": "Zugriff & Rolle",
-			"PasswordInfo": "Beim Anlegen des Kontos erzeugt das System ein einmaliges temporäres Passwort und sendet es automatisch per SMS/Nachricht an die E-Mail-Adresse der Person."
+			"PasswordInfo": "Beim Anlegen des Kontos erzeugt das System ein einmaliges temporäres Passwort und sendet es automatisch per SMS/Nachricht an die E-Mail-Adresse der Person.",
+			"CreateFailedTitle": "Mitarbeiter konnte nicht angelegt werden",
+			"NoDepartment": "Keine Abteilung",
+			"DefaultWorkSchedule": "Standardarbeitszeit des Unternehmens"
 		},
 		"FormStrip": {
 			"Overline": "HR-MODUL • NEUES PROFIL",
@@ -590,7 +596,12 @@
 		},
 		"NotificationsEmptyState": {
 			"Title": "Keine neuen Benachrichtigungen",
-			"Text": "Wenn Ihre Korrekturanträge genehmigt oder abgelehnt werden, sehen Sie das Ergebnis hier."
+			"Text": "Wenn Ihre Korrekturanträge genehmigt oder abgelehnt werden, sehen Sie das Ergebnis hier.",
+			"PendingTitle": "Keine offenen Anträge",
+			"PendingText": "Neue Korrekturanträge der Mitarbeitenden werden hier aufgelistet.",
+			"ReviewedTitle": "Heute wurden keine Anträge bearbeitet",
+			"ReviewedText": "Anträge, die Sie heute genehmigen oder ablehnen, erscheinen hier.",
+			"ShowReviewed": "Heute bearbeitete anzeigen ({{count}})"
 		},
 		"NotificationCard": {
 			"A11y": "{{date}}, Korrekturantrag für {{recordType}}-Eintrag {{result}}",
@@ -609,6 +620,59 @@
 			"Next": "Weiter",
 			"PreviousA11y": "Vorherige Seite",
 			"NextA11y": "Nächste Seite"
+		},
+		"NotificationTabs": {
+			"Pending": "Offen",
+			"ReviewedToday": "Heute bearbeitet"
+		},
+		"TabInfo": {
+			"ChangeOnlyToday": "Entscheidungen können Sie nur <strong>heute</strong> ändern.",
+			"PendingCount_one": "{{count}} Antrag wartet auf Prüfung",
+			"PendingCount_other": "{{count}} Anträge warten auf Prüfung"
+		},
+		"RequestCard": {
+			"RejectionReason": "Grund: {{reason}}",
+			"Reject": "Ablehnen",
+			"Approve": "Genehmigen",
+			"Reviewed": "Bearbeitet • {{time}}",
+			"ChangeDecision": "Entscheidung ändern"
+		},
+		"RecordChange": {
+			"Title": "{{recordType}}-Eintrag • {{date}}",
+			"A11y": "Aktuell: {{current}}, beantragt: {{requested}}",
+			"NoRecord": "Kein Eintrag"
+		},
+		"DecisionSummary": {
+			"RejectTitle": "Antrag ablehnen?",
+			"ChangeTitle": "Entscheidung ändern?",
+			"RejectText": "Der Antrag von <strong>{{name}}</strong> wird <rejected>abgelehnt</rejected>.",
+			"ChangeText": "Der Antrag von <strong>{{name}}</strong> wird von <from>{{from}}</from> auf <to>{{to}}</to> geändert.",
+			"ShortStatus": {
+				"Pending": "Offen",
+				"Approved": "Genehmigt",
+				"Rejected": "Abgelehnt"
+			}
+		},
+		"DecisionActions": {
+			"Reject": "Ablehnen",
+			"ChangeDecision": "Entscheidung ändern",
+			"Cancel": "Abbrechen"
+		},
+		"ReasonField": {
+			"Label": "Begründung",
+			"Required": "Pflichtfeld",
+			"A11y": "Ablehnungsgrund",
+			"Placeholder": "Ablehnungsgrund eingeben...",
+			"TemplatesLabel": "Schnellvorlagen",
+			"Templates": {
+				"Mismatch": "Stimmt nicht mit dem Eintrag überein",
+				"WrongTime": "Fehlerhafte Zeitangabe",
+				"MoreInfo": "Weitere Informationen erforderlich"
+			}
+		},
+		"ResultToast": {
+			"Approved": "Antrag genehmigt.",
+			"Rejected": "Antrag abgelehnt."
 		}
 	},
 	"EmployeeSchedule": {
@@ -629,7 +693,8 @@
 				"InvalidAddressMessage": "Geben Sie die Adresse im Format „odoo.firma.de“ ohne Leerzeichen und Pfad ein.",
 				"UnreachableTitle": "Verbindung zum Server fehlgeschlagen",
 				"UnreachableMessage": "Bitte prüfen Sie die Adresse und Ihre Internetverbindung."
-			}
+			},
+			"Server": "Server"
 		},
 		"ServerInputCard": {
 			"ProtocolA11y": "Protokoll: {{protocol}}",
@@ -649,6 +714,15 @@
 		},
 		"HelperNote": {
 			"Text": "Die Serveradresse erhalten Sie von Ihrer Administration"
+		},
+		"DatabaseField": {
+			"Loading": "Datenbanken werden geladen...",
+			"Placeholder": "Datenbank auswählen",
+			"A11y": "Datenbank: {{database}}",
+			"NotSelected": "nicht ausgewählt"
+		},
+		"DatabaseList": {
+			"Empty": "Auf diesem Server wurde keine Datenbank gefunden."
 		}
 	},
 	"SetPassword": {
@@ -737,6 +811,30 @@
 			"Title": "Telefon an das Terminal halten",
 			"Subtitle": "Zur Bestätigung kann ein Fingerabdruck nötig sein",
 			"UseCode": "Funktioniert nicht? Mit Code einstempeln"
+		},
+		"DailyAnnouncementModal": {
+			"Title": "Ankündigung des Tages",
+			"DefaultCategory": "Ankündigung",
+			"PageA11y": "Ankündigung {{current}} von {{total}}.",
+			"Saving": "Wird gespeichert...",
+			"Next": "Weiter",
+			"Read": "Gelesen",
+			"Note": "Bestätigen Sie die Ankündigung, um fortzufahren"
+		},
+		"TodayProgramModal": {
+			"Title": "Ihr Programm heute",
+			"EventCount_one": "{{count}} Termin",
+			"EventCount_other": "{{count}} Termine",
+			"Now": "Jetzt",
+			"Next": "Als Nächstes",
+			"AllDay": "Ganztägig",
+			"RemainingEvents_one": "{{count}} weiterer Termin auf der nächsten Seite",
+			"RemainingEvents_other": "{{count}} weitere Termine auf der nächsten Seite",
+			"EmptyTitle": "Für heute sind keine Termine geplant",
+			"EmptyText": "In Ihrem Kalender sind keine Besprechungen, Schulungen oder Aufgaben eingetragen. Wir wünschen Ihnen einen guten Arbeitstag!",
+			"ShiftStatus": "Schichtstatus: {{status}}",
+			"Online": "Online",
+			"Organizer": "Organisiert von: {{name}}"
 		}
 	},
 	"ExtraConstants": {

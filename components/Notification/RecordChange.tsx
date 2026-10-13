@@ -5,6 +5,7 @@ import { formatShortDate } from '@/helper/dateHelpers';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 import { IconName } from '../Home/types';
 import {
@@ -21,6 +22,7 @@ const RECORD_ICONS: Record<ApprovalRecordType, IconName> = {
 };
 export const RecordChange: FC<RecordChangeProps> = ({ request }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	const styles = useMemo(() => createRecordStyles(colors), [colors]);
 
 	const requestedColor =
@@ -35,17 +37,22 @@ export const RecordChange: FC<RecordChangeProps> = ({ request }) => {
 					size={16}
 				/>
 				<Text numberOfLines={1} style={styles.title}>
-					{RECORD_TYPE_LABELS[request.recordType]} kaydı •{' '}
-					{formatShortDate(request.dateKey)}
+					{t('Notification.RecordChange.Title', {
+						recordType: t(RECORD_TYPE_LABELS[request.recordType]),
+						date: formatShortDate(request.dateKey),
+					})}
 				</Text>
 			</View>
 			<View
-				accessibilityLabel={`Mevcut: ${request.currentTime ?? 'kayıt yok'}, talep edilen: ${request.requestedTime}`}
+				accessibilityLabel={t('Notification.RecordChange.A11y', {
+					current: request.currentTime ?? t('Notification.RecordChange.NoRecord'),
+					requested: request.requestedTime,
+				})}
 				accessible
 				style={styles.timeRow}
 			>
 				<Text style={request.currentTime ? styles.current : styles.missing}>
-					{request.currentTime ?? 'Kayıt yok'}
+					{request.currentTime ?? t('Notification.RecordChange.NoRecord')}
 				</Text>
 				<MaterialIcons
 					color={colors.secondary}

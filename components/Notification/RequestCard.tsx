@@ -5,6 +5,7 @@ import { formatTime } from '@/helper/dateHelpers';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { IconName } from '../Home/types';
 import { ApprovalRequest } from './approvalRequests';
@@ -149,6 +150,7 @@ export const RequestCard: FC<RequestCardProps> = ({
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createCardStyles(colors), [colors]);
+	const { t } = useTranslation();
 	const isPending = request.status === 'pending';
 
 	return (
@@ -161,7 +163,9 @@ export const RequestCard: FC<RequestCardProps> = ({
 			{request.rejectionReason ? (
 				<CardNote
 					icon='report-problem'
-					text={`Neden: ${request.rejectionReason}`}
+					text={t('Notification.RequestCard.RejectionReason', {
+						reason: request.rejectionReason,
+					})}
 					tone='error'
 				/>
 			) : null}
@@ -170,13 +174,13 @@ export const RequestCard: FC<RequestCardProps> = ({
 				<View style={styles.actions}>
 					<CardButton
 						icon='close'
-						label='Reddet'
+						label={t('Notification.RequestCard.Reject')}
 						onPress={() => onReject(request.id)}
 						variant='reject'
 					/>
 					<CardButton
 						icon='check-circle'
-						label='Onayla'
+						label={t('Notification.RequestCard.Approve')}
 						onPress={() => onApprove(request.id)}
 						variant='approve'
 					/>
@@ -186,13 +190,15 @@ export const RequestCard: FC<RequestCardProps> = ({
 					{request.resolvedAt !== null && (
 						<CardNote
 							icon='how-to-reg'
-							text={`Değerlendirildi • ${formatTime(request.resolvedAt)}`}
+							text={t('Notification.RequestCard.Reviewed', {
+								time: formatTime(request.resolvedAt),
+							})}
 						/>
 					)}
 					<View style={styles.actions}>
 						<CardButton
 							icon='edit'
-							label='Kararı Değiştir'
+							label={t('Notification.RequestCard.ChangeDecision')}
 							onPress={() => onChangeDecision(request.id)}
 							variant='neutral'
 						/>

@@ -7,7 +7,9 @@
 			"ActiveEmployees_other": "{{count}} active employees",
 			"PendingBadge": "{{count}} pending",
 			"CorrectionRequests": "Correction Requests",
-			"CorrectionRequestsSubtitle": "Shift & log reviews"
+			"CorrectionRequestsSubtitle": "Shift & log reviews",
+			"ManualApproval": "Manual Attendance Approval",
+			"ManualApprovalSubtitle": "Attendance reviews."
 		},
 		"SectionIntro": {
 			"Overline": "ODOO MANAGEMENT CONSOLE",
@@ -94,7 +96,8 @@
 		"FarewellCard": {
 			"Title": "See you tomorrow, {{name}}.",
 			"Text": "Thanks for your effort today. Don't forget to rest!"
-		}
+		},
+		"Checkpoint": "Main Entrance Panel"
 	},
 	"Profile": {
 		"Header": {
@@ -201,7 +204,10 @@
 			"AnnualLeave": "Annual Leave (Days)",
 			"WorkDays": "Work Days",
 			"AccessAndRole": "Access & Role",
-			"PasswordInfo": "When the account is created, the system will generate a one-time temporary password and send it automatically to the employee's email address via SMS/message."
+			"PasswordInfo": "When the account is created, the system will generate a one-time temporary password and send it automatically to the employee's email address via SMS/message.",
+			"CreateFailedTitle": "Couldn't create employee",
+			"NoDepartment": "No department",
+			"DefaultWorkSchedule": "Company default schedule"
 		},
 		"FormStrip": {
 			"Overline": "HR MODULE • NEW PROFILE",
@@ -590,7 +596,12 @@
 		},
 		"NotificationsEmptyState": {
 			"Title": "No new notifications",
-			"Text": "When your correction requests are approved or rejected, you'll see the result here."
+			"Text": "When your correction requests are approved or rejected, you'll see the result here.",
+			"PendingTitle": "No pending requests",
+			"PendingText": "New correction requests from employees will be listed here.",
+			"ReviewedTitle": "No requests reviewed today",
+			"ReviewedText": "Requests you approve or reject today will appear here.",
+			"ShowReviewed": "View Today's Reviewed ({{count}})"
 		},
 		"NotificationCard": {
 			"A11y": "{{date}}, {{recordType}} record correction request {{result}}",
@@ -609,6 +620,59 @@
 			"Next": "Next",
 			"PreviousA11y": "Previous page",
 			"NextA11y": "Next page"
+		},
+		"NotificationTabs": {
+			"Pending": "Pending",
+			"ReviewedToday": "Reviewed Today"
+		},
+		"TabInfo": {
+			"ChangeOnlyToday": "You can only change decisions <strong>today</strong>.",
+			"PendingCount_one": "{{count}} request awaiting review",
+			"PendingCount_other": "{{count}} requests awaiting review"
+		},
+		"RequestCard": {
+			"RejectionReason": "Reason: {{reason}}",
+			"Reject": "Reject",
+			"Approve": "Approve",
+			"Reviewed": "Reviewed • {{time}}",
+			"ChangeDecision": "Change Decision"
+		},
+		"RecordChange": {
+			"Title": "{{recordType}} record • {{date}}",
+			"A11y": "Current: {{current}}, requested: {{requested}}",
+			"NoRecord": "No record"
+		},
+		"DecisionSummary": {
+			"RejectTitle": "Reject this request?",
+			"ChangeTitle": "Change this decision?",
+			"RejectText": "<strong>{{name}}</strong>'s request will be <rejected>rejected</rejected>.",
+			"ChangeText": "<strong>{{name}}</strong>'s request will be changed from <from>{{from}}</from> to <to>{{to}}</to>.",
+			"ShortStatus": {
+				"Pending": "Pending",
+				"Approved": "Approved",
+				"Rejected": "Rejected"
+			}
+		},
+		"DecisionActions": {
+			"Reject": "Reject",
+			"ChangeDecision": "Change Decision",
+			"Cancel": "Cancel"
+		},
+		"ReasonField": {
+			"Label": "Reason",
+			"Required": "Required",
+			"A11y": "Rejection reason",
+			"Placeholder": "Enter the rejection reason...",
+			"TemplatesLabel": "Quick Templates",
+			"Templates": {
+				"Mismatch": "Doesn't match the record",
+				"WrongTime": "Incorrect time entry",
+				"MoreInfo": "More information needed"
+			}
+		},
+		"ResultToast": {
+			"Approved": "Request approved.",
+			"Rejected": "Request rejected."
 		}
 	},
 	"EmployeeSchedule": {
@@ -629,7 +693,8 @@
 				"InvalidAddressMessage": "Enter the address as \"odoo.company.com\", without spaces or a path.",
 				"UnreachableTitle": "Couldn't connect to the server",
 				"UnreachableMessage": "Please check the address and your internet connection."
-			}
+			},
+			"Server": "Server"
 		},
 		"ServerInputCard": {
 			"ProtocolA11y": "Protocol: {{protocol}}",
@@ -649,6 +714,15 @@
 		},
 		"HelperNote": {
 			"Text": "Ask your administrator for the server address"
+		},
+		"DatabaseField": {
+			"Loading": "Loading databases...",
+			"Placeholder": "Select a database",
+			"A11y": "Database: {{database}}",
+			"NotSelected": "not selected"
+		},
+		"DatabaseList": {
+			"Empty": "No databases found on this server."
 		}
 	},
 	"SetPassword": {
@@ -737,6 +811,30 @@
 			"Title": "Hold your phone near the panel",
 			"Subtitle": "Fingerprint verification may be required",
 			"UseCode": "Not working? Check in with a code"
+		},
+		"DailyAnnouncementModal": {
+			"Title": "Today's Announcement",
+			"DefaultCategory": "Announcement",
+			"PageA11y": "{{current}} of {{total}} announcements.",
+			"Saving": "Saving...",
+			"Next": "Next",
+			"Read": "I've Read It",
+			"Note": "Acknowledge the announcement to continue"
+		},
+		"TodayProgramModal": {
+			"Title": "Your Schedule Today",
+			"EventCount_one": "{{count}} event",
+			"EventCount_other": "{{count}} events",
+			"Now": "Now",
+			"Next": "Up Next",
+			"AllDay": "All day",
+			"RemainingEvents_one": "{{count}} more event on the next page",
+			"RemainingEvents_other": "{{count}} more events on the next page",
+			"EmptyTitle": "No events planned for today",
+			"EmptyText": "There are no meetings, trainings or tasks on your calendar. Have a great day at work!",
+			"ShiftStatus": "Shift Status: {{status}}",
+			"Online": "Online",
+			"Organizer": "Organizer: {{name}}"
 		}
 	},
 	"ExtraConstants": {

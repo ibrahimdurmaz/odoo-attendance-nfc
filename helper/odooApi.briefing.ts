@@ -10,7 +10,7 @@ const NO_SESSION: OdooFailure = {
 	ok: false,
 	kind: 'unauthorized',
 	status: null,
-	message: 'Oturum açık değil.',
+	message: 'Not signed in.',
 };
 
 /** Odoo tarih-saatleri UTC ve "2026-10-08 06:30:00" biçimindedir. */

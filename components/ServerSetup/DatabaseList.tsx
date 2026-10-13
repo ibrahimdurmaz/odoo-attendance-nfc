@@ -4,6 +4,7 @@ import { fonts, theme } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { OPTION_HEIGHT, VISIBLE_DATABASE_ROWS } from './layout';
 type DatabaseListProps = {
@@ -18,12 +19,15 @@ export const DatabaseList: FC<DatabaseListProps> = ({
 	onSelect,
 }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	const styles = useMemo(() => createDatabaseListStyles(colors), [colors]);
 
 	if (databases.length === 0) {
 		return (
 			<View style={styles.card}>
-				<Text style={styles.empty}>Bu sunucuda veritabanı bulunamadı.</Text>
+				<Text style={styles.empty}>
+					{t('ServerSetup.DatabaseList.Empty')}
+				</Text>
 			</View>
 		);
 	}

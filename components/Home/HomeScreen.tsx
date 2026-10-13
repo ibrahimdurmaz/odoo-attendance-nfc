@@ -30,10 +30,9 @@ import { NfcPromptModal } from '../Modals/NfcPromptModal';
 import { TodayProgramModal } from '../Modals/TodayProgramModal';
 import { ActionButton } from './ActionButton';
 import { ActivityRow } from './ActivityRow';
-import { getStatusBadges } from './config';
+import { getCheckpointName, getStatusBadges } from './config';
 import {
 	BREAK_ALLOWANCE_SECONDS,
-	CHECKPOINT,
 	INITIAL_SESSION,
 	SHIFT_HOURS,
 	TARGET_SECONDS,
@@ -234,7 +233,7 @@ export const HomeScreen: FC = () => {
 					breakSeconds,
 				targetSeconds: TARGET_SECONDS,
 				shiftHours: SHIFT_HOURS,
-				checkpoint: CHECKPOINT,
+				checkpoint: getCheckpointName(),
 				location: checkInLocation ?? '',
 			}),
 		);
@@ -277,7 +276,7 @@ export const HomeScreen: FC = () => {
 			id: `check-in-${at}`,
 			icon: 'login',
 			title: t('Home.Activities.CheckIn'),
-			subtitle: location ?? CHECKPOINT,
+			subtitle: location ?? getCheckpointName(),
 			time: formatTime(at),
 			background: colors.tertiaryFixed,
 			foreground: colors.tertiary,
@@ -303,7 +302,7 @@ export const HomeScreen: FC = () => {
 			id: `check-out-${at}`,
 			icon: 'logout',
 			title: t('Home.Activities.CheckOut'),
-			subtitle: location ?? CHECKPOINT,
+			subtitle: location ?? getCheckpointName(),
 			time: formatTime(at),
 			background: colors.primaryFixed,
 			foreground: colors.primary,

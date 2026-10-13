@@ -5,6 +5,7 @@ import { toDateKey } from '@/helper/dateHelpers';
 import { useModalStore } from '@/store/modalStore';
 import { useFocusEffect } from 'expo-router';
 import type { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useCallback, useMemo, useState } from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -46,6 +47,7 @@ export const AdminNotificationsScreen: FC = () => {
 	const colors = theme();
 	const styles = useMemo(() => createScreenStyles(colors), [colors]);
 	const { triggerModal } = useModalStore();
+	const { t } = useTranslation();
 
 	const [requests, setRequests] = useState<ApprovalRequest[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
@@ -144,7 +146,10 @@ export const AdminNotificationsScreen: FC = () => {
 
 	return (
 		<SafeAreaView edges={['top']} style={styles.screen}>
-			<AdminHeader title='Bildirimler' profileActive={false} />
+			<AdminHeader
+				profileActive={false}
+				title={t('Notification.NotificationsHeader.Title')}
+			/>
 			<ScrollView
 				contentContainerStyle={styles.content}
 				showsVerticalScrollIndicator={false}

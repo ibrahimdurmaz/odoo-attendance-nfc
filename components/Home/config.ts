@@ -10,6 +10,9 @@ type StatusBadge = {
 	foreground: ColorValue;
 };
 
+/** Giriş panelinin adı; çağrıldığı andaki dile göre döner. */
+export const getCheckpointName = (): string => i18n.t('Home.Checkpoint');
+
 export const getStatusBadges = (
 	colors: ThemeColors,
 ): Record<Status, StatusBadge> => ({

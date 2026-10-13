@@ -26,16 +26,18 @@ export type ApprovalRequest = {
 	resolvedAt: number | null;
 };
 
+// Değerler çeviri anahtarıdır.
 export const RECORD_TYPE_LABELS: Record<ApprovalRecordType, string> = {
-	entry: 'Giriş',
-	break: 'Mola',
-	exit: 'Çıkış',
+	entry: 'ExtraConstants.RecordTypes.Entry',
+	break: 'ExtraConstants.RecordTypes.Break',
+	exit: 'ExtraConstants.RecordTypes.Exit',
 };
 
+// Değerler çeviri anahtarıdır.
 export const STATUS_LABELS: Record<ApprovalStatus, string> = {
-	pending: 'Onay bekliyor',
-	approved: 'Onaylandı',
-	rejected: 'Reddedildi',
+	pending: 'ExtraConstants.RequestStatus.Pending',
+	approved: 'ExtraConstants.RequestStatus.Approved',
+	rejected: 'ExtraConstants.RequestStatus.Rejected',
 };
 
 // ---------------------------------------------------------------------------

@@ -7,7 +7,7 @@ import { formatTime } from '@/helper/dateHelpers';
 import { useModalStore } from '@/store/modalStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { useTranslation } from 'react-i18next';
-import { CHECKPOINT } from '../Home/constants';
+import { getCheckpointName } from '../Home/config';
 import { ModalWrapper } from './ModalWrapper';
 import { NfcPromptModalStyles } from './styles';
 
@@ -305,7 +305,7 @@ export const NfcPromptModal = ({
 
 	const showFailure = () => {
 		triggerModal('checkInFailed', {
-			terminalName: CHECKPOINT,
+			terminalName: getCheckpointName(),
 			time: formatTime(Date.now()),
 		});
 	};
@@ -321,7 +321,7 @@ export const NfcPromptModal = ({
 		triggerModal('checkInSuccessful', { time: formatTime(checkInAt) });
 	};
 
-	const panelName = CHECKPOINT;
+	const panelName = getCheckpointName();
 	return (
 		<ModalWrapper onClose={onClose} visible={visible}>
 			<Prompt

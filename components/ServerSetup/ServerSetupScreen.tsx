@@ -5,6 +5,7 @@ import { fetchDatabases } from '@/helper/odooApi';
 import { useRouter } from 'expo-router';
 import type { FC } from 'react';
 import { useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
 	Keyboard,
 	KeyboardAvoidingView,
@@ -57,6 +58,7 @@ export const ServerSetupScreen: FC = () => {
 	const colors = theme();
 	const styles = useMemo(() => createScreenStyles(colors), [colors]);
 	const router = useRouter();
+	const { t } = useTranslation();
 
 	const [protocol, setProtocol] = useState<Protocol>(DEFAULT_PROTOCOL);
 	const [address, setAddress] = useState('');
@@ -180,7 +182,9 @@ export const ServerSetupScreen: FC = () => {
 								onLayout={(event) => setFieldTop(event.nativeEvent.layout.y)}
 								style={styles.field}
 							>
-								<Text style={styles.label}>Sunucu</Text>
+								<Text style={styles.label}>
+									{t('ServerSetup.ServerSetupScreen.Server')}
+								</Text>
 								<View
 									onLayout={(event) => setCardTop(event.nativeEvent.layout.y)}
 								>

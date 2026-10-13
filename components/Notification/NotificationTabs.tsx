@@ -3,6 +3,7 @@ import { fonts, theme } from '@/assets/theme';
 
 import type { FC } from 'react';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { NotificationTab } from './AdminNotificationsScreen';
 type NotificationTabsProps = {
@@ -19,13 +20,18 @@ export const NotificationTabs: FC<NotificationTabsProps> = ({
 	onSelect,
 }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	const styles = useMemo(() => createTabStyles(colors), [colors]);
 
 	const tabs: { key: NotificationTab; label: string; count: number }[] = [
-		{ key: 'pending', label: 'Bekleyen', count: pendingCount },
+		{
+			key: 'pending',
+			label: t('Notification.NotificationTabs.Pending'),
+			count: pendingCount,
+		},
 		{
 			key: 'reviewedToday',
-			label: 'Bugün Değerlendirilen',
+			label: t('Notification.NotificationTabs.ReviewedToday'),
 			count: reviewedCount,
 		},
 	];

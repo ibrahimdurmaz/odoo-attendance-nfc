@@ -4,6 +4,7 @@ import { fonts, theme } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { NotificationTab } from './AdminNotificationsScreen';
 
@@ -19,6 +20,7 @@ export const NotificationsEmptyState: FC<NotificationsEmptyStateProps> = ({
 	onShowReviewed,
 }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	const styles = useMemo(() => createEmptyStyles(colors), [colors]);
 	const isPendingTab = tab === 'pending';
 
@@ -34,13 +36,13 @@ export const NotificationsEmptyState: FC<NotificationsEmptyStateProps> = ({
 				</View>
 				<Text style={styles.title}>
 					{isPendingTab
-						? 'Bekleyen talep yok'
-						: 'Bugün değerlendirilen talep yok'}
+						? t('Notification.NotificationsEmptyState.PendingTitle')
+						: t('Notification.NotificationsEmptyState.ReviewedTitle')}
 				</Text>
 				<Text style={styles.text}>
 					{isPendingTab
-						? 'Çalışanlar yeni düzeltme talebi gönderdikçe burada listelenir.'
-						: 'Bugün onayladığınız ya da reddettiğiniz talepler burada görünür.'}
+						? t('Notification.NotificationsEmptyState.PendingText')
+						: t('Notification.NotificationsEmptyState.ReviewedText')}
 				</Text>
 			</View>
 
@@ -52,7 +54,9 @@ export const NotificationsEmptyState: FC<NotificationsEmptyStateProps> = ({
 				>
 					<MaterialIcons color={colors.primary} name='history' size={20} />
 					<Text style={styles.linkText}>
-						Bugün Değerlendirilenleri Gör ({reviewedCount})
+						{t('Notification.NotificationsEmptyState.ShowReviewed', {
+							count: reviewedCount,
+						})}
 					</Text>
 					<MaterialIcons
 						color={colors.outline}

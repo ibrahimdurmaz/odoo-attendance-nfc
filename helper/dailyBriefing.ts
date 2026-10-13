@@ -6,6 +6,7 @@ import type {
 	ProgramEvent,
 	ProgramEventKind,
 } from '@/components/Modals/TodayProgramModal';
+import i18n from '@/i18n';
 import type { OdooResult } from './odooApi';
 import type { OdooAnnouncement, OdooCalendarEvent } from './odooApi.briefing';
 import {
@@ -46,7 +47,7 @@ const toAnnouncement = ({
 		.filter((line) => line.trim().length > 0);
 	return {
 		id: `message-${id}`,
-		category: author ?? 'Duyuru',
+		category: author ?? i18n.t('Modals.DailyAnnouncementModal.DefaultCategory'),
 		date: new Date(postedAt),
 		title: title.trim(),
 		body: rest.join('\n').trim(),
@@ -63,7 +64,8 @@ const isAnnouncementEvent = (event: OdooCalendarEvent): boolean =>
 
 const eventToAnnouncement = (event: OdooCalendarEvent): Announcement => ({
 	id: `event-${event.id}`,
-	category: event.organizer ?? 'Duyuru',
+	category:
+		event.organizer ?? i18n.t('Modals.DailyAnnouncementModal.DefaultCategory'),
 	date: new Date(event.startAt),
 	title: event.title,
 	body: event.description,
@@ -81,8 +83,11 @@ const toEventKind = (event: OdooCalendarEvent): ProgramEventKind => {
 /** "Toplantı Odası 2 • Düzenleyen: Ahmet Yılmaz" */
 const toEventDetail = (event: OdooCalendarEvent): string =>
 	[
-		event.location ?? (event.isOnline ? 'Online' : null),
-		event.organizer ? `Düzenleyen: ${event.organizer}` : null,
+		event.location ??
+			(event.isOnline ? i18n.t('Modals.TodayProgramModal.Online') : null),
+		event.organizer
+			? i18n.t('Modals.TodayProgramModal.Organizer', { name: event.organizer })
+			: null,
 	]
 		.filter((part): part is string => part !== null)
 		.join(' • ');

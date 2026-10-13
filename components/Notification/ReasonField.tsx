@@ -3,50 +3,58 @@ import { fonts, theme } from '@/assets/theme';
 
 import type { FC } from 'react';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 type ReasonFieldProps = { value: string; onChangeText: (text: string) => void };
 const MAX_REASON_LENGTH = 140;
+// Değerler çeviri anahtarıdır.
 const TEMPLATES = [
-	'Kayıtla uyuşmuyor',
-	'Hatalı saat girişi',
-	'Daha fazla bilgi gerekli',
+	'Notification.ReasonField.Templates.Mismatch',
+	'Notification.ReasonField.Templates.WrongTime',
+	'Notification.ReasonField.Templates.MoreInfo',
 ];
 export const ReasonField: FC<ReasonFieldProps> = ({ value, onChangeText }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	const styles = useMemo(() => createFieldStyles(colors), [colors]);
 
 	return (
 		<View style={styles.container}>
 			<View style={styles.labelRow}>
 				<Text style={styles.label}>
-					Gerekçe <Text style={styles.required}>*</Text>
+					{t('Notification.ReasonField.Label')}{' '}
+					<Text style={styles.required}>*</Text>
 				</Text>
-				<Text style={styles.badge}>Zorunlu</Text>
+				<Text style={styles.badge}>
+					{t('Notification.ReasonField.Required')}
+				</Text>
 			</View>
 			<TextInput
-				accessibilityLabel='Ret gerekçesi'
+				accessibilityLabel={t('Notification.ReasonField.A11y')}
 				maxLength={MAX_REASON_LENGTH}
 				multiline
 				onChangeText={onChangeText}
-				placeholder='Ret gerekçesini yazın...'
+				placeholder={t('Notification.ReasonField.Placeholder')}
 				placeholderTextColor={colors.outline}
 				style={styles.input}
 				textAlignVertical='top'
 				value={value}
 			/>
-			<Text style={styles.templatesLabel}>Hızlı Şablonlar</Text>
+			<Text style={styles.templatesLabel}>
+				{t('Notification.ReasonField.TemplatesLabel')}
+			</Text>
 			<View style={styles.templates}>
 				{TEMPLATES.map((template) => (
 					<Pressable
 						accessibilityRole='button'
 						key={template}
-						onPress={() => onChangeText(template)}
+						onPress={() => onChangeText(t(template))}
 						style={({ pressed }) => [
 							styles.chip,
 							pressed && styles.chipPressed,
 						]}
 					>
-						<Text style={styles.chipText}>{template}</Text>
+						<Text style={styles.chipText}>{t(template)}</Text>
 					</Pressable>
 				))}
 			</View>

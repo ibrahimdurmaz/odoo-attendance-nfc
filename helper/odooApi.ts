@@ -60,7 +60,7 @@ const NETWORK_FAILURE: OdooFailure = {
 	ok: false,
 	kind: 'network',
 	status: null,
-	message: 'Sunucuya ulaşılamadı.',
+	message: 'Could not reach the server.',
 };
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
@@ -133,7 +133,7 @@ const toRpcFailure = (error: unknown): OdooFailure => {
 			? data.message
 			: typeof details.message === 'string'
 				? details.message
-				: 'Odoo hata döndü.';
+				: 'Odoo returned an error.';
 
 	const isDenied =
 		name.endsWith('AccessDenied') || details.code === SESSION_EXPIRED_CODE;
@@ -175,7 +175,7 @@ const callRpc = async (
 			ok: false,
 			kind: toErrorKind(response.status),
 			status: response.status,
-			message: `Odoo ${response.status} döndü.`,
+			message: `Odoo returned ${response.status}.`,
 		};
 		return { result, sessionId: null };
 	}
@@ -268,7 +268,7 @@ export const callOdoo = async (
 	const message =
 		isRecord(response.body) && typeof response.body.message === 'string'
 			? response.body.message
-			: `Odoo ${response.status} döndü.`;
+			: `Odoo returned ${response.status}.`;
 	return {
 		ok: false,
 		kind: toErrorKind(response.status),
@@ -316,7 +316,7 @@ export const fetchEmployees = async (
 			ok: false,
 			kind: 'server',
 			status: 200,
-			message: 'Beklenmeyen cevap biçimi.',
+			message: 'Unexpected response format.',
 		};
 	}
 	const employees = result.data
@@ -351,7 +351,7 @@ const NO_SESSION: OdooFailure = {
 	ok: false,
 	kind: 'unauthorized',
 	status: null,
-	message: 'Oturum açık değil.',
+	message: 'Not signed in.',
 };
 
 const toSessionUser = (session: unknown): OdooSessionUser | null => {
@@ -405,7 +405,7 @@ export const loginWithPassword = async ({
 			ok: false,
 			kind: 'server',
 			status: 200,
-			message: 'Oturum bilgisi okunamadı.',
+			message: 'Could not read the session info.',
 		};
 	}
 	if (!sessionId) {
@@ -413,7 +413,7 @@ export const loginWithPassword = async ({
 			ok: false,
 			kind: 'server',
 			status: 200,
-			message: 'Oturum çerezi okunamadı.',
+			message: 'Could not read the session cookie.',
 		};
 	}
 
@@ -684,7 +684,7 @@ const fetchEmployeeProfilesWhere = async ({
 			ok: false,
 			kind: 'server',
 			status: 200,
-			message: 'Beklenmeyen cevap biçimi.',
+			message: 'Unexpected response format.',
 		};
 	}
 	const profiles = result.data
@@ -819,7 +819,7 @@ const UNEXPECTED_ATTENDANCE: OdooFailure = {
 	ok: false,
 	kind: 'server',
 	status: 200,
-	message: 'Giriş-çıkış kaydı okunamadı.',
+	message: 'Could not read the attendance record.',
 };
 
 /** Oturumu açan çalışanın en son giriş-çıkış kaydı; hiç kaydı yoksa `data: null`. */
@@ -892,7 +892,7 @@ export const checkInAttendance = async (): Promise<
 				ok: false,
 				kind: 'server',
 				status: 200,
-				message: 'Giriş kaydedilemedi.',
+				message: 'Could not save the check-in.',
 			}
 		: result;
 };
@@ -911,7 +911,7 @@ export const checkOutAttendance = async (
 			ok: false,
 			kind: 'notFound',
 			status: null,
-			message: 'Açık bir giriş kaydı yok.',
+			message: 'There is no open check-in record.',
 		};
 	}
 
@@ -929,7 +929,7 @@ export const checkOutAttendance = async (
 					ok: false,
 					kind: 'server',
 					status: 200,
-					message: 'Çıkış kaydedilemedi.',
+					message: 'Could not save the check-out.',
 				}
 			: result;
 	}
@@ -1200,7 +1200,7 @@ const fetchOptions = async (
 			ok: false,
 			kind: 'server',
 			status: 200,
-			message: 'Beklenmeyen cevap biçimi.',
+			message: 'Unexpected response format.',
 		};
 	}
 	const options = result.data
@@ -1291,7 +1291,7 @@ export const createEmployee = async (
 				ok: false,
 				kind: 'server',
 				status: 200,
-				message: 'Oluşturulan kaydın numarası okunamadı.',
+				message: 'Could not read the ID of the created record.',
 			}
 		: { ok: true, data: id };
 };

@@ -4,6 +4,7 @@ import { fonts, theme } from '@/assets/theme';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
 import {
 	ApprovalRequest,
@@ -13,16 +14,18 @@ import {
 	STATUS_LABELS,
 } from './approvalRequests';
 type DecisionSummaryProps = { request: ApprovalRequest; employeeName: string };
+// Değerler çeviri anahtarıdır.
 const SHORT_STATUS_LABELS: Record<ApprovalStatus, string> = {
-	pending: 'Bekliyor',
-	approved: 'Onay',
-	rejected: 'Ret',
+	pending: 'Notification.DecisionSummary.ShortStatus.Pending',
+	approved: 'Notification.DecisionSummary.ShortStatus.Approved',
+	rejected: 'Notification.DecisionSummary.ShortStatus.Rejected',
 };
 export const DecisionSummary: FC<DecisionSummaryProps> = ({
 	request,
 	employeeName,
 }) => {
 	const colors = theme();
+	const { t } = useTranslation();
 	const styles = useMemo(() => createSummaryStyles(colors), [colors]);
 
 	const isPending = request.status === 'pending';
@@ -43,37 +46,48 @@ export const DecisionSummary: FC<DecisionSummaryProps> = ({
 				/>
 			</View>
 			<Text accessibilityRole='header' style={styles.title}>
-				{isPending ? 'Talep reddedilsin mi?' : 'Karar değiştirilsin mi?'}
+				{isPending
+					? t('Notification.DecisionSummary.RejectTitle')
+					: t('Notification.DecisionSummary.ChangeTitle')}
 			</Text>
 			{isPending ? (
 				<Text style={styles.text}>
-					<Text style={styles.strong}>{employeeName}</Text> adlı çalışanın
-					talebi <Text style={styles.rejected}>reddedilecek</Text>.
+					<Trans
+						components={{
+							strong: <Text style={styles.strong} />,
+							rejected: <Text style={styles.rejected} />,
+						}}
+						i18nKey='Notification.DecisionSummary.RejectText'
+						values={{ name: employeeName }}
+					/>
 				</Text>
 			) : (
 				<Text style={styles.text}>
-					<Text style={styles.strong}>{employeeName}</Text> adlı çalışanın
-					talebi{' '}
-					<Text style={statusStyles[request.status]}>
-						{STATUS_LABELS[request.status]}
-					</Text>{' '}
-					durumundan{' '}
-					<Text style={statusStyles[nextStatus]}>
-						{STATUS_LABELS[nextStatus]}
-					</Text>{' '}
-					durumuna alınacak.
+					<Trans
+						components={{
+							strong: <Text style={styles.strong} />,
+							from: <Text style={statusStyles[request.status]} />,
+							to: <Text style={statusStyles[nextStatus]} />,
+						}}
+						i18nKey='Notification.DecisionSummary.ChangeText'
+						values={{
+							name: employeeName,
+							from: t(STATUS_LABELS[request.status]),
+							to: t(STATUS_LABELS[nextStatus]),
+						}}
+					/>
 				</Text>
 			)}
 			<View style={styles.strip}>
 				<View style={styles.stripLabel}>
 					<MaterialIcons color={colors.primary} name='schedule' size={18} />
 					<Text style={styles.stripText}>
-						{RECORD_TYPE_LABELS[request.recordType]} • {request.requestedTime}
+						{t(RECORD_TYPE_LABELS[request.recordType])} • {request.requestedTime}
 					</Text>
 				</View>
 				<View style={styles.stripLabel}>
 					<Text style={[styles.from, statusStyles[request.status]]}>
-						{SHORT_STATUS_LABELS[request.status]}
+						{t(SHORT_STATUS_LABELS[request.status])}
 					</Text>
 					<MaterialIcons
 						color={colors.onSurfaceVariant}
@@ -81,7 +95,7 @@ export const DecisionSummary: FC<DecisionSummaryProps> = ({
 						size={14}
 					/>
 					<Text style={[styles.to, statusStyles[nextStatus]]}>
-						{SHORT_STATUS_LABELS[nextStatus]}
+						{t(SHORT_STATUS_LABELS[nextStatus])}
 					</Text>
 				</View>
 			</View>

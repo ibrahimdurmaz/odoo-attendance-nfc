@@ -81,7 +81,10 @@ export const AddEmployeeScreen = () => {
 		const result = await createEmployeeFromForm(values);
 		setIsSaving(false);
 		if (!result.ok) {
-			Alert.alert('Çalışan oluşturulamadı', result.message);
+			Alert.alert(
+				t('AddEmployee.AddEmployeeScreen.CreateFailedTitle'),
+				result.message,
+			);
 			return;
 		}
 
