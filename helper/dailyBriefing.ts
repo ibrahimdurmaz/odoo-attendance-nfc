@@ -1,14 +1,16 @@
-import { Announcement } from '@/components/Modals/DailyAnnouncementModal';
-import {
+// Giriş yapılınca gösterilen günlük bilgilendirme: Odoo'daki duyuru ve takvim kayıtlarını
+// DailyAnnouncementModal ve TodayProgramModal'ın beklediği biçime çevirir.
+
+import type { Announcement } from '@/components/Modals/DailyAnnouncementModal';
+import type {
 	ProgramEvent,
 	ProgramEventKind,
 } from '@/components/Modals/TodayProgramModal';
-import { OdooResult } from './odooApi';
+import type { OdooResult } from './odooApi';
+import type { OdooAnnouncement, OdooCalendarEvent } from './odooApi.briefing';
 import {
 	fetchCalendarEvents,
 	fetchChannelAnnouncements,
-	OdooAnnouncement,
-	OdooCalendarEvent,
 } from './odooApi.briefing';
 
 /** Yöneticinin duyuru yazdığı Discuss kanalının adı; Odoo'daki adla birebir aynı olmalı. */
@@ -43,7 +45,7 @@ const toAnnouncement = ({
 		.split('\n')
 		.filter((line) => line.trim().length > 0);
 	return {
-		id: String(id),
+		id: `message-${id}`,
 		category: author ?? 'Duyuru',
 		date: new Date(postedAt),
 		title: title.trim(),
@@ -51,6 +53,22 @@ const toAnnouncement = ({
 		icon: 'campaign',
 	};
 };
+
+/**
+ * Tüm gün süren ve düzenleyen dışında kimsenin davet edilmediği etkinlik herkese yönelik bir
+ * duyurudur: programda değil, duyuru modalında gösterilir.
+ */
+const isAnnouncementEvent = (event: OdooCalendarEvent): boolean =>
+	event.isAllDay && !event.hasInvitees;
+
+const eventToAnnouncement = (event: OdooCalendarEvent): Announcement => ({
+	id: `event-${event.id}`,
+	category: event.organizer ?? 'Duyuru',
+	date: new Date(event.startAt),
+	title: event.title,
+	body: event.description,
+	icon: 'event',
+});
 
 const toEventKind = (event: OdooCalendarEvent): ProgramEventKind => {
 	if (event.isOnline) return 'online';
@@ -94,8 +112,13 @@ export const fetchDailyBriefing = async (
 	return {
 		ok: true,
 		data: {
-			announcements: announcements.data.map(toAnnouncement),
-			events: events.data.map(toProgramEvent),
+			announcements: [
+				...events.data.filter(isAnnouncementEvent).map(eventToAnnouncement),
+				...announcements.data.map(toAnnouncement),
+			],
+			events: events.data
+				.filter((event) => !isAnnouncementEvent(event))
+				.map(toProgramEvent),
 		},
 	};
 };

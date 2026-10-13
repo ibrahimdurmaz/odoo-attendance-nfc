@@ -164,6 +164,8 @@ export const fetchChannelAnnouncements = async (
 export type OdooCalendarEvent = {
 	id: number;
 	title: string;
+	/** Açıklama, HTML'den arındırılmış; boşsa boş metin. */
+	description: string;
 	/** Etkinliğin yeri; boşsa null. */
 	location: string | null;
 	/** Düzenleyen kişi; oturumu açan kullanıcının kendisiyse null. */
@@ -175,11 +177,13 @@ export type OdooCalendarEvent = {
 	isOnline: boolean;
 	/** Katılımcı sayısı (düzenleyen dahil). */
 	attendeeCount: number;
+	/** Düzenleyen dışında davet edilen biri var mı. Yoksa etkinlik herkese yöneliktir. */
+	hasInvitees: boolean;
 	/** Etiket adları, örn. ["Eğitim"]. */
 	tags: string[];
 };
 
-const OPTIONAL_EVENT_FIELDS = ['videocall_location', 'categ_ids'];
+const OPTIONAL_EVENT_FIELDS = ['videocall_location', 'categ_ids', 'privacy'];
 
 const toIdList = (value: unknown): number[] =>
 	Array.isArray(value)
@@ -213,8 +217,36 @@ const fetchEventTagNames = async (
 	return names;
 };
 
+/** Kullanıcı numaralarını kişi (res.partner) numaralarına çevirir; okunamazsa boş sözlük. */
+const fetchUserPartnerIds = async (
+	userIds: number[],
+): Promise<Record<number, number>> => {
+	const result = await callOdooSession(
+		'res.users',
+		'read',
+		{ fields: ['partner_id'] },
+		[userIds],
+	);
+	if (!result.ok || !Array.isArray(result.data)) return {};
+
+	const partners: Record<number, number> = {};
+	for (const record of result.data) {
+		const partnerId = isRecord(record) ? toRelatedId(record.partner_id) : null;
+		if (
+			isRecord(record) &&
+			typeof record.id === 'number' &&
+			partnerId !== null
+		) {
+			partners[record.id] = partnerId;
+		}
+	}
+	return partners;
+};
+
 /**
- * Oturumu açan kullanıcının katılımcı olduğu ve [from, to) aralığına değen takvim etkinlikleri.
+ * [from, to) aralığına değen takvim etkinlikleri: kullanıcının davet edildikleri ve tüm gün süren
+ * etkinlikler. Tüm gün süren bir etkinlik, kullanıcı davetli değilse yalnızca düzenleyen dışında
+ * kimse davet edilmemişse (herkese yönelikse) alınır. Özel (private) etkinlikler atlanır.
  * Takvim uygulaması kurulu değilse boş liste döner; yalnızca bağlantı ve oturum hataları iletilir.
  */
 export const fetchCalendarEvents = async (
@@ -232,12 +264,15 @@ export const fetchCalendarEvents = async (
 
 	const result = await callOdooSession('calendar.event', 'search_read', {
 		domain: [
+			'|',
 			['partner_ids.user_ids', 'in', [uid]],
+			['allday', '=', true],
 			['start', '<', toOdooDatetimeText(to)],
 			['stop', '>', toOdooDatetimeText(from)],
 		],
 		fields: [
 			'name',
+			'description',
 			'start',
 			'stop',
 			'allday',
@@ -252,10 +287,19 @@ export const fetchCalendarEvents = async (
 		return isConnectionProblem(result) ? result : { ok: true, data: [] };
 	if (!Array.isArray(result.data)) return { ok: true, data: [] };
 
-	const records = result.data.filter(isRecord);
-	const tagNames = await fetchEventTagNames([
-		...new Set(records.flatMap((record) => toIdList(record.categ_ids))),
+	const records = result.data
+		.filter(isRecord)
+		.filter((record) => record.privacy !== 'private');
+	const organizerIds = records
+		.map((record) => toRelatedId(record.user_id))
+		.filter((id): id is number => id !== null);
+	const [tagNames, partnerOfUser] = await Promise.all([
+		fetchEventTagNames([
+			...new Set(records.flatMap((record) => toIdList(record.categ_ids))),
+		]),
+		fetchUserPartnerIds([...new Set([uid, ...organizerIds])]),
 	]);
+	const ownPartnerId = partnerOfUser[uid];
 
 	const events: OdooCalendarEvent[] = [];
 	for (const record of records) {
@@ -264,17 +308,29 @@ export const fetchCalendarEvents = async (
 		if (typeof record.id !== 'number' || startAt === null || endAt === null)
 			continue;
 
-		const isOwnEvent = toRelatedId(record.user_id) === uid;
+		const organizerId = toRelatedId(record.user_id);
+		const organizerPartnerId =
+			organizerId === null ? undefined : partnerOfUser[organizerId];
+		const partnerIds = toIdList(record.partner_ids);
+		const hasInvitees = partnerIds.some((id) => id !== organizerPartnerId);
+		// Kişi numarası okunamadıysa davetli sayılır; etkinlik yanlışlıkla gizlenmesin.
+		const isInvited =
+			ownPartnerId === undefined || partnerIds.includes(ownPartnerId);
+		// Başkalarına özel tüm gün etkinliği, kullanıcı davetli değilse onu ilgilendirmez.
+		if (record.allday === true && hasInvitees && !isInvited) continue;
+
 		events.push({
 			id: record.id,
 			title: toFilledText(record.name) ?? 'Etkinlik',
+			description: toPlainText(record.description),
 			location: toFilledText(record.location),
-			organizer: isOwnEvent ? null : toRelatedName(record.user_id),
+			organizer: organizerId === uid ? null : toRelatedName(record.user_id),
 			startAt,
 			endAt,
 			isAllDay: record.allday === true,
 			isOnline: toFilledText(record.videocall_location) !== null,
-			attendeeCount: toIdList(record.partner_ids).length,
+			attendeeCount: partnerIds.length,
+			hasInvitees,
 			tags: toIdList(record.categ_ids)
 				.map((id) => tagNames[id])
 				.filter((name): name is string => name !== undefined),
