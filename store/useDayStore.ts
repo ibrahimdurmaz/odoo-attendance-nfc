@@ -98,7 +98,9 @@ type DayRecordInput = Pick<
 	| 'shiftHours'
 	| 'checkpoint'
 	| 'location'
->;
+> &
+	// Gün birden fazla giriş-çıkıştan oluşuyorsa aradaki boşluk çalışma sayılmasın diye verilir.
+	Partial<Pick<DayRecord, 'workedSeconds' | 'breakSeconds'>>;
 
 /** Giriş, çıkış ve molalardan kaydedilecek gün kaydını üretir. */
 export const createDayRecord = (input: DayRecordInput): DayRecord => {
@@ -111,8 +113,11 @@ export const createDayRecord = (input: DayRecordInput): DayRecord => {
 	return {
 		...input,
 		dateKey: toDateKey(input.checkInAt),
-		breakSeconds: Math.floor(breakSeconds),
-		workedSeconds: Math.max(0, Math.floor(elapsedSeconds - breakSeconds)),
+		breakSeconds: Math.floor(input.breakSeconds ?? breakSeconds),
+		workedSeconds: Math.max(
+			0,
+			Math.floor(input.workedSeconds ?? elapsedSeconds - breakSeconds),
+		),
 		correction: null,
 	};
 };

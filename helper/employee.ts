@@ -1,10 +1,9 @@
 import { AttendanceSummary, DepartmentFilter, Employee } from '@/store/types';
-import { RequestStatus } from '@/store/useCorrectionRequestStore';
 
 const EMPLOYEE_ID_PREFIX = 'EMP-';
 /** Liste boşken üretilecek ilk sicil numarası. */
 const FIRST_EMPLOYEE_NUMBER = 8001;
-
+type RequestStatus = 'pending' | 'approved' | 'rejected';
 export const STATUS_TABS: RequestStatus[] = ['pending', 'approved', 'rejected'];
 
 /** Değerler çeviri anahtarıdır; ekranda t() ile çevrilir. */

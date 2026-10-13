@@ -13,4 +13,5 @@ export const INITIAL_SESSION: Session = {
 	checkOutLocation: null,
 	breakStartedAt: null,
 	breaks: [],
+	earlierShifts: [],
 };

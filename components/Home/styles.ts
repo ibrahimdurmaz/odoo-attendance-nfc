@@ -71,6 +71,12 @@ export const styles = StyleSheet.create({
 		fontFamily: fonts.semibold,
 		fontSize: 12,
 	},
+	button: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	pressed: { opacity: 0.85 },
 
 	// Gün sonu özeti
 	successIcon: {

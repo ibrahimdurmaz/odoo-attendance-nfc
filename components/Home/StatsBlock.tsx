@@ -5,32 +5,42 @@ import {
 	formatMinutes,
 	formatTime,
 } from '@/helper/dateHelpers';
+import { useModalStore } from '@/store/modalStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
-import { Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { Pressable, Text, View } from 'react-native';
 import { BREAK_ALLOWANCE_SECONDS, TARGET_SECONDS } from './constants';
 import { ProgressRing } from './ProgressRing';
 import { Stat } from './Stat';
 import { styles } from './styles';
 import { Session, Status } from './types';
-import { useTranslation } from 'react-i18next';
 
 export function StatsBlock({
 	status,
 	session,
 	finishedBreakSeconds,
+	earlierWorkedSeconds,
+	earlierBreakSeconds,
 	now,
+	loadBriefing,
 }: {
 	status: Status;
 	session: Session;
 	finishedBreakSeconds: number;
+	/** Bugünkü önceki giriş-çıkışların net çalışması ve molası. */
+	earlierWorkedSeconds: number;
+	earlierBreakSeconds: number;
 	now: number;
+	loadBriefing: () => {};
 }) {
 	const colors = theme();
 	const { t } = useTranslation();
+	const { triggerModal } = useModalStore();
 	const workEnd = session.checkOutAt ?? session.breakStartedAt ?? now;
-	const workedSeconds = session.checkInAt
+	const currentWorkedSeconds = session.checkInAt
 		? Math.max(0, (workEnd - session.checkInAt) / 1000 - finishedBreakSeconds)
 		: 0;
+	const workedSeconds = earlierWorkedSeconds + currentWorkedSeconds;
 	const progress = workedSeconds / TARGET_SECONDS;
 	const percent = t('UI.Common.Percent', {
 		value: Math.floor(progress * 100),
@@ -40,7 +50,8 @@ export function StatsBlock({
 	const currentBreakSeconds = session.breakStartedAt
 		? Math.max(0, (now - session.breakStartedAt) / 1000)
 		: 0;
-	const usedBreakSeconds = finishedBreakSeconds + currentBreakSeconds;
+	const usedBreakSeconds =
+		earlierBreakSeconds + finishedBreakSeconds + currentBreakSeconds;
 	const breakLeftSeconds = Math.max(
 		0,
 		BREAK_ALLOWANCE_SECONDS - usedBreakSeconds,
@@ -135,6 +146,20 @@ export function StatsBlock({
 					</Text>
 				</View>
 			) : null}
+			<Pressable
+				accessibilityRole='button'
+				onPress={async () => {
+					void loadBriefing();
+					triggerModal('todayProgram');
+				}}
+				style={({ pressed }) => [styles.button, pressed && styles.pressed]}
+			>
+				<MaterialIcons
+					color={colors.onSurfaceVariant}
+					name='calendar-month'
+					size={22}
+				/>
+			</Pressable>
 
 			<ProgressRing
 				color={status === 'onBreak' ? colors.secondary : colors.primary}

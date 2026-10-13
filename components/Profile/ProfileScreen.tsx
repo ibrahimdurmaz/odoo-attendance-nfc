@@ -1,5 +1,5 @@
 import { theme } from '@/assets/theme';
-import { useOdooSessionStore } from '@/store/useOdooSessionStore';
+import { resetAllStores } from '@/store/resetAllStores';
 import { useProfileStore } from '@/store/useProfileStore';
 import { useRouter } from 'expo-router';
 import type { FC } from 'react';
@@ -14,11 +14,8 @@ import { StatsSection } from './StatsSection';
 export const ProfileScreen: FC = () => {
 	const router = useRouter();
 	const profile = useProfileStore((state) => state.profile);
-	const { clearSession } = useOdooSessionStore();
-	const { logout } = useProfileStore();
 	const logoutWithRedirect = () => {
-		logout();
-		clearSession();
+		resetAllStores();
 		router.navigate('/server_setup');
 	};
 	const colors = theme();

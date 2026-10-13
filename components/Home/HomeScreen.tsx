@@ -4,13 +4,16 @@ import {
 	formatMinutes,
 	formatTime,
 	getGreeting,
+	toDateKey,
 } from '@/helper/dateHelpers';
 import {
 	checkInAttendance,
 	checkOutAttendance,
 	fetchLastAttendance,
+	fetchOwnAttendancesSince,
 } from '@/helper/odooApi';
 import { useModalStore } from '@/store/modalStore';
+import { useDailyBriefingStore } from '@/store/useDailyBriefingStore';
 import { createDayRecord, useDayStore } from '@/store/useDayStore';
 import { useProfileStore } from '@/store/useProfileStore';
 import { MaterialIcons } from '@react-native-vector-icons/material-icons';
@@ -22,7 +25,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { CheckInFailedModal } from '../Modals/CheckInFailedModal';
 import { CheckInSuccessModal } from '../Modals/CheckInSuccessModal';
 import { CodeScannerModal } from '../Modals/CodeScannerModal';
+import { DailyAnnouncementModal } from '../Modals/DailyAnnouncementModal';
 import { NfcPromptModal } from '../Modals/NfcPromptModal';
+import { TodayProgramModal } from '../Modals/TodayProgramModal';
 import { ActionButton } from './ActionButton';
 import { ActivityRow } from './ActivityRow';
 import { getStatusBadges } from './config';
@@ -38,10 +43,43 @@ import { Header } from './Header';
 import { InfoTile } from './InfoTile';
 import { StatsBlock } from './StatsBlock';
 import { styles } from './styles';
-import { Activity, Session } from './types';
+import { Activity, BreakRecord, Session, ShiftRecord } from './types';
+
+const sumBreakSeconds = (breaks: BreakRecord[]): number =>
+	breaks.reduce((sum, item) => sum + (item.end - item.start) / 1000, 0);
+
+const getShiftWorkedSeconds = (shift: ShiftRecord): number =>
+	Math.max(0, (shift.checkOutAt - shift.checkInAt) / 1000 - shift.breakSeconds);
+
+/** Yeni giriş yapılırken, aynı güne ait tamamlanmış giriş-çıkışları önceki vardiyalar olarak döner. */
+const getEarlierShifts = (
+	previous: Session,
+	checkInAt: number,
+): ShiftRecord[] => {
+	const shifts = [...previous.earlierShifts];
+	if (
+		previous.status === 'completed' &&
+		previous.checkInAt !== null &&
+		previous.checkOutAt !== null
+	) {
+		shifts.push({
+			checkInAt: previous.checkInAt,
+			checkOutAt: previous.checkOutAt,
+			checkInLocation: previous.checkInLocation,
+			checkOutLocation: previous.checkOutLocation,
+			breaks: previous.breaks,
+			breakSeconds: sumBreakSeconds(previous.breaks),
+		});
+	}
+	const dateKey = toDateKey(checkInAt);
+	return shifts.filter((shift) => toDateKey(shift.checkInAt) === dateKey);
+};
 
 export const HomeScreen: FC = () => {
 	const [session, setSession] = useState<Session>(INITIAL_SESSION);
+	const { announcements, events, loadBriefing, confirmAnnouncements } =
+		useDailyBriefingStore();
+
 	const [now, setNow] = useState(Date.now());
 	const profile = useProfileStore((state) => state.profile);
 	const { status } = session;
@@ -62,13 +100,30 @@ export const HomeScreen: FC = () => {
 	// Uygulama açılınca Odoo'daki son kayıttan bugünkü durumu geri yükler.
 	// Bu arada kullanıcı bir şeye bastıysa (giriş, mola) onun yaptığı ezilmez.
 	useEffect(() => {
-		void fetchLastAttendance().then((result) => {
+		void fetchLastAttendance().then(async (result) => {
 			if (!result.ok || !result.data) return;
-			const { checkInAt, checkOutAt, checkInLocation, checkOutLocation } =
+			const { id, checkInAt, checkOutAt, checkInLocation, checkOutLocation } =
 				result.data;
 			const isToday =
 				new Date(checkInAt).toDateString() === new Date().toDateString();
 			if (checkOutAt !== null && !isToday) return;
+
+			// Bugün birden fazla giriş-çıkış yapıldıysa öncekiler de toplama katılır.
+			const today = await fetchOwnAttendancesSince(
+				new Date().setHours(0, 0, 0, 0),
+			);
+			const earlierShifts: ShiftRecord[] = [];
+			for (const record of today.ok ? today.data : []) {
+				if (record.id === id || record.checkOutAt === null) continue;
+				earlierShifts.push({
+					checkInAt: record.checkInAt,
+					checkOutAt: record.checkOutAt,
+					checkInLocation: record.checkInLocation,
+					checkOutLocation: record.checkOutLocation,
+					breaks: [],
+					breakSeconds: record.breakSeconds,
+				});
+			}
 
 			setSession((previous) =>
 				previous.status !== INITIAL_SESSION.status
@@ -79,6 +134,7 @@ export const HomeScreen: FC = () => {
 								status: 'working',
 								checkInAt,
 								checkInLocation,
+								earlierShifts,
 							}
 						: {
 								...INITIAL_SESSION,
@@ -87,6 +143,7 @@ export const HomeScreen: FC = () => {
 								checkOutAt,
 								checkInLocation,
 								checkOutLocation,
+								earlierShifts,
 							},
 			);
 		});
@@ -95,7 +152,6 @@ export const HomeScreen: FC = () => {
 
 	const checkIn = () => {
 		triggerModal('nfcPrompt');
-		console.log(modals.nfcPrompt.visible);
 	};
 	// NFC okutma başarılı olunca çağrılır: girişi Odoo'ya yazar, giriş saatini döner (olmazsa null).
 	const confirmCheckIn = async (): Promise<number | null> => {
@@ -106,12 +162,15 @@ export const HomeScreen: FC = () => {
 		}
 		const { checkInAt, checkInLocation } = result.data;
 		setNow(Date.now());
-		setSession({
+		// Gün içinde tekrar giriş yapılırsa önceki giriş-çıkışlar korunur.
+		setSession((previous) => ({
 			...INITIAL_SESSION,
 			status: 'working',
 			checkInAt,
 			checkInLocation,
-		});
+			earlierShifts: getEarlierShifts(previous, checkInAt),
+		}));
+		void loadBriefing();
 		return checkInAt;
 	};
 	const startBreak = () => {
@@ -141,10 +200,7 @@ export const HomeScreen: FC = () => {
 		const breaks = session.breakStartedAt
 			? [...session.breaks, { start: session.breakStartedAt, end: at }]
 			: session.breaks;
-		const breakSeconds = breaks.reduce(
-			(sum, item) => sum + (item.end - item.start) / 1000,
-			0,
-		);
+		const breakSeconds = sumBreakSeconds(breaks);
 
 		const result = await checkOutAttendance(breakSeconds);
 		if (!result.ok) {
@@ -159,11 +215,23 @@ export const HomeScreen: FC = () => {
 		const checkInLocation =
 			attendance.checkInLocation ?? session.checkInLocation;
 
+		// Gün kaydı bugünkü tüm giriş-çıkışları kapsar: ilk girişten son çıkışa.
+		const { earlierShifts } = session;
 		saveDay(
 			createDayRecord({
-				checkInAt: session.checkInAt,
+				checkInAt: earlierShifts[0]?.checkInAt ?? session.checkInAt,
 				checkOutAt,
-				breaks,
+				breaks: [...earlierShifts.flatMap((shift) => shift.breaks), ...breaks],
+				workedSeconds:
+					earlierShifts.reduce(
+						(sum, shift) => sum + getShiftWorkedSeconds(shift),
+						0,
+					) +
+					(checkOutAt - session.checkInAt) / 1000 -
+					breakSeconds,
+				breakSeconds:
+					earlierShifts.reduce((sum, shift) => sum + shift.breakSeconds, 0) +
+					breakSeconds,
 				targetSeconds: TARGET_SECONDS,
 				shiftHours: SHIFT_HOURS,
 				checkpoint: CHECKPOINT,
@@ -186,42 +254,71 @@ export const HomeScreen: FC = () => {
 	const { t } = useTranslation();
 	// --- Hesaplar ---
 
-	const finishedBreakSeconds = session.breaks.reduce(
-		(sum, item) => sum + (item.end - item.start) / 1000,
+	const finishedBreakSeconds = sumBreakSeconds(session.breaks);
+	const earlierWorkedSeconds = session.earlierShifts.reduce(
+		(sum, shift) => sum + getShiftWorkedSeconds(shift),
+		0,
+	);
+	const earlierBreakSeconds = session.earlierShifts.reduce(
+		(sum, shift) => sum + shift.breakSeconds,
 		0,
 	);
 	const currentBreakSeconds = session.breakStartedAt
 		? Math.max(0, (now - session.breakStartedAt) / 1000)
 		: 0;
-	const usedBreakSeconds = finishedBreakSeconds + currentBreakSeconds;
+	const usedBreakSeconds =
+		earlierBreakSeconds + finishedBreakSeconds + currentBreakSeconds;
 	const isBreakOverLimit = usedBreakSeconds > BREAK_ALLOWANCE_SECONDS;
 	const badge = getStatusBadges(colors)[status];
 
 	const activities: Activity[] = [];
-	if (session.checkInAt) {
+	const addCheckIn = (at: number, location: string | null) => {
 		activities.push({
-			id: 'check-in',
+			id: `check-in-${at}`,
 			icon: 'login',
 			title: t('Home.Activities.CheckIn'),
-			subtitle: session.checkInLocation ?? CHECKPOINT,
-			time: formatTime(session.checkInAt),
+			subtitle: location ?? CHECKPOINT,
+			time: formatTime(at),
 			background: colors.tertiaryFixed,
 			foreground: colors.tertiary,
 		});
-	}
-	session.breaks.forEach((item) => {
-		activities.push({
-			id: `break-${item.start}`,
-			icon: 'free-breakfast',
-			title: t('Home.Activities.Break'),
-			subtitle: t('Home.Activities.BreakDuration', {
-				duration: formatMinutes((item.end - item.start) / 1000),
-			}),
-			time: `${formatTime(item.start)} – ${formatTime(item.end)}`,
-			background: colors.secondaryContainer,
-			foreground: colors.onSecondaryContainer,
+	};
+	const addBreaks = (breaks: BreakRecord[]) => {
+		breaks.forEach((item) => {
+			activities.push({
+				id: `break-${item.start}`,
+				icon: 'free-breakfast',
+				title: t('Home.Activities.Break'),
+				subtitle: t('Home.Activities.BreakDuration', {
+					duration: formatMinutes((item.end - item.start) / 1000),
+				}),
+				time: `${formatTime(item.start)} – ${formatTime(item.end)}`,
+				background: colors.secondaryContainer,
+				foreground: colors.onSecondaryContainer,
+			});
 		});
+	};
+	const addCheckOut = (at: number, location: string | null) => {
+		activities.push({
+			id: `check-out-${at}`,
+			icon: 'logout',
+			title: t('Home.Activities.CheckOut'),
+			subtitle: location ?? CHECKPOINT,
+			time: formatTime(at),
+			background: colors.primaryFixed,
+			foreground: colors.primary,
+		});
+	};
+
+	session.earlierShifts.forEach((shift) => {
+		addCheckIn(shift.checkInAt, shift.checkInLocation);
+		addBreaks(shift.breaks);
+		addCheckOut(shift.checkOutAt, shift.checkOutLocation);
 	});
+	if (session.checkInAt) {
+		addCheckIn(session.checkInAt, session.checkInLocation);
+	}
+	addBreaks(session.breaks);
 	if (session.breakStartedAt) {
 		activities.push({
 			id: 'active-break',
@@ -245,15 +342,7 @@ export const HomeScreen: FC = () => {
 		});
 	}
 	if (session.checkOutAt) {
-		activities.push({
-			id: 'check-out',
-			icon: 'logout',
-			title: t('Home.Activities.CheckOut'),
-			subtitle: session.checkOutLocation ?? CHECKPOINT,
-			time: formatTime(session.checkOutAt),
-			background: colors.primaryFixed,
-			foreground: colors.primary,
-		});
+		addCheckOut(session.checkOutAt, session.checkOutLocation);
 	}
 
 	return (
@@ -265,6 +354,11 @@ export const HomeScreen: FC = () => {
 			<CheckInSuccessModal />
 			<CodeScannerModal />
 			<NfcPromptModal confirmCheckIn={confirmCheckIn} />
+			<DailyAnnouncementModal
+				announcements={announcements}
+				onConfirm={confirmAnnouncements}
+			/>
+			<TodayProgramModal events={events} />
 			<Header />
 			<ScrollView
 				contentContainerStyle={styles.content}
@@ -296,13 +390,16 @@ export const HomeScreen: FC = () => {
 				</View>
 
 				<StatsBlock
+					earlierBreakSeconds={earlierBreakSeconds}
+					earlierWorkedSeconds={earlierWorkedSeconds}
 					finishedBreakSeconds={finishedBreakSeconds}
 					now={now}
 					session={session}
 					status={status}
+					loadBriefing={loadBriefing}
 				/>
-				{/* Aksiyon butonları */}
-				{status === 'notCheckedIn' ? (
+				{/* Aksiyon butonları; çıkıştan sonra aynı gün tekrar giriş yapılabilir. */}
+				{status === 'notCheckedIn' || status === 'completed' ? (
 					<ActionButton
 						background={colors.tertiaryContainer}
 						foreground={colors.onTertiary}

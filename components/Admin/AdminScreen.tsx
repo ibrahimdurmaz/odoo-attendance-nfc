@@ -1,11 +1,10 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { theme, ThemeColors } from '@/assets/theme';
 import { getAttendanceSummary } from '@/helper/employee';
 import { syncEmployeesFromOdoo } from '@/helper/odooEmployeeSync';
-import { useCorrectionRequestStore } from '@/store/useCorrectionRequestStore';
 import { useEmployeeStore } from '@/store/useEmployeeStore';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -24,20 +23,9 @@ export const AdminScreen = () => {
 	const onOpenEmployees = () => {
 		router.navigate('/employee_list');
 	};
-	// const onOpenCorrections = () => {
-	// 	router.navigate('/correction_request');
-	// };
-	const loadRequests = useCorrectionRequestStore((state) => state.loadRequests);
-	// const pendingCorrectionCount = useCorrectionRequestStore(
-	// 	(state) =>
-	// 		state.requests.filter((request) => request.status === 'pending').length,
-	// );
 	const employees = useEmployeeStore((state) => state.employees);
 	const summary = useMemo(() => getAttendanceSummary(employees), [employees]);
 
-	useEffect(() => {
-		loadRequests();
-	}, [loadRequests]);
 	// Ekran her açıldığında çalışanları ve giriş durumlarını Odoo'dan tazeler.
 	useFocusEffect(
 		useCallback(() => {
@@ -65,21 +53,6 @@ export const AdminScreen = () => {
 						})}
 						title={t('Admin.AdminScreen.Employees')}
 					/>
-					{/* <NavCard
-						badge={
-							pendingCorrectionCount > 0
-								? t('Admin.AdminScreen.PendingBadge', {
-										count: pendingCorrectionCount,
-									})
-								: undefined
-						}
-						icon='edit-calendar'
-						isAccent
-						isChevronHighlighted={pendingCorrectionCount > 0}
-						onPress={onOpenCorrections}
-						subtitle={t('Admin.AdminScreen.CorrectionRequestsSubtitle')}
-						title={t('Admin.AdminScreen.CorrectionRequests')}
-					/> */}
 				</View>
 
 				<AttendanceCard

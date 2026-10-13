@@ -70,8 +70,6 @@ function RootLayoutNav() {
 					<Stack.Screen name='add_employee' />
 					<Stack.Screen name='employee_list' />
 					<Stack.Screen name='edit_employee' />
-					{/* <Stack.Screen name='correction_request' />
-					<Stack.Screen name='correction_request_detail' /> */}
 				</Stack.Protected>
 			</Stack>
 		</ThemeProvider>

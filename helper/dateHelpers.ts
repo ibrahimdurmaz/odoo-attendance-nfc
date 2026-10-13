@@ -1,6 +1,6 @@
 import i18n from '@/i18n';
 
-const DAY_KEYS = [
+export const DAY_KEYS = [
 	'Sunday',
 	'Monday',
 	'Tuesday',
@@ -9,7 +9,7 @@ const DAY_KEYS = [
 	'Friday',
 	'Saturday',
 ] as const;
-const MONTH_KEYS = [
+export const MONTH_KEYS = [
 	'January',
 	'February',
 	'March',

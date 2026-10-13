@@ -879,16 +879,22 @@ export const checkInAttendance = async (): Promise<
 		return { ok: true, data: last.data };
 
 	const result = await toggleAttendance();
-	if (!result.ok) return result;
+	if (result.ok && result.data.checkOutAt === null) return result;
 
-	return result.data.checkOutAt === null
-		? result
-		: {
+	// Odoo girişi kaydetmiş ama cevabı ulaşmamış ya da okunamamış olabilir (örn. süre doldu);
+	// karar cevaba göre değil, Odoo'daki son kayda göre verilir.
+	const current = await fetchLastAttendance();
+	if (current.ok && current.data && current.data.checkOutAt === null)
+		return { ok: true, data: current.data };
+
+	return result.ok
+		? {
 				ok: false,
 				kind: 'server',
 				status: 200,
 				message: 'Giriş kaydedilemedi.',
-			};
+			}
+		: result;
 };
 
 /**
@@ -910,16 +916,22 @@ export const checkOutAttendance = async (
 	}
 
 	const result = await toggleAttendance();
-	if (!result.ok) return result;
-
-	const attendance = result.data;
-	if (attendance.checkOutAt === null) {
-		return {
-			ok: false,
-			kind: 'server',
-			status: 200,
-			message: 'Çıkış kaydedilemedi.',
-		};
+	// Girişteki gibi: cevap ulaşmadıysa çıkışın kaydedilip kaydedilmediği Odoo'dan okunur.
+	const current =
+		result.ok && result.data.checkOutAt !== null
+			? result
+			: await fetchLastAttendance();
+	const attendance =
+		current.ok && current.data?.id === last.data.id ? current.data : null;
+	if (!attendance || attendance.checkOutAt === null) {
+		return result.ok
+			? {
+					ok: false,
+					kind: 'server',
+					status: 200,
+					message: 'Çıkış kaydedilemedi.',
+				}
+			: result;
 	}
 	if (breakSeconds <= 0)
 		return { ok: true, data: { attendance, isBreakSaved: true } };
@@ -978,6 +990,37 @@ export const fetchEmployeeAttendances = async (
 			['employee_id', '=', employeeId],
 			['check_in', '>=', toOdooDatetime(from)],
 			['check_in', '<', toOdooDatetime(to)],
+		],
+		fields: [
+			'check_in',
+			'check_out',
+			'worked_hours',
+			'break_duration',
+			...locationFields,
+		],
+		order: 'check_in asc',
+	});
+	if (!result.ok) return result;
+	if (!Array.isArray(result.data)) return UNEXPECTED_ATTENDANCE;
+
+	const records = result.data
+		.map(toAttendanceRecord)
+		.filter((record): record is OdooAttendanceRecord => record !== null);
+	return { ok: true, data: records };
+};
+
+/** Oturumu açan çalışanın girişi `from` anından sonraki giriş-çıkış kayıtları, eskiden yeniye. */
+export const fetchOwnAttendancesSince = async (
+	from: number,
+): Promise<OdooResult<OdooAttendanceRecord[]>> => {
+	const uid = useOdooSessionStore.getState().session?.uid;
+	if (uid === undefined) return NO_SESSION;
+
+	const locationFields = await fetchAttendanceLocationFields();
+	const result = await callOdooSession('hr.attendance', 'search_read', {
+		domain: [
+			['employee_id.user_id', '=', uid],
+			['check_in', '>=', toOdooDatetime(from)],
 		],
 		fields: [
 			'check_in',

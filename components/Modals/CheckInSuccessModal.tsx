@@ -3,6 +3,7 @@ import { Pressable, Text, View } from 'react-native';
 import { theme } from '@/assets/theme';
 import { formatTime } from '@/helper/dateHelpers';
 import { useModalStore } from '@/store/modalStore';
+import { useDailyBriefingStore } from '@/store/useDailyBriefingStore';
 import { useProfileStore } from '@/store/useProfileStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { useTranslation } from 'react-i18next';
@@ -40,6 +41,7 @@ export const CheckInSuccessModal = () => {
 
 	const onClose = () => {
 		closeModal('checkInSuccessful');
+		void useDailyBriefingStore.getState().showBriefing();
 	};
 	const styles = CheckInSuccessModalStyles;
 	return (

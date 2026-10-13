@@ -8,6 +8,17 @@ export type Status = 'notCheckedIn' | 'working' | 'onBreak' | 'completed';
 
 export type BreakRecord = { start: number; end: number };
 
+/** Bugün daha önce kapatılmış bir giriş-çıkış çifti. */
+export type ShiftRecord = {
+	checkInAt: number;
+	checkOutAt: number;
+	checkInLocation: string | null;
+	checkOutLocation: string | null;
+	/** Tek tek molalar; Odoo'dan geri yüklenen kayıtta bilinmez, boş kalır. */
+	breaks: BreakRecord[];
+	breakSeconds: number;
+};
+
 export type Session = {
 	status: Status;
 	checkInAt: number | null;
@@ -18,6 +29,8 @@ export type Session = {
 	checkOutLocation: string | null;
 	breakStartedAt: number | null;
 	breaks: BreakRecord[];
+	/** Aynı gün içinde daha önce tamamlanan giriş-çıkışlar, eskiden yeniye. */
+	earlierShifts: ShiftRecord[];
 };
 
 export type Activity = {
