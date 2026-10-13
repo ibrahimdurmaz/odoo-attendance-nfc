@@ -1,11 +1,5 @@
 import { create } from 'zustand';
-import {
-	AttendanceStatus,
-	Employee,
-	NewEmployee,
-	Option,
-	ShiftTemplateKey,
-} from './types';
+import { AttendanceStatus, Employee, NewEmployee, Option } from './types';
 
 // label / shortLabel değerleri çeviri anahtarıdır; ekranda t() ile çevrilir.
 export const DEPARTMENTS: (Option<string> & { shortLabel: string })[] = [
@@ -41,7 +35,7 @@ export const COMPANIES: Option<string>[] = [
 	{ key: 'odoo_arge', label: 'ExtraConstants.Companies.OdooArge' },
 ];
 
-export const SHIFT_TEMPLATES: Option<ShiftTemplateKey>[] = [
+export const SHIFT_TEMPLATES: Option<string>[] = [
 	{ key: 'standard', label: 'ExtraConstants.ShiftTemplates.Standard' },
 	{ key: 'flexible', label: 'ExtraConstants.ShiftTemplates.Flexible' },
 	{ key: 'second', label: 'ExtraConstants.ShiftTemplates.Second' },

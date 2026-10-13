@@ -23,6 +23,9 @@ export const AdminScreen = () => {
 	const onOpenEmployees = () => {
 		router.navigate('/employee_list');
 	};
+	const onOpenAdminNotification = () => {
+		router.navigate('/notification');
+	};
 	const employees = useEmployeeStore((state) => state.employees);
 	const summary = useMemo(() => getAttendanceSummary(employees), [employees]);
 
@@ -52,6 +55,12 @@ export const AdminScreen = () => {
 							count: summary.total,
 						})}
 						title={t('Admin.AdminScreen.Employees')}
+					/>
+					<NavCard
+						icon='calendar-month'
+						onPress={onOpenAdminNotification}
+						subtitle={'Mesai değerlendirmeleri.'}
+						title={'Manuel Katılım Onayı'}
 					/>
 				</View>
 

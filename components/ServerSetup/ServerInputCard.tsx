@@ -6,7 +6,7 @@ import type { FC } from 'react';
 import { useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import { INPUT_HEIGHT } from './ServerSetupScreen';
+import { INPUT_HEIGHT } from './layout';
 import { Protocol } from './serverAddress';
 
 type ServerInputCardProps = {

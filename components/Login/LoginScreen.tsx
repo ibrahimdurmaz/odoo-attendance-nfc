@@ -129,7 +129,6 @@ export const LoginScreen = ({
 				return;
 			}
 
-			console.log('LOGIN', profile);
 			login(profile);
 			router.navigate('/(tabs)');
 		} catch (error) {

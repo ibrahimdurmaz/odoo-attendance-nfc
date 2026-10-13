@@ -57,7 +57,6 @@ function RootLayoutNav() {
 				<Stack.Protected guard={isLoggedIn}>
 					<Stack.Screen name='(tabs)' />
 					<Stack.Screen name='day_details' />
-					{/* <Stack.Screen name='notification' /> */}
 				</Stack.Protected>
 				<Stack.Protected guard={!isLoggedIn}>
 					<Stack.Screen name='server_setup' />
@@ -70,6 +69,7 @@ function RootLayoutNav() {
 					<Stack.Screen name='add_employee' />
 					<Stack.Screen name='employee_list' />
 					<Stack.Screen name='edit_employee' />
+					<Stack.Screen name='notification' />
 				</Stack.Protected>
 			</Stack>
 		</ThemeProvider>

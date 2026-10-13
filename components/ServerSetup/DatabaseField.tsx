@@ -5,7 +5,7 @@ import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text } from 'react-native';
-import { INPUT_HEIGHT } from './ServerSetupScreen';
+import { INPUT_HEIGHT } from './layout';
 type DatabaseFieldProps = {
 	/** Seçili veritabanı; henüz seçilmediyse null. */
 	selected: string | null;

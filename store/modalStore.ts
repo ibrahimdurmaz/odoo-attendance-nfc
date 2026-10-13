@@ -10,7 +10,8 @@ type ModalTags =
 	| 'deactivateEmployee'
 	| 'rejectRequest'
 	| 'dailyAnnouncement'
-	| 'todayProgram';
+	| 'todayProgram'
+	| 'changeDecision';
 type ModalState = {
 	modals: Record<ModalTags, { visible: boolean; props?: any }>;
 };
@@ -33,6 +34,7 @@ const initialState: ModalState = {
 		rejectRequest: { visible: false },
 		dailyAnnouncement: { visible: false },
 		todayProgram: { visible: false },
+		changeDecision: { visible: false },
 	},
 };
 

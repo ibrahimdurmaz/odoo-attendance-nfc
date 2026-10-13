@@ -22,6 +22,7 @@ import { DatabaseField } from './DatabaseField';
 import { DatabaseList } from './DatabaseList';
 import { ErrorBanner } from './ErrorBanner';
 import { HelperNote } from './HelperNote';
+import { INPUT_HEIGHT } from './layout';
 import { ProtocolDropdown } from './ProtocolDropdown';
 import {
 	buildServerUrl,
@@ -50,10 +51,7 @@ const ERROR_TEXTS: Record<ConnectionError, { title: string; message: string }> =
 		},
 	};
 
-export const INPUT_HEIGHT = 56;
 const DROPDOWN_GAP = 8;
-export const VISIBLE_DATABASE_ROWS = 4;
-export const OPTION_HEIGHT = 44;
 
 export const ServerSetupScreen: FC = () => {
 	const colors = theme();

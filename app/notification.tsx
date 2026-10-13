@@ -1,5 +1,5 @@
-import { NotificationsScreen } from '@/components/Notification/NotificationsScreen';
+import { AdminNotificationsScreen } from '@/components/Notification/AdminNotificationsScreen';
 
 export default function Screen() {
-	return <NotificationsScreen />;
+	return <AdminNotificationsScreen />;
 }

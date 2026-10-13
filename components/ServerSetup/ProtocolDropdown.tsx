@@ -6,7 +6,7 @@ import type { FC } from 'react';
 import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Protocol, PROTOCOLS } from './serverAddress';
-import { OPTION_HEIGHT } from './ServerSetupScreen';
+import { OPTION_HEIGHT } from './layout';
 
 type ProtocolDropdownProps = {
 	selected: Protocol;

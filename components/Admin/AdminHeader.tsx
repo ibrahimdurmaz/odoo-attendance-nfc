@@ -8,10 +8,14 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 type AdminHeaderProps = {
 	title: string;
+	profileActive?: boolean;
 };
 
 /** Yönetim ekranlarının ortak üst başlığı. */
-export const AdminHeader: FC<AdminHeaderProps> = ({ title }) => {
+export const AdminHeader: FC<AdminHeaderProps> = ({
+	title,
+	profileActive = true,
+}) => {
 	const colors = theme();
 	const router = useRouter();
 	const { t } = useTranslation();
@@ -19,73 +23,41 @@ export const AdminHeader: FC<AdminHeaderProps> = ({ title }) => {
 	const onBack = () => {
 		router.navigate('/(tabs)');
 	};
-	// const onNotificationsPress = () => {
-	// 	router.navigate('/notification');
-	// };
 	const onProfilePress = () => {
 		router.navigate('/profile');
 	};
 	return (
 		<View style={styles.header}>
 			<View style={styles.left}>
-				{onBack ? (
-					<Pressable
-						accessibilityLabel={t('UI.Buttons.Back')}
-						accessibilityRole='button'
-						hitSlop={8}
-						onPress={onBack}
-						style={({ pressed }) => [
-							styles.iconButton,
-							pressed && styles.pressed,
-						]}
-					>
-						<MaterialIcons
-							color={colors.onSurface}
-							name='arrow-back'
-							size={24}
-						/>
-					</Pressable>
-				) : (
-					<View style={styles.logo}>
-						<MaterialIcons
-							color={colors.onPrimaryContainer}
-							name='badge'
-							size={20}
-						/>
-					</View>
-				)}
+				<Pressable
+					accessibilityLabel={t('UI.Buttons.Back')}
+					accessibilityRole='button'
+					hitSlop={8}
+					onPress={onBack}
+					style={({ pressed }) => [
+						styles.iconButton,
+						pressed && styles.pressed,
+					]}
+				>
+					<MaterialIcons color={colors.onSurface} name='arrow-back' size={24} />
+				</Pressable>
 				<Text accessibilityRole='header' numberOfLines={1} style={styles.title}>
 					{title}
 				</Text>
 			</View>
 
-			<View style={styles.right}>
-				{/* <Pressable
-						accessibilityLabel={t('UI.Accessibility.Notifications')}
+			{profileActive && (
+				<View style={styles.right}>
+					<Pressable
+						accessibilityLabel={t('UI.Accessibility.Profile')}
 						accessibilityRole='button'
-						hitSlop={8}
-						onPress={onNotificationsPress}
-						style={({ pressed }) => [
-							styles.iconButton,
-							pressed && styles.pressed,
-						]}
+						onPress={onProfilePress}
+						style={styles.avatar}
 					>
-						<MaterialIcons
-							color={colors.onSurfaceVariant}
-							name='notifications'
-							size={22}
-						/>
-					</Pressable> */}
-
-				<Pressable
-					accessibilityLabel={t('UI.Accessibility.Profile')}
-					accessibilityRole='button'
-					onPress={onProfilePress}
-					style={styles.avatar}
-				>
-					<MaterialIcons color={colors.onPrimary} name='person' size={18} />
-				</Pressable>
-			</View>
+						<MaterialIcons color={colors.onPrimary} name='person' size={18} />
+					</Pressable>
+				</View>
+			)}
 		</View>
 	);
 };
