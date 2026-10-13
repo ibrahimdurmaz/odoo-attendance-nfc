@@ -1,0 +1,977 @@
+{
+	"Admin": {
+		"AdminScreen": {
+			"Title": "Gestión",
+			"Employees": "Empleados",
+			"ActiveEmployees_one": "{{count}} empleado activo",
+			"ActiveEmployees_other": "{{count}} empleados activos",
+			"ActiveEmployees_many": "{{count}} empleados activos",
+			"PendingBadge": "{{count}} pendientes",
+			"CorrectionRequests": "Solicitudes de corrección",
+			"CorrectionRequestsSubtitle": "Revisión de turnos y registros",
+			"ManualApproval": "Aprobación manual de asistencia",
+			"ManualApprovalSubtitle": "Revisiones de asistencia."
+		},
+		"SectionIntro": {
+			"Overline": "CONSOLA DE GESTIÓN ODOO",
+			"Title": "Operaciones y asistencia"
+		},
+		"AttendanceCard": {
+			"Title": "Asistencia de hoy",
+			"Shift": "Turno: {{hours}}",
+			"AttendanceRate": "Tasa de asistencia",
+			"AttendanceRateA11y": "Tasa de asistencia del {{rate}} por ciento",
+			"Target": "Objetivo: {{percent}} %",
+			"Staff": "{{present}} / {{total}} empleados",
+			"Approved": "Confirmado",
+			"Waiting": "Pendiente",
+			"NoEntry": "Sin entrada",
+			"ActiveBreak": "En pausa"
+		},
+		"AttendanceTile": {
+			"Persons": "personas",
+			"A11y": "{{label}}: {{count}} personas, {{caption}}"
+		},
+		"AddEmployeeButton": {
+			"Label": "Añadir empleado"
+		}
+	},
+	"Home": {
+		"Header": {
+			"Brand": "ODOO",
+			"Title": "Inicio"
+		},
+		"StatusBadge": {
+			"NotCheckedIn": "Sin entrada registrada",
+			"Working": "Trabajando",
+			"OnBreak": "En pausa",
+			"Completed": "Jornada completada"
+		},
+		"Activities": {
+			"CheckIn": "Entrada",
+			"Break": "Pausa",
+			"BreakDuration": "{{duration}} de descanso",
+			"InProgress": "En curso",
+			"ActiveWork": "Turno activo",
+			"Now": "Ahora",
+			"CheckOut": "Salida"
+		},
+		"Actions": {
+			"CheckIn": "Registrar entrada",
+			"StartBreak": "Iniciar pausa",
+			"CheckOut": "Registrar salida",
+			"EndBreak": "Terminar pausa",
+			"FinishAndCheckOut": "Terminar turno y registrar salida"
+		},
+		"InfoTiles": {
+			"PlannedShift": "Turno previsto",
+			"UsedBreak": "Pausa utilizada",
+			"LimitExceeded": "Límite superado",
+			"WithinLimit": "Dentro del límite"
+		},
+		"TodaysActivities": {
+			"Title": "Actividad de hoy",
+			"RecordCount_one": "{{count}} registro",
+			"RecordCount_other": "{{count}} registros",
+			"RecordCount_many": "{{count}} registros",
+			"EmptyTitle": "Aún no hay actividad",
+			"EmptyText": "Cuando registre su entrada, aquí aparecerán el inicio del turno, las pausas y las duraciones."
+		},
+		"StatsBlock": {
+			"TotalNetWork": "TRABAJO NETO TOTAL",
+			"Overtime": "+{{duration}} de horas extra",
+			"Undertime": "Faltan {{duration}}",
+			"Target": "Objetivo",
+			"TargetHours": "8 horas",
+			"Completed": "Completado",
+			"TotalBreak": "Pausa total",
+			"WorkPaused": "Tiempo de trabajo en pausa: {{duration}}",
+			"BreakTime": "Tiempo de pausa",
+			"ElapsedTime": "Tiempo transcurrido",
+			"TargetValue": "Objetivo: {{duration}}",
+			"PercentCompleted": "{{percent}} completado",
+			"BreakStartedAt": "Inicio {{time}}",
+			"TargetShift": "Turno objetivo",
+			"RemainingTime": "Tiempo restante",
+			"BreakAllowance": "Pausa permitida"
+		},
+		"FarewellCard": {
+			"Title": "Hasta mañana, {{name}}.",
+			"Text": "Gracias por su esfuerzo de hoy. ¡No olvide descansar!"
+		},
+		"Checkpoint": "Panel de entrada principal"
+	},
+	"Profile": {
+		"Header": {
+			"Title": "Perfil"
+		},
+		"IdCard": {
+			"Active": "ACTIVO",
+			"EmployeeIdLabel": "N.º DE EMPLEADO",
+			"StaffId": "Identificación de personal"
+		},
+		"SecurityNote": {
+			"Text": "Su identificación solo es válida en este teléfono"
+		},
+		"StatsSection": {
+			"Title": "Horas y vacaciones",
+			"RemainingLeave": "Vacaciones anuales restantes",
+			"AnnualEntitlement": "Derecho anual",
+			"Days": "Días",
+			"OvertimeThisMonth": "Horas extra este mes",
+			"RecordedThisMonth_one": "{{count}} día registrado este mes",
+			"RecordedThisMonth_other": "{{count}} días registrados este mes",
+			"RecordedThisMonth_many": "{{count}} días registrados este mes"
+		},
+		"SettingsSection": {
+			"Title": "Ajustes",
+			"Language": "Idioma",
+			"LanguageA11y": "Idioma: {{language}}",
+			"Appearance": "Apariencia",
+			"Light": "Claro",
+			"Dark": "Oscuro"
+		},
+		"LogoutSection": {
+			"Logout": "Cerrar sesión",
+			"SignedInAs": "Sesión iniciada como {{name}}"
+		},
+		"LoggedOutView": {
+			"Title": "Sesión cerrada",
+			"Text": "Inicie sesión para ver su perfil."
+		},
+		"LanguageModal": {
+			"Title": "Idioma",
+			"AvailableLanguages": "Idiomas disponibles",
+			"AppliedImmediately": "Su elección se aplica de inmediato."
+		}
+	},
+	"Schedule": {
+		"ScheduleScreen": {
+			"Brand": "ODOO",
+			"Title": "Horario",
+			"Filters": {
+				"Week": "Esta semana",
+				"Month": "Últimos 30 días",
+				"Overtime": "Horas extra",
+				"Undertime": "Tiempo faltante"
+			},
+			"RecordDetails": "Detalle de registros",
+			"RecordCount_one": "{{count}} registro",
+			"RecordCount_other": "{{count}} registros",
+			"RecordCount_many": "{{count}} registros",
+			"EmptyTitle": "No se encontraron registros",
+			"EmptyText": "Aquí aparecen los días en los que termina su turno."
+		},
+		"WeeklySummary": {
+			"Title": "Estado semanal de trabajo",
+			"Target": "/ {{hours}} h",
+			"Remaining": "Quedan {{duration}}",
+			"DaysRecorded_one": "{{count}} día registrado",
+			"DaysRecorded_other": "{{count}} días registrados",
+			"DaysRecorded_many": "{{count}} días registrados",
+			"WeeklyQuota": "Cuota semanal: {{hours}} h"
+		},
+		"WeeksDays": {
+			"Title": "Esta semana",
+			"Today": "Hoy",
+			"SameMonthRange": "{{start}} - {{end}}"
+		},
+		"DayCard": {
+			"A11y": "{{date}}, detalle del día",
+			"PendingCorrection": "Corrección pendiente",
+			"Completed": "Completado",
+			"Net": "Neto:"
+		}
+	},
+	"AddEmployee": {
+		"AddEmployeeScreen": {
+			"Title": "Crear empleado",
+			"PersonalInfo": "Datos personales",
+			"FirstName": "Nombre",
+			"FirstNamePlaceholder": "p. ej. Lucía",
+			"LastName": "Apellido",
+			"LastNamePlaceholder": "p. ej. García",
+			"CorporateEmail": "Correo corporativo",
+			"EmailPlaceholder": "nombre@odoo.com",
+			"PhoneNumber": "Número de teléfono",
+			"PhonePlaceholder": "+90 5XX XXX XX XX",
+			"JobInfo": "Datos laborales",
+			"EmployeeId": "N.º de empleado",
+			"AutoGenerated": "Generado automáticamente",
+			"JobTitle": "Puesto",
+			"JobTitlePlaceholder": "p. ej. Ingeniera de software sénior",
+			"Department": "Departamento",
+			"Company": "Empresa",
+			"StartDate": "Fecha de incorporación",
+			"DatePlaceholder": "DD.MM.AAAA",
+			"WorkSchedule": "Horario de trabajo",
+			"ShiftTemplate": "Plantilla de turno",
+			"AnnualLeave": "Vacaciones anuales (días)",
+			"WorkDays": "Días laborables",
+			"AccessAndRole": "Acceso y rol",
+			"PasswordInfo": "Al crear la cuenta, el sistema generará una contraseña temporal de un solo uso y la enviará automáticamente al correo electrónico del empleado.",
+			"CreateFailedTitle": "No se pudo crear el empleado",
+			"NoDepartment": "Sin departamento",
+			"DefaultWorkSchedule": "Horario predeterminado de la empresa"
+		},
+		"FormStrip": {
+			"Overline": "MÓDULO DE RR. HH. • NUEVO PERFIL",
+			"AdminPermission": "Permiso de administrador"
+		},
+		"PhotoPicker": {
+			"AddPhoto": "Añadir foto",
+			"ChangePhoto": "Cambiar foto",
+			"SelectImage": "Seleccionar imagen",
+			"Remove": "Quitar",
+			"Failed": "No se pudo seleccionar la foto. Inténtelo de nuevo.",
+			"Hint": "Elija un retrato de la galería del dispositivo (PNG, JPG)"
+		},
+		"RoleSegment": {
+			"Employee": "Empleado",
+			"Admin": "Admin"
+		},
+		"IntegrationCard": {
+			"Title": "Integración con torniquete y quiosco Odoo",
+			"Text": "El registro de tarjetas NFC/RFID estará disponible después de guardar."
+		},
+		"BottomActionBar": {
+			"Errors": "Hay campos incompletos o no válidos. Revíselos.",
+			"Cancel": "Cancelar",
+			"CreateEmployee": "Crear empleado"
+		},
+		"Validation": {
+			"Required": "Este campo es obligatorio",
+			"InvalidEmail": "Introduzca un correo válido",
+			"InvalidPhone": "Introduzca un número válido con prefijo de país (p. ej. +34 612 34 56 78)",
+			"EmployeeIdTaken": "Este número de empleado ya está en uso",
+			"DateFormat": "Use el formato DD.MM.AAAA",
+			"LeaveRange": "Debe estar entre 0 y {{max}}"
+		},
+		"EmployeeCreatedModal": {
+			"NfcCard": "Tarjeta NFC / RFID",
+			"AwaitingPairing": "Pendiente de vinculación",
+			"EmailInvite": "Invitación por correo",
+			"Sent": "Enviada"
+		},
+		"SuccessHero": {
+			"Pill": "Directorio de RR. HH. de Odoo actualizado",
+			"Title": "Empleado creado correctamente",
+			"Text": "El registro en el sistema se ha completado y se han generado las claves de autenticación."
+		},
+		"TemporaryPasswordCard": {
+			"Title": "Contraseña temporal",
+			"FirstLoginTag": "Para el primer inicio de sesión",
+			"OneTimeCode": "Código de un solo uso",
+			"Copy": "Copiar",
+			"CopyA11y": "Copiar contraseña",
+			"Copied": "Copiado",
+			"Notice": "Comparta esta contraseña con el empleado de forma segura. Deberá definir una nueva contraseña en su primer inicio de sesión."
+		},
+		"CreatedActions": {
+			"AddAnother": "Añadir empleado",
+			"BackToList": "Volver a la lista de empleados"
+		}
+	},
+	"CorrectionRequest": {
+		"CorrectionRequestsScreen": {
+			"Title": "Solicitudes de corrección",
+			"NoMatchTitle": "Sin solicitudes coincidentes",
+			"NoMatchText": "No se encontraron solicitudes para el empleado o la fecha buscados.",
+			"EmptyTitle": "No hay solicitudes: {{status}}",
+			"EmptyText": "Aquí aparecen las solicitudes de corrección enviadas por los empleados."
+		},
+		"StatusSegments": {
+			"Pending": "Pendientes",
+			"Approved": "Aprobadas",
+			"Rejected": "Rechazadas",
+			"SegmentA11y_one": "{{label}}, {{count}} solicitud",
+			"SegmentA11y_other": "{{label}}, {{count}} solicitudes",
+			"SegmentA11y_many": "{{label}}, {{count}} solicitudes"
+		},
+		"RequestSearchBar": {
+			"Placeholder": "Buscar por nombre o fecha...",
+			"A11y": "Buscar por nombre de empleado o fecha"
+		},
+		"RequestCard": {
+			"Summary": "{{date}} • Registro de {{recordType}}"
+		},
+		"TimeChange": {
+			"A11y": "Actual: {{current}}, solicitado: {{requested}}",
+			"NoRecord": "Sin registro"
+		},
+		"ResultBanner": {
+			"Approved": "Solicitud aprobada",
+			"Rejected": "Solicitud rechazada",
+			"Text": "Se ha creado una notificación del resultado para {{name}}.",
+			"DismissA11y": "Cerrar notificación"
+		}
+	},
+	"CorrectionRequestDetail": {
+		"CorrectionRequestDetailScreen": {
+			"Title": "Detalle de la solicitud",
+			"NotFound": "Solicitud no encontrada."
+		},
+		"RequestSummaryCard": {
+			"ToCorrect": "A corregir: {{recordType}}",
+			"CurrentStatus": "Estado actual",
+			"RecordedTime": "Hora registrada",
+			"MissingTimestamp": "Falta la marca de tiempo",
+			"NoRecord": "Sin registro",
+			"Requested": "Solicitado",
+			"RequestedCaptions": {
+				"Entry": "Hora de inicio del turno",
+				"Break": "Hora de inicio de la pausa",
+				"Exit": "Hora de fin del turno"
+			}
+		},
+		"ReasonQuote": {
+			"Label": "Motivo"
+		},
+		"ImpactNote": {
+			"Title": "Análisis de impacto",
+			"Text": "Si se aprueba, el tiempo neto será de <strong>{{duration}}</strong>. {{conclusion}}",
+			"CompletesTarget": "Cumple el objetivo de {{duration}}.",
+			"BelowTarget": "Queda {{duration}} por debajo del objetivo.",
+			"NoRecord": "No se puede calcular el impacto porque no hay registros de este día."
+		},
+		"ResolvedNote": {
+			"Title": "Resultado",
+			"ManagerNote": "Nota del responsable: {{note}}"
+		},
+		"DayTimelineCard": {
+			"Title": "Registros de ese día",
+			"CheckIn": "Entrada",
+			"Break": "Pausa",
+			"CheckOut": "Salida",
+			"RecordNotFound": "Registro no encontrado",
+			"Empty": "No se encontraron registros de este día."
+		},
+		"TimelineRow": {
+			"UnderReview": "Corrección solicitada"
+		},
+		"DecisionBar": {
+			"Reject": "Rechazar",
+			"Approve": "Aprobar"
+		},
+		"RejectModalHeader": {
+			"Title": "Rechazar solicitud",
+			"Info": "El motivo del rechazo se enviará al empleado como notificación."
+		},
+		"TemplateChips": {
+			"Label": "Plantillas rápidas:",
+			"AddA11y": "Añadir plantilla: {{template}}",
+			"Templates": {
+				"Mismatch": "No coincide con los registros.",
+				"MoreInfo": "Se necesita más información.",
+				"Timeout": "Plazo vencido."
+			}
+		},
+		"RejectReasonField": {
+			"Label": "Motivo",
+			"A11y": "Motivo del rechazo",
+			"Placeholder": "Escriba el motivo del rechazo que se enviará al empleado..."
+		},
+		"RejectActions": {
+			"Submit": "Enviar rechazo",
+			"Cancel": "Cancelar"
+		}
+	},
+	"DayDetails": {
+		"DayDetailHeader": {
+			"Title": "Detalle del día"
+		},
+		"DayDetailScreen": {
+			"NotFound": "No se encontraron registros de este día",
+			"PendingCorrection": "Corrección pendiente",
+			"Completed": "Completado",
+			"Timeline": "Cronología",
+			"EventCount_one": "{{count}} evento registrado",
+			"EventCount_other": "{{count}} eventos registrados",
+			"EventCount_many": "{{count}} eventos registrados",
+			"LocationTerminal": "UBICACIÓN Y TERMINAL",
+			"UnknownLocation": "Ubicación no disponible",
+			"RequestCorrection": "Solicitar corrección",
+			"Events": {
+				"Break": "Pausa",
+				"BreakDuration": "{{duration}} de descanso",
+				"ShiftStart": "Inicio del turno",
+				"CheckInRecorded": "Entrada registrada",
+				"ShiftEnd": "Fin del turno",
+				"ShiftCompleted": "Jornada diaria completada"
+			}
+		},
+		"StateBand": {
+			"Pending": "Solicitud de corrección pendiente de aprobación: {{recordType}} → {{time}}",
+			"Complete": "Toda la actividad del día está completa"
+		},
+		"Summary": {
+			"TotalNetWork": "TRABAJO NETO TOTAL",
+			"Overtime": "+{{duration}} de horas extra",
+			"Undertime": "Faltan {{duration}}",
+			"WorkedA11y": "{{hours}} horas {{minutes}} minutos",
+			"Hours": "h",
+			"Minutes": "min",
+			"Planned": "Previsto: {{hours}} ({{duration}})"
+		},
+		"CorrectionRequestModal": {
+			"Title": "Solicitar corrección",
+			"Description": "Si cree que falta algo en sus registros o que son incorrectos, cree una solicitud.",
+			"WhichRecord": "¿Qué registro?",
+			"CorrectTime": "Hora correcta",
+			"OriginalRecord": "Registro original: ",
+			"None": "ninguno",
+			"SuggestedCorrection": "Corrección propuesta",
+			"Hour": "Hora",
+			"Minute": "Min",
+			"Increase": "Aumentar {{label}}",
+			"Decrease": "Disminuir {{label}}",
+			"Reason": "Motivo",
+			"ReasonA11y": "Motivo de la corrección",
+			"ReasonPlaceholder": "Indique un motivo breve...",
+			"Note": "Su solicitud se envía a su responsable. Una vez aprobada, su horario se actualiza automáticamente.",
+			"Submit": "Enviar solicitud",
+			"Cancel": "Cancelar"
+		}
+	},
+	"EditEmployee": {
+		"EditEmployeeScreen": {
+			"Title": "Editar empleado",
+			"NotFound": "Empleado no encontrado."
+		},
+		"EditEmployeeForm": {
+			"PersonalInfo": "Datos personales",
+			"FirstName": "Nombre",
+			"LastName": "Apellido",
+			"Email": "Correo electrónico",
+			"Phone": "Teléfono",
+			"PhonePlaceholder": "+90 5XX XXX XX XX",
+			"JobInfo": "Datos laborales",
+			"EmployeeId": "N.º de empleado",
+			"EmployeeIdLocked": "El número de empleado no se puede cambiar",
+			"JobTitle": "Puesto",
+			"Department": "Departamento",
+			"Company": "Empresa",
+			"StartDate": "Fecha de incorporación",
+			"DatePlaceholder": "DD.MM.AAAA",
+			"WorkSchedule": "Horario de trabajo",
+			"Shift": "Turno",
+			"AnnualLeave": "Vacaciones anuales",
+			"WorkDays": "Días laborables",
+			"Account": "Cuenta",
+			"SaveChanges": "Guardar cambios"
+		},
+		"AccountStatusSwitch": {
+			"Title": "Estado de la cuenta",
+			"Active": "Activa",
+			"Passive": "Inactiva"
+		},
+		"DangerZone": {
+			"Title": "Desactivar cuenta",
+			"Text": "Al desactivarlo, el empleado no podrá acceder al sistema y se ocultará de las listas de turnos.",
+			"Deactivate": "Desactivar empleado"
+		},
+		"DeactivateEmployeeModal": {
+			"Title": "¿Desactivar a {{name}}?",
+			"Text": "No podrá iniciar sesión en la aplicación ni registrar entradas o salidas en el panel. Los registros anteriores se conservan.",
+			"Confirm": "Desactivar",
+			"Cancel": "Cancelar",
+			"Note": "Puede reactivarlo en cualquier momento"
+		}
+	},
+	"EmployeeDetail": {
+		"EmployeeDetailScreen": {
+			"Title": "Detalle del empleado",
+			"NotFound": "Empleado no encontrado."
+		},
+		"DetailStrip": {
+			"Overline": "GESTIÓN DE PERFIL",
+			"EditA11y": "Editar perfil",
+			"Edit": "Editar"
+		},
+		"PresencePill": {
+			"Passive": "Inactivo"
+		},
+		"AccountStatePill": {
+			"Active": "Activo",
+			"Passive": "Inactivo"
+		},
+		"TodaySection": {
+			"Title": "Hoy",
+			"CheckIn": "Entrada",
+			"NetWork": "Trabajo neto",
+			"WorkStatus": "Estado laboral",
+			"Passive": "Inactivo"
+		},
+		"WorkStates": {
+			"Inside": "Trabajando",
+			"OnBreak": "En pausa",
+			"Outside": "Fuera de turno",
+			"Absent": "Ausente"
+		},
+		"PersonalSection": {
+			"Title": "Datos personales",
+			"Email": "Correo electrónico",
+			"Phone": "Teléfono"
+		},
+		"JobSection": {
+			"Title": "Datos laborales",
+			"EmployeeId": "N.º de empleado",
+			"Department": "Departamento",
+			"Company": "Empresa",
+			"StartDate": "Incorporación"
+		},
+		"ScheduleSection": {
+			"Title": "Horario de trabajo",
+			"Shift": "Turno",
+			"AnnualLeave": "Vacaciones anuales",
+			"RemainingLeave": "Vacaciones restantes",
+			"Days_one": "{{count}} día",
+			"Days_other": "{{count}} días",
+			"Days_many": "{{count}} días"
+		},
+		"AccountSection": {
+			"Title": "Cuenta",
+			"UserRole": "Rol de usuario",
+			"Admin": "Admin",
+			"Employee": "Empleado",
+			"AccountStatus": "Estado de la cuenta"
+		},
+		"DetailActions": {
+			"ResetPassword": "Restablecer contraseña",
+			"ViewSchedule": "Ver horario"
+		}
+	},
+	"EmployeeList": {
+		"EmployeeListScreen": {
+			"Title": "Lista de empleados",
+			"EmptyTitle": "Aún no hay empleados",
+			"EmptyText": "Cree el primer empleado con el botón Añadir.",
+			"NoMatchTitle": "Sin empleados coincidentes",
+			"NoMatchText": "No se encontraron registros para el nombre o número de empleado buscado. Pruebe a borrar los filtros."
+		},
+		"ListStrip": {
+			"Overline": "DIRECTORIO Y ASISTENCIA EN VIVO",
+			"AddNew": "Añadir",
+			"AddEmployeeA11y": "Añadir empleado"
+		},
+		"SearchBar": {
+			"Placeholder": "Buscar nombre o n.º de empleado...",
+			"A11y": "Buscar nombre o número de empleado"
+		},
+		"DepartmentChips": {
+			"All": "Todos",
+			"ChipA11y_one": "{{label}}, {{count}} empleado",
+			"ChipA11y_other": "{{label}}, {{count}} empleados",
+			"ChipA11y_many": "{{label}}, {{count}} empleados"
+		},
+		"MetricBar": {
+			"ActivePresence": "Presentes ahora",
+			"TotalPersons": "/ {{total}} personas"
+		}
+	},
+	"Login": {
+		"BrandHeader": {
+			"Title": "Odoo Asistencia",
+			"Subtitle": "Inicie sesión en su cuenta"
+		},
+		"LoginScreen": {
+			"IdentifierLabel": "Correo electrónico",
+			"IdentifierPlaceholder": "nombre@empresa.com",
+			"PasswordLabel": "Contraseña",
+			"CredentialsErrorTitle": "Correo o contraseña incorrectos.",
+			"CredentialsErrorMessage": "Revise sus datos e inténtelo de nuevo.",
+			"ConnectionErrorTitle": "No se pudo conectar con el servidor.",
+			"ConnectionErrorMessage": "Compruebe su conexión a internet e inténtelo de nuevo.",
+			"ForgotPassword": "He olvidado mi contraseña"
+		},
+		"AuthTextField": {
+			"ShowPassword": "Mostrar contraseña",
+			"HidePassword": "Ocultar contraseña"
+		},
+		"SubmitButton": {
+			"LoggingIn": "Iniciando sesión..."
+		},
+		"SupportNote": {
+			"Text": "¿No tiene cuenta? Contacte con su departamento de RR. HH."
+		}
+	},
+	"Notification": {
+		"NotificationsHeader": {
+			"Title": "Notificaciones"
+		},
+		"NotificationsScreen": {
+			"Count_one": "{{count}} notificación nueva",
+			"Count_other": "{{count}} notificaciones nuevas",
+			"Count_many": "{{count}} notificaciones nuevas"
+		},
+		"NotificationsEmptyState": {
+			"Title": "No tiene notificaciones nuevas",
+			"Text": "Cuando sus solicitudes de corrección se aprueben o rechacen, verá el resultado aquí.",
+			"PendingTitle": "No hay solicitudes pendientes",
+			"PendingText": "Las nuevas solicitudes de corrección de los empleados aparecerán aquí.",
+			"ReviewedTitle": "Hoy no se ha revisado ninguna solicitud",
+			"ReviewedText": "Las solicitudes que apruebe o rechace hoy aparecerán aquí.",
+			"ShowReviewed": "Ver las revisadas hoy ({{count}})"
+		},
+		"NotificationCard": {
+			"A11y": "{{date}}, solicitud de corrección del registro de {{recordType}} {{result}}",
+			"ApprovedResult": "aprobada",
+			"RejectedResult": "rechazada",
+			"Updated": "Hora de {{recordType}} actualizada a {{time}}",
+			"ManagerNote": "Nota del responsable: {{note}}",
+			"NotSpecified": "No especificado"
+		},
+		"ResultBadge": {
+			"Approved": "Aprobada",
+			"Rejected": "Rechazada"
+		},
+		"Pagination": {
+			"Previous": "Anterior",
+			"Next": "Siguiente",
+			"PreviousA11y": "Página anterior",
+			"NextA11y": "Página siguiente"
+		},
+		"NotificationTabs": {
+			"Pending": "Pendientes",
+			"ReviewedToday": "Revisadas hoy"
+		},
+		"TabInfo": {
+			"ChangeOnlyToday": "Solo puede cambiar las decisiones <strong>hoy</strong>.",
+			"PendingCount_one": "{{count}} solicitud pendiente de revisión",
+			"PendingCount_other": "{{count}} solicitudes pendientes de revisión",
+			"PendingCount_many": "{{count}} solicitudes pendientes de revisión"
+		},
+		"RequestCard": {
+			"RejectionReason": "Motivo: {{reason}}",
+			"Reject": "Rechazar",
+			"Approve": "Aprobar",
+			"Reviewed": "Revisada • {{time}}",
+			"ChangeDecision": "Cambiar decisión"
+		},
+		"RecordChange": {
+			"Title": "Registro de {{recordType}} • {{date}}",
+			"A11y": "Actual: {{current}}, solicitado: {{requested}}",
+			"NoRecord": "Sin registro"
+		},
+		"DecisionSummary": {
+			"RejectTitle": "¿Rechazar la solicitud?",
+			"ChangeTitle": "¿Cambiar la decisión?",
+			"RejectText": "La solicitud de <strong>{{name}}</strong> será <rejected>rechazada</rejected>.",
+			"ChangeText": "La solicitud de <strong>{{name}}</strong> pasará de <from>{{from}}</from> a <to>{{to}}</to>.",
+			"ShortStatus": {
+				"Pending": "Pendiente",
+				"Approved": "Aprobada",
+				"Rejected": "Rechazada"
+			}
+		},
+		"DecisionActions": {
+			"Reject": "Rechazar",
+			"ChangeDecision": "Cambiar decisión",
+			"Cancel": "Cancelar"
+		},
+		"ReasonField": {
+			"Label": "Motivo",
+			"Required": "Obligatorio",
+			"A11y": "Motivo del rechazo",
+			"Placeholder": "Escriba el motivo del rechazo...",
+			"TemplatesLabel": "Plantillas rápidas",
+			"Templates": {
+				"Mismatch": "No coincide con el registro",
+				"WrongTime": "Hora introducida incorrecta",
+				"MoreInfo": "Se necesita más información"
+			}
+		},
+		"ResultToast": {
+			"Approved": "Solicitud aprobada.",
+			"Rejected": "Solicitud rechazada."
+		}
+	},
+	"EmployeeSchedule": {
+		"ScheduleScreen": {
+			"Overline": "HORARIO DEL EMPLEADO",
+			"EmptyText": "Aquí aparecen los días en los que el empleado terminó su turno."
+		}
+	},
+	"ServerSetup": {
+		"SetupHeading": {
+			"Title": "Iniciar sesión",
+			"Subtitle": "Configure la conexión con su servidor"
+		},
+		"ServerSetupScreen": {
+			"ServerDomain": "Dominio del servidor",
+			"Errors": {
+				"InvalidAddressTitle": "Dirección de servidor no válida",
+				"InvalidAddressMessage": "Introduzca la dirección como \"odoo.empresa.com\", sin espacios ni ruta.",
+				"UnreachableTitle": "No se pudo conectar con el servidor",
+				"UnreachableMessage": "Compruebe la dirección y su conexión a internet."
+			},
+			"Server": "Servidor"
+		},
+		"ServerInputCard": {
+			"ProtocolA11y": "Protocolo: {{protocol}}",
+			"AddressA11y": "Dirección del servidor",
+			"Placeholder": "Introduzca la dirección del servidor",
+			"ClearA11y": "Borrar entrada"
+		},
+		"ConnectionHint": {
+			"Secure": "Conexión cifrada (HTTPS)",
+			"Insecure": "Conexión sin cifrar (HTTP)",
+			"Port": "Puerto {{port}}"
+		},
+		"SubmitButton": {
+			"Connecting": "Conectando...",
+			"Retry": "Reintentar",
+			"Next": "Siguiente"
+		},
+		"HelperNote": {
+			"Text": "Pida la dirección del servidor a su administrador"
+		},
+		"DatabaseField": {
+			"Loading": "Cargando bases de datos...",
+			"Placeholder": "Seleccione una base de datos",
+			"A11y": "Base de datos: {{database}}",
+			"NotSelected": "sin seleccionar"
+		},
+		"DatabaseList": {
+			"Empty": "No se encontraron bases de datos en este servidor."
+		}
+	},
+	"SetPassword": {
+		"PasswordHeader": {
+			"Title": "Defina su contraseña",
+			"Welcome": "Le damos la bienvenida, <name>{{name}}</name>. Cree una contraseña segura y permanente para su primer inicio de sesión."
+		},
+		"SetPasswordScreen": {
+			"NewPassword": "Nueva contraseña",
+			"NewPasswordPlaceholder": "Introduzca su nueva contraseña",
+			"ConfirmPassword": "Confirmar contraseña",
+			"ConfirmPasswordPlaceholder": "Introduzca de nuevo su contraseña",
+			"Matched": "Coincide",
+			"Mismatch": "No coincide"
+		},
+		"StatusLabel": {
+			"Weak": "Débil",
+			"Medium": "Media",
+			"Strong": "Fuerte"
+		},
+		"CriteriaCard": {
+			"Overline": "CRITERIOS DE SEGURIDAD",
+			"Counter": "{{met}}/{{total}} cumplidos",
+			"RuleA11y": "{{label}}: {{state}}",
+			"Met": "cumplido",
+			"NotMet": "no cumplido",
+			"Rules": {
+				"MinLength": "Al menos {{count}} caracteres",
+				"Digit": "Al menos un número",
+				"Uppercase": "Al menos una letra mayúscula"
+			}
+		},
+		"TrustNote": {
+			"Text": "Su contraseña se sincroniza automáticamente con el inicio de sesión único corporativo (SSO) y los quioscos de torniquete."
+		},
+		"SaveButton": {
+			"Save": "Guardar contraseña",
+			"Note": "Después de guardar su contraseña, se le llevará a los pasos de configuración inicial."
+		}
+	},
+	"Modals": {
+		"CheckInFailedModal": {
+			"Title": "No se pudo registrar la entrada",
+			"Message": "Acerque un poco más el teléfono al panel e inténtelo de nuevo.",
+			"HintTitle": "Distancia de contacto",
+			"HintText": "Mantenga el dispositivo quieto a 2-3 cm del logotipo",
+			"UseCode": "Entrar con código",
+			"Support": "Si el problema continúa, comuníquelo a RR. HH."
+		},
+		"CheckInSuccessModal": {
+			"Title": "Entrada registrada",
+			"Subtitle": "Que tenga una buena jornada, {{name}}.",
+			"RecordTime": "HORA DE REGISTRO",
+			"Synced": "Sincronizado con Odoo",
+			"ShiftStatus": "Estado del turno",
+			"EarlyStart": "Inicio anticipado",
+			"LateStart": "Inicio tardío",
+			"OnTimeStart": "Inicio puntual"
+		},
+		"CodeScannerModal": {
+			"CameraActive": "Cámara activa",
+			"Flash": "Flash",
+			"Title": "Escanee el código del panel",
+			"Subtitle": "Coloque el código dentro del marco",
+			"AutoDetecting": "Detección automática",
+			"PermissionTitle": "Se necesita permiso de cámara",
+			"PermissionText": "Permita el acceso a la cámara para escanear el código del panel.",
+			"GrantPermission": "Permitir",
+			"Help": "¿No funciona? Obtener ayuda",
+			"HelpTitle": "Ayuda y consejos",
+			"HelpCaption": "Consejos para escanear más rápido",
+			"Tips": {
+				"Reflection": "Si hay reflejos, incline un poco el dispositivo",
+				"Closer": "Acerque un poco más el dispositivo al panel"
+			},
+			"GotIt": "Entendido"
+		},
+		"NfcPromptModal": {
+			"Ready": "Listo",
+			"KeypadTitle": "Código de acceso rápido",
+			"BackToNfc": "Volver al escaneo NFC",
+			"DigitsEntered": "{{count}} de {{total}} dígitos introducidos",
+			"Delete": "Borrar",
+			"Confirm": "Confirmar",
+			"Scan": "ACERQUE",
+			"Title": "Acerque el teléfono al panel",
+			"Subtitle": "Puede requerirse la huella dactilar para verificar",
+			"UseCode": "¿No funciona? Entrar con código"
+		},
+		"DailyAnnouncementModal": {
+			"Title": "Anuncio del día",
+			"DefaultCategory": "Anuncio",
+			"PageA11y": "Anuncio {{current}} de {{total}}.",
+			"Saving": "Guardando...",
+			"Next": "Siguiente",
+			"Read": "Leído",
+			"Note": "Confirme el anuncio para continuar"
+		},
+		"TodayProgramModal": {
+			"Title": "Su programa de hoy",
+			"EventCount_one": "{{count}} evento",
+			"EventCount_other": "{{count}} eventos",
+			"EventCount_many": "{{count}} eventos",
+			"Now": "Ahora",
+			"Next": "Siguiente",
+			"AllDay": "Todo el día",
+			"RemainingEvents_one": "{{count}} evento más en la página siguiente",
+			"RemainingEvents_other": "{{count}} eventos más en la página siguiente",
+			"RemainingEvents_many": "{{count}} eventos más en la página siguiente",
+			"EmptyTitle": "No hay eventos previstos para hoy",
+			"EmptyText": "No hay reuniones, formaciones ni tareas en su calendario. ¡Que tenga una buena jornada!",
+			"ShiftStatus": "Estado del turno: {{status}}",
+			"Online": "En línea",
+			"Organizer": "Organiza: {{name}}"
+		}
+	},
+	"ExtraConstants": {
+		"Days": {
+			"Sunday": "Domingo",
+			"Monday": "Lunes",
+			"Tuesday": "Martes",
+			"Wednesday": "Miércoles",
+			"Thursday": "Jueves",
+			"Friday": "Viernes",
+			"Saturday": "Sábado"
+		},
+		"ShortDays": {
+			"Sunday": "Dom",
+			"Monday": "Lun",
+			"Tuesday": "Mar",
+			"Wednesday": "Mié",
+			"Thursday": "Jue",
+			"Friday": "Vie",
+			"Saturday": "Sáb"
+		},
+		"Months": {
+			"January": "enero",
+			"February": "febrero",
+			"March": "marzo",
+			"April": "abril",
+			"May": "mayo",
+			"June": "junio",
+			"July": "julio",
+			"August": "agosto",
+			"September": "septiembre",
+			"October": "octubre",
+			"November": "noviembre",
+			"December": "diciembre"
+		},
+		"DateFormats": {
+			"Long": "{{weekday}}, {{day}} de {{month}} de {{year}}",
+			"Short": "{{weekday}}, {{day}} de {{month}}",
+			"Compact": "{{weekday}}, {{day}} de {{month}}",
+			"DayMonth": "{{day}} de {{month}}",
+			"DayMonthYear": "{{day}} de {{month}} de {{year}}"
+		},
+		"Duration": {
+			"HoursMinutes": "{{hours}} h {{minutes}} min",
+			"Minutes": "{{minutes}} min"
+		},
+		"Greetings": {
+			"Morning": "Buenos días",
+			"Afternoon": "Buenas tardes",
+			"Evening": "Buenas noches"
+		},
+		"RelativeTime": {
+			"JustNow": "Ahora mismo",
+			"MinutesAgo": "Hace {{minutes}} min",
+			"HoursAgo": "Hace {{hours}} h",
+			"Yesterday": "Ayer {{time}}"
+		},
+		"Departments": {
+			"Arge": "I+D e ingeniería",
+			"Satis": "Ventas",
+			"Ik": "Recursos Humanos",
+			"Uretim": "Producción y logística",
+			"Pazarlama": "Marketing"
+		},
+		"DepartmentsShort": {
+			"Arge": "I+D",
+			"Satis": "Ventas",
+			"Ik": "RR. HH.",
+			"Uretim": "Producción",
+			"Pazarlama": "Marketing"
+		},
+		"Companies": {
+			"OdooTr": "Odoo Kurumsal A.Ş.",
+			"OdooArge": "Odoo İleri Teknolojiler Ltd."
+		},
+		"ShiftTemplates": {
+			"Standard": "Turno estándar (09:00 – 18:00)",
+			"Flexible": "Horario flexible (09:30 – 18:30)",
+			"Second": "Segundo turno (16:00 – 00:30)"
+		},
+		"AttendanceStatus": {
+			"Inside": "Dentro",
+			"OnBreak": "En pausa",
+			"Outside": "Fuera",
+			"Absent": "Ausente"
+		},
+		"RecordTypes": {
+			"Entry": "Entrada",
+			"Break": "Pausa",
+			"Exit": "Salida"
+		},
+		"RequestStatus": {
+			"Pending": "Pendiente de aprobación",
+			"Approved": "Aprobada",
+			"Rejected": "Rechazada"
+		}
+	},
+	"UI": {
+		"Buttons": {
+			"Back": "Atrás",
+			"Close": "Cerrar",
+			"Login": "Iniciar sesión",
+			"ClearSearch": "Borrar búsqueda",
+			"Retry": "Reintentar",
+			"Ok": "Aceptar",
+			"MarkAllRead": "Marcar todo como visto"
+		},
+		"Accessibility": {
+			"Notifications": "Notificaciones",
+			"Profile": "Perfil"
+		},
+		"Tabs": {
+			"Home": "Inicio",
+			"Schedule": "Estadísticas",
+			"Profile": "Perfil",
+			"Admin": "Gestión"
+		},
+		"NotFound": {
+			"Title": "¡Vaya!",
+			"Text": "Esta pantalla no existe.",
+			"GoHome": "Ir a la pantalla de inicio"
+		},
+		"Common": {
+			"Percent": "{{value}} %"
+		}
+	}
+}

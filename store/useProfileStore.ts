@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { Employee } from './types';
 
-export type Language = 'tr' | 'en' | 'de';
+export type Language = 'tr' | 'en' | 'de' | 'es' | 'pt' | 'fr' | 'ru';
 
 export type ThemeMode = 'light' | 'dark' | 'system';
 
@@ -37,14 +37,18 @@ export const LANGUAGE_OPTIONS: {
 	{ code: 'tr', label: 'Türkçe', description: 'Türkiye', flag: '🇹🇷' },
 	{ code: 'en', label: 'English', description: 'United Kingdom', flag: '🇬🇧' },
 	{ code: 'de', label: 'Deutsch', description: 'Deutschland', flag: '🇩🇪' },
+	{ code: 'es', label: 'Español', description: 'España', flag: '🇪🇸' },
+	{ code: 'pt', label: 'Português', description: 'Portugal', flag: '🇵🇹' },
+	{ code: 'fr', label: 'Français', description: 'France', flag: '🇫🇷' },
+	{ code: 'ru', label: 'Русский', description: 'Россия', flag: '🇷🇺' },
 ];
 
 export const initialProfile: Employee = {
 	fullName: '',
 	jobTitle: '',
-	department: 'arge', // varsayılan DepartmentKey
+	department: '',
 	employeeId: '',
-	company: 'odoo_tr', // varsayılan CompanyKey
+	company: '',
 	avatarUrl: null,
 	remainingLeaveDays: 0,
 	hasPassword: false,
@@ -52,15 +56,15 @@ export const initialProfile: Employee = {
 	email: '',
 	phone: '',
 	startDateKey: '',
-	shiftTemplate: 'standard', // varsayılan ShiftTemplateKey
+	shiftTemplate: 'standard',
 	annualLeaveDays: 0,
-	status: 'absent', // varsayılan AttendanceStatus
+	status: 'absent',
 	createdAt: 0,
 };
 
 const initialState: ProfileState = {
 	profile: initialProfile,
-	preferences: { language: 'tr', theme: 'light' },
+	preferences: { language: 'en', theme: 'light' },
 };
 
 export const useProfileStore = create<ProfileStore>()(

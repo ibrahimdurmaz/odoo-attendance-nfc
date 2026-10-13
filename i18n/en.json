@@ -566,10 +566,10 @@
 			"Subtitle": "Sign in to your account"
 		},
 		"LoginScreen": {
-			"IdentifierLabel": "Employee ID or Email",
-			"IdentifierPlaceholder": "1 or name@company.com",
+			"IdentifierLabel": "Email",
+			"IdentifierPlaceholder": "name@company.com",
 			"PasswordLabel": "Password",
-			"CredentialsErrorTitle": "Incorrect employee ID or password.",
+			"CredentialsErrorTitle": "Incorrect email or password.",
 			"CredentialsErrorMessage": "Check your details and try again.",
 			"ConnectionErrorTitle": "Couldn't reach the server.",
 			"ConnectionErrorMessage": "Check your internet connection and try again.",

@@ -7,7 +7,7 @@ import {
 } from '@/store/useProfileStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { ModalWrapper } from '../Modals/ModalWrapper';
 import { useTranslation } from 'react-i18next';
 
@@ -199,9 +199,11 @@ export const LanguageModal: FC = () => {
 			>
 				<LanguageModalHeader onClose={close} />
 
-				<View
+				{/* Diller küçük ekrana sığmayabilir; liste kendi içinde kayar. */}
+				<ScrollView
 					accessibilityLabel={t('Profile.LanguageModal.AvailableLanguages')}
 					accessibilityRole='radiogroup'
+					contentContainerStyle={modalStyles.listContent}
 					style={modalStyles.list}
 				>
 					{LANGUAGE_OPTIONS.map((option) => (
@@ -214,7 +216,7 @@ export const LanguageModal: FC = () => {
 							onPress={() => selectLanguage(option.code)}
 						/>
 					))}
-				</View>
+				</ScrollView>
 
 				<View style={modalStyles.note}>
 					<MaterialIcons color={colors.primary} name='bolt' size={15} />
@@ -237,7 +239,8 @@ const modalStyles = StyleSheet.create({
 		gap: 16,
 		borderRadius: 16,
 	},
-	list: { gap: 4 },
+	list: { flexGrow: 0, maxHeight: 340 },
+	listContent: { gap: 4 },
 	note: {
 		flexDirection: 'row',
 		alignItems: 'center',

@@ -566,10 +566,10 @@
 			"Subtitle": "Bei Ihrem Konto anmelden"
 		},
 		"LoginScreen": {
-			"IdentifierLabel": "Personalnummer oder E-Mail",
-			"IdentifierPlaceholder": "1 oder name@firma.de",
+			"IdentifierLabel": "E-Mail",
+			"IdentifierPlaceholder": "name@firma.de",
 			"PasswordLabel": "Passwort",
-			"CredentialsErrorTitle": "Personalnummer oder Passwort falsch.",
+			"CredentialsErrorTitle": "E-Mail oder Passwort falsch.",
 			"CredentialsErrorMessage": "Prüfen Sie Ihre Angaben und versuchen Sie es erneut.",
 			"ConnectionErrorTitle": "Server nicht erreichbar.",
 			"ConnectionErrorMessage": "Prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.",

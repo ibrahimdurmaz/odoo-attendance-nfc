@@ -557,10 +557,10 @@
 			"Subtitle": "Hesabınıza giriş yapın"
 		},
 		"LoginScreen": {
-			"IdentifierLabel": "Çalışan Numarası veya E-posta",
-			"IdentifierPlaceholder": "1 veya ad@sirket.com",
+			"IdentifierLabel": "E-posta",
+			"IdentifierPlaceholder": "ad@sirket.com",
 			"PasswordLabel": "Şifre",
-			"CredentialsErrorTitle": "Çalışan Numarası veya şifre hatalı.",
+			"CredentialsErrorTitle": "E-posta veya şifre hatalı.",
 			"CredentialsErrorMessage": "Bilgilerinizi kontrol edip tekrar deneyin.",
 			"ConnectionErrorTitle": "Sunucuya ulaşılamadı.",
 			"ConnectionErrorMessage": "İnternet bağlantınızı kontrol edip tekrar deneyin.",

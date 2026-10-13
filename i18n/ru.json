@@ -1,0 +1,990 @@
+{
+	"Admin": {
+		"AdminScreen": {
+			"Title": "Управление",
+			"Employees": "Сотрудники",
+			"ActiveEmployees_one": "{{count}} активный сотрудник",
+			"ActiveEmployees_few": "{{count}} активных сотрудника",
+			"ActiveEmployees_many": "{{count}} активных сотрудников",
+			"ActiveEmployees_other": "{{count}} активных сотрудников",
+			"PendingBadge": "Ожидают: {{count}}",
+			"CorrectionRequests": "Запросы на исправление",
+			"CorrectionRequestsSubtitle": "Проверка смен и отметок",
+			"ManualApproval": "Ручное подтверждение посещаемости",
+			"ManualApprovalSubtitle": "Проверка рабочего времени."
+		},
+		"SectionIntro": {
+			"Overline": "КОНСОЛЬ УПРАВЛЕНИЯ ODOO",
+			"Title": "Операции и посещаемость"
+		},
+		"AttendanceCard": {
+			"Title": "Посещаемость сегодня",
+			"Shift": "Смена: {{hours}}",
+			"AttendanceRate": "Уровень посещаемости",
+			"AttendanceRateA11y": "Уровень посещаемости {{rate}} процентов",
+			"Target": "Цель: {{percent}} %",
+			"Staff": "{{present}} / {{total}} сотрудников",
+			"Approved": "Подтверждено",
+			"Waiting": "Ожидаются",
+			"NoEntry": "Нет входа",
+			"ActiveBreak": "На перерыве"
+		},
+		"AttendanceTile": {
+			"Persons": "чел.",
+			"A11y": "{{label}}: {{count}} чел., {{caption}}"
+		},
+		"AddEmployeeButton": {
+			"Label": "Добавить сотрудника"
+		}
+	},
+	"Home": {
+		"Header": {
+			"Brand": "ODOO",
+			"Title": "Главная"
+		},
+		"StatusBadge": {
+			"NotCheckedIn": "Вход не отмечен",
+			"Working": "Вы работаете",
+			"OnBreak": "Вы на перерыве",
+			"Completed": "День завершён"
+		},
+		"Activities": {
+			"CheckIn": "Вход",
+			"Break": "Перерыв",
+			"BreakDuration": "Отдых {{duration}}",
+			"InProgress": "Продолжается",
+			"ActiveWork": "Текущая смена",
+			"Now": "Сейчас",
+			"CheckOut": "Выход"
+		},
+		"Actions": {
+			"CheckIn": "Отметить вход",
+			"StartBreak": "Начать перерыв",
+			"CheckOut": "Отметить выход",
+			"EndBreak": "Завершить перерыв",
+			"FinishAndCheckOut": "Завершить смену и отметить выход"
+		},
+		"InfoTiles": {
+			"PlannedShift": "Плановая смена",
+			"UsedBreak": "Использовано перерыва",
+			"LimitExceeded": "Лимит превышен",
+			"WithinLimit": "В пределах лимита"
+		},
+		"TodaysActivities": {
+			"Title": "События за сегодня",
+			"RecordCount_one": "{{count}} запись",
+			"RecordCount_few": "{{count}} записи",
+			"RecordCount_many": "{{count}} записей",
+			"RecordCount_other": "{{count}} записей",
+			"EmptyTitle": "Пока нет событий",
+			"EmptyText": "После отметки входа здесь появятся начало смены, перерывы и их длительность."
+		},
+		"StatsBlock": {
+			"TotalNetWork": "ЧИСТОЕ РАБОЧЕЕ ВРЕМЯ",
+			"Overtime": "+{{duration}} переработки",
+			"Undertime": "Недоработка {{duration}}",
+			"Target": "Цель",
+			"TargetHours": "8 часов",
+			"Completed": "Выполнено",
+			"TotalBreak": "Всего перерывов",
+			"WorkPaused": "Рабочее время на паузе: {{duration}}",
+			"BreakTime": "Время перерыва",
+			"ElapsedTime": "Прошло времени",
+			"TargetValue": "Цель: {{duration}}",
+			"PercentCompleted": "Выполнено {{percent}}",
+			"BreakStartedAt": "Начало {{time}}",
+			"TargetShift": "Целевая смена",
+			"RemainingTime": "Осталось",
+			"BreakAllowance": "Норма перерыва"
+		},
+		"FarewellCard": {
+			"Title": "До завтра, {{name}}.",
+			"Text": "Спасибо за сегодняшнюю работу. Не забудьте отдохнуть!"
+		},
+		"Checkpoint": "Терминал главного входа"
+	},
+	"Profile": {
+		"Header": {
+			"Title": "Профиль"
+		},
+		"IdCard": {
+			"Active": "АКТИВЕН",
+			"EmployeeIdLabel": "ТАБЕЛЬНЫЙ НОМЕР",
+			"StaffId": "Удостоверение сотрудника"
+		},
+		"SecurityNote": {
+			"Text": "Ваше удостоверение действует только на этом телефоне"
+		},
+		"StatsSection": {
+			"Title": "Рабочее время и отпуск",
+			"RemainingLeave": "Остаток ежегодного отпуска",
+			"AnnualEntitlement": "Положено в год",
+			"Days": "Дней",
+			"OvertimeThisMonth": "Переработка за месяц",
+			"RecordedThisMonth_one": "В этом месяце учтён {{count}} день",
+			"RecordedThisMonth_few": "В этом месяце учтено {{count}} дня",
+			"RecordedThisMonth_many": "В этом месяце учтено {{count}} дней",
+			"RecordedThisMonth_other": "В этом месяце учтено {{count}} дней"
+		},
+		"SettingsSection": {
+			"Title": "Настройки",
+			"Language": "Язык",
+			"LanguageA11y": "Язык: {{language}}",
+			"Appearance": "Оформление",
+			"Light": "Светлое",
+			"Dark": "Тёмное"
+		},
+		"LogoutSection": {
+			"Logout": "Выйти",
+			"SignedInAs": "Вы вошли как {{name}}"
+		},
+		"LoggedOutView": {
+			"Title": "Вы вышли из аккаунта",
+			"Text": "Войдите, чтобы увидеть свой профиль."
+		},
+		"LanguageModal": {
+			"Title": "Выбор языка",
+			"AvailableLanguages": "Доступные языки",
+			"AppliedImmediately": "Выбор применяется сразу."
+		}
+	},
+	"Schedule": {
+		"ScheduleScreen": {
+			"Brand": "ODOO",
+			"Title": "График",
+			"Filters": {
+				"Week": "Эта неделя",
+				"Month": "Последние 30 дней",
+				"Overtime": "Переработка",
+				"Undertime": "Недоработка"
+			},
+			"RecordDetails": "Детали записей",
+			"RecordCount_one": "{{count}} запись",
+			"RecordCount_few": "{{count}} записи",
+			"RecordCount_many": "{{count}} записей",
+			"RecordCount_other": "{{count}} записей",
+			"EmptyTitle": "Записи не найдены",
+			"EmptyText": "Здесь отображаются дни, в которые вы завершили смену."
+		},
+		"WeeklySummary": {
+			"Title": "Рабочее время за неделю",
+			"Target": "/ {{hours}} ч",
+			"Remaining": "Осталось {{duration}}",
+			"DaysRecorded_one": "Учтён {{count}} день",
+			"DaysRecorded_few": "Учтено {{count}} дня",
+			"DaysRecorded_many": "Учтено {{count}} дней",
+			"DaysRecorded_other": "Учтено {{count}} дней",
+			"WeeklyQuota": "Недельная норма: {{hours}} ч"
+		},
+		"WeeksDays": {
+			"Title": "Ход этой недели",
+			"Today": "Сегодня",
+			"SameMonthRange": "{{start}} - {{end}}"
+		},
+		"DayCard": {
+			"A11y": "{{date}}, детали дня",
+			"PendingCorrection": "Ожидает исправления",
+			"Completed": "Завершено",
+			"Net": "Чистое:"
+		}
+	},
+	"AddEmployee": {
+		"AddEmployeeScreen": {
+			"Title": "Новый сотрудник",
+			"PersonalInfo": "Личные данные",
+			"FirstName": "Имя",
+			"FirstNamePlaceholder": "напр. Анна",
+			"LastName": "Фамилия",
+			"LastNamePlaceholder": "напр. Иванова",
+			"CorporateEmail": "Корпоративная почта",
+			"EmailPlaceholder": "name@odoo.com",
+			"PhoneNumber": "Номер телефона",
+			"PhonePlaceholder": "+90 5XX XXX XX XX",
+			"JobInfo": "Сведения о работе",
+			"EmployeeId": "Табельный номер",
+			"AutoGenerated": "Создаётся автоматически",
+			"JobTitle": "Должность",
+			"JobTitlePlaceholder": "напр. Старший инженер-программист",
+			"Department": "Отдел",
+			"Company": "Компания",
+			"StartDate": "Дата приёма на работу",
+			"DatePlaceholder": "ДД.ММ.ГГГГ",
+			"WorkSchedule": "Режим работы",
+			"ShiftTemplate": "Шаблон смены",
+			"AnnualLeave": "Ежегодный отпуск (дней)",
+			"WorkDays": "Рабочих дней",
+			"AccessAndRole": "Доступ и роль",
+			"PasswordInfo": "При создании учётной записи система сгенерирует одноразовый временный пароль и автоматически отправит его на электронную почту сотрудника.",
+			"CreateFailedTitle": "Не удалось создать сотрудника",
+			"NoDepartment": "Без отдела",
+			"DefaultWorkSchedule": "График компании по умолчанию"
+		},
+		"FormStrip": {
+			"Overline": "МОДУЛЬ HR • НОВЫЙ ПРОФИЛЬ",
+			"AdminPermission": "Права администратора"
+		},
+		"PhotoPicker": {
+			"AddPhoto": "Добавить фото",
+			"ChangePhoto": "Изменить фото",
+			"SelectImage": "Выбрать изображение",
+			"Remove": "Удалить",
+			"Failed": "Не удалось выбрать фото. Попробуйте ещё раз.",
+			"Hint": "Выберите портрет из галереи устройства (PNG, JPG)"
+		},
+		"RoleSegment": {
+			"Employee": "Сотрудник",
+			"Admin": "Админ"
+		},
+		"IntegrationCard": {
+			"Title": "Интеграция с турникетом и киоском Odoo",
+			"Text": "После сохранения станет доступна привязка карты NFC/RFID."
+		},
+		"BottomActionBar": {
+			"Errors": "Есть незаполненные или неверные поля. Проверьте их.",
+			"Cancel": "Отмена",
+			"CreateEmployee": "Создать сотрудника"
+		},
+		"Validation": {
+			"Required": "Обязательное поле",
+			"InvalidEmail": "Введите корректный адрес почты",
+			"InvalidPhone": "Введите корректный номер с кодом страны (напр. +7 912 345 67 89)",
+			"EmployeeIdTaken": "Этот табельный номер уже используется",
+			"DateFormat": "Введите в формате ДД.ММ.ГГГГ",
+			"LeaveRange": "Должно быть от 0 до {{max}}"
+		},
+		"EmployeeCreatedModal": {
+			"NfcCard": "Карта NFC / RFID",
+			"AwaitingPairing": "Ожидает привязки",
+			"EmailInvite": "Приглашение по почте",
+			"Sent": "Отправлено"
+		},
+		"SuccessHero": {
+			"Pill": "Справочник HR в Odoo обновлён",
+			"Title": "Сотрудник успешно создан",
+			"Text": "Запись в системе создана, ключи аутентификации сгенерированы."
+		},
+		"TemporaryPasswordCard": {
+			"Title": "Временный пароль",
+			"FirstLoginTag": "Для первого входа",
+			"OneTimeCode": "Одноразовый код",
+			"Copy": "Копировать",
+			"CopyA11y": "Скопировать пароль",
+			"Copied": "Скопировано",
+			"Notice": "Передайте этот пароль сотруднику безопасным способом. При первом входе он должен будет задать новый пароль."
+		},
+		"CreatedActions": {
+			"AddAnother": "Добавить сотрудника",
+			"BackToList": "К списку сотрудников"
+		}
+	},
+	"CorrectionRequest": {
+		"CorrectionRequestsScreen": {
+			"Title": "Запросы на исправление",
+			"NoMatchTitle": "Подходящих запросов нет",
+			"NoMatchText": "Запросы по указанному сотруднику или дате не найдены.",
+			"EmptyTitle": "Нет запросов: {{status}}",
+			"EmptyText": "Здесь отображаются запросы на исправление от сотрудников."
+		},
+		"StatusSegments": {
+			"Pending": "Ожидают",
+			"Approved": "Одобрены",
+			"Rejected": "Отклонены",
+			"SegmentA11y_one": "{{label}}, {{count}} запрос",
+			"SegmentA11y_few": "{{label}}, {{count}} запроса",
+			"SegmentA11y_many": "{{label}}, {{count}} запросов",
+			"SegmentA11y_other": "{{label}}, {{count}} запросов"
+		},
+		"RequestSearchBar": {
+			"Placeholder": "Поиск по имени или дате...",
+			"A11y": "Поиск по имени сотрудника или дате"
+		},
+		"RequestCard": {
+			"Summary": "{{date}} • Отметка: {{recordType}}"
+		},
+		"TimeChange": {
+			"A11y": "Сейчас: {{current}}, запрошено: {{requested}}",
+			"NoRecord": "Нет записи"
+		},
+		"ResultBanner": {
+			"Approved": "Запрос одобрен",
+			"Rejected": "Запрос отклонён",
+			"Text": "Уведомление о результате создано для: {{name}}.",
+			"DismissA11y": "Закрыть уведомление"
+		}
+	},
+	"CorrectionRequestDetail": {
+		"CorrectionRequestDetailScreen": {
+			"Title": "Детали запроса",
+			"NotFound": "Запрос не найден."
+		},
+		"RequestSummaryCard": {
+			"ToCorrect": "Исправить: {{recordType}}",
+			"CurrentStatus": "Текущее состояние",
+			"RecordedTime": "Записанное время",
+			"MissingTimestamp": "Отметка времени отсутствует",
+			"NoRecord": "Нет записи",
+			"Requested": "Запрошено",
+			"RequestedCaptions": {
+				"Entry": "Время начала смены",
+				"Break": "Время начала перерыва",
+				"Exit": "Время окончания смены"
+			}
+		},
+		"ReasonQuote": {
+			"Label": "Причина"
+		},
+		"ImpactNote": {
+			"Title": "Анализ влияния",
+			"Text": "После одобрения чистое время составит <strong>{{duration}}</strong>. {{conclusion}}",
+			"CompletesTarget": "Цель {{duration}} будет выполнена.",
+			"BelowTarget": "До цели не хватит {{duration}}.",
+			"NoRecord": "Влияние нельзя рассчитать: за этот день нет записей."
+		},
+		"ResolvedNote": {
+			"Title": "Результат",
+			"ManagerNote": "Комментарий руководителя: {{note}}"
+		},
+		"DayTimelineCard": {
+			"Title": "Записи за этот день",
+			"CheckIn": "Вход",
+			"Break": "Перерыв",
+			"CheckOut": "Выход",
+			"RecordNotFound": "Запись не найдена",
+			"Empty": "За этот день записей не найдено."
+		},
+		"TimelineRow": {
+			"UnderReview": "Запрошено исправление"
+		},
+		"DecisionBar": {
+			"Reject": "Отклонить",
+			"Approve": "Одобрить"
+		},
+		"RejectModalHeader": {
+			"Title": "Отклонить запрос",
+			"Info": "Причина отклонения будет отправлена сотруднику в уведомлении."
+		},
+		"TemplateChips": {
+			"Label": "Быстрые шаблоны:",
+			"AddA11y": "Добавить шаблон: {{template}}",
+			"Templates": {
+				"Mismatch": "Не совпадает с записями.",
+				"MoreInfo": "Нужно больше сведений.",
+				"Timeout": "Срок истёк."
+			}
+		},
+		"RejectReasonField": {
+			"Label": "Причина",
+			"A11y": "Причина отклонения",
+			"Placeholder": "Напишите причину отклонения для сотрудника..."
+		},
+		"RejectActions": {
+			"Submit": "Отправить отказ",
+			"Cancel": "Отмена"
+		}
+	},
+	"DayDetails": {
+		"DayDetailHeader": {
+			"Title": "Детали дня"
+		},
+		"DayDetailScreen": {
+			"NotFound": "За этот день записей не найдено",
+			"PendingCorrection": "Ожидает исправления",
+			"Completed": "Завершено",
+			"Timeline": "Хронология",
+			"EventCount_one": "Записано {{count}} событие",
+			"EventCount_few": "Записано {{count}} события",
+			"EventCount_many": "Записано {{count}} событий",
+			"EventCount_other": "Записано {{count}} событий",
+			"LocationTerminal": "МЕСТО И ТЕРМИНАЛ",
+			"UnknownLocation": "Местоположение недоступно",
+			"RequestCorrection": "Запросить исправление",
+			"Events": {
+				"Break": "Перерыв",
+				"BreakDuration": "Отдых {{duration}}",
+				"ShiftStart": "Начало смены",
+				"CheckInRecorded": "Вход отмечен",
+				"ShiftEnd": "Конец смены",
+				"ShiftCompleted": "Дневная смена завершена"
+			}
+		},
+		"StateBand": {
+			"Pending": "Запрос на исправление ожидает одобрения: {{recordType}} → {{time}}",
+			"Complete": "Все события дня записаны полностью"
+		},
+		"Summary": {
+			"TotalNetWork": "ЧИСТОЕ РАБОЧЕЕ ВРЕМЯ",
+			"Overtime": "+{{duration}} переработки",
+			"Undertime": "Недоработка {{duration}}",
+			"WorkedA11y": "{{hours}} ч {{minutes}} мин",
+			"Hours": "ч",
+			"Minutes": "мин",
+			"Planned": "По плану: {{hours}} ({{duration}})"
+		},
+		"CorrectionRequestModal": {
+			"Title": "Запросить исправление",
+			"Description": "Если вы считаете, что в записях есть пропуски или ошибки, создайте запрос.",
+			"WhichRecord": "Какая запись?",
+			"CorrectTime": "Правильное время",
+			"OriginalRecord": "Исходная запись: ",
+			"None": "нет",
+			"SuggestedCorrection": "Предлагаемое исправление",
+			"Hour": "Часы",
+			"Minute": "Мин",
+			"Increase": "Увеличить: {{label}}",
+			"Decrease": "Уменьшить: {{label}}",
+			"Reason": "Причина",
+			"ReasonA11y": "Причина исправления",
+			"ReasonPlaceholder": "Кратко укажите причину...",
+			"Note": "Запрос отправляется вашему руководителю. После одобрения график обновится автоматически.",
+			"Submit": "Отправить запрос",
+			"Cancel": "Отмена"
+		}
+	},
+	"EditEmployee": {
+		"EditEmployeeScreen": {
+			"Title": "Редактирование сотрудника",
+			"NotFound": "Сотрудник не найден."
+		},
+		"EditEmployeeForm": {
+			"PersonalInfo": "Личные данные",
+			"FirstName": "Имя",
+			"LastName": "Фамилия",
+			"Email": "Эл. почта",
+			"Phone": "Телефон",
+			"PhonePlaceholder": "+90 5XX XXX XX XX",
+			"JobInfo": "Сведения о работе",
+			"EmployeeId": "Табельный номер",
+			"EmployeeIdLocked": "Табельный номер нельзя изменить",
+			"JobTitle": "Должность",
+			"Department": "Отдел",
+			"Company": "Компания",
+			"StartDate": "Дата приёма на работу",
+			"DatePlaceholder": "ДД.ММ.ГГГГ",
+			"WorkSchedule": "Режим работы",
+			"Shift": "Смена",
+			"AnnualLeave": "Ежегодный отпуск",
+			"WorkDays": "Рабочих дней",
+			"Account": "Учётная запись",
+			"SaveChanges": "Сохранить изменения"
+		},
+		"AccountStatusSwitch": {
+			"Title": "Состояние учётной записи",
+			"Active": "Активна",
+			"Passive": "Неактивна"
+		},
+		"DangerZone": {
+			"Title": "Отключение учётной записи",
+			"Text": "После отключения сотрудник не сможет входить в систему и будет скрыт из списков смен.",
+			"Deactivate": "Отключить сотрудника"
+		},
+		"DeactivateEmployeeModal": {
+			"Title": "Отключить: {{name}}?",
+			"Text": "Сотрудник не сможет войти в приложение и отмечать вход и выход на терминале. Прошлые записи сохранятся.",
+			"Confirm": "Отключить",
+			"Cancel": "Отмена",
+			"Note": "Вы можете снова включить учётную запись в любой момент"
+		}
+	},
+	"EmployeeDetail": {
+		"EmployeeDetailScreen": {
+			"Title": "Сведения о сотруднике",
+			"NotFound": "Сотрудник не найден."
+		},
+		"DetailStrip": {
+			"Overline": "УПРАВЛЕНИЕ ПРОФИЛЕМ",
+			"EditA11y": "Редактировать профиль",
+			"Edit": "Изменить"
+		},
+		"PresencePill": {
+			"Passive": "Неактивен"
+		},
+		"AccountStatePill": {
+			"Active": "Активен",
+			"Passive": "Неактивен"
+		},
+		"TodaySection": {
+			"Title": "Сегодня",
+			"CheckIn": "Вход",
+			"NetWork": "Чистое время",
+			"WorkStatus": "Рабочий статус",
+			"Passive": "Неактивен"
+		},
+		"WorkStates": {
+			"Inside": "Работает",
+			"OnBreak": "На перерыве",
+			"Outside": "Вне смены",
+			"Absent": "Не пришёл"
+		},
+		"PersonalSection": {
+			"Title": "Личные данные",
+			"Email": "Эл. почта",
+			"Phone": "Телефон"
+		},
+		"JobSection": {
+			"Title": "Сведения о работе",
+			"EmployeeId": "Табельный номер",
+			"Department": "Отдел",
+			"Company": "Компания",
+			"StartDate": "Принят на работу"
+		},
+		"ScheduleSection": {
+			"Title": "Режим работы",
+			"Shift": "Смена",
+			"AnnualLeave": "Ежегодный отпуск",
+			"RemainingLeave": "Остаток отпуска",
+			"Days_one": "{{count}} день",
+			"Days_few": "{{count}} дня",
+			"Days_many": "{{count}} дней",
+			"Days_other": "{{count}} дней"
+		},
+		"AccountSection": {
+			"Title": "Учётная запись",
+			"UserRole": "Роль пользователя",
+			"Admin": "Админ",
+			"Employee": "Сотрудник",
+			"AccountStatus": "Состояние учётной записи"
+		},
+		"DetailActions": {
+			"ResetPassword": "Сбросить пароль",
+			"ViewSchedule": "Открыть график"
+		}
+	},
+	"EmployeeList": {
+		"EmployeeListScreen": {
+			"Title": "Список сотрудников",
+			"EmptyTitle": "Сотрудников пока нет",
+			"EmptyText": "Создайте первого сотрудника кнопкой «Добавить».",
+			"NoMatchTitle": "Подходящих сотрудников нет",
+			"NoMatchText": "По указанному имени или табельному номеру ничего не найдено. Попробуйте сбросить фильтры."
+		},
+		"ListStrip": {
+			"Overline": "СПРАВОЧНИК И ПОСЕЩАЕМОСТЬ ОНЛАЙН",
+			"AddNew": "Добавить",
+			"AddEmployeeA11y": "Добавить сотрудника"
+		},
+		"SearchBar": {
+			"Placeholder": "Поиск по имени или таб. номеру...",
+			"A11y": "Поиск по имени или табельному номеру"
+		},
+		"DepartmentChips": {
+			"All": "Все",
+			"ChipA11y_one": "{{label}}, {{count}} сотрудник",
+			"ChipA11y_few": "{{label}}, {{count}} сотрудника",
+			"ChipA11y_many": "{{label}}, {{count}} сотрудников",
+			"ChipA11y_other": "{{label}}, {{count}} сотрудников"
+		},
+		"MetricBar": {
+			"ActivePresence": "Сейчас на месте",
+			"TotalPersons": "/ {{total}} чел."
+		}
+	},
+	"Login": {
+		"BrandHeader": {
+			"Title": "Odoo Посещаемость",
+			"Subtitle": "Войдите в свою учётную запись"
+		},
+		"LoginScreen": {
+			"IdentifierLabel": "Эл. почта",
+			"IdentifierPlaceholder": "name@company.com",
+			"PasswordLabel": "Пароль",
+			"CredentialsErrorTitle": "Неверная почта или пароль.",
+			"CredentialsErrorMessage": "Проверьте данные и попробуйте ещё раз.",
+			"ConnectionErrorTitle": "Сервер недоступен.",
+			"ConnectionErrorMessage": "Проверьте подключение к интернету и попробуйте ещё раз.",
+			"ForgotPassword": "Забыли пароль?"
+		},
+		"AuthTextField": {
+			"ShowPassword": "Показать пароль",
+			"HidePassword": "Скрыть пароль"
+		},
+		"SubmitButton": {
+			"LoggingIn": "Выполняется вход..."
+		},
+		"SupportNote": {
+			"Text": "Нет учётной записи? Обратитесь в отдел кадров."
+		}
+	},
+	"Notification": {
+		"NotificationsHeader": {
+			"Title": "Уведомления"
+		},
+		"NotificationsScreen": {
+			"Count_one": "{{count}} новое уведомление",
+			"Count_few": "{{count}} новых уведомления",
+			"Count_many": "{{count}} новых уведомлений",
+			"Count_other": "{{count}} новых уведомлений"
+		},
+		"NotificationsEmptyState": {
+			"Title": "Новых уведомлений нет",
+			"Text": "Когда ваши запросы на исправление одобрят или отклонят, результат появится здесь.",
+			"PendingTitle": "Нет ожидающих запросов",
+			"PendingText": "Новые запросы на исправление от сотрудников появятся здесь.",
+			"ReviewedTitle": "Сегодня запросы не рассматривались",
+			"ReviewedText": "Здесь отображаются запросы, которые вы одобрили или отклонили сегодня.",
+			"ShowReviewed": "Рассмотренные сегодня ({{count}})"
+		},
+		"NotificationCard": {
+			"A11y": "{{date}}, запрос на исправление отметки «{{recordType}}» {{result}}",
+			"ApprovedResult": "одобрен",
+			"RejectedResult": "отклонён",
+			"Updated": "Время отметки «{{recordType}}» изменено на {{time}}",
+			"ManagerNote": "Комментарий руководителя: {{note}}",
+			"NotSpecified": "Не указано"
+		},
+		"ResultBadge": {
+			"Approved": "Одобрено",
+			"Rejected": "Отклонено"
+		},
+		"Pagination": {
+			"Previous": "Назад",
+			"Next": "Далее",
+			"PreviousA11y": "Предыдущая страница",
+			"NextA11y": "Следующая страница"
+		},
+		"NotificationTabs": {
+			"Pending": "Ожидают",
+			"ReviewedToday": "Рассмотрены сегодня"
+		},
+		"TabInfo": {
+			"ChangeOnlyToday": "Решения можно изменить только <strong>сегодня</strong>.",
+			"PendingCount_one": "{{count}} запрос ожидает рассмотрения",
+			"PendingCount_few": "{{count}} запроса ожидают рассмотрения",
+			"PendingCount_many": "{{count}} запросов ожидают рассмотрения",
+			"PendingCount_other": "{{count}} запросов ожидают рассмотрения"
+		},
+		"RequestCard": {
+			"RejectionReason": "Причина: {{reason}}",
+			"Reject": "Отклонить",
+			"Approve": "Одобрить",
+			"Reviewed": "Рассмотрено • {{time}}",
+			"ChangeDecision": "Изменить решение"
+		},
+		"RecordChange": {
+			"Title": "Отметка: {{recordType}} • {{date}}",
+			"A11y": "Сейчас: {{current}}, запрошено: {{requested}}",
+			"NoRecord": "Нет записи"
+		},
+		"DecisionSummary": {
+			"RejectTitle": "Отклонить запрос?",
+			"ChangeTitle": "Изменить решение?",
+			"RejectText": "Запрос сотрудника <strong>{{name}}</strong> будет <rejected>отклонён</rejected>.",
+			"ChangeText": "Статус запроса сотрудника <strong>{{name}}</strong> изменится с «<from>{{from}}</from>» на «<to>{{to}}</to>».",
+			"ShortStatus": {
+				"Pending": "Ожидает",
+				"Approved": "Одобрено",
+				"Rejected": "Отказ"
+			}
+		},
+		"DecisionActions": {
+			"Reject": "Отклонить",
+			"ChangeDecision": "Изменить решение",
+			"Cancel": "Отмена"
+		},
+		"ReasonField": {
+			"Label": "Причина",
+			"Required": "Обязательно",
+			"A11y": "Причина отклонения",
+			"Placeholder": "Напишите причину отклонения...",
+			"TemplatesLabel": "Быстрые шаблоны",
+			"Templates": {
+				"Mismatch": "Не совпадает с записью",
+				"WrongTime": "Неверно указано время",
+				"MoreInfo": "Нужно больше сведений"
+			}
+		},
+		"ResultToast": {
+			"Approved": "Запрос одобрен.",
+			"Rejected": "Запрос отклонён."
+		}
+	},
+	"EmployeeSchedule": {
+		"ScheduleScreen": {
+			"Overline": "ГРАФИК СОТРУДНИКА",
+			"EmptyText": "Здесь отображаются дни, в которые сотрудник завершил смену."
+		}
+	},
+	"ServerSetup": {
+		"SetupHeading": {
+			"Title": "Вход",
+			"Subtitle": "Настройте подключение к серверу"
+		},
+		"ServerSetupScreen": {
+			"ServerDomain": "Домен сервера",
+			"Errors": {
+				"InvalidAddressTitle": "Неверный адрес сервера",
+				"InvalidAddressMessage": "Введите адрес в виде \"odoo.company.com\", без пробелов и пути.",
+				"UnreachableTitle": "Не удалось подключиться к серверу",
+				"UnreachableMessage": "Проверьте адрес и подключение к интернету."
+			},
+			"Server": "Сервер"
+		},
+		"ServerInputCard": {
+			"ProtocolA11y": "Выбор протокола: {{protocol}}",
+			"AddressA11y": "Адрес сервера",
+			"Placeholder": "Введите адрес сервера",
+			"ClearA11y": "Очистить поле"
+		},
+		"ConnectionHint": {
+			"Secure": "Зашифрованное соединение (HTTPS)",
+			"Insecure": "Незашифрованное соединение (HTTP)",
+			"Port": "Порт {{port}}"
+		},
+		"SubmitButton": {
+			"Connecting": "Подключение...",
+			"Retry": "Повторить",
+			"Next": "Далее"
+		},
+		"HelperNote": {
+			"Text": "Адрес сервера можно узнать у администратора"
+		},
+		"DatabaseField": {
+			"Loading": "Загрузка баз данных...",
+			"Placeholder": "Выберите базу данных",
+			"A11y": "База данных: {{database}}",
+			"NotSelected": "не выбрана"
+		},
+		"DatabaseList": {
+			"Empty": "На этом сервере базы данных не найдены."
+		}
+	},
+	"SetPassword": {
+		"PasswordHeader": {
+			"Title": "Задайте пароль",
+			"Welcome": "Добро пожаловать, <name>{{name}}</name>. Создайте надёжный постоянный пароль для первого входа."
+		},
+		"SetPasswordScreen": {
+			"NewPassword": "Новый пароль",
+			"NewPasswordPlaceholder": "Введите новый пароль",
+			"ConfirmPassword": "Повторите пароль",
+			"ConfirmPasswordPlaceholder": "Введите пароль ещё раз",
+			"Matched": "Совпадает",
+			"Mismatch": "Не совпадает"
+		},
+		"StatusLabel": {
+			"Weak": "Слабый",
+			"Medium": "Средний",
+			"Strong": "Надёжный"
+		},
+		"CriteriaCard": {
+			"Overline": "ТРЕБОВАНИЯ БЕЗОПАСНОСТИ",
+			"Counter": "Выполнено {{met}}/{{total}}",
+			"RuleA11y": "{{label}}: {{state}}",
+			"Met": "выполнено",
+			"NotMet": "не выполнено",
+			"Rules": {
+				"MinLength": "Не менее {{count}} символов",
+				"Digit": "Хотя бы одна цифра",
+				"Uppercase": "Хотя бы одна заглавная буква"
+			}
+		},
+		"TrustNote": {
+			"Text": "Пароль автоматически синхронизируется с корпоративным единым входом (SSO) и киосками турникетов."
+		},
+		"SaveButton": {
+			"Save": "Сохранить пароль",
+			"Note": "После сохранения пароля вы перейдёте к шагам первоначальной настройки."
+		}
+	},
+	"Modals": {
+		"CheckInFailedModal": {
+			"Title": "Не удалось отметить вход",
+			"Message": "Поднесите телефон чуть ближе к терминалу и попробуйте ещё раз.",
+			"HintTitle": "Расстояние касания",
+			"HintText": "Держите устройство неподвижно в 2–3 см от логотипа",
+			"UseCode": "Войти по коду",
+			"Support": "Если проблема не исчезнет, сообщите в отдел кадров."
+		},
+		"CheckInSuccessModal": {
+			"Title": "Вход отмечен",
+			"Subtitle": "Хорошего рабочего дня, {{name}}.",
+			"RecordTime": "ВРЕМЯ ОТМЕТКИ",
+			"Synced": "Передано в Odoo",
+			"ShiftStatus": "Статус смены",
+			"EarlyStart": "Раннее начало",
+			"LateStart": "Позднее начало",
+			"OnTimeStart": "Начало вовремя"
+		},
+		"CodeScannerModal": {
+			"CameraActive": "Камера включена",
+			"Flash": "Вспышка",
+			"Title": "Отсканируйте код терминала",
+			"Subtitle": "Поместите код в рамку",
+			"AutoDetecting": "Автоматическое распознавание",
+			"PermissionTitle": "Нужен доступ к камере",
+			"PermissionText": "Разрешите доступ к камере, чтобы отсканировать код на терминале.",
+			"GrantPermission": "Разрешить",
+			"Help": "Не работает? Получить помощь",
+			"HelpTitle": "Помощь и советы",
+			"HelpCaption": "Советы для быстрого сканирования",
+			"Tips": {
+				"Reflection": "Если есть блики, слегка измените угол",
+				"Closer": "Поднесите устройство чуть ближе к терминалу"
+			},
+			"GotIt": "Понятно"
+		},
+		"NfcPromptModal": {
+			"Ready": "Готово",
+			"KeypadTitle": "Код быстрого доступа",
+			"BackToNfc": "Вернуться к NFC",
+			"DigitsEntered": "Введено цифр: {{count}} из {{total}}",
+			"Delete": "Удалить",
+			"Confirm": "Подтвердить",
+			"Scan": "ПРИЛОЖИТЕ",
+			"Title": "Поднесите телефон к терминалу",
+			"Subtitle": "Для подтверждения может потребоваться отпечаток пальца",
+			"UseCode": "Не работает? Войти по коду"
+		},
+		"DailyAnnouncementModal": {
+			"Title": "Объявление дня",
+			"DefaultCategory": "Объявление",
+			"PageA11y": "Объявление {{current}} из {{total}}.",
+			"Saving": "Сохранение...",
+			"Next": "Далее",
+			"Read": "Прочитано",
+			"Note": "Чтобы продолжить, подтвердите объявление"
+		},
+		"TodayProgramModal": {
+			"Title": "Ваша программа на сегодня",
+			"EventCount_one": "{{count}} событие",
+			"EventCount_few": "{{count}} события",
+			"EventCount_many": "{{count}} событий",
+			"EventCount_other": "{{count}} событий",
+			"Now": "Сейчас",
+			"Next": "Далее",
+			"AllDay": "Весь день",
+			"RemainingEvents_one": "На следующей странице ещё {{count}} событие",
+			"RemainingEvents_few": "На следующей странице ещё {{count}} события",
+			"RemainingEvents_many": "На следующей странице ещё {{count}} событий",
+			"RemainingEvents_other": "На следующей странице ещё {{count}} событий",
+			"EmptyTitle": "На сегодня событий не запланировано",
+			"EmptyText": "В вашем календаре нет встреч, обучения или задач. Хорошего рабочего дня!",
+			"ShiftStatus": "Статус смены: {{status}}",
+			"Online": "Онлайн",
+			"Organizer": "Организатор: {{name}}"
+		}
+	},
+	"ExtraConstants": {
+		"Days": {
+			"Sunday": "Воскресенье",
+			"Monday": "Понедельник",
+			"Tuesday": "Вторник",
+			"Wednesday": "Среда",
+			"Thursday": "Четверг",
+			"Friday": "Пятница",
+			"Saturday": "Суббота"
+		},
+		"ShortDays": {
+			"Sunday": "Вс",
+			"Monday": "Пн",
+			"Tuesday": "Вт",
+			"Wednesday": "Ср",
+			"Thursday": "Чт",
+			"Friday": "Пт",
+			"Saturday": "Сб"
+		},
+		"Months": {
+			"January": "января",
+			"February": "февраля",
+			"March": "марта",
+			"April": "апреля",
+			"May": "мая",
+			"June": "июня",
+			"July": "июля",
+			"August": "августа",
+			"September": "сентября",
+			"October": "октября",
+			"November": "ноября",
+			"December": "декабря"
+		},
+		"DateFormats": {
+			"Long": "{{weekday}}, {{day}} {{month}} {{year}} г.",
+			"Short": "{{weekday}}, {{day}} {{month}}",
+			"Compact": "{{weekday}}, {{day}} {{month}}",
+			"DayMonth": "{{day}} {{month}}",
+			"DayMonthYear": "{{day}} {{month}} {{year}} г."
+		},
+		"Duration": {
+			"HoursMinutes": "{{hours}} ч {{minutes}} мин",
+			"Minutes": "{{minutes}} мин"
+		},
+		"Greetings": {
+			"Morning": "Доброе утро",
+			"Afternoon": "Добрый день",
+			"Evening": "Добрый вечер"
+		},
+		"RelativeTime": {
+			"JustNow": "Только что",
+			"MinutesAgo": "{{minutes}} мин назад",
+			"HoursAgo": "{{hours}} ч назад",
+			"Yesterday": "Вчера {{time}}"
+		},
+		"Departments": {
+			"Arge": "НИОКР и инженерия",
+			"Satis": "Продажи",
+			"Ik": "Отдел кадров",
+			"Uretim": "Производство и логистика",
+			"Pazarlama": "Маркетинг"
+		},
+		"DepartmentsShort": {
+			"Arge": "НИОКР",
+			"Satis": "Продажи",
+			"Ik": "Кадры",
+			"Uretim": "Производство",
+			"Pazarlama": "Маркетинг"
+		},
+		"Companies": {
+			"OdooTr": "Odoo Kurumsal A.Ş.",
+			"OdooArge": "Odoo İleri Teknolojiler Ltd."
+		},
+		"ShiftTemplates": {
+			"Standard": "Стандартная смена (09:00 – 18:00)",
+			"Flexible": "Гибкий график (09:30 – 18:30)",
+			"Second": "Вторая смена (16:00 – 00:30)"
+		},
+		"AttendanceStatus": {
+			"Inside": "На месте",
+			"OnBreak": "На перерыве",
+			"Outside": "Вышел",
+			"Absent": "Не пришёл"
+		},
+		"RecordTypes": {
+			"Entry": "Вход",
+			"Break": "Перерыв",
+			"Exit": "Выход"
+		},
+		"RequestStatus": {
+			"Pending": "Ожидает одобрения",
+			"Approved": "Одобрено",
+			"Rejected": "Отклонено"
+		}
+	},
+	"UI": {
+		"Buttons": {
+			"Back": "Назад",
+			"Close": "Закрыть",
+			"Login": "Войти",
+			"ClearSearch": "Очистить поиск",
+			"Retry": "Повторить",
+			"Ok": "ОК",
+			"MarkAllRead": "Отметить все просмотренными"
+		},
+		"Accessibility": {
+			"Notifications": "Уведомления",
+			"Profile": "Профиль"
+		},
+		"Tabs": {
+			"Home": "Главная",
+			"Schedule": "Статистика",
+			"Profile": "Профиль",
+			"Admin": "Управление"
+		},
+		"NotFound": {
+			"Title": "Ошибка!",
+			"Text": "Такого экрана нет.",
+			"GoHome": "На главный экран"
+		},
+		"Common": {
+			"Percent": "{{value}} %"
+		}
+	}
+}

@@ -15,7 +15,11 @@ import { theme } from '@/assets/theme';
 import { fetchOwnEmployee, loginWithPassword } from '@/helper/odooApi';
 import { toAppPhone } from '@/helper/odooEmployeeSync';
 import { Employee } from '@/store/types';
-import { Language, useProfileStore } from '@/store/useProfileStore';
+import {
+	Language,
+	LANGUAGE_OPTIONS,
+	useProfileStore,
+} from '@/store/useProfileStore';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { AuthTextField } from './AuthTextField';
@@ -27,7 +31,7 @@ import { screenStyles } from './styles';
 
 const toAppLanguage = (odooLanguage: string | null): Language | null => {
 	const code = odooLanguage?.slice(0, 2).toLowerCase();
-	return code === 'tr' || code === 'en' || code === 'de' ? code : null;
+	return LANGUAGE_OPTIONS.find((option) => option.code === code)?.code ?? null;
 };
 const authenticate = async (
 	serverUrl: string,
@@ -154,16 +158,16 @@ export const LoginScreen = ({
 					<BrandHeader />
 					<View style={screenStyles.form}>
 						<AuthTextField
-							autoComplete='username'
+							autoComplete='email'
 							editable={!isSubmitting}
-							icon='account-circle'
+							icon='mail'
 							keyboardType='email-address'
 							label={t('Login.LoginScreen.IdentifierLabel')}
 							onChangeText={changeIdentifier}
 							onSubmitEditing={() => passwordRef.current?.focus()}
 							placeholder={t('Login.LoginScreen.IdentifierPlaceholder')}
 							returnKeyType='next'
-							textContentType='username'
+							textContentType='emailAddress'
 							value={identifier}
 						/>
 
