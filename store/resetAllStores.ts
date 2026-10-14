@@ -12,12 +12,12 @@ import { useProfileStore } from './useProfileStore';
  * saklanan "okundu" duyuru kayıtları.
  */
 export const resetAllStores = (): void => {
-	useModalStore().resetStore();
-	useEmployeeStore().resetStore();
-	useEmployeeScheduleStore().resetStore();
-	useDayStore().resetStore();
-	useDailyBriefingStore().resetBriefing();
-	useProfileStore().logout();
+	useModalStore.getState().resetStore();
+	useEmployeeStore.getState().resetStore();
+	useEmployeeScheduleStore.getState().resetStore();
+	useDayStore.getState().resetStore();
+	useDailyBriefingStore.getState().resetBriefing();
+	useProfileStore.getState().logout();
 	// Oturum en son silinir; diğer store'lar sıfırlanırken oturuma bakabilir.
-	useOdooSessionStore().clearSession();
+	useOdooSessionStore.getState().clearSession();
 };

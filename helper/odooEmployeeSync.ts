@@ -1,7 +1,12 @@
 // Odoo'daki çalışanları uygulamanın çalışan store'una taşır.
 
+import type {
+	NewOdooEmployee,
+	OdooEmployeeProfile,
+	OdooResult,
+} from '@/helper/odooApi';
 import { createEmployee, fetchEmployeeProfiles } from '@/helper/odooApi';
-import type { NewOdooEmployee, OdooEmployeeProfile, OdooResult } from '@/helper/odooApi';
+import { createEmployeeUser } from '@/helper/odooUserApi';
 import type { Employee } from '@/store/types';
 import { useEmployeeStore } from '@/store/useEmployeeStore';
 
@@ -101,9 +106,13 @@ const toRecordId = (key: string): number | null => {
 
 /** "data:image/jpeg;base64,/9j/..." → "/9j/..."; data adresi değilse null. */
 const toImageBase64 = (uri: string | null): string | null =>
-	uri?.startsWith('data:') && uri.includes(',') ? uri.slice(uri.indexOf(',') + 1) : null;
+	uri?.startsWith('data:') && uri.includes(',')
+		? uri.slice(uri.indexOf(',') + 1)
+		: null;
 
-export const toNewOdooEmployee = (values: EmployeeFormInput): NewOdooEmployee => ({
+export const toNewOdooEmployee = (
+	values: EmployeeFormInput,
+): NewOdooEmployee => ({
 	name: [values.firstName, values.lastName]
 		.map((part) => part.trim())
 		.filter(Boolean)
@@ -119,17 +128,41 @@ export const toNewOdooEmployee = (values: EmployeeFormInput): NewOdooEmployee =>
 	imageBase64: toImageBase64(values.avatarUrl),
 });
 
+export type CreatedEmployee = {
+	/** Yeni çalışanın Odoo numarası. */
+	employeeId: number;
+	/** Kullanıcı açılamadıysa nedeni; açıldıysa null. Çalışan yine de oluşmuştur. */
+	userError: string | null;
+};
+
+/** Çalışana giriş için Odoo kullanıcısı açar; açılamazsa nedenini, açılırsa null döner. */
+const openUserAccount = async (
+	employeeId: number,
+	{ name, email }: NewOdooEmployee,
+): Promise<string | null> => {
+	if (!email)
+		return 'No email was entered, so no user was created. The employee cannot sign in.';
+
+	const user = await createEmployeeUser({ employeeId, name, email });
+	return user.ok ? null : user.message;
+};
+
 /**
- * Formdaki çalışanı Odoo'da oluşturur, ardından çalışan listesini Odoo'dan tazeler.
- * Başarılıysa yeni çalışanın Odoo numarasını döner.
+ * Formdaki çalışanı Odoo'da oluşturur, ona giriş için bir Odoo kullanıcısı açar ve çalışan
+ * listesini Odoo'dan tazeler. Odoo kullanıcıya e-postayla şifre belirleme daveti gönderir.
+ * Çalışan oluşturulamazsa hata döner; yalnızca kullanıcı açılamazsa sonuç başarılıdır ve
+ * nedeni `userError` içindedir.
  */
 export const createEmployeeFromForm = async (
 	values: EmployeeFormInput,
-): Promise<OdooResult<number>> => {
-	const created = await createEmployee(toNewOdooEmployee(values));
+): Promise<OdooResult<CreatedEmployee>> => {
+	const employee = toNewOdooEmployee(values);
+	const created = await createEmployee(employee);
 	if (!created.ok) return created;
+
+	const userError = await openUserAccount(created.data, employee);
 
 	// Liste tazelenemese bile çalışan oluştu; sonuç yine başarılıdır.
 	await syncEmployeesFromOdoo();
-	return created;
+	return { ok: true, data: { employeeId: created.data, userError } };
 };

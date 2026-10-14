@@ -33,12 +33,6 @@ export const EmployeeCreatedModal: FC = ({}) => {
 				{employee ? <EmployeeSummaryCard employee={employee} /> : null}
 				<View style={styles.tiles}>
 					<InfoTile
-						icon='badge'
-						isAccent
-						label={t('AddEmployee.EmployeeCreatedModal.NfcCard')}
-						value={t('AddEmployee.EmployeeCreatedModal.AwaitingPairing')}
-					/>
-					<InfoTile
 						icon='mail'
 						label={t('AddEmployee.EmployeeCreatedModal.EmailInvite')}
 						value={t('AddEmployee.EmployeeCreatedModal.Sent')}

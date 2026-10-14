@@ -89,6 +89,13 @@ export const AddEmployeeScreen = () => {
 		}
 
 		triggerModal('employeeCreated', String(result.data));
+		triggerModal('employeeCreated', String(result.data.employeeId));
+		if (result.data.userError) {
+			Alert.alert(
+				'Çalışan eklendi, kullanıcı açılamadı',
+				result.data.userError,
+			);
+		}
 		// Ekran açık kalıp tekrar kullanılırsa temiz bir formla başlasın; seçili şirket kalsın.
 		setValues({
 			...createInitialFormValues('', new Date()),
