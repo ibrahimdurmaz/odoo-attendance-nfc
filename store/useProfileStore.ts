@@ -3,7 +3,17 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { Employee } from './types';
 
-export type Language = 'tr' | 'en' | 'de' | 'es' | 'pt' | 'fr' | 'ru';
+export type Language =
+	| 'tr'
+	| 'en'
+	| 'de'
+	| 'es'
+	| 'pt'
+	| 'fr'
+	| 'it'
+	| 'nl'
+	| 'pl'
+	| 'ru';
 
 export type ThemeMode = 'light' | 'dark' | 'system';
 
@@ -40,6 +50,9 @@ export const LANGUAGE_OPTIONS: {
 	{ code: 'es', label: 'Español', description: 'España', flag: '🇪🇸' },
 	{ code: 'pt', label: 'Português', description: 'Portugal', flag: '🇵🇹' },
 	{ code: 'fr', label: 'Français', description: 'France', flag: '🇫🇷' },
+	{ code: 'it', label: 'Italiano', description: 'Italia', flag: '🇮🇹' },
+	{ code: 'nl', label: 'Nederlands', description: 'Nederland', flag: '🇳🇱' },
+	{ code: 'pl', label: 'Polski', description: 'Polska', flag: '🇵🇱' },
 	{ code: 'ru', label: 'Русский', description: 'Россия', flag: '🇷🇺' },
 ];
 

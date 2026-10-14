@@ -1,0 +1,964 @@
+{
+	"Admin": {
+		"AdminScreen": {
+			"Title": "Beheer",
+			"Employees": "Medewerkers",
+			"ActiveEmployees_one": "{{count}} actieve medewerker",
+			"ActiveEmployees_other": "{{count}} actieve medewerkers",
+			"PendingBadge": "{{count}} open",
+			"CorrectionRequests": "Correctieverzoeken",
+			"CorrectionRequestsSubtitle": "Controle van diensten en registraties",
+			"ManualApproval": "Handmatige aanwezigheidsgoedkeuring",
+			"ManualApprovalSubtitle": "Controle van werktijden."
+		},
+		"SectionIntro": {
+			"Overline": "ODOO-BEHEERCONSOLE",
+			"Title": "Bedrijfsvoering en aanwezigheid"
+		},
+		"AttendanceCard": {
+			"Title": "Aanwezigheid vandaag",
+			"Shift": "Dienst: {{hours}}",
+			"AttendanceRate": "Aanwezigheidspercentage",
+			"AttendanceRateA11y": "Aanwezigheidspercentage {{rate}} procent",
+			"Target": "Doel: {{percent}}%",
+			"Staff": "{{present}} / {{total}} medewerkers",
+			"Approved": "Bevestigd",
+			"Waiting": "Verwacht",
+			"NoEntry": "Niet ingeklokt",
+			"ActiveBreak": "Met pauze"
+		},
+		"AttendanceTile": {
+			"Persons": "personen",
+			"A11y": "{{label}}: {{count}} personen, {{caption}}"
+		},
+		"AddEmployeeButton": {
+			"Label": "Medewerker toevoegen"
+		}
+	},
+	"Home": {
+		"Header": {
+			"Brand": "ODOO",
+			"Title": "Start"
+		},
+		"StatusBadge": {
+			"NotCheckedIn": "Niet ingeklokt",
+			"Working": "Aan het werk",
+			"OnBreak": "Met pauze",
+			"Completed": "Dag afgerond"
+		},
+		"Activities": {
+			"CheckIn": "Inklokken",
+			"Break": "Pauze",
+			"BreakDuration": "{{duration}} rust",
+			"InProgress": "Bezig",
+			"ActiveWork": "Actieve dienst",
+			"Now": "Nu",
+			"CheckOut": "Uitklokken"
+		},
+		"Actions": {
+			"CheckIn": "Inklokken",
+			"StartBreak": "Pauze starten",
+			"CheckOut": "Uitklokken",
+			"EndBreak": "Pauze beëindigen",
+			"FinishAndCheckOut": "Dienst beëindigen en uitklokken"
+		},
+		"InfoTiles": {
+			"PlannedShift": "Geplande dienst",
+			"UsedBreak": "Gebruikte pauze",
+			"LimitExceeded": "Limiet overschreden",
+			"WithinLimit": "Binnen de limiet"
+		},
+		"TodaysActivities": {
+			"Title": "Activiteit vandaag",
+			"RecordCount_one": "{{count}} registratie",
+			"RecordCount_other": "{{count}} registraties",
+			"EmptyTitle": "Nog geen activiteit",
+			"EmptyText": "Zodra u inklokt, ziet u hier het begin van uw dienst, pauzes en duur."
+		},
+		"StatsBlock": {
+			"TotalNetWork": "TOTALE NETTO WERKTIJD",
+			"Overtime": "+{{duration}} overuren",
+			"Undertime": "{{duration}} tekort",
+			"Target": "Doel",
+			"TargetHours": "8 uur",
+			"Completed": "Voltooid",
+			"TotalBreak": "Totale pauze",
+			"WorkPaused": "Werktijd gepauzeerd: {{duration}}",
+			"BreakTime": "Pauzetijd",
+			"ElapsedTime": "Verstreken tijd",
+			"TargetValue": "Doel: {{duration}}",
+			"PercentCompleted": "{{percent}} voltooid",
+			"BreakStartedAt": "Gestart {{time}}",
+			"TargetShift": "Doeldienst",
+			"RemainingTime": "Resterende tijd",
+			"BreakAllowance": "Toegestane pauze"
+		},
+		"FarewellCard": {
+			"Title": "Tot morgen, {{name}}.",
+			"Text": "Bedankt voor uw inzet vandaag. Vergeet niet uit te rusten!"
+		},
+		"Checkpoint": "Terminal hoofdingang"
+	},
+	"Profile": {
+		"Header": {
+			"Title": "Profiel"
+		},
+		"IdCard": {
+			"Active": "ACTIEF",
+			"EmployeeIdLabel": "PERSONEELSNUMMER",
+			"StaffId": "Personeelspas"
+		},
+		"SecurityNote": {
+			"Text": "Uw pas is alleen geldig op deze telefoon"
+		},
+		"StatsSection": {
+			"Title": "Uren en verlof",
+			"RemainingLeave": "Resterend jaarlijks verlof",
+			"AnnualEntitlement": "Jaarlijks recht",
+			"Days": "Dagen",
+			"OvertimeThisMonth": "Overuren deze maand",
+			"RecordedThisMonth_one": "{{count}} dag geregistreerd deze maand",
+			"RecordedThisMonth_other": "{{count}} dagen geregistreerd deze maand"
+		},
+		"SettingsSection": {
+			"Title": "Instellingen",
+			"Language": "Taal",
+			"LanguageA11y": "Taal: {{language}}",
+			"Appearance": "Weergave",
+			"Light": "Licht",
+			"Dark": "Donker"
+		},
+		"LogoutSection": {
+			"Logout": "Uitloggen",
+			"SignedInAs": "Ingelogd als {{name}}"
+		},
+		"LoggedOutView": {
+			"Title": "Uitgelogd",
+			"Text": "Log in om uw profiel te bekijken."
+		},
+		"LanguageModal": {
+			"Title": "Taal",
+			"AvailableLanguages": "Beschikbare talen",
+			"AppliedImmediately": "Uw keuze wordt direct toegepast."
+		}
+	},
+	"Schedule": {
+		"ScheduleScreen": {
+			"Brand": "ODOO",
+			"Title": "Rooster",
+			"Filters": {
+				"Week": "Deze week",
+				"Month": "Laatste 30 dagen",
+				"Overtime": "Overuren",
+				"Undertime": "Tekort"
+			},
+			"RecordDetails": "Details van registraties",
+			"RecordCount_one": "{{count}} registratie",
+			"RecordCount_other": "{{count}} registraties",
+			"EmptyTitle": "Geen registraties gevonden",
+			"EmptyText": "Dagen waarop u uw dienst afrondt, ziet u hier."
+		},
+		"WeeklySummary": {
+			"Title": "Werktijd deze week",
+			"Target": "/ {{hours}} u",
+			"Remaining": "Nog {{duration}}",
+			"DaysRecorded_one": "{{count}} dag geregistreerd",
+			"DaysRecorded_other": "{{count}} dagen geregistreerd",
+			"WeeklyQuota": "Weekquotum: {{hours}} u"
+		},
+		"WeeksDays": {
+			"Title": "Deze week",
+			"Today": "Vandaag",
+			"SameMonthRange": "{{start}} - {{end}}"
+		},
+		"DayCard": {
+			"A11y": "{{date}}, dagdetails",
+			"PendingCorrection": "Correctie in behandeling",
+			"Completed": "Voltooid",
+			"Net": "Netto:"
+		}
+	},
+	"AddEmployee": {
+		"AddEmployeeScreen": {
+			"Title": "Nieuwe medewerker",
+			"PersonalInfo": "Persoonsgegevens",
+			"FirstName": "Voornaam",
+			"FirstNamePlaceholder": "bijv. Sanne",
+			"LastName": "Achternaam",
+			"LastNamePlaceholder": "bijv. de Vries",
+			"CorporateEmail": "Zakelijk e-mailadres",
+			"EmailPlaceholder": "naam@odoo.com",
+			"PhoneNumber": "Telefoonnummer",
+			"PhonePlaceholder": "+90 5XX XXX XX XX",
+			"JobInfo": "Functiegegevens",
+			"EmployeeId": "Personeelsnummer",
+			"AutoGenerated": "Automatisch aangemaakt",
+			"JobTitle": "Functie",
+			"JobTitlePlaceholder": "bijv. Senior software-engineer",
+			"Department": "Afdeling",
+			"Company": "Bedrijf",
+			"StartDate": "Datum in dienst",
+			"DatePlaceholder": "DD.MM.JJJJ",
+			"WorkSchedule": "Werkrooster",
+			"ShiftTemplate": "Dienstsjabloon",
+			"AnnualLeave": "Jaarlijks verlof (dagen)",
+			"WorkDays": "Werkdagen",
+			"AccessAndRole": "Toegang en rol",
+			"PasswordInfo": "Bij het aanmaken van het account stuurt Odoo een uitnodiging naar het e-mailadres van de medewerker. De medewerker stelt zelf een wachtwoord in via de link in die e-mail.",
+			"CreateFailedTitle": "Medewerker kon niet worden aangemaakt",
+			"NoDepartment": "Geen afdeling",
+			"DefaultWorkSchedule": "Standaardrooster van het bedrijf"
+		},
+		"FormStrip": {
+			"Overline": "HR-MODULE • NIEUW PROFIEL",
+			"AdminPermission": "Beheerdersrechten"
+		},
+		"PhotoPicker": {
+			"AddPhoto": "Foto toevoegen",
+			"ChangePhoto": "Foto wijzigen",
+			"SelectImage": "Afbeelding kiezen",
+			"Remove": "Verwijderen",
+			"Failed": "De foto kon niet worden gekozen. Probeer het opnieuw.",
+			"Hint": "Kies een portret uit de galerij van het apparaat (PNG, JPG)"
+		},
+		"RoleSegment": {
+			"Employee": "Medewerker",
+			"Admin": "Beheerder"
+		},
+		"IntegrationCard": {
+			"Title": "Integratie met Odoo-tourniquet en kiosk",
+			"Text": "Na het opslaan kan een NFC/RFID-pas worden gekoppeld."
+		},
+		"BottomActionBar": {
+			"Errors": "Sommige velden ontbreken of zijn ongeldig. Controleer ze.",
+			"Cancel": "Annuleren",
+			"CreateEmployee": "Medewerker aanmaken"
+		},
+		"Validation": {
+			"Required": "Dit veld is verplicht",
+			"InvalidEmail": "Voer een geldig e-mailadres in",
+			"InvalidPhone": "Voer een geldig nummer met landcode in (bijv. +31 6 12345678)",
+			"EmployeeIdTaken": "Dit personeelsnummer is al in gebruik",
+			"DateFormat": "Gebruik de notatie DD.MM.JJJJ",
+			"LeaveRange": "Moet tussen 0 en {{max}} liggen"
+		},
+		"EmployeeCreatedModal": {
+			"NfcCard": "NFC- / RFID-pas",
+			"AwaitingPairing": "Wacht op koppeling",
+			"EmailInvite": "Uitnodiging per e-mail",
+			"Sent": "Verzonden"
+		},
+		"SuccessHero": {
+			"Pill": "Odoo HR-overzicht bijgewerkt",
+			"Title": "Medewerker aangemaakt",
+			"Text": "De registratie in het systeem is voltooid en de authenticatiesleutels zijn aangemaakt."
+		},
+		"TemporaryPasswordCard": {
+			"Title": "Tijdelijk wachtwoord",
+			"FirstLoginTag": "Voor de eerste keer inloggen",
+			"OneTimeCode": "Eenmalige code",
+			"Copy": "Kopiëren",
+			"CopyA11y": "Wachtwoord kopiëren",
+			"Copied": "Gekopieerd",
+			"Notice": "Deel dit wachtwoord veilig met de medewerker. Bij de eerste keer inloggen moet een nieuw wachtwoord worden ingesteld."
+		},
+		"CreatedActions": {
+			"AddAnother": "Medewerker toevoegen",
+			"BackToList": "Terug naar medewerkerslijst"
+		}
+	},
+	"CorrectionRequest": {
+		"CorrectionRequestsScreen": {
+			"Title": "Correctieverzoeken",
+			"NoMatchTitle": "Geen overeenkomende verzoeken",
+			"NoMatchText": "Geen verzoeken gevonden voor de gezochte medewerker of datum.",
+			"EmptyTitle": "Geen verzoeken: {{status}}",
+			"EmptyText": "Correctieverzoeken van medewerkers verschijnen hier."
+		},
+		"StatusSegments": {
+			"Pending": "Open",
+			"Approved": "Goedgekeurd",
+			"Rejected": "Afgewezen",
+			"SegmentA11y_one": "{{label}}, {{count}} verzoek",
+			"SegmentA11y_other": "{{label}}, {{count}} verzoeken"
+		},
+		"RequestSearchBar": {
+			"Placeholder": "Zoek op naam of datum...",
+			"A11y": "Zoek op naam van medewerker of datum"
+		},
+		"RequestCard": {
+			"Summary": "{{date}} • Registratie: {{recordType}}"
+		},
+		"TimeChange": {
+			"A11y": "Huidig: {{current}}, gevraagd: {{requested}}",
+			"NoRecord": "Geen registratie"
+		},
+		"ResultBanner": {
+			"Approved": "Verzoek goedgekeurd",
+			"Rejected": "Verzoek afgewezen",
+			"Text": "Er is een resultaatmelding aangemaakt voor {{name}}.",
+			"DismissA11y": "Melding sluiten"
+		}
+	},
+	"CorrectionRequestDetail": {
+		"CorrectionRequestDetailScreen": {
+			"Title": "Details van verzoek",
+			"NotFound": "Verzoek niet gevonden."
+		},
+		"RequestSummaryCard": {
+			"ToCorrect": "Te corrigeren: {{recordType}}",
+			"CurrentStatus": "Huidige status",
+			"RecordedTime": "Geregistreerde tijd",
+			"MissingTimestamp": "Tijdstempel ontbreekt",
+			"NoRecord": "Geen registratie",
+			"Requested": "Gevraagd",
+			"RequestedCaptions": {
+				"Entry": "Begintijd dienst",
+				"Break": "Begintijd pauze",
+				"Exit": "Eindtijd dienst"
+			}
+		},
+		"ReasonQuote": {
+			"Label": "Reden"
+		},
+		"ImpactNote": {
+			"Title": "Impactanalyse",
+			"Text": "Bij goedkeuring wordt de netto tijd <strong>{{duration}}</strong>. {{conclusion}}",
+			"CompletesTarget": "Het doel van {{duration}} wordt gehaald.",
+			"BelowTarget": "Blijft {{duration}} onder het doel.",
+			"NoRecord": "De impact kan niet worden berekend omdat er voor deze dag geen registraties zijn."
+		},
+		"ResolvedNote": {
+			"Title": "Resultaat",
+			"ManagerNote": "Opmerking leidinggevende: {{note}}"
+		},
+		"DayTimelineCard": {
+			"Title": "Registraties van die dag",
+			"CheckIn": "Inklokken",
+			"Break": "Pauze",
+			"CheckOut": "Uitklokken",
+			"RecordNotFound": "Registratie niet gevonden",
+			"Empty": "Geen registraties gevonden voor deze dag."
+		},
+		"TimelineRow": {
+			"UnderReview": "Correctie aangevraagd"
+		},
+		"DecisionBar": {
+			"Reject": "Afwijzen",
+			"Approve": "Goedkeuren"
+		},
+		"RejectModalHeader": {
+			"Title": "Verzoek afwijzen",
+			"Info": "De reden van afwijzing wordt als melding naar de medewerker gestuurd."
+		},
+		"TemplateChips": {
+			"Label": "Snelle sjablonen:",
+			"AddA11y": "Sjabloon toevoegen: {{template}}",
+			"Templates": {
+				"Mismatch": "Komt niet overeen met de registraties.",
+				"MoreInfo": "Meer informatie nodig.",
+				"Timeout": "Termijn verstreken."
+			}
+		},
+		"RejectReasonField": {
+			"Label": "Reden",
+			"A11y": "Reden van afwijzing",
+			"Placeholder": "Schrijf de reden van afwijzing voor de medewerker..."
+		},
+		"RejectActions": {
+			"Submit": "Afwijzing versturen",
+			"Cancel": "Annuleren"
+		}
+	},
+	"DayDetails": {
+		"DayDetailHeader": {
+			"Title": "Dagdetails"
+		},
+		"DayDetailScreen": {
+			"NotFound": "Geen registraties gevonden voor deze dag",
+			"PendingCorrection": "Correctie in behandeling",
+			"Completed": "Voltooid",
+			"Timeline": "Tijdlijn",
+			"EventCount_one": "{{count}} gebeurtenis geregistreerd",
+			"EventCount_other": "{{count}} gebeurtenissen geregistreerd",
+			"LocationTerminal": "LOCATIE EN TERMINAL",
+			"UnknownLocation": "Locatie niet beschikbaar",
+			"RequestCorrection": "Correctie aanvragen",
+			"Events": {
+				"Break": "Pauze",
+				"BreakDuration": "{{duration}} rust",
+				"ShiftStart": "Begin dienst",
+				"CheckInRecorded": "Inklokken geregistreerd",
+				"ShiftEnd": "Einde dienst",
+				"ShiftCompleted": "Dagdienst voltooid"
+			}
+		},
+		"StateBand": {
+			"Pending": "Correctieverzoek wacht op goedkeuring: {{recordType}} → {{time}}",
+			"Complete": "Alle activiteiten van de dag zijn compleet"
+		},
+		"Summary": {
+			"TotalNetWork": "TOTALE NETTO WERKTIJD",
+			"Overtime": "+{{duration}} overuren",
+			"Undertime": "{{duration}} tekort",
+			"WorkedA11y": "{{hours}} uur {{minutes}} minuten",
+			"Hours": "u",
+			"Minutes": "min",
+			"Planned": "Gepland: {{hours}} ({{duration}})"
+		},
+		"CorrectionRequestModal": {
+			"Title": "Correctie aanvragen",
+			"Description": "Denkt u dat uw registraties onvolledig of onjuist zijn? Maak dan een verzoek aan.",
+			"WhichRecord": "Welke registratie?",
+			"CorrectTime": "Juiste tijd",
+			"OriginalRecord": "Oorspronkelijke registratie: ",
+			"None": "geen",
+			"SuggestedCorrection": "Voorgestelde correctie",
+			"Hour": "Uur",
+			"Minute": "Min",
+			"Increase": "{{label}} verhogen",
+			"Decrease": "{{label}} verlagen",
+			"Reason": "Reden",
+			"ReasonA11y": "Reden van correctie",
+			"ReasonPlaceholder": "Geef een korte reden...",
+			"Note": "Uw verzoek gaat naar uw leidinggevende. Na goedkeuring wordt uw rooster automatisch bijgewerkt.",
+			"Submit": "Verzoek versturen",
+			"Cancel": "Annuleren"
+		}
+	},
+	"EditEmployee": {
+		"EditEmployeeScreen": {
+			"Title": "Medewerker bewerken",
+			"NotFound": "Medewerker niet gevonden."
+		},
+		"EditEmployeeForm": {
+			"PersonalInfo": "Persoonsgegevens",
+			"FirstName": "Voornaam",
+			"LastName": "Achternaam",
+			"Email": "E-mail",
+			"Phone": "Telefoon",
+			"PhonePlaceholder": "+90 5XX XXX XX XX",
+			"JobInfo": "Functiegegevens",
+			"EmployeeId": "Personeelsnummer",
+			"EmployeeIdLocked": "Het personeelsnummer kan niet worden gewijzigd",
+			"JobTitle": "Functie",
+			"Department": "Afdeling",
+			"Company": "Bedrijf",
+			"StartDate": "Datum in dienst",
+			"DatePlaceholder": "DD.MM.JJJJ",
+			"WorkSchedule": "Werkrooster",
+			"Shift": "Dienst",
+			"AnnualLeave": "Jaarlijks verlof",
+			"WorkDays": "Werkdagen",
+			"Account": "Account",
+			"SaveChanges": "Wijzigingen opslaan"
+		},
+		"AccountStatusSwitch": {
+			"Title": "Accountstatus",
+			"Active": "Actief",
+			"Passive": "Inactief"
+		},
+		"DangerZone": {
+			"Title": "Account deactiveren",
+			"Text": "Na deactivering heeft de medewerker geen toegang meer tot het systeem en wordt deze verborgen in de dienstlijsten.",
+			"Deactivate": "Medewerker deactiveren"
+		},
+		"DeactivateEmployeeModal": {
+			"Title": "{{name}} deactiveren?",
+			"Text": "Deze persoon kan niet meer inloggen in de app en niet meer in- of uitklokken bij de terminal. Eerdere registraties blijven bewaard.",
+			"Confirm": "Deactiveren",
+			"Cancel": "Annuleren",
+			"Note": "U kunt het account op elk moment weer activeren"
+		}
+	},
+	"EmployeeDetail": {
+		"EmployeeDetailScreen": {
+			"Title": "Medewerkergegevens",
+			"NotFound": "Medewerker niet gevonden."
+		},
+		"DetailStrip": {
+			"Overline": "PROFIELBEHEER",
+			"EditA11y": "Profiel bewerken",
+			"Edit": "Bewerken"
+		},
+		"PresencePill": {
+			"Passive": "Inactief"
+		},
+		"AccountStatePill": {
+			"Active": "Actief",
+			"Passive": "Inactief"
+		},
+		"TodaySection": {
+			"Title": "Vandaag",
+			"CheckIn": "Ingeklokt",
+			"NetWork": "Netto werktijd",
+			"WorkStatus": "Werkstatus",
+			"Passive": "Inactief"
+		},
+		"WorkStates": {
+			"Inside": "Aan het werk",
+			"OnBreak": "Met pauze",
+			"Outside": "Buiten dienst",
+			"Absent": "Afwezig"
+		},
+		"PersonalSection": {
+			"Title": "Persoonsgegevens",
+			"Email": "E-mail",
+			"Phone": "Telefoon"
+		},
+		"JobSection": {
+			"Title": "Functiegegevens",
+			"EmployeeId": "Personeelsnummer",
+			"Department": "Afdeling",
+			"Company": "Bedrijf",
+			"StartDate": "In dienst sinds"
+		},
+		"ScheduleSection": {
+			"Title": "Werkrooster",
+			"Shift": "Dienst",
+			"AnnualLeave": "Jaarlijks verlof",
+			"RemainingLeave": "Resterend verlof",
+			"Days_one": "{{count}} dag",
+			"Days_other": "{{count}} dagen"
+		},
+		"AccountSection": {
+			"Title": "Account",
+			"UserRole": "Gebruikersrol",
+			"Admin": "Beheerder",
+			"Employee": "Medewerker",
+			"AccountStatus": "Accountstatus"
+		},
+		"DetailActions": {
+			"ResetPassword": "Wachtwoord resetten",
+			"ViewSchedule": "Rooster bekijken"
+		}
+	},
+	"EmployeeList": {
+		"EmployeeListScreen": {
+			"Title": "Medewerkerslijst",
+			"EmptyTitle": "Nog geen medewerkers",
+			"EmptyText": "Maak de eerste medewerker aan met de knop Toevoegen.",
+			"NoMatchTitle": "Geen overeenkomende medewerkers",
+			"NoMatchText": "Niets gevonden voor de gezochte naam of het personeelsnummer. Probeer de filters te wissen."
+		},
+		"ListStrip": {
+			"Overline": "OVERZICHT EN LIVE AANWEZIGHEID",
+			"AddNew": "Toevoegen",
+			"AddEmployeeA11y": "Medewerker toevoegen"
+		},
+		"SearchBar": {
+			"Placeholder": "Zoek naam of personeelsnummer...",
+			"A11y": "Zoek naam of personeelsnummer"
+		},
+		"DepartmentChips": {
+			"All": "Alle",
+			"ChipA11y_one": "{{label}}, {{count}} medewerker",
+			"ChipA11y_other": "{{label}}, {{count}} medewerkers"
+		},
+		"MetricBar": {
+			"ActivePresence": "Nu aanwezig",
+			"TotalPersons": "/ {{total}} personen"
+		}
+	},
+	"Login": {
+		"BrandHeader": {
+			"Title": "Odoo Aanwezigheid",
+			"Subtitle": "Log in op uw account"
+		},
+		"LoginScreen": {
+			"IdentifierLabel": "E-mail",
+			"IdentifierPlaceholder": "naam@bedrijf.nl",
+			"PasswordLabel": "Wachtwoord",
+			"CredentialsErrorTitle": "Onjuist e-mailadres of wachtwoord.",
+			"CredentialsErrorMessage": "Controleer uw gegevens en probeer het opnieuw.",
+			"ConnectionErrorTitle": "Server niet bereikbaar.",
+			"ConnectionErrorMessage": "Controleer uw internetverbinding en probeer het opnieuw.",
+			"ForgotPassword": "Wachtwoord vergeten"
+		},
+		"AuthTextField": {
+			"ShowPassword": "Wachtwoord tonen",
+			"HidePassword": "Wachtwoord verbergen"
+		},
+		"SubmitButton": {
+			"LoggingIn": "Bezig met inloggen..."
+		},
+		"SupportNote": {
+			"Text": "Geen account? Neem contact op met uw HR-afdeling."
+		}
+	},
+	"Notification": {
+		"NotificationsHeader": {
+			"Title": "Verzoeken"
+		},
+		"NotificationsScreen": {
+			"Count_one": "{{count}} nieuwe melding",
+			"Count_other": "{{count}} nieuwe meldingen"
+		},
+		"NotificationsEmptyState": {
+			"Title": "Geen nieuwe meldingen",
+			"Text": "Zodra uw correctieverzoeken zijn goedgekeurd of afgewezen, ziet u het resultaat hier.",
+			"PendingTitle": "Geen openstaande verzoeken",
+			"PendingText": "Nieuwe correctieverzoeken van medewerkers verschijnen hier.",
+			"ReviewedTitle": "Vandaag geen verzoeken beoordeeld",
+			"ReviewedText": "Verzoeken die u vandaag goedkeurt of afwijst, verschijnen hier.",
+			"ShowReviewed": "Vandaag beoordeeld bekijken ({{count}})"
+		},
+		"NotificationCard": {
+			"A11y": "{{date}}, correctieverzoek voor registratie {{recordType}} {{result}}",
+			"ApprovedResult": "goedgekeurd",
+			"RejectedResult": "afgewezen",
+			"Updated": "Tijd van {{recordType}} gewijzigd naar {{time}}",
+			"ManagerNote": "Opmerking leidinggevende: {{note}}",
+			"NotSpecified": "Niet opgegeven"
+		},
+		"ResultBadge": {
+			"Approved": "Goedgekeurd",
+			"Rejected": "Afgewezen"
+		},
+		"Pagination": {
+			"Previous": "Vorige",
+			"Next": "Volgende",
+			"PreviousA11y": "Vorige pagina",
+			"NextA11y": "Volgende pagina"
+		},
+		"NotificationTabs": {
+			"Pending": "Open",
+			"ReviewedToday": "Vandaag beoordeeld"
+		},
+		"TabInfo": {
+			"ChangeOnlyToday": "U kunt beslissingen alleen <strong>vandaag</strong> wijzigen.",
+			"PendingCount_one": "{{count}} verzoek wacht op beoordeling",
+			"PendingCount_other": "{{count}} verzoeken wachten op beoordeling"
+		},
+		"RequestCard": {
+			"RejectionReason": "Reden: {{reason}}",
+			"Reject": "Afwijzen",
+			"Approve": "Goedkeuren",
+			"Reviewed": "Beoordeeld • {{time}}",
+			"ChangeDecision": "Beslissing wijzigen"
+		},
+		"RecordChange": {
+			"Title": "Registratie: {{recordType}} • {{date}}",
+			"A11y": "Huidig: {{current}}, gevraagd: {{requested}}",
+			"NoRecord": "Geen registratie"
+		},
+		"DecisionSummary": {
+			"RejectTitle": "Verzoek afwijzen?",
+			"ChangeTitle": "Beslissing wijzigen?",
+			"RejectText": "Het verzoek van <strong>{{name}}</strong> wordt <rejected>afgewezen</rejected>.",
+			"ChangeText": "Het verzoek van <strong>{{name}}</strong> wordt gewijzigd van <from>{{from}}</from> naar <to>{{to}}</to>.",
+			"ShortStatus": {
+				"Pending": "Open",
+				"Approved": "Goedgekeurd",
+				"Rejected": "Afgewezen"
+			}
+		},
+		"DecisionActions": {
+			"Reject": "Afwijzen",
+			"ChangeDecision": "Beslissing wijzigen",
+			"Cancel": "Annuleren"
+		},
+		"ReasonField": {
+			"Label": "Reden",
+			"Required": "Verplicht",
+			"A11y": "Reden van afwijzing",
+			"Placeholder": "Schrijf de reden van afwijzing...",
+			"TemplatesLabel": "Snelle sjablonen",
+			"Templates": {
+				"Mismatch": "Komt niet overeen met de registratie",
+				"WrongTime": "Onjuiste tijd ingevoerd",
+				"MoreInfo": "Meer informatie nodig"
+			}
+		},
+		"ResultToast": {
+			"Approved": "Verzoek goedgekeurd.",
+			"Rejected": "Verzoek afgewezen."
+		}
+	},
+	"EmployeeSchedule": {
+		"ScheduleScreen": {
+			"Overline": "ROOSTER VAN MEDEWERKER",
+			"EmptyText": "Dagen waarop de medewerker de dienst heeft afgerond, verschijnen hier."
+		}
+	},
+	"ServerSetup": {
+		"SetupHeading": {
+			"Title": "Inloggen",
+			"Subtitle": "Stel uw serververbinding in"
+		},
+		"ServerSetupScreen": {
+			"ServerDomain": "Serverdomein",
+			"Errors": {
+				"InvalidAddressTitle": "Ongeldig serveradres",
+				"InvalidAddressMessage": "Voer het adres in als \"odoo.bedrijf.nl\", zonder spaties of pad.",
+				"UnreachableTitle": "Kan geen verbinding maken met de server",
+				"UnreachableMessage": "Controleer het adres en uw internetverbinding."
+			},
+			"Server": "Server"
+		},
+		"ServerInputCard": {
+			"ProtocolA11y": "Protocol: {{protocol}}",
+			"AddressA11y": "Serveradres",
+			"Placeholder": "Voer het serveradres in",
+			"ClearA11y": "Invoer wissen"
+		},
+		"ConnectionHint": {
+			"Secure": "Versleutelde verbinding (HTTPS)",
+			"Insecure": "Onversleutelde verbinding (HTTP)",
+			"Port": "Poort {{port}}"
+		},
+		"SubmitButton": {
+			"Connecting": "Verbinden...",
+			"Retry": "Opnieuw proberen",
+			"Next": "Volgende"
+		},
+		"HelperNote": {
+			"Text": "Vraag het serveradres aan uw beheerder"
+		},
+		"DatabaseField": {
+			"Loading": "Databases laden...",
+			"Placeholder": "Kies een database",
+			"A11y": "Database: {{database}}",
+			"NotSelected": "niet gekozen"
+		},
+		"DatabaseList": {
+			"Empty": "Geen databases gevonden op deze server."
+		}
+	},
+	"SetPassword": {
+		"PasswordHeader": {
+			"Title": "Stel uw wachtwoord in",
+			"Welcome": "Welkom, <name>{{name}}</name>. Maak een veilig, blijvend wachtwoord aan voor uw eerste keer inloggen."
+		},
+		"SetPasswordScreen": {
+			"NewPassword": "Nieuw wachtwoord",
+			"NewPasswordPlaceholder": "Voer uw nieuwe wachtwoord in",
+			"ConfirmPassword": "Wachtwoord bevestigen",
+			"ConfirmPasswordPlaceholder": "Voer uw wachtwoord opnieuw in",
+			"Matched": "Komt overeen",
+			"Mismatch": "Komt niet overeen"
+		},
+		"StatusLabel": {
+			"Weak": "Zwak",
+			"Medium": "Gemiddeld",
+			"Strong": "Sterk"
+		},
+		"CriteriaCard": {
+			"Overline": "BEVEILIGINGSEISEN",
+			"Counter": "{{met}}/{{total}} voldaan",
+			"RuleA11y": "{{label}}: {{state}}",
+			"Met": "voldaan",
+			"NotMet": "niet voldaan",
+			"Rules": {
+				"MinLength": "Minstens {{count}} tekens",
+				"Digit": "Minstens één cijfer",
+				"Uppercase": "Minstens één hoofdletter"
+			}
+		},
+		"TrustNote": {
+			"Text": "Uw wachtwoord wordt automatisch gesynchroniseerd met de zakelijke single sign-on (SSO) en de tourniquetkiosken."
+		},
+		"SaveButton": {
+			"Save": "Wachtwoord opslaan",
+			"Note": "Na het opslaan van uw wachtwoord gaat u naar de eerste installatiestappen."
+		}
+	},
+	"Modals": {
+		"CheckInFailedModal": {
+			"Title": "Inklokken mislukt",
+			"Message": "Houd uw telefoon iets dichter bij de terminal en probeer het opnieuw.",
+			"HintTitle": "Contactafstand",
+			"HintText": "Houd uw apparaat stil op 2-3 cm van het logo",
+			"UseCode": "Inklokken met code",
+			"Support": "Blijft het probleem bestaan? Meld het bij HR."
+		},
+		"CheckInSuccessModal": {
+			"Title": "Ingeklokt",
+			"Subtitle": "Fijne werkdag, {{name}}.",
+			"RecordTime": "TIJDSTIP REGISTRATIE",
+			"Synced": "Gesynchroniseerd met Odoo",
+			"ShiftStatus": "Dienststatus",
+			"EarlyStart": "Vroege start",
+			"LateStart": "Late start",
+			"OnTimeStart": "Op tijd begonnen"
+		},
+		"CodeScannerModal": {
+			"CameraActive": "Camera actief",
+			"Flash": "Flitser",
+			"Title": "Scan de code van de terminal",
+			"Subtitle": "Plaats de code binnen het kader",
+			"AutoDetecting": "Automatische herkenning",
+			"PermissionTitle": "Cameratoegang nodig",
+			"PermissionText": "Geef toegang tot de camera om de code op de terminal te scannen.",
+			"GrantPermission": "Toestaan",
+			"Help": "Werkt het niet? Hulp krijgen",
+			"HelpTitle": "Hulp en tips",
+			"HelpCaption": "Tips voor sneller scannen",
+			"Tips": {
+				"Reflection": "Kantel uw apparaat iets bij weerspiegeling",
+				"Closer": "Houd uw apparaat iets dichter bij de terminal"
+			},
+			"GotIt": "Begrepen"
+		},
+		"NfcPromptModal": {
+			"Ready": "Gereed",
+			"KeypadTitle": "Snelle toegangscode",
+			"BackToNfc": "Terug naar NFC-scan",
+			"DigitsEntered": "{{count}} van {{total}} cijfers ingevoerd",
+			"Delete": "Wissen",
+			"Confirm": "Bevestigen",
+			"Scan": "SCAN",
+			"Title": "Houd uw telefoon bij de terminal",
+			"Subtitle": "Verificatie met vingerafdruk kan nodig zijn",
+			"UseCode": "Werkt het niet? Inklokken met code"
+		},
+		"DailyAnnouncementModal": {
+			"Title": "Mededeling van de dag",
+			"DefaultCategory": "Mededeling",
+			"PageA11y": "Mededeling {{current}} van {{total}}.",
+			"Saving": "Opslaan...",
+			"Next": "Volgende",
+			"Read": "Gelezen",
+			"Note": "Bevestig de mededeling om verder te gaan"
+		},
+		"TodayProgramModal": {
+			"Title": "Uw programma vandaag",
+			"EventCount_one": "{{count}} afspraak",
+			"EventCount_other": "{{count}} afspraken",
+			"Now": "Nu",
+			"Next": "Hierna",
+			"AllDay": "Hele dag",
+			"RemainingEvents_one": "Nog {{count}} afspraak op de volgende pagina",
+			"RemainingEvents_other": "Nog {{count}} afspraken op de volgende pagina",
+			"EmptyTitle": "Geen afspraken gepland voor vandaag",
+			"EmptyText": "Er staan geen vergaderingen, trainingen of taken in uw agenda. Fijne werkdag!",
+			"ShiftStatus": "Dienststatus: {{status}}",
+			"Online": "Online",
+			"Organizer": "Organisator: {{name}}"
+		}
+	},
+	"ExtraConstants": {
+		"Days": {
+			"Sunday": "Zondag",
+			"Monday": "Maandag",
+			"Tuesday": "Dinsdag",
+			"Wednesday": "Woensdag",
+			"Thursday": "Donderdag",
+			"Friday": "Vrijdag",
+			"Saturday": "Zaterdag"
+		},
+		"ShortDays": {
+			"Sunday": "Zo",
+			"Monday": "Ma",
+			"Tuesday": "Di",
+			"Wednesday": "Wo",
+			"Thursday": "Do",
+			"Friday": "Vr",
+			"Saturday": "Za"
+		},
+		"Months": {
+			"January": "januari",
+			"February": "februari",
+			"March": "maart",
+			"April": "april",
+			"May": "mei",
+			"June": "juni",
+			"July": "juli",
+			"August": "augustus",
+			"September": "september",
+			"October": "oktober",
+			"November": "november",
+			"December": "december"
+		},
+		"DateFormats": {
+			"Long": "{{weekday}} {{day}} {{month}} {{year}}",
+			"Short": "{{weekday}} {{day}} {{month}}",
+			"Compact": "{{weekday}} {{day}} {{month}}",
+			"DayMonth": "{{day}} {{month}}",
+			"DayMonthYear": "{{day}} {{month}} {{year}}"
+		},
+		"Duration": {
+			"HoursMinutes": "{{hours}} u {{minutes}} min",
+			"Minutes": "{{minutes}} min"
+		},
+		"Greetings": {
+			"Morning": "Goedemorgen",
+			"Afternoon": "Goedemiddag",
+			"Evening": "Goedenavond"
+		},
+		"RelativeTime": {
+			"JustNow": "Zojuist",
+			"MinutesAgo": "{{minutes}} min geleden",
+			"HoursAgo": "{{hours}} u geleden",
+			"Yesterday": "Gisteren {{time}}"
+		},
+		"Departments": {
+			"Arge": "R&D en engineering",
+			"Satis": "Verkoop",
+			"Ik": "Personeelszaken",
+			"Uretim": "Productie en logistiek",
+			"Pazarlama": "Marketing"
+		},
+		"DepartmentsShort": {
+			"Arge": "R&D",
+			"Satis": "Verkoop",
+			"Ik": "HR",
+			"Uretim": "Productie",
+			"Pazarlama": "Marketing"
+		},
+		"Companies": {
+			"OdooTr": "Odoo Kurumsal A.Ş.",
+			"OdooArge": "Odoo İleri Teknolojiler Ltd."
+		},
+		"ShiftTemplates": {
+			"Standard": "Standaarddienst (09:00 – 18:00)",
+			"Flexible": "Flexibele werktijden (09:30 – 18:30)",
+			"Second": "Tweede dienst (16:00 – 00:30)"
+		},
+		"AttendanceStatus": {
+			"Inside": "Binnen",
+			"OnBreak": "Met pauze",
+			"Outside": "Buiten",
+			"Absent": "Afwezig"
+		},
+		"RecordTypes": {
+			"Entry": "Inklokken",
+			"Break": "Pauze",
+			"Exit": "Uitklokken"
+		},
+		"RequestStatus": {
+			"Pending": "Wacht op goedkeuring",
+			"Approved": "Goedgekeurd",
+			"Rejected": "Afgewezen"
+		}
+	},
+	"UI": {
+		"Buttons": {
+			"Back": "Terug",
+			"Close": "Sluiten",
+			"Login": "Inloggen",
+			"ClearSearch": "Zoekopdracht wissen",
+			"Retry": "Opnieuw proberen",
+			"Ok": "OK",
+			"MarkAllRead": "Alles als gezien markeren"
+		},
+		"Accessibility": {
+			"Notifications": "Meldingen",
+			"Profile": "Profiel"
+		},
+		"Tabs": {
+			"Home": "Start",
+			"Schedule": "Statistieken",
+			"Profile": "Profiel",
+			"Admin": "Beheer"
+		},
+		"NotFound": {
+			"Title": "Oeps!",
+			"Text": "Dit scherm bestaat niet.",
+			"GoHome": "Naar het startscherm"
+		},
+		"Common": {
+			"Percent": "{{value}}%"
+		}
+	}
+}

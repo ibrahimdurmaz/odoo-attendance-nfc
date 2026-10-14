@@ -154,11 +154,7 @@ export function StatsBlock({
 				}}
 				style={({ pressed }) => [styles.button, pressed && styles.pressed]}
 			>
-				<MaterialIcons
-					color={colors.onSurfaceVariant}
-					name='calendar-month'
-					size={22}
-				/>
+				<MaterialIcons color={colors.outline} name='calendar-month' size={26} />
 			</Pressable>
 
 			<ProgressRing

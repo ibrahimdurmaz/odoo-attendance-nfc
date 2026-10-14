@@ -75,6 +75,9 @@ export const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'center',
+		position: 'absolute',
+		right: 12,
+		top: 12,
 	},
 	pressed: { opacity: 0.85 },
 
