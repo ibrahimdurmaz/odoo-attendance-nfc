@@ -53,3 +53,71 @@ export const createEmployeeUser = async ({
 
 	return { ok: true, data: userId };
 };
+
+// ---------------------------------------------------------------------------
+// Pasife alma / yeniden aktif etme
+// ---------------------------------------------------------------------------
+
+/** Arşivlenmiş kayıtlar da okunsun diye; Odoo varsayılan olarak yalnızca aktifleri getirir. */
+const INCLUDE_ARCHIVED = { active_test: false };
+
+/** Çalışana bağlı kullanıcının numarası; kullanıcı yoksa null. */
+const fetchLinkedUserId = async (
+	employeeId: number,
+): Promise<OdooResult<number | null>> => {
+	const result = await callOdooSession('hr.employee', 'search_read', {
+		domain: [['id', '=', employeeId]],
+		fields: ['user_id'],
+		limit: 1,
+		context: INCLUDE_ARCHIVED,
+	});
+	if (!result.ok) return result;
+
+	const [record] = Array.isArray(result.data) ? result.data : [];
+	if (typeof record !== 'object' || record === null) {
+		return {
+			ok: false,
+			kind: 'notFound',
+			status: null,
+			message: 'Employee not found in Odoo.',
+		};
+	}
+	const userId: unknown = 'user_id' in record ? record.user_id : null;
+	return { ok: true, data: toCreatedId(userId) };
+};
+
+const setRecordActive = (model: string, id: number, active: boolean) =>
+	callOdooSession(model, 'write', { context: INCLUDE_ARCHIVED }, [
+		[id],
+		{ active },
+	]);
+
+/**
+ * Çalışanı ve bağlı kullanıcısını Odoo'da arşivler (`active: false`) ya da geri açar.
+ * Hiçbir kayıt silinmez; giriş-çıkış ve izin geçmişi korunur.
+ * Pasife alırken önce kullanıcı kapatılır (giriş hemen engellensin), aktif ederken önce çalışan açılır.
+ * Odoo, oturumu açık olan yöneticinin kendi kullanıcısını kapatmasına izin vermez; o hata iletilir.
+ */
+export const setEmployeeActive = async (
+	employeeId: number,
+	active: boolean,
+): Promise<OdooResult<null>> => {
+	const userId = await fetchLinkedUserId(employeeId);
+	if (!userId.ok) return userId;
+
+	const steps: (() => ReturnType<typeof callOdooSession>)[] = [
+		() => setRecordActive('hr.employee', employeeId, active),
+	];
+	if (userId.data !== null) {
+		const user = userId.data;
+		const userStep = () => setRecordActive('res.users', user, active);
+		if (active) steps.push(userStep);
+		else steps.unshift(userStep);
+	}
+
+	for (const step of steps) {
+		const result = await step();
+		if (!result.ok) return result;
+	}
+	return { ok: true, data: null };
+};

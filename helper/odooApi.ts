@@ -489,6 +489,8 @@ export type OdooEmployeeProfile = {
 	email: string | null;
 	/** Çalışana bağlı bir Odoo kullanıcısı var mı; yoksa uygulamaya giriş yapamaz. */
 	hasUser: boolean;
+	/** Odoo'da arşivlenmemiş (aktif) mi. Pasife alınan çalışan false olur. */
+	isActive: boolean;
 	/** Kaydın Odoo'da oluşturulduğu an (milisaniye). */
 	createdAt: number | null;
 	/** Fotoğraf, <Image source={{ uri }} /> içinde kullanılabilen "data:" adresi olarak; yoksa null. */
@@ -516,6 +518,7 @@ const CORE_PROFILE_FIELDS = [
 	'work_email',
 	'user_id',
 	'create_date',
+	'active',
 ];
 
 /** Profil sayfası büyük, listeler küçük fotoğraf kullanır. */
@@ -607,6 +610,7 @@ const toEmployeeProfile = (
 		company: toLinkedName(record.company_id),
 		email: toText(record.work_email),
 		hasUser: Array.isArray(record.user_id),
+		isActive: record.active !== false,
 		createdAt: toTimestamp(record.create_date),
 		avatarUrl: toImageDataUri(record[imageField]),
 		phone: toText(record.mobile_phone) ?? toText(record.work_phone),
@@ -712,12 +716,16 @@ export const fetchOwnEmployee = async (): Promise<
 };
 
 /**
- * Oturumu açan kullanıcının görebildiği bütün aktif çalışanları ada göre sıralı getirir.
- * Yönetici ekranları içindir; normal çalışan yalnızca herkese açık bilgileri görür.
+ * Oturumu açan kullanıcının görebildiği bütün çalışanları, pasife alınanlar (arşivlenmiş) dahil,
+ * ada göre sıralı getirir. Yönetici ekranları içindir; normal çalışan yalnızca herkese açık bilgileri görür.
  */
 export const fetchEmployeeProfiles = (): Promise<
 	OdooResult<OdooEmployeeProfile[]>
-> => fetchEmployeeProfilesWhere({ domain: [], imageField: 'image_128' });
+> =>
+	fetchEmployeeProfilesWhere({
+		domain: [['active', 'in', [true, false]]],
+		imageField: 'image_128',
+	});
 // ---------------------------------------------------------------------------
 // Giriş-çıkış (hr.attendance; Odoo'da "Katılımlar" uygulaması kurulu olmalı)
 // ---------------------------------------------------------------------------

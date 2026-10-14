@@ -21,7 +21,7 @@ export const AdminHeader: FC<AdminHeaderProps> = ({
 	const { t } = useTranslation();
 	const styles = useMemo(() => createStyles(colors), [colors]);
 	const onBack = () => {
-		router.navigate('/(tabs)');
+		router.back();
 	};
 	const onProfilePress = () => {
 		router.navigate('/profile');

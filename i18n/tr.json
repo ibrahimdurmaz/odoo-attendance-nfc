@@ -199,7 +199,7 @@
 			"AnnualLeave": "Yıllık İzin Hakkı (Gün)",
 			"WorkDays": "İş Günü",
 			"AccessAndRole": "Erişim & Rol",
-			"PasswordInfo": "Hesap oluşturulduğunda sistem tarafından tek kullanımlık geçici bir şifre üretilecek ve çalışanın e-posta adresine otomatik SMS/ileti olarak gönderilecektir.",
+			"PasswordInfo": "Hesap oluşturulduğunda Odoo, çalışanın e-posta adresine bir davet gönderir. Çalışan şifresini bu e-postadaki bağlantıdan kendisi belirler.",
 			"CreateFailedTitle": "Çalışan oluşturulamadı",
 			"NoDepartment": "Departman yok",
 			"DefaultWorkSchedule": "Şirketin varsayılan takvimi"

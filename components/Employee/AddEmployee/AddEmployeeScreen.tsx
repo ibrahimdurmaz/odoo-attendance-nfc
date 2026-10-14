@@ -33,7 +33,6 @@ import { FormSection } from './FormSection';
 import { FormStrip } from './FormStrip';
 import { FormTextField } from './FormTextField';
 import { InfoNote } from './InfoNote';
-import { IntegrationCard } from './IntegrationCard';
 import { EmployeeCreatedModal } from './Modals/EmployeeCreatedModal';
 import { PhotoPicker } from './PhotoPicker';
 import { RoleSegment } from './RoleSegment';
@@ -247,8 +246,6 @@ export const AddEmployeeScreen = () => {
 						/>
 						<InfoNote text={t('AddEmployee.AddEmployeeScreen.PasswordInfo')} />
 					</FormSection>
-
-					<IntegrationCard />
 				</ScrollView>
 
 				<BottomActionBar

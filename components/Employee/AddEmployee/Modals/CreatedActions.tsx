@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { fonts, theme, ThemeColors } from '@/assets/theme';
+import { useModalStore } from '@/store/modalStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -10,9 +11,11 @@ export const CreatedActions = () => {
 	const colors = theme();
 	const styles = useMemo(() => createActionStyles(colors), [colors]);
 	const router = useRouter();
+	const { resetStore } = useModalStore();
 	const { t } = useTranslation();
 	const onAddAnother = () => {
 		router.navigate('/add_employee');
+		resetStore();
 	};
 	const onBackToList = () => {
 		router.navigate('/employee_list');

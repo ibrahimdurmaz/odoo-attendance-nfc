@@ -61,7 +61,10 @@ export const EmployeeDetailScreen: FC<EmployeeDetailScreenProps> = ({
 	};
 	return (
 		<SafeAreaView style={styles.screen}>
-			<AdminHeader title={t('EmployeeDetail.EmployeeDetailScreen.Title')} />
+			<AdminHeader
+				title={t('EmployeeDetail.EmployeeDetailScreen.Title')}
+				profileActive={false}
+			/>
 			{employee ? (
 				<ScrollView
 					contentContainerStyle={styles.content}

@@ -204,7 +204,7 @@
 			"AnnualLeave": "Jahresurlaub (Tage)",
 			"WorkDays": "Arbeitstage",
 			"AccessAndRole": "Zugriff & Rolle",
-			"PasswordInfo": "Beim Anlegen des Kontos erzeugt das System ein einmaliges temporäres Passwort und sendet es automatisch per SMS/Nachricht an die E-Mail-Adresse der Person.",
+			"PasswordInfo": "Beim Anlegen des Kontos sendet Odoo eine Einladung an die E-Mail-Adresse der Person. Über den Link in dieser E-Mail legt sie ihr Passwort selbst fest.",
 			"CreateFailedTitle": "Mitarbeiter konnte nicht angelegt werden",
 			"NoDepartment": "Keine Abteilung",
 			"DefaultWorkSchedule": "Standardarbeitszeit des Unternehmens"

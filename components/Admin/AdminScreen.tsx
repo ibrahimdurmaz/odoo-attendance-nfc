@@ -10,7 +10,6 @@ import { useFocusEffect, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { ATTENDANCE_TARGET_PERCENT, SHIFT_HOURS } from '../Home/constants';
 import { AddEmployeeButton } from './AddEmployeeButton';
-import { AdminHeader } from './AdminHeader';
 import { AttendanceCard } from './Attendance';
 import { NavCard } from './NavCard';
 import { SectionIntro } from './SectionIntro';
@@ -40,7 +39,6 @@ export const AdminScreen = () => {
 	);
 	return (
 		<SafeAreaView edges={['top']} style={styles.screen}>
-			<AdminHeader title={t('Admin.AdminScreen.Title')} />
 			<ScrollView
 				contentContainerStyle={styles.content}
 				showsVerticalScrollIndicator={false}

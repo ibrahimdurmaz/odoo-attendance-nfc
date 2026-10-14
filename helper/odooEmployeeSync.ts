@@ -40,6 +40,8 @@ export const toAppEmployee = (profile: OdooEmployeeProfile): Employee => ({
 	remainingLeaveDays: profile.remainingLeaveDays ?? 0,
 	// Odoo'da şifre çalışanın değil kullanıcının; bağlı kullanıcısı olan çalışan giriş yapabilir.
 	hasPassword: profile.hasUser,
+	// Odoo'da arşivlenen çalışan uygulamada "Pasif" görünür.
+	active: profile.isActive,
 	// Odoo'da yöneticilik kullanıcı yetkisidir; çalışan listesinden okunmuyor.
 	admin: false,
 	email: profile.email ?? '',
@@ -54,7 +56,7 @@ export const toAppEmployee = (profile: OdooEmployeeProfile): Employee => ({
 });
 
 /**
- * Odoo'daki aktif çalışanları getirir ve çalışan store'undaki listenin yerine yazar
+ * Odoo'daki çalışanları (pasife alınanlar dahil) getirir ve çalışan store'undaki listenin yerine yazar
  * (store'daki sırayla: en yeni kayıt en üstte). Başarılıysa çalışan sayısını döner.
  */
 export const syncEmployeesFromOdoo = async (): Promise<OdooResult<number>> => {

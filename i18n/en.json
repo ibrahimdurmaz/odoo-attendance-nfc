@@ -204,7 +204,7 @@
 			"AnnualLeave": "Annual Leave (Days)",
 			"WorkDays": "Work Days",
 			"AccessAndRole": "Access & Role",
-			"PasswordInfo": "When the account is created, the system will generate a one-time temporary password and send it automatically to the employee's email address via SMS/message.",
+			"PasswordInfo": "When the account is created, Odoo sends an invitation to the employee's email address. The employee sets their own password using the link in that email.",
 			"CreateFailedTitle": "Couldn't create employee",
 			"NoDepartment": "No department",
 			"DefaultWorkSchedule": "Company default schedule"

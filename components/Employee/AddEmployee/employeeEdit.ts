@@ -2,6 +2,8 @@
 // dokunmamak için buradadır; güncelleme store'a `setState` ile yazılır.
 
 import { parseDateKey } from '@/helper/dateHelpers';
+import type { OdooResult } from '@/helper/odooApi';
+import { setEmployeeActive } from '@/helper/odooUserApi';
 import { Employee, NewEmployee } from '@/store/types';
 import { useEmployeeStore } from '@/store/useEmployeeStore';
 import {
@@ -37,6 +39,29 @@ export const updateEmployee = (
 				: employee,
 		),
 	}));
+};
+
+/**
+ * Hesabı Odoo'da pasife alır ya da yeniden aktif eder (çalışan ve bağlı kullanıcı arşivlenir;
+ * hiçbir kayıt silinmez). Başarılıysa store'daki kayıt da güncellenir.
+ */
+export const setEmployeeAccountActive = async (
+	employee: Employee,
+	active: boolean,
+): Promise<OdooResult<null>> => {
+	const odooId = Number(employee.employeeId);
+	if (!Number.isInteger(odooId) || odooId <= 0) {
+		return {
+			ok: false,
+			kind: 'notFound',
+			status: null,
+			message: 'Invalid employee ID.',
+		};
+	}
+
+	const result = await setEmployeeActive(odooId, active);
+	if (result.ok) updateEmployee(employee.employeeId, { active });
+	return result;
 };
 
 // ---------------------------------------------------------------------------

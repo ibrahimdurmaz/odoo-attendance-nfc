@@ -48,6 +48,9 @@ export const normalizeForSearch = (value: string): string =>
 		)
 		.toLowerCase();
 
+/** Pasife alınan çalışanlar listelerde ve sayılarda yer almaz. */
+const isActive = (employee: Employee): boolean => employee.active !== false;
+
 /** Departman filtresi ile ad / sicil no aramasını birlikte uygular. */
 export const filterEmployees = (
 	employees: Employee[],
@@ -56,6 +59,7 @@ export const filterEmployees = (
 ): Employee[] => {
 	const needle = normalizeForSearch(query.trim());
 	return employees.filter((employee) => {
+		if (!isActive(employee)) return false;
 		if (department !== 'all' && employee.department !== department)
 			return false;
 		if (!needle) return true;
@@ -69,15 +73,16 @@ export const filterEmployees = (
 export const countByDepartment = (
 	employees: Employee[],
 ): Record<DepartmentFilter, number> => {
+	const activeEmployees = employees.filter(isActive);
 	const counts: Record<DepartmentFilter, number> = {
-		all: employees.length,
+		all: activeEmployees.length,
 		arge: 0,
 		satis: 0,
 		ik: 0,
 		uretim: 0,
 		pazarlama: 0,
 	};
-	for (const employee of employees) {
+	for (const employee of activeEmployees) {
 		counts[employee.department] += 1;
 	}
 	return counts;
@@ -86,8 +91,12 @@ export const countByDepartment = (
 export const getAttendanceSummary = (
 	employees: Employee[],
 ): AttendanceSummary => {
-	const total = employees.length;
-	const inside = employees.filter(
+	// Pasife alınan çalışanlar yoklamaya dahil edilmez.
+	const activeEmployees = employees.filter(
+		(employee) => employee.active !== false,
+	);
+	const total = activeEmployees.length;
+	const inside = activeEmployees.filter(
 		(employee) => employee.status === 'inside',
 	).length;
 	const onBreak = employees.filter(

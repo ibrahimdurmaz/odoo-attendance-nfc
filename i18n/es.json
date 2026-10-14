@@ -209,7 +209,7 @@
 			"AnnualLeave": "Vacaciones anuales (días)",
 			"WorkDays": "Días laborables",
 			"AccessAndRole": "Acceso y rol",
-			"PasswordInfo": "Al crear la cuenta, el sistema generará una contraseña temporal de un solo uso y la enviará automáticamente al correo electrónico del empleado.",
+			"PasswordInfo": "Al crear la cuenta, Odoo envía una invitación al correo electrónico del empleado. El empleado establece su propia contraseña desde el enlace de ese correo.",
 			"CreateFailedTitle": "No se pudo crear el empleado",
 			"NoDepartment": "Sin departamento",
 			"DefaultWorkSchedule": "Horario predeterminado de la empresa"

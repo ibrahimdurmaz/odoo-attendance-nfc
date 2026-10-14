@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import { useMemo, useState } from 'react';
 import {
+	Alert,
 	KeyboardAvoidingView,
 	Platform,
 	ScrollView,
@@ -34,6 +35,7 @@ import type {
 import {
 	isEmployeeActive,
 	isFormDirty,
+	setEmployeeAccountActive,
 	toEditFormValues,
 	toEmployeeChanges,
 	updateEmployee,
@@ -56,6 +58,7 @@ export const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
 }) => {
 	const employees = useEmployeeStore((state) => state.employees);
 	const { triggerModal } = useModalStore();
+	const [isSaving, setIsSaving] = useState(false);
 	const router = useRouter();
 	const { t } = useTranslation();
 	// `initialValues`: kayıtlı hâl. `values` bundan farklılaştığında kaydet çubuğu görünür.
@@ -89,10 +92,24 @@ export const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
 		setValues((previous) => ({ ...previous, [field]: value }));
 	};
 
-	const save = () => {
+	const save = async () => {
 		setHasSubmitted(true);
 		const hasErrors = Object.keys(validateEmployeeForm(values)).length > 0;
-		if (hasErrors) return;
+		if (hasErrors || isSaving) return;
+
+		// Hesap durumu değiştiyse önce Odoo'ya yazılır; reddedilirse hiçbir şey kaydedilmez.
+		if (values.active !== initialValues.active) {
+			setIsSaving(true);
+			const result = await setEmployeeAccountActive(employee, values.active);
+			setIsSaving(false);
+			if (!result.ok) {
+				Alert.alert(
+					t('EditEmployee.EditEmployeeForm.SaveFailedTitle'),
+					result.message,
+				);
+				return;
+			}
+		}
 
 		updateEmployee(employee.employeeId, toEmployeeChanges(values, employee));
 		setInitialValues(values);
@@ -100,9 +117,16 @@ export const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
 		onSaved();
 	};
 
-	// Pasife alma onaylanınca hemen kaydedilir; formdaki diğer değişiklikler beklemeye devam eder.
-	const deactivate = () => {
-		updateEmployee(employee.employeeId, { active: false });
+	// Pasife alma onaylanınca hemen Odoo'ya yazılır; formdaki diğer değişiklikler beklemeye devam eder.
+	const deactivate = async () => {
+		const result = await setEmployeeAccountActive(employee, false);
+		if (!result.ok) {
+			Alert.alert(
+				t('EditEmployee.EditEmployeeForm.DeactivateFailedTitle'),
+				result.message,
+			);
+			return;
+		}
 		setValues((previous) => ({ ...previous, active: false }));
 		setInitialValues((previous) => ({ ...previous, active: false }));
 	};

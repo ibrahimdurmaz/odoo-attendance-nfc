@@ -209,7 +209,7 @@
 			"AnnualLeave": "Congés annuels (jours)",
 			"WorkDays": "Jours ouvrés",
 			"AccessAndRole": "Accès et rôle",
-			"PasswordInfo": "À la création du compte, le système génère un mot de passe temporaire à usage unique et l'envoie automatiquement à l'adresse e-mail de l'employé.",
+			"PasswordInfo": "À la création du compte, Odoo envoie une invitation à l'adresse e-mail de l'employé. L'employé définit lui-même son mot de passe grâce au lien contenu dans cet e-mail.",
 			"CreateFailedTitle": "Impossible de créer l'employé",
 			"NoDepartment": "Aucun service",
 			"DefaultWorkSchedule": "Horaires par défaut de la société"
