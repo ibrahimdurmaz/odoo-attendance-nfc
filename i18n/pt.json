@@ -597,7 +597,7 @@
 	},
 	"Notification": {
 		"NotificationsHeader": {
-			"Title": "Notificações"
+			"Title": "Pedidos"
 		},
 		"NotificationsScreen": {
 			"Count_one": "{{count}} notificação nova",

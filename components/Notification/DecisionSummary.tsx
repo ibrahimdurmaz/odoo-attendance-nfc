@@ -1,32 +1,24 @@
 import type { ThemeColors } from '@/assets/theme';
 import { fonts, theme } from '@/assets/theme';
-
+import { formatShortDate, formatTime } from '@/helper/dateHelpers';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { FC } from 'react';
 import { useMemo } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, Text, View } from 'react-native';
-import {
-	ApprovalRequest,
-	ApprovalStatus,
-	getNextStatus,
-	RECORD_TYPE_LABELS,
-	STATUS_LABELS,
-} from './approvalRequests';
+import type { ApprovalRequest, ApprovalStatus } from './approvalRequests';
+import { getNextStatus, STATUS_LABELS } from './approvalRequests';
+
 type DecisionSummaryProps = { request: ApprovalRequest; employeeName: string };
-// Değerler çeviri anahtarıdır.
-const SHORT_STATUS_LABELS: Record<ApprovalStatus, string> = {
-	pending: 'Notification.DecisionSummary.ShortStatus.Pending',
-	approved: 'Notification.DecisionSummary.ShortStatus.Approved',
-	rejected: 'Notification.DecisionSummary.ShortStatus.Rejected',
-};
+
+/** İkon, soru ve "Onaylandı → Reddedildi" satırı. */
 export const DecisionSummary: FC<DecisionSummaryProps> = ({
 	request,
 	employeeName,
 }) => {
 	const colors = theme();
-	const { t } = useTranslation();
 	const styles = useMemo(() => createSummaryStyles(colors), [colors]);
+	const { t } = useTranslation();
 
 	const isPending = request.status === 'pending';
 	const nextStatus = getNextStatus(request);
@@ -46,48 +38,33 @@ export const DecisionSummary: FC<DecisionSummaryProps> = ({
 				/>
 			</View>
 			<Text accessibilityRole='header' style={styles.title}>
-				{isPending
-					? t('Notification.DecisionSummary.RejectTitle')
-					: t('Notification.DecisionSummary.ChangeTitle')}
+				{t(
+					isPending
+						? 'Notification.DecisionSummary.RejectTitle'
+						: 'Notification.DecisionSummary.ChangeTitle',
+				)}
 			</Text>
-			{isPending ? (
-				<Text style={styles.text}>
-					<Trans
-						components={{
-							strong: <Text style={styles.strong} />,
-							rejected: <Text style={styles.rejected} />,
-						}}
-						i18nKey='Notification.DecisionSummary.RejectText'
-						values={{ name: employeeName }}
-					/>
-				</Text>
-			) : (
-				<Text style={styles.text}>
-					<Trans
-						components={{
-							strong: <Text style={styles.strong} />,
-							from: <Text style={statusStyles[request.status]} />,
-							to: <Text style={statusStyles[nextStatus]} />,
-						}}
-						i18nKey='Notification.DecisionSummary.ChangeText'
-						values={{
-							name: employeeName,
-							from: t(STATUS_LABELS[request.status]),
-							to: t(STATUS_LABELS[nextStatus]),
-						}}
-					/>
-				</Text>
-			)}
+			<Text style={styles.text}>
+				{t(
+					isPending
+						? 'Notification.DecisionSummary.RejectText'
+						: 'Notification.DecisionSummary.ChangeText',
+					{
+						name: employeeName,
+					},
+				)}
+			</Text>
 			<View style={styles.strip}>
 				<View style={styles.stripLabel}>
 					<MaterialIcons color={colors.primary} name='schedule' size={18} />
 					<Text style={styles.stripText}>
-						{t(RECORD_TYPE_LABELS[request.recordType])} • {request.requestedTime}
+						{formatShortDate(request.dateKey)} • {formatTime(request.checkInAt)}{' '}
+						– {formatTime(request.checkOutAt)}
 					</Text>
 				</View>
 				<View style={styles.stripLabel}>
 					<Text style={[styles.from, statusStyles[request.status]]}>
-						{t(SHORT_STATUS_LABELS[request.status])}
+						{t(STATUS_LABELS[request.status])}
 					</Text>
 					<MaterialIcons
 						color={colors.onSurfaceVariant}
@@ -95,7 +72,7 @@ export const DecisionSummary: FC<DecisionSummaryProps> = ({
 						size={14}
 					/>
 					<Text style={[styles.to, statusStyles[nextStatus]]}>
-						{t(SHORT_STATUS_LABELS[nextStatus])}
+						{t(STATUS_LABELS[nextStatus])}
 					</Text>
 				</View>
 			</View>
@@ -128,7 +105,6 @@ const createSummaryStyles = (colors: ThemeColors) =>
 			textAlign: 'center',
 			color: colors.onSurfaceVariant,
 		},
-		strong: { fontFamily: fonts.semibold, color: colors.onSurface },
 		pending: { fontFamily: fonts.semibold, color: colors.secondary },
 		approved: { fontFamily: fonts.semibold, color: colors.tertiary },
 		rejected: { fontFamily: fonts.semibold, color: colors.error },
@@ -136,17 +112,17 @@ const createSummaryStyles = (colors: ThemeColors) =>
 			alignSelf: 'stretch',
 			marginTop: 8,
 			padding: 8,
+			gap: 6,
 			borderRadius: 8,
-			flexDirection: 'row',
-			alignItems: 'center',
-			justifyContent: 'space-between',
 			backgroundColor: colors.surfaceContainerLow,
 		},
 		stripLabel: { flexDirection: 'row', alignItems: 'center', gap: 4 },
 		stripText: {
+			flexShrink: 1,
 			fontFamily: fonts.regular,
 			fontSize: 12,
 			lineHeight: 16,
+			fontVariant: ['tabular-nums'],
 			color: colors.onSurfaceVariant,
 		},
 		from: {

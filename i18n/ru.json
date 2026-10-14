@@ -606,7 +606,7 @@
 	},
 	"Notification": {
 		"NotificationsHeader": {
-			"Title": "Уведомления"
+			"Title": "Заявки"
 		},
 		"NotificationsScreen": {
 			"Count_one": "{{count}} новое уведомление",

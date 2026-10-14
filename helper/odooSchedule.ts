@@ -214,11 +214,7 @@ export const buildSchedule = (
 		}
 		// Eski bir günde kapatılmamış kayıt (çıkış unutulmuş): yalnızca kapanmış kısımlar sayılır.
 		const closed = dayRecords.filter((record) => record.checkOutAt !== null);
-		const day = toDayRecord(
-			dateKey,
-			closed,
-			getDayPlan(workSchedule, dateKey),
-		);
+		const day = toDayRecord(dateKey, closed, getDayPlan(workSchedule, dateKey));
 		if (day) days[dateKey] = day;
 	});
 

@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { theme, ThemeColors } from '@/assets/theme';
@@ -8,9 +8,11 @@ import {
 	filterEmployees,
 	getAttendanceSummary,
 } from '@/helper/employee';
+import { callOdooSession } from '@/helper/odooApi';
 import { DepartmentFilter } from '@/store/types';
 import { useEmployeeStore } from '@/store/useEmployeeStore';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { SearchBar, SearchBarCommands } from 'react-native-screens';
 import { AdminHeader } from './AdminHeader';
 import { DepartmentChips } from './DepartmentChips';
@@ -18,7 +20,6 @@ import { EmployeeCard } from './EmployeeCard';
 import { ListStrip } from './EmployeeListStrip';
 import { EmptyState } from './EmptyState';
 import { MetricBar } from './MetricBars';
-import { useTranslation } from 'react-i18next';
 
 export const EmployeeListScreen = () => {
 	const colors = theme();
@@ -44,10 +45,56 @@ export const EmployeeListScreen = () => {
 		() => filterEmployees(employees, query, department),
 		[employees, query, department],
 	);
+	const inspectApprovalFields = async () => {
+		const pattern = /approv|valid|status|state|overtime|manual/i;
 
+		const attendanceFields = await callOdooSession(
+			'hr.attendance',
+			'fields_get',
+			{
+				attributes: ['string', 'type', 'selection'],
+			},
+		);
+		if (
+			attendanceFields.ok &&
+			attendanceFields.data &&
+			typeof attendanceFields.data === 'object'
+		) {
+			const matches = Object.entries(attendanceFields.data).filter(([name]) =>
+				pattern.test(name),
+			);
+			console.log('ATTENDANCE FIELDS', JSON.stringify(matches));
+		} else
+			console.log('ATTENDANCE FIELDS ERROR', JSON.stringify(attendanceFields));
+
+		const companyFields = await callOdooSession('res.company', 'fields_get', {
+			attributes: ['string', 'type', 'selection'],
+		});
+		if (
+			companyFields.ok &&
+			companyFields.data &&
+			typeof companyFields.data === 'object'
+		) {
+			const matches = Object.entries(companyFields.data).filter(([name]) =>
+				/attendance|overtime|approv/i.test(name),
+			);
+			console.log('COMPANY FIELDS', JSON.stringify(matches));
+		}
+
+		const latest = await callOdooSession('hr.attendance', 'search_read', {
+			domain: [],
+			fields: [],
+			order: 'check_in desc',
+			limit: 2,
+		});
+		console.log('LATEST ATTENDANCES', JSON.stringify(latest));
+	};
 	return (
 		<SafeAreaView edges={['top']} style={styles.screen}>
 			<AdminHeader title={t('EmployeeList.EmployeeListScreen.Title')} />
+			<Pressable onPress={inspectApprovalFields}>
+				<Text>test</Text>
+			</Pressable>
 			<FlatList
 				contentContainerStyle={styles.content}
 				data={visibleEmployees}

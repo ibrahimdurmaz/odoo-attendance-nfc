@@ -5,13 +5,14 @@ import { toDateKey } from '@/helper/dateHelpers';
 import { useModalStore } from '@/store/modalStore';
 import { useFocusEffect } from 'expo-router';
 import type { FC } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useCallback, useMemo, useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { ActivityIndicator, Alert, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AdminHeader } from '../Admin/AdminHeader';
 import {
 	ApprovalRequest,
+	decideAttendance,
 	decideRequest,
 	fetchApprovalRequests,
 	getNotificationPage,
@@ -55,22 +56,27 @@ export const AdminNotificationsScreen: FC = () => {
 	const [page, setPage] = useState(0);
 	const [selectedId, setSelectedId] = useState<string | null>(null);
 	const [lastDecidedId, setLastDecidedId] = useState<string | null>(null);
+	const [savingId, setSavingId] = useState<string | null>(null);
 	const now = Date.now();
 
-	// Talepler sayfa her açıldığında yeniden okunur.
+	// Kayıtlar sayfa her açıldığında Odoo'dan yeniden okunur.
 	useFocusEffect(
 		useCallback(() => {
 			let isActive = true;
 			setIsLoading(true);
-			void fetchApprovalRequests().then((loaded) => {
+			void fetchApprovalRequests().then((result) => {
 				if (!isActive) return;
-				setRequests(loaded);
 				setIsLoading(false);
+				if (!result.ok) {
+					Alert.alert(t('Notification.LoadFailedTitle'), result.message);
+					return;
+				}
+				setRequests(result.data);
 			});
 			return () => {
 				isActive = false;
 			};
-		}, []),
+		}, [t]),
 	);
 
 	const pendingRequests = requests.filter(
@@ -87,11 +93,22 @@ export const AdminNotificationsScreen: FC = () => {
 		requests.find((request) => request.id === selectedId) ?? null;
 	const lastDecided = requests.find((request) => request.id === lastDecidedId);
 
-	const decide = (
+	/** Kararı önce Odoo'ya yazar; Odoo kabul ederse listede gösterir. */
+	const decide = async (
 		id: string,
 		status: 'approved' | 'rejected',
 		reason: string | null,
 	) => {
+		const request = requests.find((item) => item.id === id);
+		if (!request || savingId) return;
+
+		setSavingId(id);
+		const result = await decideAttendance(request.attendanceId, status, reason);
+		setSavingId(null);
+		if (!result.ok) {
+			Alert.alert(t('Notification.DecisionFailedTitle'), result.message);
+			return;
+		}
 		setRequests((current) => decideRequest(current, id, status, reason));
 		setLastDecidedId(id);
 	};
@@ -102,7 +119,7 @@ export const AdminNotificationsScreen: FC = () => {
 	};
 
 	const approve = (id: string) => {
-		decide(id, 'approved', null);
+		void decide(id, 'approved', null);
 	};
 
 	/** Reddetme ve karar değiştirme aynı modalı açar; modal talebin durumuna göre değişir. */
@@ -113,7 +130,7 @@ export const AdminNotificationsScreen: FC = () => {
 
 	const submitDecision = (reason: string | null) => {
 		if (!selectedRequest) return;
-		decide(
+		void decide(
 			selectedRequest.id,
 			selectedRequest.status === 'rejected' ? 'approved' : 'rejected',
 			reason,
@@ -135,6 +152,7 @@ export const AdminNotificationsScreen: FC = () => {
 		}
 		return pageRequests.map((request) => (
 			<RequestCard
+				isSaving={savingId === request.id}
 				key={request.id}
 				onApprove={approve}
 				onChangeDecision={openDecision}

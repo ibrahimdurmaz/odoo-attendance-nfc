@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -9,6 +9,7 @@ import { useEmployeeStore } from '@/store/useEmployeeStore';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { ATTENDANCE_TARGET_PERCENT, SHIFT_HOURS } from '../Home/constants';
+import { fetchAttendanceValidationMode } from '../Notification/approvalRequests';
 import { AddEmployeeButton } from './AddEmployeeButton';
 import { AttendanceCard } from './Attendance';
 import { NavCard } from './NavCard';
@@ -27,7 +28,14 @@ export const AdminScreen = () => {
 	};
 	const employees = useEmployeeStore((state) => state.employees);
 	const summary = useMemo(() => getAttendanceSummary(employees), [employees]);
-
+	const [showApprovals, setShowApprovals] = useState(false);
+	useFocusEffect(
+		useCallback(() => {
+			void fetchAttendanceValidationMode().then((result) => {
+				setShowApprovals(result.ok && result.data === 'manual_validation');
+			});
+		}, []),
+	);
 	// Ekran her açıldığında çalışanları ve giriş durumlarını Odoo'dan tazeler.
 	useFocusEffect(
 		useCallback(() => {
@@ -54,12 +62,14 @@ export const AdminScreen = () => {
 						})}
 						title={t('Admin.AdminScreen.Employees')}
 					/>
-					<NavCard
-						icon='calendar-month'
-						onPress={onOpenAdminNotification}
-						subtitle={t('Admin.AdminScreen.ManualApprovalSubtitle')}
-						title={t('Admin.AdminScreen.ManualApproval')}
-					/>
+					{showApprovals && (
+						<NavCard
+							icon='calendar-month'
+							onPress={onOpenAdminNotification}
+							subtitle={t('Admin.AdminScreen.ManualApprovalSubtitle')}
+							title={t('Admin.AdminScreen.ManualApproval')}
+						/>
+					)}
 				</View>
 
 				<AttendanceCard

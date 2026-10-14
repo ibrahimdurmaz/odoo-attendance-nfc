@@ -579,7 +579,7 @@
 	},
 	"Notification": {
 		"NotificationsHeader": {
-			"Title": "Bildirimler"
+			"Title": "Talepler"
 		},
 		"NotificationsScreen": {
 			"Count": "{{count}} yeni bildirim"

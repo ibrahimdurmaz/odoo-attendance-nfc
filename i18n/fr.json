@@ -597,7 +597,7 @@
 	},
 	"Notification": {
 		"NotificationsHeader": {
-			"Title": "Notifications"
+			"Title": "Demandes"
 		},
 		"NotificationsScreen": {
 			"Count_one": "{{count}} nouvelle notification",
