@@ -19,7 +19,6 @@ export type Employee = {
 	/** İşe başlama tarihi, "2026-10-01" biçiminde. */
 	startDateKey: string;
 	shiftTemplate: string;
-	annualLeaveDays: number;
 	status: AttendanceStatus;
 	createdAt: number;
 	active?: boolean;

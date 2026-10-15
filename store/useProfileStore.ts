@@ -70,7 +70,6 @@ export const initialProfile: Employee = {
 	phone: '',
 	startDateKey: '',
 	shiftTemplate: 'standard',
-	annualLeaveDays: 0,
 	status: 'absent',
 	createdAt: 0,
 };

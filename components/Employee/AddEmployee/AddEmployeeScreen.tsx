@@ -105,7 +105,10 @@ export const AddEmployeeScreen = () => {
 
 	return (
 		<SafeAreaView edges={['top']} style={styles.screen}>
-			<AdminHeader title={t('AddEmployee.AddEmployeeScreen.Title')} />
+			<AdminHeader
+				title={t('AddEmployee.AddEmployeeScreen.Title')}
+				profileActive={false}
+			/>
 			<KeyboardAvoidingView
 				behavior={Platform.OS === 'ios' ? 'padding' : undefined}
 				style={styles.flex}
@@ -223,15 +226,6 @@ export const AddEmployeeScreen = () => {
 							onChange={(key) => setField('shiftTemplate', key)}
 							options={options.workSchedules}
 							value={values.shiftTemplate}
-						/>
-						<FormTextField
-							error={errors.annualLeaveDays}
-							keyboardType='number-pad'
-							label={t('AddEmployee.AddEmployeeScreen.AnnualLeave')}
-							maxLength={2}
-							onChangeText={(text) => setField('annualLeaveDays', text)}
-							unit={t('AddEmployee.AddEmployeeScreen.WorkDays')}
-							value={values.annualLeaveDays}
 						/>
 					</FormSection>
 

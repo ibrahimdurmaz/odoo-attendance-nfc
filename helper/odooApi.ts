@@ -501,8 +501,6 @@ export type OdooEmployeeProfile = {
 	startDateKey: string | null;
 	/** Çalışma takviminin Odoo'daki adı, örn. "Standard 40 hours/week". */
 	workSchedule: string | null;
-	/** Geçerli izin haklarının toplamı (gün). Odoo'da "İzinler" uygulaması kurulu değilse null. */
-	annualLeaveDays: number | null;
 	/** Kalan izin (gün). Odoo'da "İzinler" uygulaması kurulu değilse null. */
 	remainingLeaveDays: number | null;
 	/** Şu an giriş yapmış mı. Odoo'da "Katılımlar" uygulaması kurulu değilse null. */
@@ -536,7 +534,6 @@ const OPTIONAL_PROFILE_FIELDS = [
 	'work_phone',
 	'contract_date_start',
 	'resource_calendar_id',
-	'allocation_display',
 	'allocation_remaining_display',
 	'attendance_state',
 ];
@@ -616,7 +613,6 @@ const toEmployeeProfile = (
 		phone: toText(record.mobile_phone) ?? toText(record.work_phone),
 		startDateKey: toDateKey(record.contract_date_start),
 		workSchedule: toLinkedName(record.resource_calendar_id),
-		annualLeaveDays: toDayCount(record.allocation_display),
 		remainingLeaveDays: toDayCount(record.allocation_remaining_display),
 		isCheckedIn: toCheckedIn(record.attendance_state),
 	};

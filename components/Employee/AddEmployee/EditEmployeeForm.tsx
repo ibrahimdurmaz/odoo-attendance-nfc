@@ -111,7 +111,7 @@ export const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
 			}
 		}
 
-		updateEmployee(employee.employeeId, toEmployeeChanges(values, employee));
+		updateEmployee(employee.employeeId, toEmployeeChanges(values));
 		setInitialValues(values);
 		setHasSubmitted(false);
 		onSaved();
@@ -246,16 +246,6 @@ export const EditEmployeeForm: FC<EditEmployeeFormProps> = ({
 							onChange={(key) => setField('shiftTemplate', key)}
 							options={SHIFT_TEMPLATES}
 							value={values.shiftTemplate}
-						/>
-						<FormTextField
-							error={errors.annualLeaveDays}
-							isRequired
-							keyboardType='number-pad'
-							label={t('EditEmployee.EditEmployeeForm.AnnualLeave')}
-							maxLength={2}
-							onChangeText={(text) => setField('annualLeaveDays', text)}
-							unit={t('EditEmployee.EditEmployeeForm.WorkDays')}
-							value={values.annualLeaveDays}
 						/>
 					</FormSection>
 

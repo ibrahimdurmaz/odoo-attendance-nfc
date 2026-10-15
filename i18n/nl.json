@@ -113,8 +113,8 @@
 		},
 		"StatsSection": {
 			"Title": "Uren en verlof",
-			"RemainingLeave": "Resterend jaarlijks verlof",
-			"AnnualEntitlement": "Jaarlijks recht",
+			"LeaveTakenThisYear": "Opgenomen verlof dit jaar",
+			"SinceYearStart": "Sinds 1 januari",
 			"Days": "Dagen",
 			"OvertimeThisMonth": "Overuren deze maand",
 			"RecordedThisMonth_one": "{{count}} dag geregistreerd deze maand",
@@ -264,7 +264,7 @@
 		},
 		"CreatedActions": {
 			"AddAnother": "Medewerker toevoegen",
-			"BackToList": "Terug naar medewerkerslijst"
+			"BackToList": "Terug"
 		}
 	},
 	"CorrectionRequest": {
@@ -451,7 +451,9 @@
 			"AnnualLeave": "Jaarlijks verlof",
 			"WorkDays": "Werkdagen",
 			"Account": "Account",
-			"SaveChanges": "Wijzigingen opslaan"
+			"SaveChanges": "Wijzigingen opslaan",
+			"SaveFailedTitle": "Wijzigingen konden niet worden opgeslagen",
+			"DeactivateFailedTitle": "Medewerker kon niet worden gedeactiveerd"
 		},
 		"AccountStatusSwitch": {
 			"Title": "Accountstatus",
@@ -573,7 +575,11 @@
 			"CredentialsErrorMessage": "Controleer uw gegevens en probeer het opnieuw.",
 			"ConnectionErrorTitle": "Server niet bereikbaar.",
 			"ConnectionErrorMessage": "Controleer uw internetverbinding en probeer het opnieuw.",
-			"ForgotPassword": "Wachtwoord vergeten"
+			"ForgotPassword": "Wachtwoord vergeten",
+			"ForgotPasswordTitle": "Wachtwoord vergeten",
+			"ForgotPasswordEnterEmail": "Voer eerst uw e-mailadres in om een resetlink te ontvangen.",
+			"ForgotPasswordSent": "Er is een link om uw wachtwoord te resetten verstuurd naar {{email}}. Controleer uw inbox.",
+			"ForgotPasswordDisabled": "Wachtwoord resetten is uitgeschakeld op deze server. Neem contact op met uw beheerder."
 		},
 		"AuthTextField": {
 			"ShowPassword": "Wachtwoord tonen",
@@ -635,7 +641,9 @@
 			"Reject": "Afwijzen",
 			"Approve": "Goedkeuren",
 			"Reviewed": "Beoordeeld • {{time}}",
-			"ChangeDecision": "Beslissing wijzigen"
+			"ChangeDecision": "Beslissing wijzigen",
+			"Worked": "Gewerkt: {{duration}}",
+			"Break": "Pauze: {{duration}}"
 		},
 		"RecordChange": {
 			"Title": "Registratie: {{recordType}} • {{date}}",
@@ -673,7 +681,9 @@
 		"ResultToast": {
 			"Approved": "Verzoek goedgekeurd.",
 			"Rejected": "Verzoek afgewezen."
-		}
+		},
+		"LoadFailedTitle": "Verzoeken konden niet worden geladen",
+		"DecisionFailedTitle": "Beslissing kon niet worden opgeslagen"
 	},
 	"EmployeeSchedule": {
 		"ScheduleScreen": {

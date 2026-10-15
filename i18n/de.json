@@ -113,8 +113,8 @@
 		},
 		"StatsSection": {
 			"Title": "Arbeitszeit & Urlaub",
-			"RemainingLeave": "Resturlaub",
-			"AnnualEntitlement": "Jahresanspruch",
+			"LeaveTakenThisYear": "Genommener Urlaub dieses Jahr",
+			"SinceYearStart": "Seit 1. Januar",
 			"Days": "Tage",
 			"OvertimeThisMonth": "Überstunden diesen Monat",
 			"RecordedThisMonth_one": "Diesen Monat {{count}} Tag erfasst",
@@ -264,7 +264,7 @@
 		},
 		"CreatedActions": {
 			"AddAnother": "Weitere Person hinzufügen",
-			"BackToList": "Zurück zur Mitarbeiterliste"
+			"BackToList": "Zurück"
 		}
 	},
 	"CorrectionRequest": {
@@ -451,7 +451,9 @@
 			"AnnualLeave": "Jahresurlaub",
 			"WorkDays": "Arbeitstage",
 			"Account": "Konto",
-			"SaveChanges": "Änderungen speichern"
+			"SaveChanges": "Änderungen speichern",
+			"SaveFailedTitle": "Änderungen konnten nicht gespeichert werden",
+			"DeactivateFailedTitle": "Mitarbeiter konnte nicht deaktiviert werden"
 		},
 		"AccountStatusSwitch": {
 			"Title": "Kontostatus",
@@ -573,7 +575,11 @@
 			"CredentialsErrorMessage": "Prüfen Sie Ihre Angaben und versuchen Sie es erneut.",
 			"ConnectionErrorTitle": "Server nicht erreichbar.",
 			"ConnectionErrorMessage": "Prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.",
-			"ForgotPassword": "Passwort vergessen"
+			"ForgotPassword": "Passwort vergessen",
+			"ForgotPasswordTitle": "Passwort vergessen",
+			"ForgotPasswordEnterEmail": "Geben Sie zuerst Ihre E-Mail-Adresse ein, um einen Link zum Zurücksetzen zu erhalten.",
+			"ForgotPasswordSent": "Ein Link zum Zurücksetzen des Passworts wurde an {{email}} gesendet. Prüfen Sie Ihren Posteingang.",
+			"ForgotPasswordDisabled": "Das Zurücksetzen von Passwörtern ist auf diesem Server deaktiviert. Wenden Sie sich an Ihren Administrator."
 		},
 		"AuthTextField": {
 			"ShowPassword": "Passwort anzeigen",
@@ -635,7 +641,9 @@
 			"Reject": "Ablehnen",
 			"Approve": "Genehmigen",
 			"Reviewed": "Bearbeitet • {{time}}",
-			"ChangeDecision": "Entscheidung ändern"
+			"ChangeDecision": "Entscheidung ändern",
+			"Worked": "Gearbeitet: {{duration}}",
+			"Break": "Pause: {{duration}}"
 		},
 		"RecordChange": {
 			"Title": "{{recordType}}-Eintrag • {{date}}",
@@ -673,7 +681,9 @@
 		"ResultToast": {
 			"Approved": "Antrag genehmigt.",
 			"Rejected": "Antrag abgelehnt."
-		}
+		},
+		"LoadFailedTitle": "Anträge konnten nicht geladen werden",
+		"DecisionFailedTitle": "Entscheidung konnte nicht gespeichert werden"
 	},
 	"EmployeeSchedule": {
 		"ScheduleScreen": {

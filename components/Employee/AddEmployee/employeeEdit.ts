@@ -83,7 +83,6 @@ const EDIT_FORM_FIELDS: EditEmployeeFormField[] = [
 	'company',
 	'startDate',
 	'shiftTemplate',
-	'annualLeaveDays',
 	'role',
 	'avatarUrl',
 	'active',
@@ -111,7 +110,6 @@ export const toEditFormValues = (
 	company: employee.company,
 	startDate: formatDisplayDate(parseDateKey(employee.startDateKey)),
 	shiftTemplate: employee.shiftTemplate,
-	annualLeaveDays: String(employee.annualLeaveDays),
 	role: employee.admin ? 'admin' : 'employee',
 	avatarUrl: employee.avatarUrl,
 	active: isEmployeeActive(employee),
@@ -126,15 +124,12 @@ export const isFormDirty = (
 
 /**
  * Doğrulanmış düzenleme formunu store'a yazılacak değişikliklere çevirir.
- * Sicil no ve şifre durumu formdan değişmez. Yıllık izin hakkı değişirse
- * kalan izin aynı fark kadar artar ya da azalır (kullanılan gün sayısı korunur).
+ * Sicil no ve şifre durumu formdan değişmez.
  */
 export const toEmployeeChanges = (
 	values: EditEmployeeFormValues,
-	employee: Employee,
 ): EmployeeChanges => {
 	const next = toNewEmployee(values);
-	const leaveDifference = next.annualLeaveDays - employee.annualLeaveDays;
 
 	return {
 		fullName: next.fullName,
@@ -142,16 +137,11 @@ export const toEmployeeChanges = (
 		department: next.department,
 		company: next.company,
 		avatarUrl: next.avatarUrl,
-		remainingLeaveDays: Math.max(
-			0,
-			employee.remainingLeaveDays + leaveDifference,
-		),
 		admin: next.admin,
 		active: values.active,
 		email: next.email,
 		phone: next.phone,
 		startDateKey: next.startDateKey,
 		shiftTemplate: next.shiftTemplate,
-		annualLeaveDays: next.annualLeaveDays,
 	};
 };

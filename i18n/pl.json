@@ -117,8 +117,8 @@
 		},
 		"StatsSection": {
 			"Title": "Czas pracy i urlop",
-			"RemainingLeave": "Pozostały urlop roczny",
-			"AnnualEntitlement": "Wymiar roczny",
+			"LeaveTakenThisYear": "Urlop wykorzystany w tym roku",
+			"SinceYearStart": "Od 1 stycznia",
 			"Days": "Dni",
 			"OvertimeThisMonth": "Nadgodziny w tym miesiącu",
 			"RecordedThisMonth_one": "{{count}} dzień zarejestrowany w tym miesiącu",
@@ -274,7 +274,7 @@
 		},
 		"CreatedActions": {
 			"AddAnother": "Dodaj pracownika",
-			"BackToList": "Wróć do listy pracowników"
+			"BackToList": "Wstecz"
 		}
 	},
 	"CorrectionRequest": {
@@ -465,7 +465,9 @@
 			"AnnualLeave": "Urlop roczny",
 			"WorkDays": "Dni robocze",
 			"Account": "Konto",
-			"SaveChanges": "Zapisz zmiany"
+			"SaveChanges": "Zapisz zmiany",
+			"SaveFailedTitle": "Nie udało się zapisać zmian",
+			"DeactivateFailedTitle": "Nie udało się dezaktywować pracownika"
 		},
 		"AccountStatusSwitch": {
 			"Title": "Stan konta",
@@ -591,7 +593,11 @@
 			"CredentialsErrorMessage": "Sprawdź dane i spróbuj ponownie.",
 			"ConnectionErrorTitle": "Serwer jest niedostępny.",
 			"ConnectionErrorMessage": "Sprawdź połączenie z internetem i spróbuj ponownie.",
-			"ForgotPassword": "Nie pamiętam hasła"
+			"ForgotPassword": "Nie pamiętam hasła",
+			"ForgotPasswordTitle": "Nie pamiętam hasła",
+			"ForgotPasswordEnterEmail": "Najpierw wpisz adres e-mail, aby otrzymać link do zresetowania hasła.",
+			"ForgotPasswordSent": "Link do zresetowania hasła został wysłany na adres {{email}}. Sprawdź skrzynkę odbiorczą.",
+			"ForgotPasswordDisabled": "Resetowanie hasła jest wyłączone na tym serwerze. Skontaktuj się z administratorem."
 		},
 		"AuthTextField": {
 			"ShowPassword": "Pokaż hasło",
@@ -657,7 +663,9 @@
 			"Reject": "Odrzuć",
 			"Approve": "Zatwierdź",
 			"Reviewed": "Rozpatrzono • {{time}}",
-			"ChangeDecision": "Zmień decyzję"
+			"ChangeDecision": "Zmień decyzję",
+			"Worked": "Przepracowano: {{duration}}",
+			"Break": "Przerwa: {{duration}}"
 		},
 		"RecordChange": {
 			"Title": "Rejestracja: {{recordType}} • {{date}}",
@@ -695,7 +703,9 @@
 		"ResultToast": {
 			"Approved": "Wniosek zatwierdzony.",
 			"Rejected": "Wniosek odrzucony."
-		}
+		},
+		"LoadFailedTitle": "Nie udało się wczytać wniosków",
+		"DecisionFailedTitle": "Nie udało się zapisać decyzji"
 	},
 	"EmployeeSchedule": {
 		"ScheduleScreen": {

@@ -18,7 +18,8 @@ export const CreatedActions = () => {
 		resetStore();
 	};
 	const onBackToList = () => {
-		router.navigate('/employee_list');
+		router.back();
+		resetStore();
 	};
 	return (
 		<View style={styles.container}>

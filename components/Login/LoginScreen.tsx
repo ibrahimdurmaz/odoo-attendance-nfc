@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import type { TextInput } from 'react-native';
 import {
+	Alert,
 	Animated,
 	KeyboardAvoidingView,
 	Platform,
@@ -14,6 +15,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { theme } from '@/assets/theme';
 import { fetchOwnEmployee, loginWithPassword } from '@/helper/odooApi';
 import { toAppPhone } from '@/helper/odooEmployeeSync';
+import { requestPasswordReset } from '@/helper/odooPasswordReset';
 import { Employee } from '@/store/types';
 import {
 	Language,
@@ -45,6 +47,7 @@ const authenticate = async (
 		login: identifier.trim(),
 		password,
 	});
+
 	if (!session.ok) {
 		// Yanlış e-posta ya da şifre: null. Diğer her şey bağlantı hatası sayılır.
 		if (session.kind === 'unauthorized') return null;
@@ -71,7 +74,6 @@ const authenticate = async (
 		phone: toAppPhone(profile?.phone ?? null),
 		startDateKey: profile?.startDateKey ?? '',
 		shiftTemplate: 'standard',
-		annualLeaveDays: profile?.annualLeaveDays ?? 0,
 		status: profile?.isCheckedIn ? 'inside' : 'outside',
 		createdAt: Date.now(),
 	};
@@ -89,6 +91,7 @@ export const LoginScreen = ({
 	const [identifier, setIdentifier] = useState('');
 	const [password, setPassword] = useState('');
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [isSendingReset, setIsSendingReset] = useState(false);
 	const [error, setError] = useState<LoginError | null>(null);
 	const passwordRef = useRef<TextInput>(null);
 	const shake = useRef(new Animated.Value(0)).current;
@@ -114,7 +117,37 @@ export const LoginScreen = ({
 		setPassword(text);
 		setError(null);
 	};
-	const onForgotPassword = () => {};
+	const onForgotPassword = async () => {
+		const login = identifier.trim();
+		if (!login) {
+			Alert.alert(
+				t('Login.LoginScreen.ForgotPasswordTitle'),
+				t('Login.LoginScreen.ForgotPasswordEnterEmail'),
+			);
+			return;
+		}
+		if (isSendingReset) return;
+
+		setIsSendingReset(true);
+		const result = await requestPasswordReset(serverUrl, database, login);
+		setIsSendingReset(false);
+
+		if (result.ok) {
+			Alert.alert(
+				t('Login.LoginScreen.ForgotPasswordTitle'),
+				t('Login.LoginScreen.ForgotPasswordSent', { email: login }),
+			);
+			return;
+		}
+		Alert.alert(
+			t('Login.LoginScreen.ForgotPasswordTitle'),
+			result.kind === 'notFound'
+				? t('Login.LoginScreen.ForgotPasswordDisabled')
+				: result.kind === 'network'
+					? t('Login.LoginScreen.ConnectionErrorMessage')
+					: result.message,
+		);
+	};
 	const submit = async () => {
 		if (!canSubmit) return;
 
@@ -213,6 +246,7 @@ export const LoginScreen = ({
 							hitSlop={8}
 							onPress={onForgotPassword}
 							style={screenStyles.forgot}
+							disabled={isSendingReset}
 						>
 							<Text
 								style={[screenStyles.forgotLabel, { color: colors.primary }]}

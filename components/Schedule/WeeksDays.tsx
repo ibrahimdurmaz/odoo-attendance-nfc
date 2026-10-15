@@ -7,11 +7,7 @@ import {
 	toDateKey,
 } from '@/helper/dateHelpers';
 import i18n from '@/i18n';
-import { useDayStore } from '@/store/useDayStore';
-import {
-	getEmployeeDays,
-	useEmployeeScheduleStore,
-} from '@/store/useEmployeeScheduleStore';
+import { DayRecord } from '@/store/useDayStore';
 import { useTranslation } from 'react-i18next';
 import { Pressable, Text, View } from 'react-native';
 import { WeeksDaysStyles } from './styles';
@@ -29,16 +25,14 @@ const formatWeekRange = (monday: Date, friday: Date): string => {
 };
 export function WeeksDays({
 	onPress,
-	id,
+	days,
 	monday,
 }: {
 	onPress: (dateKey: string) => void;
-	id?: string;
+	/** Days built by ScheduleScreen (from Odoo, plus today's local record). */
+	days: Record<string, DayRecord>;
 	monday: Date;
 }) {
-	const ownDays = useDayStore((state) => state.days);
-	const schedules = useEmployeeScheduleStore((state) => state.schedules);
-	const days = id ? getEmployeeDays(schedules, id) : ownDays;
 	const today = new Date();
 	const todayKey = toDateKey(today);
 	const weekDates = Array.from({ length: WORK_DAYS_PER_WEEK }, (_, index) =>

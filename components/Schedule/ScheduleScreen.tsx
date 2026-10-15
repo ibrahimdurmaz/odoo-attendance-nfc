@@ -7,10 +7,12 @@ import {
 	useEmployeeScheduleStore,
 } from '@/store/useEmployeeScheduleStore';
 import { useEmployeeStore } from '@/store/useEmployeeStore';
+import { useProfileStore } from '@/store/useProfileStore';
+import { useScheduleDays, useScheduleId } from '@/store/useScheduleDays';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import type { ComponentProps } from 'react';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -65,8 +67,8 @@ type ScheduleScreenProps = {
 
 export const ScheduleScreen = ({ id }: ScheduleScreenProps) => {
 	const ownDays = useDayStore((state) => state.days);
+	const ownEmployeeId = useProfileStore((state) => state.profile.employeeId);
 	const schedules = useEmployeeScheduleStore((state) => state.schedules);
-	const loadSchedule = useEmployeeScheduleStore((state) => state.loadSchedule);
 	const employee = useEmployeeStore((state) =>
 		state.employees.find((item) => item.employeeId === id),
 	);
@@ -74,16 +76,26 @@ export const ScheduleScreen = ({ id }: ScheduleScreenProps) => {
 	const { t } = useTranslation();
 	const [filter, setFilter] = useState<Filter>('week');
 
-	// Ekrandaki bütün veri buradan çıkar: alt bileşenler store okumaz, `days`
-	// ve ondan hesaplananları prop olarak alır.
-	const days = id ? getEmployeeDays(schedules, id) : ownDays;
+	const days = useScheduleDays(id);
+	const scheduleId = useScheduleId(id);
+	const loadSchedule = useEmployeeScheduleStore((state) => state.loadSchedule);
+	// Whose schedule: the given employee's, or your own.
+	const odooDays = getEmployeeDays(schedules, scheduleId);
 
-	useEffect(() => {
-		if (id) loadSchedule(id);
-	}, [id, loadSchedule]);
+	useFocusEffect(
+		useCallback(() => {
+			if (scheduleId) loadSchedule(scheduleId);
+		}, [scheduleId, loadSchedule]),
+	);
+
+	// Reload from Odoo every time the screen opens, so new check-outs show up.
+	useFocusEffect(
+		useCallback(() => {
+			if (scheduleId) loadSchedule(scheduleId);
+		}, [scheduleId, loadSchedule]),
+	);
 
 	const recentDays = useMemo(() => getRecentDays(days), [days]);
-
 	const today = new Date();
 
 	const monday = getMonday(today);
@@ -167,7 +179,7 @@ export const ScheduleScreen = ({ id }: ScheduleScreenProps) => {
 				/>
 
 				{/* Bu haftanın günleri */}
-				<WeeksDays id={id} onPress={openDay} monday={monday} />
+				<WeeksDays days={days} onPress={openDay} monday={monday} />
 
 				{/* Filtreler */}
 				<ScrollView

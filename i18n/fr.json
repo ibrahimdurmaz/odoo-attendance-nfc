@@ -115,8 +115,8 @@
 		},
 		"StatsSection": {
 			"Title": "Heures et congés",
-			"RemainingLeave": "Congés annuels restants",
-			"AnnualEntitlement": "Droit annuel",
+			"LeaveTakenThisYear": "Congés pris cette année",
+			"SinceYearStart": "Depuis le 1er janvier",
 			"Days": "Jours",
 			"OvertimeThisMonth": "Heures supplémentaires ce mois-ci",
 			"RecordedThisMonth_one": "{{count}} jour enregistré ce mois-ci",
@@ -269,7 +269,7 @@
 		},
 		"CreatedActions": {
 			"AddAnother": "Ajouter un employé",
-			"BackToList": "Retour à la liste des employés"
+			"BackToList": "Retour"
 		}
 	},
 	"CorrectionRequest": {
@@ -458,7 +458,9 @@
 			"AnnualLeave": "Congés annuels",
 			"WorkDays": "Jours ouvrés",
 			"Account": "Compte",
-			"SaveChanges": "Enregistrer les modifications"
+			"SaveChanges": "Enregistrer les modifications",
+			"SaveFailedTitle": "Impossible d'enregistrer les modifications",
+			"DeactivateFailedTitle": "Impossible de désactiver l'employé"
 		},
 		"AccountStatusSwitch": {
 			"Title": "État du compte",
@@ -582,7 +584,11 @@
 			"CredentialsErrorMessage": "Vérifiez vos informations et réessayez.",
 			"ConnectionErrorTitle": "Serveur injoignable.",
 			"ConnectionErrorMessage": "Vérifiez votre connexion internet et réessayez.",
-			"ForgotPassword": "Mot de passe oublié"
+			"ForgotPassword": "Mot de passe oublié",
+			"ForgotPasswordTitle": "Mot de passe oublié",
+			"ForgotPasswordEnterEmail": "Saisissez d'abord votre adresse e-mail pour recevoir un lien de réinitialisation.",
+			"ForgotPasswordSent": "Un lien de réinitialisation du mot de passe a été envoyé à {{email}}. Consultez votre boîte de réception.",
+			"ForgotPasswordDisabled": "La réinitialisation du mot de passe est désactivée sur ce serveur. Contactez votre administrateur."
 		},
 		"AuthTextField": {
 			"ShowPassword": "Afficher le mot de passe",
@@ -646,7 +652,9 @@
 			"Reject": "Refuser",
 			"Approve": "Approuver",
 			"Reviewed": "Traitée • {{time}}",
-			"ChangeDecision": "Modifier la décision"
+			"ChangeDecision": "Modifier la décision",
+			"Worked": "Travaillé : {{duration}}",
+			"Break": "Pause : {{duration}}"
 		},
 		"RecordChange": {
 			"Title": "Pointage : {{recordType}} • {{date}}",
@@ -684,7 +692,9 @@
 		"ResultToast": {
 			"Approved": "Demande approuvée.",
 			"Rejected": "Demande refusée."
-		}
+		},
+		"LoadFailedTitle": "Impossible de charger les demandes",
+		"DecisionFailedTitle": "Impossible d'enregistrer la décision"
 	},
 	"EmployeeSchedule": {
 		"ScheduleScreen": {

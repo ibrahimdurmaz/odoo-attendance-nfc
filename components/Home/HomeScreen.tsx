@@ -176,7 +176,6 @@ export const HomeScreen: FC = () => {
 		const at = Date.now();
 		setNow(at);
 		setSession((prev) => ({ ...prev, status: 'onBreak', breakStartedAt: at }));
-		console.log(session);
 	};
 
 	const endBreak = () => {

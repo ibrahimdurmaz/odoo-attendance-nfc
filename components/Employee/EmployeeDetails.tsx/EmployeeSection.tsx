@@ -65,12 +65,6 @@ export const ScheduleSection: FC<EmployeeSectionProps> = ({ employee }) => {
 				value={t(getOptionLabel(SHIFT_TEMPLATES, employee.shiftTemplate))}
 			/>
 			<DetailRow
-				label={t('EmployeeDetail.ScheduleSection.AnnualLeave')}
-				value={t('EmployeeDetail.ScheduleSection.Days', {
-					count: employee.annualLeaveDays,
-				})}
-			/>
-			<DetailRow
 				isAccent
 				label={t('EmployeeDetail.ScheduleSection.RemainingLeave')}
 				value={t('EmployeeDetail.ScheduleSection.Days', {

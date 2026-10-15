@@ -115,8 +115,8 @@
 		},
 		"StatsSection": {
 			"Title": "Horas e férias",
-			"RemainingLeave": "Férias anuais restantes",
-			"AnnualEntitlement": "Direito anual",
+			"LeaveTakenThisYear": "Férias usadas este ano",
+			"SinceYearStart": "Desde 1 de janeiro",
 			"Days": "Dias",
 			"OvertimeThisMonth": "Horas extra este mês",
 			"RecordedThisMonth_one": "{{count}} dia registado este mês",
@@ -269,7 +269,7 @@
 		},
 		"CreatedActions": {
 			"AddAnother": "Adicionar funcionário",
-			"BackToList": "Voltar à lista de funcionários"
+			"BackToList": "Voltar"
 		}
 	},
 	"CorrectionRequest": {
@@ -458,7 +458,9 @@
 			"AnnualLeave": "Férias anuais",
 			"WorkDays": "Dias úteis",
 			"Account": "Conta",
-			"SaveChanges": "Guardar alterações"
+			"SaveChanges": "Guardar alterações",
+			"SaveFailedTitle": "Não foi possível guardar as alterações",
+			"DeactivateFailedTitle": "Não foi possível desativar o funcionário"
 		},
 		"AccountStatusSwitch": {
 			"Title": "Estado da conta",
@@ -582,7 +584,11 @@
 			"CredentialsErrorMessage": "Verifique os seus dados e tente novamente.",
 			"ConnectionErrorTitle": "Não foi possível contactar o servidor.",
 			"ConnectionErrorMessage": "Verifique a sua ligação à internet e tente novamente.",
-			"ForgotPassword": "Esqueci-me da palavra-passe"
+			"ForgotPassword": "Esqueci-me da palavra-passe",
+			"ForgotPasswordTitle": "Esqueci-me da palavra-passe",
+			"ForgotPasswordEnterEmail": "Introduza primeiro o seu e-mail para receber uma ligação de reposição.",
+			"ForgotPasswordSent": "Foi enviada uma ligação para repor a palavra-passe para {{email}}. Verifique a sua caixa de entrada.",
+			"ForgotPasswordDisabled": "A reposição de palavra-passe está desativada neste servidor. Contacte o seu administrador."
 		},
 		"AuthTextField": {
 			"ShowPassword": "Mostrar palavra-passe",
@@ -646,7 +652,9 @@
 			"Reject": "Rejeitar",
 			"Approve": "Aprovar",
 			"Reviewed": "Analisado • {{time}}",
-			"ChangeDecision": "Alterar decisão"
+			"ChangeDecision": "Alterar decisão",
+			"Worked": "Trabalhado: {{duration}}",
+			"Break": "Pausa: {{duration}}"
 		},
 		"RecordChange": {
 			"Title": "Registo de {{recordType}} • {{date}}",
@@ -684,7 +692,9 @@
 		"ResultToast": {
 			"Approved": "Pedido aprovado.",
 			"Rejected": "Pedido rejeitado."
-		}
+		},
+		"LoadFailedTitle": "Não foi possível carregar os pedidos",
+		"DecisionFailedTitle": "Não foi possível guardar a decisão"
 	},
 	"EmployeeSchedule": {
 		"ScheduleScreen": {

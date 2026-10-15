@@ -111,8 +111,8 @@
 		},
 		"StatsSection": {
 			"Title": "Mesai & İzin Durumu",
-			"RemainingLeave": "Kalan Yıllık İzin",
-			"AnnualEntitlement": "Yıllık hak ediş",
+			"LeaveTakenThisYear": "Bu Yıl Kullanılan İzin",
+			"SinceYearStart": "1 Ocak’tan bu yana",
 			"Days": "Gün",
 			"OvertimeThisMonth": "Bu Ay Fazla Mesai",
 			"RecordedThisMonth": "Bu ay {{count}} gün kayıtlı"
@@ -259,7 +259,7 @@
 		},
 		"CreatedActions": {
 			"AddAnother": "Yeni Çalışan Ekle",
-			"BackToList": "Çalışan Listesine Dön"
+			"BackToList": "Geri"
 		}
 	},
 	"CorrectionRequest": {
@@ -444,7 +444,9 @@
 			"AnnualLeave": "Yıllık İzin Hakkı",
 			"WorkDays": "İş Günü",
 			"Account": "Hesap",
-			"SaveChanges": "Değişiklikleri Kaydet"
+			"SaveChanges": "Değişiklikleri Kaydet",
+			"SaveFailedTitle": "Değişiklikler kaydedilemedi",
+			"DeactivateFailedTitle": "Çalışan pasife alınamadı"
 		},
 		"AccountStatusSwitch": {
 			"Title": "Hesap Durumu",
@@ -564,7 +566,11 @@
 			"CredentialsErrorMessage": "Bilgilerinizi kontrol edip tekrar deneyin.",
 			"ConnectionErrorTitle": "Sunucuya ulaşılamadı.",
 			"ConnectionErrorMessage": "İnternet bağlantınızı kontrol edip tekrar deneyin.",
-			"ForgotPassword": "Şifremi unuttum"
+			"ForgotPassword": "Şifremi unuttum",
+			"ForgotPasswordTitle": "Şifremi unuttum",
+			"ForgotPasswordEnterEmail": "Şifre sıfırlama bağlantısı için önce e-posta adresinizi girin.",
+			"ForgotPasswordSent": "Şifre sıfırlama bağlantısı {{email}} adresine gönderildi. Gelen kutunuzu kontrol edin.",
+			"ForgotPasswordDisabled": "Bu sunucuda şifre sıfırlama kapalı. Yöneticinizle iletişime geçin."
 		},
 		"AuthTextField": {
 			"ShowPassword": "Şifreyi göster",
@@ -624,7 +630,9 @@
 			"Reject": "Reddet",
 			"Approve": "Onayla",
 			"Reviewed": "Değerlendirildi • {{time}}",
-			"ChangeDecision": "Kararı Değiştir"
+			"ChangeDecision": "Kararı Değiştir",
+			"Worked": "Çalışma: {{duration}}",
+			"Break": "Mola: {{duration}}"
 		},
 		"RecordChange": {
 			"Title": "{{recordType}} kaydı • {{date}}",
@@ -662,7 +670,9 @@
 		"ResultToast": {
 			"Approved": "Talep onaylandı.",
 			"Rejected": "Talep reddedildi."
-		}
+		},
+		"LoadFailedTitle": "Talepler yüklenemedi",
+		"DecisionFailedTitle": "Karar kaydedilemedi"
 	},
 	"EmployeeSchedule": {
 		"ScheduleScreen": {

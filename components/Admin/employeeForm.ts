@@ -24,7 +24,6 @@ export type EmployeeFormValues = {
 	/** "01.10.2026" */
 	startDate: string;
 	shiftTemplate: string;
-	annualLeaveDays: string;
 	role: EmployeeRole;
 	avatarUrl: string | null;
 };
@@ -38,8 +37,6 @@ const TURKEY_CALLING_CODE = '+90';
 const TURKISH_PHONE_PATTERN = /^\+90\d{10}$/;
 // Ülke kodu 0 ile başlamaz; en kısa numaralar ülke koduyla birlikte 8 rakamdır.
 const INTERNATIONAL_PHONE_PATTERN = /^\+[1-9]\d{7,14}$/;
-const MAX_LEAVE_DAYS = 60;
-const DEFAULT_LEAVE_DAYS = 20;
 
 export const createInitialFormValues = (
 	employeeId: string,
@@ -55,7 +52,6 @@ export const createInitialFormValues = (
 	company: '',
 	startDate: formatDisplayDate(today),
 	shiftTemplate: '',
-	annualLeaveDays: String(DEFAULT_LEAVE_DAYS),
 	role: 'employee',
 	avatarUrl: null,
 });
@@ -164,13 +160,6 @@ export const validateEmployeeForm = (
 	if (!parseDisplayDate(values.startDate))
 		errors.startDate = i18n.t('AddEmployee.Validation.DateFormat');
 
-	const leaveDays = values.annualLeaveDays.trim();
-	if (!/^\d+$/.test(leaveDays) || Number(leaveDays) > MAX_LEAVE_DAYS) {
-		errors.annualLeaveDays = i18n.t('AddEmployee.Validation.LeaveRange', {
-			max: MAX_LEAVE_DAYS,
-		});
-	}
-
 	return errors;
 };
 
@@ -178,29 +167,24 @@ export const validateEmployeeForm = (
  * Doğrulanmış form değerlerini store'a eklenecek kayda çevirir.
  * Tüm normalizasyon burada yapılır; store geleni olduğu gibi saklar.
  */
-export const toNewEmployee = (values: EmployeeFormValues): NewEmployee => {
-	const annualLeaveDays = Number(values.annualLeaveDays);
+export const toNewEmployee = (
+	values: EmployeeFormValues,
+): Omit<NewEmployee, 'remainingLeaveDays'> => ({
+	fullName: toFullName(values.firstName, values.lastName),
+	jobTitle: values.jobTitle.trim(),
+	department: values.department,
+	employeeId: normalizeEmployeeId(values.employeeId),
+	company: values.company,
+	avatarUrl: values.avatarUrl,
+	// Geçici şifreyle başlar; kalıcı şifresini ilk girişte belirler.
+	hasPassword: false,
+	admin: values.role === 'admin',
 
-	return {
-		fullName: toFullName(values.firstName, values.lastName),
-		jobTitle: values.jobTitle.trim(),
-		department: values.department,
-		employeeId: normalizeEmployeeId(values.employeeId),
-		company: values.company,
-		avatarUrl: values.avatarUrl,
-		// Yeni çalışan henüz izin kullanmadı: kalan izin, yıllık hakkın tamamı.
-		remainingLeaveDays: annualLeaveDays,
-		// Geçici şifreyle başlar; kalıcı şifresini ilk girişte belirler.
-		hasPassword: false,
-		admin: values.role === 'admin',
-
-		email: values.email.trim().toLowerCase(),
-		phone: values.phone,
-		startDateKey: toDateKey(parseDisplayDate(values.startDate) ?? new Date()),
-		shiftTemplate: values.shiftTemplate,
-		annualLeaveDays,
-	};
-};
+	email: values.email.trim().toLowerCase(),
+	phone: values.phone,
+	startDateKey: toDateKey(parseDisplayDate(values.startDate) ?? new Date()),
+	shiftTemplate: values.shiftTemplate,
+});
 
 // ---------------------------------------------------------------------------
 // Geçici şifre

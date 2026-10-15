@@ -117,8 +117,8 @@
 		},
 		"StatsSection": {
 			"Title": "Рабочее время и отпуск",
-			"RemainingLeave": "Остаток ежегодного отпуска",
-			"AnnualEntitlement": "Положено в год",
+			"LeaveTakenThisYear": "Отпуск, использованный в этом году",
+			"SinceYearStart": "С 1 января",
 			"Days": "Дней",
 			"OvertimeThisMonth": "Переработка за месяц",
 			"RecordedThisMonth_one": "В этом месяце учтён {{count}} день",
@@ -274,7 +274,7 @@
 		},
 		"CreatedActions": {
 			"AddAnother": "Добавить сотрудника",
-			"BackToList": "К списку сотрудников"
+			"BackToList": "Назад"
 		}
 	},
 	"CorrectionRequest": {
@@ -465,7 +465,9 @@
 			"AnnualLeave": "Ежегодный отпуск",
 			"WorkDays": "Рабочих дней",
 			"Account": "Учётная запись",
-			"SaveChanges": "Сохранить изменения"
+			"SaveChanges": "Сохранить изменения",
+			"SaveFailedTitle": "Не удалось сохранить изменения",
+			"DeactivateFailedTitle": "Не удалось отключить сотрудника"
 		},
 		"AccountStatusSwitch": {
 			"Title": "Состояние учётной записи",
@@ -591,7 +593,11 @@
 			"CredentialsErrorMessage": "Проверьте данные и попробуйте ещё раз.",
 			"ConnectionErrorTitle": "Сервер недоступен.",
 			"ConnectionErrorMessage": "Проверьте подключение к интернету и попробуйте ещё раз.",
-			"ForgotPassword": "Забыли пароль?"
+			"ForgotPassword": "Забыли пароль?",
+			"ForgotPasswordTitle": "Забыли пароль?",
+			"ForgotPasswordEnterEmail": "Сначала введите адрес эл. почты, чтобы получить ссылку для сброса пароля.",
+			"ForgotPasswordSent": "Ссылка для сброса пароля отправлена на {{email}}. Проверьте входящие.",
+			"ForgotPasswordDisabled": "Сброс пароля на этом сервере отключён. Обратитесь к администратору."
 		},
 		"AuthTextField": {
 			"ShowPassword": "Показать пароль",
@@ -657,7 +663,9 @@
 			"Reject": "Отклонить",
 			"Approve": "Одобрить",
 			"Reviewed": "Рассмотрено • {{time}}",
-			"ChangeDecision": "Изменить решение"
+			"ChangeDecision": "Изменить решение",
+			"Worked": "Отработано: {{duration}}",
+			"Break": "Перерыв: {{duration}}"
 		},
 		"RecordChange": {
 			"Title": "Отметка: {{recordType}} • {{date}}",
@@ -695,7 +703,9 @@
 		"ResultToast": {
 			"Approved": "Запрос одобрен.",
 			"Rejected": "Запрос отклонён."
-		}
+		},
+		"LoadFailedTitle": "Не удалось загрузить заявки",
+		"DecisionFailedTitle": "Не удалось сохранить решение"
 	},
 	"EmployeeSchedule": {
 		"ScheduleScreen": {

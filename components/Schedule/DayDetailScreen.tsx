@@ -2,17 +2,13 @@ import { theme, ThemeColors } from '@/assets/theme';
 import { formatDateKey, formatMinutes, formatTime } from '@/helper/dateHelpers';
 import i18n from '@/i18n';
 import { useModalStore } from '@/store/modalStore';
-import { DayRecord, useDayStore } from '@/store/useDayStore';
-import {
-	getEmployeeDays,
-	useEmployeeScheduleStore,
-} from '@/store/useEmployeeScheduleStore';
+import { DayRecord } from '@/store/useDayStore';
+import { useScheduleDays } from '@/store/useScheduleDays';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import type { ComponentProps, FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ColorValue, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { CorrectionRequestModal } from './CorrectionRequestModal';
 import { DayDetailHeader } from './DayDetailHeader';
 import { StateBand } from './StateBand';
 import { DayDetailsStyles } from './styles';
@@ -83,10 +79,7 @@ const buildTimeline = (
 };
 
 export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey, id }) => {
-	// `days[dateKey]` kayıt yoksa undefined döner; store'un tipi bunu göstermediği için açıkça yazıldı.
-	const ownDays = useDayStore((state) => state.days);
-	const schedules = useEmployeeScheduleStore((state) => state.schedules);
-	const days = id ? getEmployeeDays(schedules, id) : ownDays;
+	const days = useScheduleDays(id);
 	const day = days[dateKey];
 
 	const { triggerModal } = useModalStore();
@@ -194,7 +187,6 @@ export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey, id }) => {
 					))}
 				</View>
 
-				{/* Lokasyon */}
 				<View
 					style={[
 						styles.card,
@@ -218,8 +210,7 @@ export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey, id }) => {
 							numberOfLines={1}
 							style={[styles.locationName, { color: colors.onSurface }]}
 						>
-							{day.location ||
-								t('DayDetails.DayDetailScreen.UnknownLocation')}
+							{day.location || t('DayDetails.DayDetailScreen.UnknownLocation')}
 						</Text>
 						{day.checkpoint ? (
 							<Text
@@ -235,27 +226,7 @@ export const DayDetailScreen: FC<DayDetailScreenProps> = ({ dateKey, id }) => {
 						) : null}
 					</View>
 				</View>
-
-				{/* <Pressable
-					accessibilityLabel={t('DayDetails.DayDetailScreen.RequestCorrection')}
-					accessibilityRole='button'
-					onPress={() => {
-						triggerModal('correctionRequest');
-					}}
-					style={({ pressed }) => [
-						styles.correctionButton,
-						{ backgroundColor: colors.surfaceContainerHigh },
-						pressed && styles.pressed,
-					]}
-				>
-					<MaterialIcons color={colors.primary} name='edit-note' size={20} />
-					<Text style={[styles.correctionLabel, { color: colors.primary }]}>
-						{t('DayDetails.DayDetailScreen.RequestCorrection')}
-					</Text>
-				</Pressable> */}
 			</ScrollView>
-
-			<CorrectionRequestModal day={day} />
 		</SafeAreaView>
 	);
 };

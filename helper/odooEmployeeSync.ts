@@ -49,7 +49,6 @@ export const toAppEmployee = (profile: OdooEmployeeProfile): Employee => ({
 	startDateKey: profile.startDateKey ?? '',
 	// Odoo'da sabit vardiya şablonu yok; çalışma takviminin adı profile.workSchedule içinde.
 	shiftTemplate: 'standard',
-	annualLeaveDays: profile.annualLeaveDays ?? 0,
 	// Odoo yalnızca "giriş yaptı / çıkış yaptı" bilir; mola durumu yoktur.
 	status: profile.isCheckedIn ? 'inside' : 'outside',
 	createdAt: profile.createdAt ?? 0,

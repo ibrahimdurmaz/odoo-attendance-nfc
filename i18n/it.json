@@ -115,8 +115,8 @@
 		},
 		"StatsSection": {
 			"Title": "Ore e ferie",
-			"RemainingLeave": "Ferie annuali residue",
-			"AnnualEntitlement": "Spettanza annuale",
+			"LeaveTakenThisYear": "Ferie godute quest’anno",
+			"SinceYearStart": "Dal 1° gennaio",
 			"Days": "Giorni",
 			"OvertimeThisMonth": "Straordinari del mese",
 			"RecordedThisMonth_one": "{{count}} giorno registrato questo mese",
@@ -269,7 +269,7 @@
 		},
 		"CreatedActions": {
 			"AddAnother": "Aggiungi dipendente",
-			"BackToList": "Torna all'elenco dipendenti"
+			"BackToList": "Indietro"
 		}
 	},
 	"CorrectionRequest": {
@@ -458,7 +458,9 @@
 			"AnnualLeave": "Ferie annuali",
 			"WorkDays": "Giorni lavorativi",
 			"Account": "Account",
-			"SaveChanges": "Salva modifiche"
+			"SaveChanges": "Salva modifiche",
+			"SaveFailedTitle": "Impossibile salvare le modifiche",
+			"DeactivateFailedTitle": "Impossibile disattivare il dipendente"
 		},
 		"AccountStatusSwitch": {
 			"Title": "Stato dell'account",
@@ -582,7 +584,11 @@
 			"CredentialsErrorMessage": "Controlli i dati e riprovi.",
 			"ConnectionErrorTitle": "Server non raggiungibile.",
 			"ConnectionErrorMessage": "Controlli la connessione a internet e riprovi.",
-			"ForgotPassword": "Password dimenticata"
+			"ForgotPassword": "Password dimenticata",
+			"ForgotPasswordTitle": "Password dimenticata",
+			"ForgotPasswordEnterEmail": "Inserisca prima il suo indirizzo e-mail per ricevere un link di reimpostazione.",
+			"ForgotPasswordSent": "Un link per reimpostare la password è stato inviato a {{email}}. Controlli la posta in arrivo.",
+			"ForgotPasswordDisabled": "La reimpostazione della password è disattivata su questo server. Contatti il suo amministratore."
 		},
 		"AuthTextField": {
 			"ShowPassword": "Mostra password",
@@ -646,7 +652,9 @@
 			"Reject": "Respingi",
 			"Approve": "Approva",
 			"Reviewed": "Valutata • {{time}}",
-			"ChangeDecision": "Cambia decisione"
+			"ChangeDecision": "Cambia decisione",
+			"Worked": "Lavorato: {{duration}}",
+			"Break": "Pausa: {{duration}}"
 		},
 		"RecordChange": {
 			"Title": "Timbratura: {{recordType}} • {{date}}",
@@ -684,7 +692,9 @@
 		"ResultToast": {
 			"Approved": "Richiesta approvata.",
 			"Rejected": "Richiesta respinta."
-		}
+		},
+		"LoadFailedTitle": "Impossibile caricare le richieste",
+		"DecisionFailedTitle": "Impossibile salvare la decisione"
 	},
 	"EmployeeSchedule": {
 		"ScheduleScreen": {

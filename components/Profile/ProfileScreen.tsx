@@ -33,7 +33,7 @@ export const ProfileScreen: FC = () => {
 					showsVerticalScrollIndicator={false}
 				>
 					<IdCard profile={profile} />
-					<StatsSection remainingLeaveDays={profile.remainingLeaveDays} />
+					<StatsSection />
 					<SettingsSection />
 					<LogoutSection
 						fullName={profile.fullName}

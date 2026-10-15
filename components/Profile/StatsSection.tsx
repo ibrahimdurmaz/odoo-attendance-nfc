@@ -1,11 +1,19 @@
 import { fonts, theme } from '@/assets/theme';
-import { formatDuration, toDateKey } from '@/helper/dateHelpers';
-import { useDayStore } from '@/store/useDayStore';
+import { formatDuration } from '@/helper/dateHelpers';
+
+import {
+	fetchLeaveDaysTakenThisYear,
+	fetchMonthlyOvertime,
+	formatLeaveDays,
+	MonthlyOvertime,
+} from '@/helper/odooStats';
+import { useProfileStore } from '@/store/useProfileStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
-import { FC, useMemo } from 'react';
+import { useFocusEffect } from 'expo-router';
+import { FC, useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ColorValue, StyleSheet, Text, View } from 'react-native';
 import { IconName } from '../Home/types';
-import { useTranslation } from 'react-i18next';
 
 type StatCardProps = {
 	label: string;
@@ -53,28 +61,52 @@ const StatCard: FC<StatCardProps> = ({
 	);
 };
 
-/** Bu ayın kayıtlı günlerinden hedefi aşan sürelerin toplamı. */
-const useMonthlyOvertime = () => {
-	const days = useDayStore((state) => state.days);
-
-	return useMemo(() => {
-		// dateKey "2026-10-03" biçimindedir; ilk 7 karakter yıl ve aydır.
-		const monthPrefix = toDateKey(new Date()).slice(0, 7);
-		const monthDays = Object.values(days).filter((day) =>
-			day.dateKey.startsWith(monthPrefix),
-		);
-		const overtimeSeconds = monthDays.reduce(
-			(sum, day) => sum + Math.max(0, day.workedSeconds - day.targetSeconds),
-			0,
-		);
-		return { overtimeSeconds, dayCount: monthDays.length };
-	}, [days]);
+type ProfileStats = {
+	/** Bu yıl kullanılan izin (gün). Odoo'da "İzinler" uygulaması yoksa ya da henüz okunmadıysa null. */
+	leaveDaysTaken: number | null;
+	overtime: MonthlyOvertime;
 };
 
-type StatsSectionProps = { remainingLeaveDays: number };
+const EMPTY_STATS: ProfileStats = {
+	leaveDaysTaken: null,
+	overtime: { overtimeSeconds: 0, dayCount: 0 },
+};
 
-export const StatsSection: FC<StatsSectionProps> = ({ remainingLeaveDays }) => {
-	const { overtimeSeconds, dayCount } = useMonthlyOvertime();
+/** Ekran her açıldığında izin ve fazla mesaiyi Odoo'dan okur. Okunamayan değer öncekinde kalır. */
+const useProfileStats = (): ProfileStats => {
+	const employeeId = useProfileStore((state) => state.profile.employeeId);
+	const [stats, setStats] = useState<ProfileStats>(EMPTY_STATS);
+
+	useFocusEffect(
+		useCallback(() => {
+			if (!employeeId) return undefined;
+			// Ekrandan çıkıldıktan sonra gelen cevap yazılmasın.
+			let isActive = true;
+
+			const load = async () => {
+				const [leave, overtime] = await Promise.all([
+					fetchLeaveDaysTakenThisYear(employeeId),
+					fetchMonthlyOvertime(employeeId),
+				]);
+				if (!isActive) return;
+				setStats((current) => ({
+					leaveDaysTaken: leave.ok ? leave.data : current.leaveDaysTaken,
+					overtime: overtime.ok ? overtime.data : current.overtime,
+				}));
+			};
+			load();
+
+			return () => {
+				isActive = false;
+			};
+		}, [employeeId]),
+	);
+
+	return stats;
+};
+
+export const StatsSection: FC = () => {
+	const { leaveDaysTaken, overtime } = useProfileStats();
 	const colors = theme();
 	const { t } = useTranslation();
 
@@ -84,24 +116,27 @@ export const StatsSection: FC<StatsSectionProps> = ({ remainingLeaveDays }) => {
 				{t('Profile.StatsSection.Title')}
 			</Text>
 			<View style={statStyles.row}>
-				<StatCard
-					accent={colors.secondary}
-					caption={t('Profile.StatsSection.AnnualEntitlement')}
-					icon='calendar-today'
-					iconBackground={colors.secondaryContainer}
-					label={t('Profile.StatsSection.RemainingLeave')}
-					unit={t('Profile.StatsSection.Days')}
-					value={String(remainingLeaveDays)}
-				/>
+				{/* Odoo'da "İzinler" uygulaması yoksa izin kartı gösterilmez. */}
+				{leaveDaysTaken !== null && (
+					<StatCard
+						accent={colors.secondary}
+						caption={t('Profile.StatsSection.SinceYearStart')}
+						icon='calendar-today'
+						iconBackground={colors.secondaryContainer}
+						label={t('Profile.StatsSection.LeaveTakenThisYear')}
+						unit={t('Profile.StatsSection.Days')}
+						value={formatLeaveDays(leaveDaysTaken)}
+					/>
+				)}
 				<StatCard
 					accent={colors.primary}
 					caption={t('Profile.StatsSection.RecordedThisMonth', {
-						count: dayCount,
+						count: overtime.dayCount,
 					})}
 					icon='schedule'
 					iconBackground={colors.primaryFixed}
 					label={t('Profile.StatsSection.OvertimeThisMonth')}
-					value={formatDuration(overtimeSeconds)}
+					value={formatDuration(overtime.overtimeSeconds)}
 				/>
 			</View>
 		</View>

@@ -115,8 +115,8 @@
 		},
 		"StatsSection": {
 			"Title": "Horas y vacaciones",
-			"RemainingLeave": "Vacaciones anuales restantes",
-			"AnnualEntitlement": "Derecho anual",
+			"LeaveTakenThisYear": "Vacaciones tomadas este año",
+			"SinceYearStart": "Desde el 1 de enero",
 			"Days": "Días",
 			"OvertimeThisMonth": "Horas extra este mes",
 			"RecordedThisMonth_one": "{{count}} día registrado este mes",
@@ -269,7 +269,7 @@
 		},
 		"CreatedActions": {
 			"AddAnother": "Añadir empleado",
-			"BackToList": "Volver a la lista de empleados"
+			"BackToList": "Atrás"
 		}
 	},
 	"CorrectionRequest": {
@@ -458,7 +458,9 @@
 			"AnnualLeave": "Vacaciones anuales",
 			"WorkDays": "Días laborables",
 			"Account": "Cuenta",
-			"SaveChanges": "Guardar cambios"
+			"SaveChanges": "Guardar cambios",
+			"SaveFailedTitle": "No se pudieron guardar los cambios",
+			"DeactivateFailedTitle": "No se pudo desactivar al empleado"
 		},
 		"AccountStatusSwitch": {
 			"Title": "Estado de la cuenta",
@@ -582,7 +584,11 @@
 			"CredentialsErrorMessage": "Revise sus datos e inténtelo de nuevo.",
 			"ConnectionErrorTitle": "No se pudo conectar con el servidor.",
 			"ConnectionErrorMessage": "Compruebe su conexión a internet e inténtelo de nuevo.",
-			"ForgotPassword": "He olvidado mi contraseña"
+			"ForgotPassword": "He olvidado mi contraseña",
+			"ForgotPasswordTitle": "He olvidado mi contraseña",
+			"ForgotPasswordEnterEmail": "Introduzca primero su correo electrónico para recibir un enlace de restablecimiento.",
+			"ForgotPasswordSent": "Se ha enviado un enlace para restablecer la contraseña a {{email}}. Revise su bandeja de entrada.",
+			"ForgotPasswordDisabled": "El restablecimiento de contraseña está desactivado en este servidor. Contacte con su administrador."
 		},
 		"AuthTextField": {
 			"ShowPassword": "Mostrar contraseña",
@@ -646,7 +652,9 @@
 			"Reject": "Rechazar",
 			"Approve": "Aprobar",
 			"Reviewed": "Revisada • {{time}}",
-			"ChangeDecision": "Cambiar decisión"
+			"ChangeDecision": "Cambiar decisión",
+			"Worked": "Trabajado: {{duration}}",
+			"Break": "Pausa: {{duration}}"
 		},
 		"RecordChange": {
 			"Title": "Registro de {{recordType}} • {{date}}",
@@ -684,7 +692,9 @@
 		"ResultToast": {
 			"Approved": "Solicitud aprobada.",
 			"Rejected": "Solicitud rechazada."
-		}
+		},
+		"LoadFailedTitle": "No se pudieron cargar las solicitudes",
+		"DecisionFailedTitle": "No se pudo guardar la decisión"
 	},
 	"EmployeeSchedule": {
 		"ScheduleScreen": {
