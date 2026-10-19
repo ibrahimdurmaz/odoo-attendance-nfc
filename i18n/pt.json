@@ -10,7 +10,9 @@
 			"CorrectionRequests": "Pedidos de correção",
 			"CorrectionRequestsSubtitle": "Revisão de turnos e registos",
 			"ManualApproval": "Aprovação manual de presenças",
-			"ManualApprovalSubtitle": "Revisões de presenças."
+			"ManualApprovalSubtitle": "Revisões de presenças.",
+			"EntranceCard": "Configurar cartão de entrada",
+			"EntranceCardSubtitle": "Gravar ou renovar o cartão de entrada"
 		},
 		"SectionIntro": {
 			"Overline": "CONSOLA DE GESTÃO ODOO",
@@ -956,7 +958,8 @@
 			"ClearSearch": "Limpar pesquisa",
 			"Retry": "Tentar novamente",
 			"Ok": "OK",
-			"MarkAllRead": "Marcar tudo como visto"
+			"MarkAllRead": "Marcar tudo como visto",
+			"Cancel": "Cancelar"
 		},
 		"Accessibility": {
 			"Notifications": "Notificações",
@@ -975,6 +978,35 @@
 		},
 		"Common": {
 			"Percent": "{{value}}%"
+		}
+	},
+	"EntranceCard": {
+		"FormModal": {
+			"Title": "Configurar cartão de entrada",
+			"Text": "Introduza o nome do local de trabalho deste cartão.",
+			"LocationLabel": "Local de trabalho",
+			"LocationPlaceholder": "p. ex. Entrada da sede",
+			"ReplaceWarning": "Se este local já tiver um cartão, o antigo deixa de funcionar.",
+			"Write": "Gravar cartão"
+		},
+		"WriteModal": {
+			"WaitingTitle": "Aproxime o cartão do telemóvel",
+			"WaitingText": "Aproxime o cartão da parte superior da traseira do telemóvel e mantenha-o imóvel.",
+			"SavingTitle": "A guardar",
+			"SavingText": "O cartão foi gravado; a guardar no Odoo.",
+			"SuccessTitle": "Cartão gravado",
+			"SuccessNewText": "O cartão de {{location}} está pronto.",
+			"SuccessReplacedText": "O novo cartão de {{location}} está pronto. O antigo já não funciona.",
+			"LocationLabel": "Local de trabalho",
+			"WrittenAtLabel": "Gravado em",
+			"StatusLabel": "Estado",
+			"StatusReady": "Pronto a usar",
+			"WriteAnother": "Gravar outro cartão",
+			"WriteFailedTitle": "Não foi possível gravar o cartão",
+			"WriteFailedText": "O cartão não estava suficientemente perto do telemóvel ou não pode ser gravado. Tente novamente.",
+			"SaveFailedTitle": "Não foi possível guardar o cartão",
+			"SaveFailedText": "Não foi possível guardar o cartão no Odoo. Verifique a sua ligação à internet e tente novamente.",
+			"Retry": "Tentar novamente"
 		}
 	}
 }

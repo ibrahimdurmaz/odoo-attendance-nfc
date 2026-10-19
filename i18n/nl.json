@@ -9,7 +9,9 @@
 			"CorrectionRequests": "Correctieverzoeken",
 			"CorrectionRequestsSubtitle": "Controle van diensten en registraties",
 			"ManualApproval": "Handmatige aanwezigheidsgoedkeuring",
-			"ManualApprovalSubtitle": "Controle van werktijden."
+			"ManualApprovalSubtitle": "Controle van werktijden.",
+			"EntranceCard": "Toegangskaart instellen",
+			"EntranceCardSubtitle": "Toegangskaart schrijven of vernieuwen"
 		},
 		"SectionIntro": {
 			"Overline": "ODOO-BEHEERCONSOLE",
@@ -943,7 +945,8 @@
 			"ClearSearch": "Zoekopdracht wissen",
 			"Retry": "Opnieuw proberen",
 			"Ok": "OK",
-			"MarkAllRead": "Alles als gezien markeren"
+			"MarkAllRead": "Alles als gezien markeren",
+			"Cancel": "Annuleren"
 		},
 		"Accessibility": {
 			"Notifications": "Meldingen",
@@ -962,6 +965,35 @@
 		},
 		"Common": {
 			"Percent": "{{value}}%"
+		}
+	},
+	"EntranceCard": {
+		"FormModal": {
+			"Title": "Toegangskaart instellen",
+			"Text": "Voer de naam in van de werklocatie voor deze kaart.",
+			"LocationLabel": "Werklocatie",
+			"LocationPlaceholder": "bijv. Ingang hoofdkantoor",
+			"ReplaceWarning": "Als deze locatie al een kaart heeft, werkt de oude kaart niet meer.",
+			"Write": "Kaart schrijven"
+		},
+		"WriteModal": {
+			"WaitingTitle": "Houd de kaart tegen de telefoon",
+			"WaitingText": "Houd de kaart dicht bij de bovenkant van de achterkant van de telefoon en houd hem stil.",
+			"SavingTitle": "Opslaan",
+			"SavingText": "De kaart is geschreven en wordt opgeslagen in Odoo.",
+			"SuccessTitle": "Kaart geschreven",
+			"SuccessNewText": "De kaart voor {{location}} is klaar.",
+			"SuccessReplacedText": "De nieuwe kaart voor {{location}} is klaar. De oude kaart werkt niet meer.",
+			"LocationLabel": "Werklocatie",
+			"WrittenAtLabel": "Geschreven op",
+			"StatusLabel": "Status",
+			"StatusReady": "Klaar voor gebruik",
+			"WriteAnother": "Nog een kaart schrijven",
+			"WriteFailedTitle": "Kaart kon niet worden geschreven",
+			"WriteFailedText": "De kaart was niet dicht genoeg bij de telefoon of kan niet worden beschreven. Probeer het opnieuw.",
+			"SaveFailedTitle": "Kaart kon niet worden opgeslagen",
+			"SaveFailedText": "De kaart kon niet in Odoo worden opgeslagen. Controleer uw internetverbinding en probeer het opnieuw.",
+			"Retry": "Opnieuw proberen"
 		}
 	}
 }

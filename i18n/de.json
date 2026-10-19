@@ -9,7 +9,9 @@
 			"CorrectionRequests": "Korrekturanträge",
 			"CorrectionRequestsSubtitle": "Prüfung von Arbeitszeiten & Logs",
 			"ManualApproval": "Manuelle Anwesenheitsfreigabe",
-			"ManualApprovalSubtitle": "Arbeitszeitprüfungen."
+			"ManualApprovalSubtitle": "Arbeitszeitprüfungen.",
+			"EntranceCard": "Eingangskarte einrichten",
+			"EntranceCardSubtitle": "Eingangskarte beschreiben oder erneuern"
 		},
 		"SectionIntro": {
 			"Overline": "ODOO VERWALTUNGSKONSOLE",
@@ -943,7 +945,8 @@
 			"ClearSearch": "Suche löschen",
 			"Retry": "Erneut versuchen",
 			"Ok": "OK",
-			"MarkAllRead": "Alle als gesehen markieren"
+			"MarkAllRead": "Alle als gesehen markieren",
+			"Cancel": "Abbrechen"
 		},
 		"Accessibility": {
 			"Notifications": "Benachrichtigungen",
@@ -962,6 +965,35 @@
 		},
 		"Common": {
 			"Percent": "{{value}} %"
+		}
+	},
+	"EntranceCard": {
+		"FormModal": {
+			"Title": "Eingangskarte einrichten",
+			"Text": "Geben Sie den Namen des Arbeitsorts für diese Karte ein.",
+			"LocationLabel": "Arbeitsort",
+			"LocationPlaceholder": "z. B. Eingang Hauptsitz",
+			"ReplaceWarning": "Hat dieser Ort bereits eine Karte, funktioniert die alte Karte nicht mehr.",
+			"Write": "Karte beschreiben"
+		},
+		"WriteModal": {
+			"WaitingTitle": "Karte an das Telefon halten",
+			"WaitingText": "Halten Sie die Karte nah an den oberen Teil der Telefonrückseite und bewegen Sie sie nicht.",
+			"SavingTitle": "Wird gespeichert",
+			"SavingText": "Die Karte ist beschrieben und wird in Odoo gespeichert.",
+			"SuccessTitle": "Karte beschrieben",
+			"SuccessNewText": "Die Karte für {{location}} ist einsatzbereit.",
+			"SuccessReplacedText": "Die neue Karte für {{location}} ist einsatzbereit. Die alte Karte funktioniert nicht mehr.",
+			"LocationLabel": "Arbeitsort",
+			"WrittenAtLabel": "Beschrieben am",
+			"StatusLabel": "Status",
+			"StatusReady": "Einsatzbereit",
+			"WriteAnother": "Weitere Karte beschreiben",
+			"WriteFailedTitle": "Karte konnte nicht beschrieben werden",
+			"WriteFailedText": "Die Karte war nicht nah genug am Telefon oder kann nicht beschrieben werden. Versuchen Sie es erneut.",
+			"SaveFailedTitle": "Karte konnte nicht gespeichert werden",
+			"SaveFailedText": "Die Karte konnte nicht in Odoo gespeichert werden. Prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.",
+			"Retry": "Erneut versuchen"
 		}
 	}
 }

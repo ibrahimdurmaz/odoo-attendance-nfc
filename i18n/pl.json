@@ -11,7 +11,9 @@
 			"CorrectionRequests": "Wnioski o korektę",
 			"CorrectionRequestsSubtitle": "Weryfikacja zmian i rejestracji",
 			"ManualApproval": "Ręczne zatwierdzanie obecności",
-			"ManualApprovalSubtitle": "Weryfikacja czasu pracy."
+			"ManualApprovalSubtitle": "Weryfikacja czasu pracy.",
+			"EntranceCard": "Skonfiguruj kartę wejścia",
+			"EntranceCardSubtitle": "Zapisz lub odnów kartę wejścia"
 		},
 		"SectionIntro": {
 			"Overline": "KONSOLA ZARZĄDZANIA ODOO",
@@ -969,7 +971,8 @@
 			"ClearSearch": "Wyczyść wyszukiwanie",
 			"Retry": "Spróbuj ponownie",
 			"Ok": "OK",
-			"MarkAllRead": "Oznacz wszystko jako przejrzane"
+			"MarkAllRead": "Oznacz wszystko jako przejrzane",
+			"Cancel": "Anuluj"
 		},
 		"Accessibility": {
 			"Notifications": "Powiadomienia",
@@ -988,6 +991,35 @@
 		},
 		"Common": {
 			"Percent": "{{value}}%"
+		}
+	},
+	"EntranceCard": {
+		"FormModal": {
+			"Title": "Skonfiguruj kartę wejścia",
+			"Text": "Wpisz nazwę miejsca pracy dla tej karty.",
+			"LocationLabel": "Miejsce pracy",
+			"LocationPlaceholder": "np. Wejście do siedziby",
+			"ReplaceWarning": "Jeśli to miejsce ma już kartę, stara karta przestanie działać.",
+			"Write": "Zapisz kartę"
+		},
+		"WriteModal": {
+			"WaitingTitle": "Przyłóż kartę do telefonu",
+			"WaitingText": "Przyłóż kartę do górnej części tyłu telefonu i trzymaj ją nieruchomo.",
+			"SavingTitle": "Zapisywanie",
+			"SavingText": "Karta została zapisana, trwa zapis w Odoo.",
+			"SuccessTitle": "Karta zapisana",
+			"SuccessNewText": "Karta dla {{location}} jest gotowa.",
+			"SuccessReplacedText": "Nowa karta dla {{location}} jest gotowa. Stara karta już nie działa.",
+			"LocationLabel": "Miejsce pracy",
+			"WrittenAtLabel": "Zapisano",
+			"StatusLabel": "Status",
+			"StatusReady": "Gotowa do użycia",
+			"WriteAnother": "Zapisz kolejną kartę",
+			"WriteFailedTitle": "Nie udało się zapisać karty",
+			"WriteFailedText": "Karta była za daleko od telefonu lub nie można jej zapisać. Spróbuj ponownie.",
+			"SaveFailedTitle": "Nie udało się zachować karty",
+			"SaveFailedText": "Nie udało się zapisać karty w Odoo. Sprawdź połączenie z internetem i spróbuj ponownie.",
+			"Retry": "Spróbuj ponownie"
 		}
 	}
 }

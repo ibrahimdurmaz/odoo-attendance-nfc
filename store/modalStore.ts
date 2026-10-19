@@ -10,7 +10,9 @@ type ModalTags =
 	| 'rejectRequest'
 	| 'dailyAnnouncement'
 	| 'todayProgram'
-	| 'changeDecision';
+	| 'changeDecision'
+	| 'entranceCardForm'
+	| 'entranceCardWrite';
 type ModalState = {
 	modals: Record<ModalTags, { visible: boolean; props?: any }>;
 };
@@ -33,6 +35,8 @@ const initialState: ModalState = {
 		dailyAnnouncement: { visible: false },
 		todayProgram: { visible: false },
 		changeDecision: { visible: false },
+		entranceCardForm: { visible: false },
+		entranceCardWrite: { visible: false },
 	},
 };
 

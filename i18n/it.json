@@ -10,7 +10,9 @@
 			"CorrectionRequests": "Richieste di correzione",
 			"CorrectionRequestsSubtitle": "Verifica turni e timbrature",
 			"ManualApproval": "Approvazione manuale presenze",
-			"ManualApprovalSubtitle": "Verifiche delle presenze."
+			"ManualApprovalSubtitle": "Verifiche delle presenze.",
+			"EntranceCard": "Configura tessera di ingresso",
+			"EntranceCardSubtitle": "Scrivi o rinnova la tessera di ingresso"
 		},
 		"SectionIntro": {
 			"Overline": "CONSOLE DI GESTIONE ODOO",
@@ -956,7 +958,8 @@
 			"ClearSearch": "Cancella ricerca",
 			"Retry": "Riprova",
 			"Ok": "OK",
-			"MarkAllRead": "Segna tutto come visto"
+			"MarkAllRead": "Segna tutto come visto",
+			"Cancel": "Annulla"
 		},
 		"Accessibility": {
 			"Notifications": "Notifiche",
@@ -975,6 +978,35 @@
 		},
 		"Common": {
 			"Percent": "{{value}}%"
+		}
+	},
+	"EntranceCard": {
+		"FormModal": {
+			"Title": "Configura tessera di ingresso",
+			"Text": "Inserisca il nome della sede di lavoro di questa tessera.",
+			"LocationLabel": "Sede di lavoro",
+			"LocationPlaceholder": "es. Ingresso sede centrale",
+			"ReplaceWarning": "Se questa sede ha già una tessera, quella vecchia smetterà di funzionare.",
+			"Write": "Scrivi tessera"
+		},
+		"WriteModal": {
+			"WaitingTitle": "Avvicini la tessera al telefono",
+			"WaitingText": "Avvicini la tessera alla parte alta del retro del telefono e la tenga ferma.",
+			"SavingTitle": "Salvataggio",
+			"SavingText": "La tessera è scritta, salvataggio in Odoo.",
+			"SuccessTitle": "Tessera scritta",
+			"SuccessNewText": "La tessera per {{location}} è pronta.",
+			"SuccessReplacedText": "La nuova tessera per {{location}} è pronta. Quella vecchia non funziona più.",
+			"LocationLabel": "Sede di lavoro",
+			"WrittenAtLabel": "Scritta il",
+			"StatusLabel": "Stato",
+			"StatusReady": "Pronta all'uso",
+			"WriteAnother": "Scrivi un'altra tessera",
+			"WriteFailedTitle": "Impossibile scrivere la tessera",
+			"WriteFailedText": "La tessera non era abbastanza vicina al telefono o non può essere scritta. Riprovi.",
+			"SaveFailedTitle": "Impossibile salvare la tessera",
+			"SaveFailedText": "Non è stato possibile salvare la tessera in Odoo. Controlli la connessione a internet e riprovi.",
+			"Retry": "Riprova"
 		}
 	}
 }

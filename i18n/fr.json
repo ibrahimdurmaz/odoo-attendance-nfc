@@ -10,7 +10,9 @@
 			"CorrectionRequests": "Demandes de correction",
 			"CorrectionRequestsSubtitle": "Vérification des horaires et pointages",
 			"ManualApproval": "Validation manuelle des présences",
-			"ManualApprovalSubtitle": "Vérification des présences."
+			"ManualApprovalSubtitle": "Vérification des présences.",
+			"EntranceCard": "Configurer la carte d'entrée",
+			"EntranceCardSubtitle": "Écrire ou renouveler la carte d'entrée"
 		},
 		"SectionIntro": {
 			"Overline": "CONSOLE DE GESTION ODOO",
@@ -956,7 +958,8 @@
 			"ClearSearch": "Effacer la recherche",
 			"Retry": "Réessayer",
 			"Ok": "OK",
-			"MarkAllRead": "Tout marquer comme vu"
+			"MarkAllRead": "Tout marquer comme vu",
+			"Cancel": "Annuler"
 		},
 		"Accessibility": {
 			"Notifications": "Notifications",
@@ -975,6 +978,35 @@
 		},
 		"Common": {
 			"Percent": "{{value}} %"
+		}
+	},
+	"EntranceCard": {
+		"FormModal": {
+			"Title": "Configurer la carte d'entrée",
+			"Text": "Saisissez le nom du lieu de travail de cette carte.",
+			"LocationLabel": "Lieu de travail",
+			"LocationPlaceholder": "ex. Entrée du siège",
+			"ReplaceWarning": "Si ce lieu a déjà une carte, l'ancienne cessera de fonctionner.",
+			"Write": "Écrire la carte"
+		},
+		"WriteModal": {
+			"WaitingTitle": "Approchez la carte du téléphone",
+			"WaitingText": "Approchez la carte du haut du dos du téléphone et maintenez-la immobile.",
+			"SavingTitle": "Enregistrement",
+			"SavingText": "La carte est écrite, enregistrement dans Odoo.",
+			"SuccessTitle": "Carte écrite",
+			"SuccessNewText": "La carte de {{location}} est prête.",
+			"SuccessReplacedText": "La nouvelle carte de {{location}} est prête. L'ancienne ne fonctionne plus.",
+			"LocationLabel": "Lieu de travail",
+			"WrittenAtLabel": "Écrite le",
+			"StatusLabel": "État",
+			"StatusReady": "Prête à l'emploi",
+			"WriteAnother": "Écrire une autre carte",
+			"WriteFailedTitle": "Impossible d'écrire la carte",
+			"WriteFailedText": "La carte n'était pas assez près du téléphone ou ne peut pas être écrite. Réessayez.",
+			"SaveFailedTitle": "Impossible d'enregistrer la carte",
+			"SaveFailedText": "La carte n'a pas pu être enregistrée dans Odoo. Vérifiez votre connexion internet et réessayez.",
+			"Retry": "Réessayer"
 		}
 	}
 }

@@ -6,11 +6,14 @@ import { theme, ThemeColors } from '@/assets/theme';
 import { getAttendanceSummary } from '@/helper/employee';
 import { syncEmployeesFromOdoo } from '@/helper/odooEmployeeSync';
 import { ensureRemoteWorkType } from '@/helper/odooRemoteWork';
+import { useEntranceCardWriter } from '@/hooks/useEntranceCardWriter';
 import { useEmployeeStore } from '@/store/useEmployeeStore';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { ATTENDANCE_TARGET_PERCENT } from '../Home/constants';
 import { fetchAttendanceValidationMode } from '../Notification/approvalRequests';
+import { EntranceCardFormModal } from './AddCard/EntranceCardFormModal';
+import { EntranceCardWriteModal } from './AddCard/EntranceCardWriteModal';
 import { AddEmployeeButton } from './AddEmployeeButton';
 import { AttendanceCard } from './Attendance';
 import { NavCard } from './NavCard';
@@ -54,9 +57,20 @@ export const AdminScreen = () => {
 			});
 		}, []),
 	);
-	const onOpenAddCard = () => {};
+	const cardWriter = useEntranceCardWriter();
+
+	const onOpenAddCard = () => {
+		cardWriter.openForm();
+	};
 	return (
 		<SafeAreaView edges={['top']} style={styles.screen}>
+			<EntranceCardFormModal onSubmit={cardWriter.write} />
+			<EntranceCardWriteModal
+				onClose={cardWriter.close}
+				onRetry={cardWriter.retry}
+				onWriteAnother={cardWriter.writeAnother}
+				state={cardWriter.state}
+			/>
 			<ScrollView
 				contentContainerStyle={styles.content}
 				showsVerticalScrollIndicator={false}
@@ -83,8 +97,8 @@ export const AdminScreen = () => {
 					<NavCard
 						icon='add-link'
 						onPress={onOpenAddCard}
-						subtitle={'Giriş kartını yaz veya yenile'}
-						title={'Giriş Kartı Tanımla'}
+						subtitle={t('Admin.AdminScreen.EntranceCardSubtitle')}
+						title={t('Admin.AdminScreen.EntranceCard')}
 					/>
 				</View>
 

@@ -10,7 +10,9 @@
 			"CorrectionRequests": "Solicitudes de corrección",
 			"CorrectionRequestsSubtitle": "Revisión de turnos y registros",
 			"ManualApproval": "Aprobación manual de asistencia",
-			"ManualApprovalSubtitle": "Revisiones de asistencia."
+			"ManualApprovalSubtitle": "Revisiones de asistencia.",
+			"EntranceCard": "Configurar tarjeta de entrada",
+			"EntranceCardSubtitle": "Grabar o renovar la tarjeta de entrada"
 		},
 		"SectionIntro": {
 			"Overline": "CONSOLA DE GESTIÓN ODOO",
@@ -956,7 +958,8 @@
 			"ClearSearch": "Borrar búsqueda",
 			"Retry": "Reintentar",
 			"Ok": "Aceptar",
-			"MarkAllRead": "Marcar todo como visto"
+			"MarkAllRead": "Marcar todo como visto",
+			"Cancel": "Cancelar"
 		},
 		"Accessibility": {
 			"Notifications": "Notificaciones",
@@ -975,6 +978,35 @@
 		},
 		"Common": {
 			"Percent": "{{value}} %"
+		}
+	},
+	"EntranceCard": {
+		"FormModal": {
+			"Title": "Configurar tarjeta de entrada",
+			"Text": "Introduzca el nombre del lugar de trabajo de esta tarjeta.",
+			"LocationLabel": "Lugar de trabajo",
+			"LocationPlaceholder": "p. ej. Entrada de la oficina central",
+			"ReplaceWarning": "Si este lugar ya tiene una tarjeta, la anterior dejará de funcionar.",
+			"Write": "Grabar tarjeta"
+		},
+		"WriteModal": {
+			"WaitingTitle": "Acerque la tarjeta al teléfono",
+			"WaitingText": "Acerque la tarjeta a la parte superior de la trasera del teléfono y manténgala quieta.",
+			"SavingTitle": "Guardando",
+			"SavingText": "La tarjeta está grabada; se está guardando en Odoo.",
+			"SuccessTitle": "Tarjeta grabada",
+			"SuccessNewText": "La tarjeta de {{location}} está lista.",
+			"SuccessReplacedText": "La nueva tarjeta de {{location}} está lista. La anterior ya no funciona.",
+			"LocationLabel": "Lugar de trabajo",
+			"WrittenAtLabel": "Grabada el",
+			"StatusLabel": "Estado",
+			"StatusReady": "Lista para usar",
+			"WriteAnother": "Grabar otra tarjeta",
+			"WriteFailedTitle": "No se pudo grabar la tarjeta",
+			"WriteFailedText": "La tarjeta no estaba lo bastante cerca del teléfono o no se puede grabar. Inténtelo de nuevo.",
+			"SaveFailedTitle": "No se pudo guardar la tarjeta",
+			"SaveFailedText": "No se pudo guardar la tarjeta en Odoo. Compruebe su conexión a internet e inténtelo de nuevo.",
+			"Retry": "Reintentar"
 		}
 	}
 }

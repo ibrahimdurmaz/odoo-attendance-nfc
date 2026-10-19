@@ -11,7 +11,9 @@
 			"CorrectionRequests": "Запросы на исправление",
 			"CorrectionRequestsSubtitle": "Проверка смен и отметок",
 			"ManualApproval": "Ручное подтверждение посещаемости",
-			"ManualApprovalSubtitle": "Проверка рабочего времени."
+			"ManualApprovalSubtitle": "Проверка рабочего времени.",
+			"EntranceCard": "Настроить карту входа",
+			"EntranceCardSubtitle": "Записать или обновить карту входа"
 		},
 		"SectionIntro": {
 			"Overline": "КОНСОЛЬ УПРАВЛЕНИЯ ODOO",
@@ -969,7 +971,8 @@
 			"ClearSearch": "Очистить поиск",
 			"Retry": "Повторить",
 			"Ok": "ОК",
-			"MarkAllRead": "Отметить все просмотренными"
+			"MarkAllRead": "Отметить все просмотренными",
+			"Cancel": "Отмена"
 		},
 		"Accessibility": {
 			"Notifications": "Уведомления",
@@ -988,6 +991,35 @@
 		},
 		"Common": {
 			"Percent": "{{value}} %"
+		}
+	},
+	"EntranceCard": {
+		"FormModal": {
+			"Title": "Настроить карту входа",
+			"Text": "Введите название рабочего места для этой карты.",
+			"LocationLabel": "Рабочее место",
+			"LocationPlaceholder": "напр. Вход в главный офис",
+			"ReplaceWarning": "Если у этого места уже есть карта, старая перестанет работать.",
+			"Write": "Записать карту"
+		},
+		"WriteModal": {
+			"WaitingTitle": "Приложите карту к телефону",
+			"WaitingText": "Поднесите карту к верхней части задней панели телефона и держите неподвижно.",
+			"SavingTitle": "Сохранение",
+			"SavingText": "Карта записана, идёт сохранение в Odoo.",
+			"SuccessTitle": "Карта записана",
+			"SuccessNewText": "Карта для «{{location}}» готова.",
+			"SuccessReplacedText": "Новая карта для «{{location}}» готова. Старая карта больше не работает.",
+			"LocationLabel": "Рабочее место",
+			"WrittenAtLabel": "Записана",
+			"StatusLabel": "Статус",
+			"StatusReady": "Готова к работе",
+			"WriteAnother": "Записать ещё одну карту",
+			"WriteFailedTitle": "Не удалось записать карту",
+			"WriteFailedText": "Карта была недостаточно близко к телефону или не поддерживает запись. Попробуйте ещё раз.",
+			"SaveFailedTitle": "Не удалось сохранить карту",
+			"SaveFailedText": "Не удалось сохранить карту в Odoo. Проверьте подключение к интернету и попробуйте ещё раз.",
+			"Retry": "Повторить"
 		}
 	}
 }

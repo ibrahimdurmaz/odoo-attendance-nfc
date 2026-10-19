@@ -8,7 +8,9 @@
 			"CorrectionRequests": "Düzeltme Talepleri",
 			"CorrectionRequestsSubtitle": "Mesai & log incelemeleri",
 			"ManualApproval": "Manuel Katılım Onayı",
-			"ManualApprovalSubtitle": "Mesai değerlendirmeleri."
+			"ManualApprovalSubtitle": "Mesai değerlendirmeleri.",
+			"EntranceCard": "Giriş Kartı Tanımla",
+			"EntranceCardSubtitle": "Giriş kartını yaz veya yenile"
 		},
 		"SectionIntro": {
 			"Overline": "ODOO YÖNETİM KONSOLU",
@@ -930,7 +932,8 @@
 			"ClearSearch": "Aramayı Temizle",
 			"Retry": "Tekrar Dene",
 			"Ok": "Tamam",
-			"MarkAllRead": "Hepsini Gördüm"
+			"MarkAllRead": "Hepsini Gördüm",
+			"Cancel": "Vazgeç"
 		},
 		"Accessibility": {
 			"Notifications": "Bildirimler",
@@ -949,6 +952,35 @@
 		},
 		"Common": {
 			"Percent": "%{{value}}"
+		}
+	},
+	"EntranceCard": {
+		"FormModal": {
+			"Title": "Giriş Kartı Tanımla",
+			"Text": "Bu kartın ait olduğu çalışma konumunun adını girin.",
+			"LocationLabel": "Çalışma konumu",
+			"LocationPlaceholder": "örn. Merkez Ofis Girişi",
+			"ReplaceWarning": "Bu konumun zaten bir kartı varsa eski kart çalışmaz hâle gelir.",
+			"Write": "Kartı Yaz"
+		},
+		"WriteModal": {
+			"WaitingTitle": "Kartı telefona yaklaştırın",
+			"WaitingText": "Kartı telefonun arka yüzünün üst kısmına yaklaştırıp sabit tutun.",
+			"SavingTitle": "Kaydediliyor",
+			"SavingText": "Kart yazıldı, Odoo'ya kaydediliyor.",
+			"SuccessTitle": "Kart yazıldı",
+			"SuccessNewText": "{{location}} kartı kullanıma hazır.",
+			"SuccessReplacedText": "{{location}} için yeni kart hazır. Eski kart artık çalışmıyor.",
+			"LocationLabel": "Çalışma Konumu",
+			"WrittenAtLabel": "Yazılma Zamanı",
+			"StatusLabel": "Durum",
+			"StatusReady": "Kullanıma Hazır",
+			"WriteAnother": "Başka Kart Yaz",
+			"WriteFailedTitle": "Kart yazılamadı",
+			"WriteFailedText": "Kart telefona yeterince yakın değildi ya da yazılamıyor. Tekrar deneyin.",
+			"SaveFailedTitle": "Kart kaydedilemedi",
+			"SaveFailedText": "Kart Odoo'ya kaydedilemedi. İnternet bağlantınızı kontrol edip tekrar deneyin.",
+			"Retry": "Tekrar Dene"
 		}
 	}
 }
