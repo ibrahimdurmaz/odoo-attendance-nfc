@@ -1,14 +1,15 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { theme, ThemeColors } from '@/assets/theme';
 import { getAttendanceSummary } from '@/helper/employee';
 import { syncEmployeesFromOdoo } from '@/helper/odooEmployeeSync';
+import { ensureRemoteWorkType } from '@/helper/odooRemoteWork';
 import { useEmployeeStore } from '@/store/useEmployeeStore';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { ATTENDANCE_TARGET_PERCENT, SHIFT_HOURS } from '../Home/constants';
+import { ATTENDANCE_TARGET_PERCENT } from '../Home/constants';
 import { fetchAttendanceValidationMode } from '../Notification/approvalRequests';
 import { AddEmployeeButton } from './AddEmployeeButton';
 import { AttendanceCard } from './Attendance';
@@ -36,6 +37,14 @@ export const AdminScreen = () => {
 			});
 		}, []),
 	);
+	// Uzaktan çalışma girişi için gereken "Remote Work" türü yoksa oluşturulur (yönetici yetkisi ister).
+	// Ekran bağlandığında bir kez çalışır; türün sonradan silinmesi seyrek olduğu için yeterli.
+	useEffect(() => {
+		void ensureRemoteWorkType().then((result) => {
+			if (!result.ok)
+				console.log('REMOTE WORK TYPE', result.kind, result.message);
+		});
+	}, []);
 	// Ekran her açıldığında çalışanları ve giriş durumlarını Odoo'dan tazeler.
 	useFocusEffect(
 		useCallback(() => {
@@ -45,6 +54,7 @@ export const AdminScreen = () => {
 			});
 		}, []),
 	);
+	const onOpenAddCard = () => {};
 	return (
 		<SafeAreaView edges={['top']} style={styles.screen}>
 			<ScrollView
@@ -70,10 +80,15 @@ export const AdminScreen = () => {
 							title={t('Admin.AdminScreen.ManualApproval')}
 						/>
 					)}
+					<NavCard
+						icon='add-link'
+						onPress={onOpenAddCard}
+						subtitle={'Giriş kartını yaz veya yenile'}
+						title={'Giriş Kartı Tanımla'}
+					/>
 				</View>
 
 				<AttendanceCard
-					shiftHours={SHIFT_HOURS}
 					summary={summary}
 					targetPercent={ATTENDANCE_TARGET_PERCENT}
 				/>

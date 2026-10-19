@@ -442,9 +442,6 @@ export const CheckInFailedModalStyles = StyleSheet.create({
 		justifyContent: 'center',
 		gap: 8,
 	},
-	secondaryButton: {
-		marginTop: 12,
-	},
 	buttonLabel: {
 		fontFamily: fonts.semibold,
 		fontSize: 14,
@@ -569,44 +566,6 @@ export const NfcPromptModalStyles = StyleSheet.create({
 		fontFamily: fonts.semibold,
 		fontSize: 14,
 	},
-
-	keypad: { alignSelf: 'stretch', marginTop: 16, gap: 8 },
-	keypadHeader: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-	keypadTitle: {
-		flex: 1,
-		fontFamily: fonts.semibold,
-		fontSize: 18,
-		lineHeight: 24,
-	},
-	dots: {
-		flexDirection: 'row',
-		justifyContent: 'center',
-		gap: 8,
-		marginVertical: 16,
-	},
-	dot: {
-		width: 14,
-		height: 14,
-		borderRadius: 7,
-	},
-	keyRow: { flexDirection: 'row', gap: 8 },
-	key: {
-		flex: 1,
-		height: 56,
-		borderRadius: 8,
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-	keyLabel: {
-		fontFamily: fonts.bold,
-		fontSize: 20,
-		fontVariant: ['tabular-nums'],
-	},
-	deleteLabel: {
-		fontFamily: fonts.semibold,
-		fontSize: 14,
-	},
-	confirmKeyDisabled: { opacity: 0.4 },
 });
 
 export const ModalWrapperStyles = StyleSheet.create({

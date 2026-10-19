@@ -411,7 +411,7 @@
 			"WorkedA11y": "{{hours}} heures {{minutes}} minutes",
 			"Hours": "h",
 			"Minutes": "min",
-			"Planned": "Prévu : {{hours}} ({{duration}})"
+			"Planned": "Prévu : {{duration}}"
 		},
 		"CorrectionRequestModal": {
 			"Title": "Demander une correction",
@@ -790,7 +790,6 @@
 			"Message": "Rapprochez un peu plus le téléphone de la borne et réessayez.",
 			"HintTitle": "Distance de contact",
 			"HintText": "Maintenez l'appareil immobile à 2-3 cm du logo",
-			"UseCode": "Pointer avec un code",
 			"Support": "Si le problème persiste, signalez-le aux RH."
 		},
 		"CheckInSuccessModal": {
@@ -799,9 +798,7 @@
 			"RecordTime": "HEURE DU POINTAGE",
 			"Synced": "Synchronisé avec Odoo",
 			"ShiftStatus": "Statut du poste",
-			"EarlyStart": "Début en avance",
-			"LateStart": "Début en retard",
-			"OnTimeStart": "Début à l'heure"
+			"PlannedWorkHours": "Heures de travail prévues"
 		},
 		"CodeScannerModal": {
 			"CameraActive": "Caméra active",
@@ -823,15 +820,10 @@
 		},
 		"NfcPromptModal": {
 			"Ready": "Prêt",
-			"KeypadTitle": "Code d'accès rapide",
-			"BackToNfc": "Revenir au scan NFC",
-			"DigitsEntered": "{{count}} chiffres saisis sur {{total}}",
-			"Delete": "Effacer",
-			"Confirm": "Valider",
 			"Scan": "APPROCHEZ",
 			"Title": "Approchez le téléphone de la borne",
 			"Subtitle": "Une vérification par empreinte digitale peut être demandée",
-			"UseCode": "Ça ne fonctionne pas ? Pointer avec un code"
+			"RemoteWork": "Je travaille à distance"
 		},
 		"DailyAnnouncementModal": {
 			"Title": "Annonce du jour",
@@ -902,6 +894,7 @@
 		},
 		"Duration": {
 			"HoursMinutes": "{{hours}} h {{minutes}} min",
+			"Hours": "{{hours}} h",
 			"Minutes": "{{minutes}} min"
 		},
 		"Greetings": {

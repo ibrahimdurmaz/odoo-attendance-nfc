@@ -1044,65 +1044,41 @@ export const fetchOwnAttendancesSince = async (
 	return { ok: true, data: records };
 };
 
-export type OdooWorkSlot = {
-	/** Haftanın günü: 0 = Pazartesi … 6 = Pazar (Odoo'daki gibi). */
-	weekday: number;
-	/** Yalnızca belirli bir güne aitse o gün ("2026-10-08"); her hafta tekrarlıyorsa null. */
-	dateKey: string | null;
-	/** Başlangıç ve bitiş, saat olarak: 8.5 = 08:30. */
-	hourFrom: number;
-	hourTo: number;
-	/** Bu dilimde çalışılması beklenen saat. */
-	hours: number;
-};
-
 export type OdooWorkSchedule = {
 	/** Takvimin adı, örn. "Standard 40 hours/week"; çalışanın takvimi yoksa null. */
 	name: string | null;
-	/** Ortalama günlük saat; esnek takvimde hedef buradan gelir. */
-	hoursPerDay: number | null;
-	/** Sabit saatleri olmayan (esnek) takvim mi. */
-	isFlexible: boolean;
-	slots: OdooWorkSlot[];
+	/** Haftalık çalışma saati (örn. 40); takvim yoksa ya da okunamazsa null. */
+	hoursPerWeek: number | null;
 };
 
-const NO_WORK_SCHEDULE: OdooWorkSchedule = {
-	name: null,
-	hoursPerDay: null,
-	isFlexible: false,
-	slots: [],
-};
+const NO_WORK_SCHEDULE: OdooWorkSchedule = { name: null, hoursPerWeek: null };
+
+/** Haftalık saat yoksa günlük ortalamadan hesaplanırken kullanılan iş günü sayısı. */
+const WORKDAYS_PER_WEEK = 5;
+
+/** Sürüme göre bulunmayabilen takvim alanları; olmayan alan istenirse Odoo sorguyu reddeder. */
+const OPTIONAL_CALENDAR_FIELDS = ['hours_per_week', 'hours_per_day'];
 
 const toLinkedId = (value: unknown): number | null =>
 	Array.isArray(value) && typeof value[0] === 'number' ? value[0] : null;
 
-const toWorkSlot = (record: unknown): OdooWorkSlot | null => {
-	if (!isRecord(record)) return null;
+const toPositiveNumber = (value: unknown): number | null =>
+	typeof value === 'number' && value > 0 ? value : null;
 
-	const {
-		dayofweek,
-		hour_from: hourFrom,
-		hour_to: hourTo,
-		duration_hours: hours,
-	} = record;
-	const weekday = Number(dayofweek);
-	if (
-		!Number.isInteger(weekday) ||
-		typeof hourFrom !== 'number' ||
-		typeof hourTo !== 'number'
-	) {
-		return null;
-	}
-	return {
-		weekday,
-		dateKey: toDateKey(record.date),
-		hourFrom,
-		hourTo,
-		hours:
-			typeof hours === 'number' && hours > 0
-				? hours
-				: Math.max(0, hourTo - hourFrom),
-	};
+/** Her hafta tekrarlayan dilimlerin toplam saati (belirli bir güne ait dilimler sayılmaz). */
+const sumWeeklySlotHours = (data: unknown): number | null => {
+	if (!Array.isArray(data)) return null;
+	const total = data.reduce<number>((sum, record) => {
+		if (!isRecord(record) || toDateKey(record.date) !== null) return sum;
+		const { hour_from: hourFrom, hour_to: hourTo } = record;
+		const hours =
+			toPositiveNumber(record.duration_hours) ??
+			(typeof hourFrom === 'number' && typeof hourTo === 'number'
+				? Math.max(0, hourTo - hourFrom)
+				: 0);
+		return sum + hours;
+	}, 0);
+	return total > 0 ? total : null;
 };
 
 /** search_read sonucunun ilk kaydı; yoksa ya da biçim bozuksa null. */
@@ -1133,39 +1109,38 @@ export const fetchEmployeeWorkSchedule = async (
 	);
 	if (calendarId === null) return { ok: true, data: NO_WORK_SCHEDULE };
 
-	const [calendar, attendances] = await Promise.all([
+	const optionalFields = await fetchAvailableFields(
+		'resource.calendar',
+		OPTIONAL_CALENDAR_FIELDS,
+	);
+	if (!optionalFields.ok) return optionalFields;
+
+	const [calendar, slots] = await Promise.all([
 		callOdooSession('resource.calendar', 'search_read', {
 			domain: [['id', '=', calendarId]],
-			fields: ['name', 'hours_per_day', 'calendar_type'],
+			fields: ['name', ...optionalFields.data],
 			limit: 1,
 		}),
 		callOdooSession('resource.calendar.attendance', 'search_read', {
 			domain: [['calendar_id', '=', calendarId]],
-			fields: ['dayofweek', 'hour_from', 'hour_to', 'duration_hours', 'date'],
+			fields: ['hour_from', 'hour_to', 'duration_hours', 'date'],
 		}),
 	]);
-	for (const result of [calendar, attendances]) {
+	for (const result of [calendar, slots]) {
 		if (!result.ok && isConnectionProblem(result)) return result;
 	}
 
+	// Önce Odoo'nun haftalık saati, yoksa dilimlerin toplamı, o da yoksa günlük ortalama × 5.
 	const calendarRecord = calendar.ok ? firstRecord(calendar.data) : null;
-	const slots =
-		attendances.ok && Array.isArray(attendances.data)
-			? attendances.data
-					.map(toWorkSlot)
-					.filter((slot): slot is OdooWorkSlot => slot !== null)
-			: [];
-	const hoursPerDay = calendarRecord?.hours_per_day;
+	const hoursPerDay = toPositiveNumber(calendarRecord?.hours_per_day);
+	const hoursPerWeek =
+		toPositiveNumber(calendarRecord?.hours_per_week) ??
+		(slots.ok ? sumWeeklySlotHours(slots.data) : null) ??
+		(hoursPerDay === null ? null : hoursPerDay * WORKDAYS_PER_WEEK);
 
 	return {
 		ok: true,
-		data: {
-			name: toText(calendarRecord?.name),
-			hoursPerDay:
-				typeof hoursPerDay === 'number' && hoursPerDay > 0 ? hoursPerDay : null,
-			isFlexible: calendarRecord?.calendar_type === 'undefined',
-			slots,
-		},
+		data: { name: toText(calendarRecord?.name), hoursPerWeek },
 	};
 };
 

@@ -100,7 +100,6 @@ export function Summary({ day }: { day: DayRecord }) {
 						style={[styles.caption, { color: colors.onSurfaceVariant }]}
 					>
 						{t('DayDetails.Summary.Planned', {
-							hours: day.shiftHours,
 							duration: formatDuration(day.targetSeconds),
 						})}
 					</Text>

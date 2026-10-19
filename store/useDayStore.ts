@@ -24,8 +24,6 @@ export type DayRecord = {
 	workedSeconds: number;
 	breakSeconds: number;
 	targetSeconds: number;
-	/** "08:30 - 17:30" */
-	shiftHours: string;
 	checkpoint: string;
 	location: string;
 	/** Onay bekleyen düzeltme talebi; yoksa null. */
@@ -95,7 +93,6 @@ type DayRecordInput = Pick<
 	| 'checkOutAt'
 	| 'breaks'
 	| 'targetSeconds'
-	| 'shiftHours'
 	| 'checkpoint'
 	| 'location'
 > &

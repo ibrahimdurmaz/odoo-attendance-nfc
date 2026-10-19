@@ -411,7 +411,7 @@
 			"WorkedA11y": "{{hours}} horas {{minutes}} minutos",
 			"Hours": "h",
 			"Minutes": "min",
-			"Planned": "Previsto: {{hours}} ({{duration}})"
+			"Planned": "Previsto: {{duration}}"
 		},
 		"CorrectionRequestModal": {
 			"Title": "Solicitar corrección",
@@ -790,7 +790,6 @@
 			"Message": "Acerque un poco más el teléfono al panel e inténtelo de nuevo.",
 			"HintTitle": "Distancia de contacto",
 			"HintText": "Mantenga el dispositivo quieto a 2-3 cm del logotipo",
-			"UseCode": "Entrar con código",
 			"Support": "Si el problema continúa, comuníquelo a RR. HH."
 		},
 		"CheckInSuccessModal": {
@@ -799,9 +798,7 @@
 			"RecordTime": "HORA DE REGISTRO",
 			"Synced": "Sincronizado con Odoo",
 			"ShiftStatus": "Estado del turno",
-			"EarlyStart": "Inicio anticipado",
-			"LateStart": "Inicio tardío",
-			"OnTimeStart": "Inicio puntual"
+			"PlannedWorkHours": "Horas de trabajo previstas"
 		},
 		"CodeScannerModal": {
 			"CameraActive": "Cámara activa",
@@ -823,15 +820,10 @@
 		},
 		"NfcPromptModal": {
 			"Ready": "Listo",
-			"KeypadTitle": "Código de acceso rápido",
-			"BackToNfc": "Volver al escaneo NFC",
-			"DigitsEntered": "{{count}} de {{total}} dígitos introducidos",
-			"Delete": "Borrar",
-			"Confirm": "Confirmar",
 			"Scan": "ACERQUE",
 			"Title": "Acerque el teléfono al panel",
 			"Subtitle": "Puede requerirse la huella dactilar para verificar",
-			"UseCode": "¿No funciona? Entrar con código"
+			"RemoteWork": "Estoy trabajando en remoto"
 		},
 		"DailyAnnouncementModal": {
 			"Title": "Anuncio del día",
@@ -902,6 +894,7 @@
 		},
 		"Duration": {
 			"HoursMinutes": "{{hours}} h {{minutes}} min",
+			"Hours": "{{hours}} h",
 			"Minutes": "{{minutes}} min"
 		},
 		"Greetings": {

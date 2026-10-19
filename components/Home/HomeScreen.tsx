@@ -1,42 +1,42 @@
 import { theme } from '@/assets/theme';
 import {
 	formatDate,
+	formatHours,
 	formatMinutes,
 	formatTime,
 	getGreeting,
 	toDateKey,
 } from '@/helper/dateHelpers';
+import type { OdooAttendance } from '@/helper/odooApi';
 import {
+	callOdooSession,
 	checkInAttendance,
 	checkOutAttendance,
 	fetchLastAttendance,
 	fetchOwnAttendancesSince,
 } from '@/helper/odooApi';
+import { checkInRemoteAttendance } from '@/helper/odooRemoteWork';
+import { useTodayTargetSeconds } from '@/helper/useTodayTarget';
 import { useModalStore } from '@/store/modalStore';
 import { useDailyBriefingStore } from '@/store/useDailyBriefingStore';
 import { createDayRecord, useDayStore } from '@/store/useDayStore';
 import { useProfileStore } from '@/store/useProfileStore';
 import { MaterialIcons } from '@react-native-vector-icons/material-icons';
+import { useFocusEffect } from 'expo-router';
 import type { FC } from 'react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ScrollView, Text, View } from 'react-native';
+import { Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CheckInFailedModal } from '../Modals/CheckInFailedModal';
 import { CheckInSuccessModal } from '../Modals/CheckInSuccessModal';
-import { CodeScannerModal } from '../Modals/CodeScannerModal';
 import { DailyAnnouncementModal } from '../Modals/DailyAnnouncementModal';
 import { NfcPromptModal } from '../Modals/NfcPromptModal';
 import { TodayProgramModal } from '../Modals/TodayProgramModal';
 import { ActionButton } from './ActionButton';
 import { ActivityRow } from './ActivityRow';
 import { getCheckpointName, getStatusBadges } from './config';
-import {
-	BREAK_ALLOWANCE_SECONDS,
-	INITIAL_SESSION,
-	SHIFT_HOURS,
-	TARGET_SECONDS,
-} from './constants';
+import { BREAK_ALLOWANCE_SECONDS, INITIAL_SESSION } from './constants';
 import { FarewellCard } from './FarewellCard';
 import { Header } from './Header';
 import { InfoTile } from './InfoTile';
@@ -96,70 +96,88 @@ export const HomeScreen: FC = () => {
 		return () => clearInterval(intervalId);
 	}, [isRunning]);
 
-	// Uygulama açılınca Odoo'daki son kayıttan bugünkü durumu geri yükler.
-	// Bu arada kullanıcı bir şeye bastıysa (giriş, mola) onun yaptığı ezilmez.
-	useEffect(() => {
-		void fetchLastAttendance().then(async (result) => {
-			if (!result.ok || !result.data) return;
-			const { id, checkInAt, checkOutAt, checkInLocation, checkOutLocation } =
-				result.data;
-			const isToday =
-				new Date(checkInAt).toDateString() === new Date().toDateString();
-			if (checkOutAt !== null && !isToday) return;
+	// Yoldaki eşitleme, bu arada yapılan giriş/çıkışı eski veriyle ezmesin diye istek sayacı.
+	const syncRequest = useRef(0);
 
-			// Bugün birden fazla giriş-çıkış yapıldıysa öncekiler de toplama katılır.
-			const today = await fetchOwnAttendancesSince(
-				new Date().setHours(0, 0, 0, 0),
-			);
-			const earlierShifts: ShiftRecord[] = [];
-			for (const record of today.ok ? today.data : []) {
-				if (record.id === id || record.checkOutAt === null) continue;
-				earlierShifts.push({
-					checkInAt: record.checkInAt,
-					checkOutAt: record.checkOutAt,
-					checkInLocation: record.checkInLocation,
-					checkOutLocation: record.checkOutLocation,
-					breaks: [],
-					breakSeconds: record.breakSeconds,
+	// Ekran her açıldığında bugünkü durum Odoo'dan yeniden kurulur; Odoo'da silinen ya da
+	// değiştirilen kayıtlar böylece ekrandan da kalkar. Odoo molayı ancak çıkışta tuttuğu için
+	// açık kaydın molaları cihazdakinden korunur.
+	useFocusEffect(
+		useCallback(() => {
+			const request = ++syncRequest.current;
+			void (async () => {
+				const result = await fetchLastAttendance();
+				if (!result.ok) return;
+				const last = result.data;
+				const isOpen = last !== null && last.checkOutAt === null;
+				const isToday =
+					last !== null && toDateKey(last.checkInAt) === toDateKey(Date.now());
+
+				// Bugün birden fazla giriş-çıkış yapıldıysa öncekiler de toplama katılır.
+				const earlierShifts: ShiftRecord[] = [];
+				if (last && (isOpen || isToday)) {
+					const today = await fetchOwnAttendancesSince(
+						new Date().setHours(0, 0, 0, 0),
+					);
+					for (const record of today.ok ? today.data : []) {
+						if (record.id === last.id || record.checkOutAt === null) continue;
+						earlierShifts.push({
+							checkInAt: record.checkInAt,
+							checkOutAt: record.checkOutAt,
+							checkInLocation: record.checkInLocation,
+							checkOutLocation: record.checkOutLocation,
+							breaks: [],
+							breakSeconds: record.breakSeconds,
+						});
+					}
+				}
+				if (request !== syncRequest.current) return;
+
+				setSession((previous) => {
+					if (!last || (!isOpen && !isToday)) return INITIAL_SESSION;
+
+					const isSameRecord = previous.checkInAt === last.checkInAt;
+					const breaks = isSameRecord ? previous.breaks : [];
+					if (isOpen) {
+						const breakStartedAt = isSameRecord
+							? previous.breakStartedAt
+							: null;
+						return {
+							...INITIAL_SESSION,
+							status: breakStartedAt ? 'onBreak' : 'working',
+							checkInAt: last.checkInAt,
+							checkInLocation: last.checkInLocation,
+							breaks,
+							breakStartedAt,
+							earlierShifts,
+						};
+					}
+					return {
+						...INITIAL_SESSION,
+						status: 'completed',
+						checkInAt: last.checkInAt,
+						checkOutAt: last.checkOutAt,
+						checkInLocation: last.checkInLocation,
+						checkOutLocation: last.checkOutLocation,
+						breaks,
+						earlierShifts,
+					};
 				});
-			}
-
-			setSession((previous) =>
-				previous.status !== INITIAL_SESSION.status
-					? previous
-					: checkOutAt === null
-						? {
-								...INITIAL_SESSION,
-								status: 'working',
-								checkInAt,
-								checkInLocation,
-								earlierShifts,
-							}
-						: {
-								...INITIAL_SESSION,
-								status: 'completed',
-								checkInAt,
-								checkOutAt,
-								checkInLocation,
-								checkOutLocation,
-								earlierShifts,
-							},
-			);
-		});
-	}, []);
+				setNow(Date.now());
+			})();
+		}, []),
+	);
 	// --- Eylemler (Odoo / NFC çağrıları buraya eklenir) ---
 
 	const checkIn = () => {
 		triggerModal('nfcPrompt');
 	};
-	// NFC okutma başarılı olunca çağrılır: girişi Odoo'ya yazar, giriş saatini döner (olmazsa null).
-	const confirmCheckIn = async (): Promise<number | null> => {
-		const result = await checkInAttendance();
-		if (!result.ok) {
-			console.log('CHECK IN', result.kind, result.message);
-			return null;
-		}
-		const { checkInAt, checkInLocation } = result.data;
+	// Giriş Odoo'ya yazıldıktan sonra ekrandaki oturumu başlatır, giriş saatini döner.
+	const startSession = ({
+		checkInAt,
+		checkInLocation,
+	}: OdooAttendance): number => {
+		syncRequest.current += 1;
 		setNow(Date.now());
 		// Gün içinde tekrar giriş yapılırsa önceki giriş-çıkışlar korunur.
 		setSession((previous) => ({
@@ -171,6 +189,28 @@ export const HomeScreen: FC = () => {
 		}));
 		void loadBriefing();
 		return checkInAt;
+	};
+
+	// NFC okutma başarılı olunca çağrılır: girişi Odoo'ya yazar, giriş saatini döner (olmazsa null).
+	const confirmCheckIn = async (): Promise<number | null> => {
+		const result = await checkInAttendance();
+		if (!result.ok) {
+			console.log('CHECK IN', result.kind, result.message);
+			return null;
+		}
+		return startSession(result.data);
+	};
+
+	// "Uzaktan çalışıyorum": girişi Odoo'ya "Remote Work" zaman türüyle yazar.
+	const confirmRemoteCheckIn = async (): Promise<number | null> => {
+		const result = await checkInRemoteAttendance();
+		if (!result.ok) {
+			console.log('REMOTE CHECK IN', result.kind, result.message);
+			return null;
+		}
+		if (!result.data.isTimeTypeSaved)
+			console.log('REMOTE CHECK IN', 'time type could not be saved');
+		return startSession(result.data.attendance);
 	};
 	const startBreak = () => {
 		const at = Date.now();
@@ -190,6 +230,8 @@ export const HomeScreen: FC = () => {
 				: prev.breaks,
 		}));
 	};
+	// Bugünün hedefi: Odoo'daki haftalık saat / 5; hafta sonu 0, yüklenirken null.
+	const targetSeconds = useTodayTargetSeconds();
 
 	const checkOut = async () => {
 		if (!session.checkInAt) return;
@@ -230,13 +272,13 @@ export const HomeScreen: FC = () => {
 				breakSeconds:
 					earlierShifts.reduce((sum, shift) => sum + shift.breakSeconds, 0) +
 					breakSeconds,
-				targetSeconds: TARGET_SECONDS,
-				shiftHours: SHIFT_HOURS,
+				targetSeconds: targetSeconds ?? 0,
 				checkpoint: getCheckpointName(),
 				location: checkInLocation ?? '',
 			}),
 		);
 
+		syncRequest.current += 1;
 		setNow(checkOutAt);
 		setSession({
 			...session,
@@ -342,7 +384,42 @@ export const HomeScreen: FC = () => {
 	if (session.checkOutAt) {
 		addCheckOut(session.checkOutAt, session.checkOutLocation);
 	}
+	const inspectApprovalFields = async () => {
+		const fields = await callOdooSession('hr.work.location', 'fields_get', {
+			attributes: ['type', 'string', 'readonly'],
+		});
+		console.log(
+			'WORK LOCATION FIELDS',
+			fields.ok
+				? Object.entries(
+						fields.data as Record<string, { type: string; string: string }>,
+					)
+						.filter(([, value]) => ['char', 'text'].includes(value.type))
+						.map(([key, value]) => `${key} (${value.type}): ${value.string}`)
+				: fields,
+		);
 
+		const locations = await callOdooSession('hr.work.location', 'search_read', {
+			domain: [],
+			fields: ['name', 'location_type'],
+		});
+		console.log('WORK LOCATIONS', locations);
+
+		const employee = await callOdooSession('hr.employee', 'search_read', {
+			domain: [
+				[
+					'user_id',
+					'=',
+					(
+						await import('@/store/useOdooSessionStore')
+					).useOdooSessionStore.getState().session?.uid,
+				],
+			],
+			fields: ['work_location_id'],
+			limit: 1,
+		});
+		console.log('OWN WORK LOCATION', employee);
+	};
 	return (
 		<SafeAreaView
 			edges={['top']}
@@ -350,8 +427,10 @@ export const HomeScreen: FC = () => {
 		>
 			<CheckInFailedModal />
 			<CheckInSuccessModal />
-			<CodeScannerModal />
-			<NfcPromptModal confirmCheckIn={confirmCheckIn} />
+			<NfcPromptModal
+				confirmCheckIn={confirmCheckIn}
+				confirmRemoteCheckIn={confirmRemoteCheckIn}
+			/>
 			<DailyAnnouncementModal
 				announcements={announcements}
 				onConfirm={confirmAnnouncements}
@@ -364,6 +443,9 @@ export const HomeScreen: FC = () => {
 			>
 				{/* Karşılama ve durum rozeti */}
 				<View style={styles.greeting}>
+					<Pressable onPress={inspectApprovalFields}>
+						<Text>test</Text>
+					</Pressable>
 					<View style={styles.greetingTexts}>
 						<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
 							{formatDate(now)}
@@ -395,6 +477,7 @@ export const HomeScreen: FC = () => {
 					session={session}
 					status={status}
 					loadBriefing={loadBriefing}
+					targetSeconds={targetSeconds}
 				/>
 				{/* Aksiyon butonları; çıkıştan sonra aynı gün tekrar giriş yapılabilir. */}
 				{status === 'notCheckedIn' || status === 'completed' ? (
@@ -453,7 +536,7 @@ export const HomeScreen: FC = () => {
 						icon='event-note'
 						label={t('Home.InfoTiles.PlannedShift')}
 						note={profile.department}
-						value={SHIFT_HOURS}
+						value={targetSeconds === null ? '—' : formatHours(targetSeconds)}
 					/>
 					<InfoTile
 						icon='local-cafe'

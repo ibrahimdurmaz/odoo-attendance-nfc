@@ -411,7 +411,7 @@
 			"WorkedA11y": "{{hours}} ore {{minutes}} minuti",
 			"Hours": "h",
 			"Minutes": "min",
-			"Planned": "Previsto: {{hours}} ({{duration}})"
+			"Planned": "Previsto: {{duration}}"
 		},
 		"CorrectionRequestModal": {
 			"Title": "Richiedi correzione",
@@ -790,7 +790,6 @@
 			"Message": "Avvicini un po' di più il telefono al terminale e riprovi.",
 			"HintTitle": "Distanza di contatto",
 			"HintText": "Tenga il dispositivo fermo a 2-3 cm dal logo",
-			"UseCode": "Entra con codice",
 			"Support": "Se il problema persiste, lo segnali all'ufficio del personale."
 		},
 		"CheckInSuccessModal": {
@@ -799,9 +798,7 @@
 			"RecordTime": "ORA DI REGISTRAZIONE",
 			"Synced": "Sincronizzato con Odoo",
 			"ShiftStatus": "Stato del turno",
-			"EarlyStart": "Inizio anticipato",
-			"LateStart": "Inizio in ritardo",
-			"OnTimeStart": "Inizio puntuale"
+			"PlannedWorkHours": "Ore di lavoro previste"
 		},
 		"CodeScannerModal": {
 			"CameraActive": "Fotocamera attiva",
@@ -823,15 +820,10 @@
 		},
 		"NfcPromptModal": {
 			"Ready": "Pronto",
-			"KeypadTitle": "Codice di accesso rapido",
-			"BackToNfc": "Torna alla lettura NFC",
-			"DigitsEntered": "{{count}} di {{total}} cifre inserite",
-			"Delete": "Cancella",
-			"Confirm": "Conferma",
 			"Scan": "AVVICINI",
 			"Title": "Avvicini il telefono al terminale",
 			"Subtitle": "Potrebbe essere richiesta l'impronta digitale per la verifica",
-			"UseCode": "Non funziona? Entra con codice"
+			"RemoteWork": "Sto lavorando da remoto"
 		},
 		"DailyAnnouncementModal": {
 			"Title": "Comunicazione del giorno",
@@ -902,6 +894,7 @@
 		},
 		"Duration": {
 			"HoursMinutes": "{{hours}} h {{minutes}} min",
+			"Hours": "{{hours}} h",
 			"Minutes": "{{minutes}} min"
 		},
 		"Greetings": {

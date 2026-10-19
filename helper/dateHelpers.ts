@@ -55,6 +55,14 @@ export const formatDuration = (seconds: number): string => {
 	});
 };
 
+/** 28800 → "8s", 27000 → "7,5s": planlanan çalışma süresi, en çok bir ondalıkla. */
+export const formatHours = (seconds: number): string =>
+	i18n.t('ExtraConstants.Duration.Hours', {
+		hours: (Math.round((Math.max(0, seconds) / 3600) * 10) / 10).toLocaleString(
+			i18n.language,
+		),
+	});
+
 /** 2160 → "36 dk" */
 export const formatMinutes = (seconds: number): string =>
 	i18n.t('ExtraConstants.Duration.Minutes', {

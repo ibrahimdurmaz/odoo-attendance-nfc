@@ -411,7 +411,7 @@
 			"WorkedA11y": "{{hours}} horas e {{minutes}} minutos",
 			"Hours": "h",
 			"Minutes": "min",
-			"Planned": "Previsto: {{hours}} ({{duration}})"
+			"Planned": "Previsto: {{duration}}"
 		},
 		"CorrectionRequestModal": {
 			"Title": "Pedir correção",
@@ -790,7 +790,6 @@
 			"Message": "Aproxime um pouco mais o telemóvel do painel e tente novamente.",
 			"HintTitle": "Distância de contacto",
 			"HintText": "Mantenha o dispositivo imóvel a 2-3 cm do logótipo",
-			"UseCode": "Entrar com código",
 			"Support": "Se o problema persistir, informe os RH."
 		},
 		"CheckInSuccessModal": {
@@ -799,9 +798,7 @@
 			"RecordTime": "HORA DO REGISTO",
 			"Synced": "Sincronizado com o Odoo",
 			"ShiftStatus": "Estado do turno",
-			"EarlyStart": "Início antecipado",
-			"LateStart": "Início tardio",
-			"OnTimeStart": "Início pontual"
+			"PlannedWorkHours": "Horas de trabalho previstas"
 		},
 		"CodeScannerModal": {
 			"CameraActive": "Câmara ativa",
@@ -823,15 +820,10 @@
 		},
 		"NfcPromptModal": {
 			"Ready": "Pronto",
-			"KeypadTitle": "Código de acesso rápido",
-			"BackToNfc": "Voltar à leitura NFC",
-			"DigitsEntered": "{{count}} de {{total}} dígitos introduzidos",
-			"Delete": "Apagar",
-			"Confirm": "Confirmar",
 			"Scan": "APROXIME",
 			"Title": "Aproxime o telemóvel do painel",
 			"Subtitle": "Pode ser necessária a impressão digital para verificação",
-			"UseCode": "Não funciona? Entrar com código"
+			"RemoteWork": "Estou trabalhando remotamente"
 		},
 		"DailyAnnouncementModal": {
 			"Title": "Anúncio do dia",
@@ -902,6 +894,7 @@
 		},
 		"Duration": {
 			"HoursMinutes": "{{hours}} h {{minutes}} min",
+			"Hours": "{{hours}} h",
 			"Minutes": "{{minutes}} min"
 		},
 		"Greetings": {

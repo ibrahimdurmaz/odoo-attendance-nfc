@@ -18,7 +18,6 @@ export const CheckInFailedModal = () => {
 		closeModal('checkInFailed');
 	};
 	const onRetry = () => {};
-	const onUseCode = () => {};
 	const styles = CheckInFailedModalStyles;
 	return (
 		<ModalWrapper onClose={onClose} visible={visible}>
@@ -133,23 +132,6 @@ export const CheckInFailedModal = () => {
 						]}
 					>
 						{t('UI.Buttons.Retry')}
-					</Text>
-				</Pressable>
-
-				<Pressable
-					accessibilityLabel={t('Modals.CheckInFailedModal.UseCode')}
-					accessibilityRole='button'
-					onPress={onUseCode}
-					style={({ pressed }) => [
-						styles.button,
-						styles.secondaryButton,
-						{ backgroundColor: colors.surfaceContainerHigh },
-						pressed && styles.pressed,
-					]}
-				>
-					<MaterialIcons color={colors.primary} name='dialpad' size={22} />
-					<Text style={[styles.buttonLabel, { color: colors.onSurface }]}>
-						{t('Modals.CheckInFailedModal.UseCode')}
 					</Text>
 				</Pressable>
 

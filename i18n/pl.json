@@ -418,7 +418,7 @@
 			"WorkedA11y": "{{hours}} godz. {{minutes}} min",
 			"Hours": "godz.",
 			"Minutes": "min",
-			"Planned": "Planowo: {{hours}} ({{duration}})"
+			"Planned": "Planowo: {{duration}}"
 		},
 		"CorrectionRequestModal": {
 			"Title": "Wnioskuj o korektę",
@@ -801,7 +801,6 @@
 			"Message": "Przybliż telefon nieco bardziej do terminala i spróbuj ponownie.",
 			"HintTitle": "Odległość zbliżenia",
 			"HintText": "Trzymaj urządzenie nieruchomo 2-3 cm od logo",
-			"UseCode": "Wejdź kodem",
 			"Support": "Jeśli problem się powtarza, zgłoś go do działu kadr."
 		},
 		"CheckInSuccessModal": {
@@ -810,9 +809,7 @@
 			"RecordTime": "GODZINA REJESTRACJI",
 			"Synced": "Przesłano do Odoo",
 			"ShiftStatus": "Status zmiany",
-			"EarlyStart": "Wcześniejszy start",
-			"LateStart": "Spóźniony start",
-			"OnTimeStart": "Start punktualny"
+			"PlannedWorkHours": "Planowany czas pracy"
 		},
 		"CodeScannerModal": {
 			"CameraActive": "Aparat aktywny",
@@ -834,15 +831,10 @@
 		},
 		"NfcPromptModal": {
 			"Ready": "Gotowe",
-			"KeypadTitle": "Kod szybkiego dostępu",
-			"BackToNfc": "Wróć do skanowania NFC",
-			"DigitsEntered": "Wpisano cyfr: {{count}} z {{total}}",
-			"Delete": "Usuń",
-			"Confirm": "Potwierdź",
 			"Scan": "PRZYBLIŻ",
 			"Title": "Zbliż telefon do terminala",
 			"Subtitle": "Weryfikacja może wymagać odcisku palca",
-			"UseCode": "Nie działa? Wejdź kodem"
+			"RemoteWork": "Pracuję zdalnie"
 		},
 		"DailyAnnouncementModal": {
 			"Title": "Ogłoszenie dnia",
@@ -915,6 +907,7 @@
 		},
 		"Duration": {
 			"HoursMinutes": "{{hours}} h {{minutes}} min",
+			"Hours": "{{hours}} h",
 			"Minutes": "{{minutes}} min"
 		},
 		"Greetings": {

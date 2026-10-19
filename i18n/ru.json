@@ -418,7 +418,7 @@
 			"WorkedA11y": "{{hours}} ч {{minutes}} мин",
 			"Hours": "ч",
 			"Minutes": "мин",
-			"Planned": "По плану: {{hours}} ({{duration}})"
+			"Planned": "По плану: {{duration}}"
 		},
 		"CorrectionRequestModal": {
 			"Title": "Запросить исправление",
@@ -801,7 +801,6 @@
 			"Message": "Поднесите телефон чуть ближе к терминалу и попробуйте ещё раз.",
 			"HintTitle": "Расстояние касания",
 			"HintText": "Держите устройство неподвижно в 2–3 см от логотипа",
-			"UseCode": "Войти по коду",
 			"Support": "Если проблема не исчезнет, сообщите в отдел кадров."
 		},
 		"CheckInSuccessModal": {
@@ -810,9 +809,7 @@
 			"RecordTime": "ВРЕМЯ ОТМЕТКИ",
 			"Synced": "Передано в Odoo",
 			"ShiftStatus": "Статус смены",
-			"EarlyStart": "Раннее начало",
-			"LateStart": "Позднее начало",
-			"OnTimeStart": "Начало вовремя"
+			"PlannedWorkHours": "Плановые рабочие часы"
 		},
 		"CodeScannerModal": {
 			"CameraActive": "Камера включена",
@@ -834,15 +831,10 @@
 		},
 		"NfcPromptModal": {
 			"Ready": "Готово",
-			"KeypadTitle": "Код быстрого доступа",
-			"BackToNfc": "Вернуться к NFC",
-			"DigitsEntered": "Введено цифр: {{count}} из {{total}}",
-			"Delete": "Удалить",
-			"Confirm": "Подтвердить",
 			"Scan": "ПРИЛОЖИТЕ",
 			"Title": "Поднесите телефон к терминалу",
 			"Subtitle": "Для подтверждения может потребоваться отпечаток пальца",
-			"UseCode": "Не работает? Войти по коду"
+			"RemoteWork": "Я работаю удалённо"
 		},
 		"DailyAnnouncementModal": {
 			"Title": "Объявление дня",
@@ -915,6 +907,7 @@
 		},
 		"Duration": {
 			"HoursMinutes": "{{hours}} ч {{minutes}} мин",
+			"Hours": "{{hours}} ч",
 			"Minutes": "{{minutes}} мин"
 		},
 		"Greetings": {

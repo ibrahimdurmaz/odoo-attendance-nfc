@@ -404,7 +404,7 @@
 			"WorkedA11y": "{{hours}} hours {{minutes}} minutes",
 			"Hours": "hrs",
 			"Minutes": "min",
-			"Planned": "Planned: {{hours}} ({{duration}})"
+			"Planned": "Planned: {{duration}}"
 		},
 		"CorrectionRequestModal": {
 			"Title": "Request Correction",
@@ -779,7 +779,6 @@
 			"Message": "Hold your phone a little closer to the panel and try again.",
 			"HintTitle": "Contact Distance",
 			"HintText": "Hold your device steady 2-3 cm from the logo",
-			"UseCode": "Check In with Code",
 			"Support": "If the problem continues, report it to HR."
 		},
 		"CheckInSuccessModal": {
@@ -788,9 +787,7 @@
 			"RecordTime": "RECORDED AT",
 			"Synced": "Synced to Odoo",
 			"ShiftStatus": "Shift Status",
-			"EarlyStart": "Early Start",
-			"LateStart": "Late Start",
-			"OnTimeStart": "On-time Start"
+			"PlannedWorkHours": "Planned work hours"
 		},
 		"CodeScannerModal": {
 			"CameraActive": "Camera Active",
@@ -812,15 +809,10 @@
 		},
 		"NfcPromptModal": {
 			"Ready": "Ready",
-			"KeypadTitle": "Quick Access Code",
-			"BackToNfc": "Back to NFC scanning",
-			"DigitsEntered": "{{count}} of {{total}} digits entered",
-			"Delete": "Delete",
-			"Confirm": "Confirm",
 			"Scan": "TAP",
 			"Title": "Hold your phone near the panel",
 			"Subtitle": "Fingerprint verification may be required",
-			"UseCode": "Not working? Check in with a code"
+			"RemoteWork": "I am working remotely"
 		},
 		"DailyAnnouncementModal": {
 			"Title": "Today's Announcement",
@@ -889,6 +881,7 @@
 		},
 		"Duration": {
 			"HoursMinutes": "{{hours}}h {{minutes}}m",
+			"Hours": "{{hours}}h",
 			"Minutes": "{{minutes}} min"
 		},
 		"Greetings": {

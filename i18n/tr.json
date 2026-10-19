@@ -397,7 +397,7 @@
 			"WorkedA11y": "{{hours}} saat {{minutes}} dakika",
 			"Hours": "saat",
 			"Minutes": "dakika",
-			"Planned": "Planlanan: {{hours}} ({{duration}})"
+			"Planned": "Planlanan: {{duration}}"
 		},
 		"CorrectionRequestModal": {
 			"Title": "Düzeltme Talep Et",
@@ -768,7 +768,6 @@
 			"Message": "Telefonu panele biraz daha yaklaştırın ve tekrar deneyin.",
 			"HintTitle": "Temas Mesafesi",
 			"HintText": "Cihazınızı logonun 2-3 cm yakınına sabit tutun",
-			"UseCode": "Kodla Giriş Yap",
 			"Support": "Sorun devam ederse İK'ya bildirin."
 		},
 		"CheckInSuccessModal": {
@@ -777,9 +776,7 @@
 			"RecordTime": "KAYIT SAATİ",
 			"Synced": "Odoo'ya aktarıldı",
 			"ShiftStatus": "Vardiya Durumu",
-			"EarlyStart": "Erken Başlangıç",
-			"LateStart": "Geç Başlangıç",
-			"OnTimeStart": "Zamanında Başlangıç"
+			"PlannedWorkHours": "Planlanan çalışma süresi"
 		},
 		"CodeScannerModal": {
 			"CameraActive": "Kamera Aktif",
@@ -801,15 +798,10 @@
 		},
 		"NfcPromptModal": {
 			"Ready": "Hazır",
-			"KeypadTitle": "Hızlı Erişim Kodu",
-			"BackToNfc": "NFC ile okutmaya dön",
-			"DigitsEntered": "{{count}} / {{total}} hane girildi",
-			"Delete": "Sil",
-			"Confirm": "Onayla",
 			"Scan": "OKUTUN",
 			"Title": "Telefonu panele yaklaştırın",
 			"Subtitle": "Doğrulama için parmak izi gerekebilir",
-			"UseCode": "Çalışmıyor mu? Kodla giriş yap"
+			"RemoteWork": "Uzaktan çalışıyorum"
 		},
 		"DailyAnnouncementModal": {
 			"Title": "Günün Duyurusu",
@@ -876,6 +868,7 @@
 		},
 		"Duration": {
 			"HoursMinutes": "{{hours}}s {{minutes}}dk",
+			"Hours": "{{hours}}s",
 			"Minutes": "{{minutes}} dk"
 		},
 		"Greetings": {

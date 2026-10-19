@@ -9,7 +9,7 @@ import { useModalStore } from '@/store/modalStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { useTranslation } from 'react-i18next';
 import { Pressable, Text, View } from 'react-native';
-import { BREAK_ALLOWANCE_SECONDS, TARGET_SECONDS } from './constants';
+import { BREAK_ALLOWANCE_SECONDS } from './constants';
 import { ProgressRing } from './ProgressRing';
 import { Stat } from './Stat';
 import { styles } from './styles';
@@ -23,6 +23,7 @@ export function StatsBlock({
 	earlierBreakSeconds,
 	now,
 	loadBriefing,
+	targetSeconds,
 }: {
 	status: Status;
 	session: Session;
@@ -32,6 +33,8 @@ export function StatsBlock({
 	earlierBreakSeconds: number;
 	now: number;
 	loadBriefing: () => {};
+	/** Bugünün hedefi (haftalık saat / 5); hafta sonu 0, yüklenirken null. */
+	targetSeconds: number | null;
 }) {
 	const colors = theme();
 	const { t } = useTranslation();
@@ -41,12 +44,13 @@ export function StatsBlock({
 		? Math.max(0, (workEnd - session.checkInAt) / 1000 - finishedBreakSeconds)
 		: 0;
 	const workedSeconds = earlierWorkedSeconds + currentWorkedSeconds;
-	const progress = workedSeconds / TARGET_SECONDS;
+	const target = targetSeconds ?? 0;
+	const progress = target > 0 ? workedSeconds / target : 0;
 	const percent = t('UI.Common.Percent', {
 		value: Math.floor(progress * 100),
 	});
-	const remainingSeconds = Math.max(0, TARGET_SECONDS - workedSeconds);
-	const overtimeSeconds = workedSeconds - TARGET_SECONDS;
+	const remainingSeconds = Math.max(0, target - workedSeconds);
+	const overtimeSeconds = workedSeconds - target;
 	const currentBreakSeconds = session.breakStartedAt
 		? Math.max(0, (now - session.breakStartedAt) / 1000)
 		: 0;
@@ -184,7 +188,7 @@ export function StatsBlock({
 				<Text style={[styles.ringNote, { color: colors.tertiary }]}>
 					{status === 'notCheckedIn'
 						? t('Home.StatsBlock.TargetValue', {
-								duration: formatDuration(TARGET_SECONDS),
+								duration: formatDuration(target),
 							})
 						: null}
 					{status === 'working'

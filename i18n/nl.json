@@ -404,7 +404,7 @@
 			"WorkedA11y": "{{hours}} uur {{minutes}} minuten",
 			"Hours": "u",
 			"Minutes": "min",
-			"Planned": "Gepland: {{hours}} ({{duration}})"
+			"Planned": "Gepland: {{duration}}"
 		},
 		"CorrectionRequestModal": {
 			"Title": "Correctie aanvragen",
@@ -779,7 +779,6 @@
 			"Message": "Houd uw telefoon iets dichter bij de terminal en probeer het opnieuw.",
 			"HintTitle": "Contactafstand",
 			"HintText": "Houd uw apparaat stil op 2-3 cm van het logo",
-			"UseCode": "Inklokken met code",
 			"Support": "Blijft het probleem bestaan? Meld het bij HR."
 		},
 		"CheckInSuccessModal": {
@@ -788,9 +787,7 @@
 			"RecordTime": "TIJDSTIP REGISTRATIE",
 			"Synced": "Gesynchroniseerd met Odoo",
 			"ShiftStatus": "Dienststatus",
-			"EarlyStart": "Vroege start",
-			"LateStart": "Late start",
-			"OnTimeStart": "Op tijd begonnen"
+			"PlannedWorkHours": "Geplande werkuren"
 		},
 		"CodeScannerModal": {
 			"CameraActive": "Camera actief",
@@ -812,15 +809,10 @@
 		},
 		"NfcPromptModal": {
 			"Ready": "Gereed",
-			"KeypadTitle": "Snelle toegangscode",
-			"BackToNfc": "Terug naar NFC-scan",
-			"DigitsEntered": "{{count}} van {{total}} cijfers ingevoerd",
-			"Delete": "Wissen",
-			"Confirm": "Bevestigen",
 			"Scan": "SCAN",
 			"Title": "Houd uw telefoon bij de terminal",
 			"Subtitle": "Verificatie met vingerafdruk kan nodig zijn",
-			"UseCode": "Werkt het niet? Inklokken met code"
+			"RemoteWork": "Ik werk op afstand"
 		},
 		"DailyAnnouncementModal": {
 			"Title": "Mededeling van de dag",
@@ -889,6 +881,7 @@
 		},
 		"Duration": {
 			"HoursMinutes": "{{hours}} u {{minutes}} min",
+			"Hours": "{{hours}} u",
 			"Minutes": "{{minutes}} min"
 		},
 		"Greetings": {

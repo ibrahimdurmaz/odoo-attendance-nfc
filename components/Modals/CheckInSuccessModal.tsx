@@ -1,13 +1,13 @@
 import { Pressable, Text, View } from 'react-native';
 
 import { theme } from '@/assets/theme';
-import { formatTime } from '@/helper/dateHelpers';
+import { formatHours, formatTime } from '@/helper/dateHelpers';
+import { useTodayTargetSeconds } from '@/helper/useTodayTarget';
 import { useModalStore } from '@/store/modalStore';
 import { useDailyBriefingStore } from '@/store/useDailyBriefingStore';
 import { useProfileStore } from '@/store/useProfileStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { useTranslation } from 'react-i18next';
-import { SHIFT_HOURS } from '../Home/constants';
 import { ModalWrapper } from './ModalWrapper';
 import { CheckInSuccessModalStyles } from './styles';
 
@@ -21,23 +21,10 @@ export const CheckInSuccessModal = () => {
 	// Giriş saati modalı açan yerden gelir (Odoo'nun kaydettiği saat); gelmezse şu anki saat.
 	const time = props?.time ?? formatTime(Date.now());
 
-	/** "09:12" ya da "09.12" → 552 */
-	const toMinutes = (value: string) => {
-		const [hours = 0, minutes = 0] = value.split(/[:.]/).map(Number);
-		return hours * 60 + minutes;
-	};
-
-	const getShiftStatus = (checkInTime: string) => {
-		const minutes = toMinutes(checkInTime);
-		const start = toMinutes('08:40');
-		const end = toMinutes('09:20');
-
-		if (minutes < start) return t('Modals.CheckInSuccessModal.EarlyStart');
-		if (minutes > end) return t('Modals.CheckInSuccessModal.LateStart');
-		return t('Modals.CheckInSuccessModal.OnTimeStart'); // 08:40 - 09:20 arası (dahil)
-	};
-	const shiftStatus = getShiftStatus(time);
 	const userName = profile?.fullName.split(' ')[0] ?? '';
+	// Sabit başlangıç saati yok; bugün çalışılacak süre gösterilir (haftalık saat / 5).
+	const targetSeconds = useTodayTargetSeconds();
+	const plannedHours = targetSeconds === null ? '—' : formatHours(targetSeconds);
 
 	const onClose = () => {
 		closeModal('checkInSuccessful');
@@ -125,7 +112,7 @@ export const CheckInSuccessModal = () => {
 							numberOfLines={1}
 							style={[styles.caption, { color: colors.onSurfaceVariant }]}
 						>
-							{shiftStatus}
+							{t('Modals.CheckInSuccessModal.PlannedWorkHours')}
 						</Text>
 					</View>
 					<Text
@@ -137,7 +124,7 @@ export const CheckInSuccessModal = () => {
 							},
 						]}
 					>
-						{SHIFT_HOURS}
+						{plannedHours}
 					</Text>
 				</View>
 

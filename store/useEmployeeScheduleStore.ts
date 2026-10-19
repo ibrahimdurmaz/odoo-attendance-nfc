@@ -21,6 +21,8 @@ type EmployeeScheduleStore = {
 	schedules: Record<string, EmployeeDays>;
 	/** Bugün hâlâ içeride olan çalışanların süren günü. Anahtar: çalışan numarası. */
 	liveDays: Record<string, LiveDay>;
+	/** Haftalık hedef (saniye), Odoo'daki çalışma takviminden. Anahtar: çalışan numarası. */
+	weeklyTargets: Record<string, number>;
 	/** Çalışanın çizelgesini yazar; varsa üzerine yazar. */
 	setSchedule: (employeeId: string, days: EmployeeDays) => void;
 	/**
@@ -31,16 +33,17 @@ type EmployeeScheduleStore = {
 	resetStore: () => void;
 };
 
-/** `liveDays` içinden bir çalışanı çıkarır. */
-const withoutEmployee = (
-	liveDays: Record<string, LiveDay>,
+/** Çalışan numarasına göre tutulan bir kayıttan o çalışanı çıkarır. */
+const withoutEmployee = <Value>(
+	records: Record<string, Value>,
 	employeeId: string,
-): Record<string, LiveDay> =>
-	Object.fromEntries(Object.entries(liveDays).filter(([key]) => key !== employeeId));
+): Record<string, Value> =>
+	Object.fromEntries(Object.entries(records).filter(([key]) => key !== employeeId));
 
 export const useEmployeeScheduleStore = create<EmployeeScheduleStore>()((set) => ({
 	schedules: {},
 	liveDays: {},
+	weeklyTargets: {},
 
 	setSchedule: (employeeId, days) =>
 		set((state) => ({
@@ -51,17 +54,21 @@ export const useEmployeeScheduleStore = create<EmployeeScheduleStore>()((set) =>
 		const result = await fetchEmployeeSchedule(employeeId);
 		if (!result.ok) return result;
 
-		const { days, liveDay } = result.data;
+		const { days, liveDay, weeklyTargetSeconds } = result.data;
 		set((state) => ({
 			schedules: { ...state.schedules, [employeeId]: days },
 			liveDays: liveDay
 				? { ...state.liveDays, [employeeId]: liveDay }
 				: withoutEmployee(state.liveDays, employeeId),
+			weeklyTargets:
+				weeklyTargetSeconds === null
+					? withoutEmployee(state.weeklyTargets, employeeId)
+					: { ...state.weeklyTargets, [employeeId]: weeklyTargetSeconds },
 		}));
 		return { ok: true, data: Object.keys(days).length };
 	},
 
-	resetStore: () => set({ schedules: {}, liveDays: {} }),
+	resetStore: () => set({ schedules: {}, liveDays: {}, weeklyTargets: {} }),
 }));
 
 // Çizelgesi olmayan çalışan için her seferinde aynı boş nesne dönsün diye sabit;

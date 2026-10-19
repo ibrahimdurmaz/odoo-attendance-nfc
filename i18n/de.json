@@ -404,7 +404,7 @@
 			"WorkedA11y": "{{hours}} Stunden {{minutes}} Minuten",
 			"Hours": "Std.",
 			"Minutes": "Min.",
-			"Planned": "Geplant: {{hours}} ({{duration}})"
+			"Planned": "Geplant: {{duration}}"
 		},
 		"CorrectionRequestModal": {
 			"Title": "Korrektur beantragen",
@@ -779,7 +779,6 @@
 			"Message": "Halten Sie das Telefon etwas näher an das Terminal und versuchen Sie es erneut.",
 			"HintTitle": "Abstand",
 			"HintText": "Halten Sie Ihr Gerät ruhig 2–3 cm vor das Logo",
-			"UseCode": "Mit Code einstempeln",
 			"Support": "Wenn das Problem weiterhin besteht, melden Sie es der Personalabteilung."
 		},
 		"CheckInSuccessModal": {
@@ -788,9 +787,7 @@
 			"RecordTime": "ERFASST UM",
 			"Synced": "An Odoo übertragen",
 			"ShiftStatus": "Schichtstatus",
-			"EarlyStart": "Früher Beginn",
-			"LateStart": "Später Beginn",
-			"OnTimeStart": "Pünktlicher Beginn"
+			"PlannedWorkHours": "Geplante Arbeitszeit"
 		},
 		"CodeScannerModal": {
 			"CameraActive": "Kamera aktiv",
@@ -812,15 +809,10 @@
 		},
 		"NfcPromptModal": {
 			"Ready": "Bereit",
-			"KeypadTitle": "Schnellzugriffscode",
-			"BackToNfc": "Zurück zum NFC-Scan",
-			"DigitsEntered": "{{count}} von {{total}} Ziffern eingegeben",
-			"Delete": "Löschen",
-			"Confirm": "Bestätigen",
 			"Scan": "SCANNEN",
 			"Title": "Telefon an das Terminal halten",
 			"Subtitle": "Zur Bestätigung kann ein Fingerabdruck nötig sein",
-			"UseCode": "Funktioniert nicht? Mit Code einstempeln"
+			"RemoteWork": "Ich arbeite remote"
 		},
 		"DailyAnnouncementModal": {
 			"Title": "Ankündigung des Tages",
@@ -889,6 +881,7 @@
 		},
 		"Duration": {
 			"HoursMinutes": "{{hours}} Std. {{minutes}} Min.",
+			"Hours": "{{hours}} Std.",
 			"Minutes": "{{minutes}} Min."
 		},
 		"Greetings": {

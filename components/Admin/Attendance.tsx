@@ -3,6 +3,8 @@ import { useMemo } from 'react';
 import { ColorValue, StyleSheet, Text, View } from 'react-native';
 
 import { fonts, theme, ThemeColors } from '@/assets/theme';
+import { formatHours } from '@/helper/dateHelpers';
+import { useTodayTargetSeconds } from '@/helper/useTodayTarget';
 import { AttendanceStatus, AttendanceSummary } from '@/store/types';
 import { ATTENDANCE_LABELS } from '@/store/useEmployeeStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
@@ -107,19 +109,17 @@ const createTileStyles = (colors: ThemeColors) =>
 
 type AttendanceCardProps = {
 	summary: AttendanceSummary;
-	shiftHours: string;
 	targetPercent: number;
 };
 
 export const AttendanceCard: FC<AttendanceCardProps> = ({
 	summary,
-	shiftHours,
 	targetPercent,
 }) => {
 	const colors = theme();
 	const styles = useMemo(() => createAttendanceStyles(colors), [colors]);
 	const { t } = useTranslation();
-
+	const targetSeconds = useTodayTargetSeconds();
 	return (
 		<View style={styles.card}>
 			<View style={styles.header}>
@@ -130,7 +130,9 @@ export const AttendanceCard: FC<AttendanceCardProps> = ({
 					</Text>
 				</View>
 				<Text style={styles.shift}>
-					{t('Admin.AttendanceCard.Shift', { hours: shiftHours })}
+					{t('Admin.AttendanceCard.Shift', {
+						hours: targetSeconds === null ? '—' : formatHours(targetSeconds),
+					})}
 				</Text>
 			</View>
 

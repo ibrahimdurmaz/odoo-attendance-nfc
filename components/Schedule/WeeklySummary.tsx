@@ -1,26 +1,35 @@
 import { theme } from '@/assets/theme';
 import { formatDuration } from '@/helper/dateHelpers';
+import i18n from '@/i18n';
 import { DayRecord } from '@/store/useDayStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 
-export const WEEKLY_TARGET_HOURS = 40;
+/** 144000 → "40", 135000 → "37,5"; takvim yoksa "—". */
+const formatWeeklyHours = (seconds: number | null): string =>
+	seconds === null
+		? '—'
+		: (Math.round((seconds / 3600) * 10) / 10).toLocaleString(i18n.language);
 
 export function WeeklySummary({
 	weeklyProgress,
 	weeklySeconds,
 	weeklyRemaining,
+	weeklyTargetSeconds,
 	thisWeekDays,
 }: {
 	weeklyProgress: number;
 	weeklySeconds: number;
 	weeklyRemaining: number;
+	/** Odoo'daki haftalık çalışma saati (saniye); takvim yoksa null. */
+	weeklyTargetSeconds: number | null;
 	thisWeekDays: DayRecord[];
 }) {
 	const colors = theme();
 	const { t } = useTranslation();
+	const weeklyHours = formatWeeklyHours(weeklyTargetSeconds);
 	return (
 		<View
 			style={[
@@ -64,7 +73,7 @@ export function WeeklySummary({
 						style={[styles.weeklyTarget, { color: colors.onSurfaceVariant }]}
 					>
 						{' '}
-						{t('Schedule.WeeklySummary.Target', { hours: WEEKLY_TARGET_HOURS })}
+						{t('Schedule.WeeklySummary.Target', { hours: weeklyHours })}
 					</Text>
 				</Text>
 				<Text style={[styles.remaining, { color: colors.primary }]}>
@@ -92,7 +101,7 @@ export function WeeklySummary({
 					{t('Schedule.WeeklySummary.DaysRecorded', { count: thisWeekDays.length })}
 				</Text>
 				<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
-					{t('Schedule.WeeklySummary.WeeklyQuota', { hours: WEEKLY_TARGET_HOURS })}
+					{t('Schedule.WeeklySummary.WeeklyQuota', { hours: weeklyHours })}
 				</Text>
 			</View>
 		</View>

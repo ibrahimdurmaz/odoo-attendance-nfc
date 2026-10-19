@@ -3,7 +3,6 @@ type ModalTags =
 	| 'nfcPrompt'
 	| 'checkInFailed'
 	| 'checkInSuccessful'
-	| 'codeScanner'
 	| 'correctionRequest'
 	| 'language'
 	| 'employeeCreated'
@@ -26,7 +25,6 @@ const initialState: ModalState = {
 		nfcPrompt: { visible: false },
 		checkInFailed: { visible: false },
 		checkInSuccessful: { visible: false },
-		codeScanner: { visible: false },
 		correctionRequest: { visible: false },
 		language: { visible: false },
 		employeeCreated: { visible: false },

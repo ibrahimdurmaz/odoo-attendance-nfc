@@ -18,7 +18,7 @@ import { Pressable, ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { DayCard } from './DayCard';
 import { styles } from './styles';
-import { WEEKLY_TARGET_HOURS, WeeklySummary } from './WeeklySummary';
+import { WeeklySummary } from './WeeklySummary';
 import { WeeksDays } from './WeeksDays';
 
 type IconName = ComponentProps<typeof MaterialIcons>['name'];
@@ -49,8 +49,6 @@ const FILTERS: { key: Filter; label: string; icon: IconName }[] = [
 	},
 ];
 
-const WEEKLY_TARGET_SECONDS = WEEKLY_TARGET_HOURS * 3600;
-
 /** İçinde bulunulan haftanın pazartesisi. */
 const getMonday = (today: Date): Date => {
 	const daysSinceMonday = (today.getDay() + 6) % 7;
@@ -79,6 +77,10 @@ export const ScheduleScreen = ({ id }: ScheduleScreenProps) => {
 	const days = useScheduleDays(id);
 	const scheduleId = useScheduleId(id);
 	const loadSchedule = useEmployeeScheduleStore((state) => state.loadSchedule);
+	// Haftalık hedef Odoo'daki çalışma takviminden (örn. 40 saat); takvim yoksa null.
+	const weeklyTargetSeconds = useEmployeeScheduleStore(
+		(state) => state.weeklyTargets[scheduleId] ?? null,
+	);
 	// Whose schedule: the given employee's, or your own.
 	const odooDays = getEmployeeDays(schedules, scheduleId);
 
@@ -106,8 +108,10 @@ export const ScheduleScreen = ({ id }: ScheduleScreenProps) => {
 		(sum, day) => sum + day.workedSeconds,
 		0,
 	);
-	const weeklyProgress = Math.min(1, weeklySeconds / WEEKLY_TARGET_SECONDS);
-	const weeklyRemaining = Math.max(0, WEEKLY_TARGET_SECONDS - weeklySeconds);
+	const weeklyTarget = weeklyTargetSeconds ?? 0;
+	const weeklyProgress =
+		weeklyTarget > 0 ? Math.min(1, weeklySeconds / weeklyTarget) : 0;
+	const weeklyRemaining = Math.max(0, weeklyTarget - weeklySeconds);
 
 	const visibleDays = recentDays.filter((day) => {
 		if (filter === 'week') return day.dateKey >= mondayKey;
@@ -175,6 +179,7 @@ export const ScheduleScreen = ({ id }: ScheduleScreenProps) => {
 					weeklyProgress={weeklyProgress}
 					weeklySeconds={weeklySeconds}
 					weeklyRemaining={weeklyRemaining}
+					weeklyTargetSeconds={weeklyTargetSeconds}
 					thisWeekDays={thisWeekDays}
 				/>
 

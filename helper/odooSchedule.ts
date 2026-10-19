@@ -18,7 +18,6 @@ import type { BreakRecord, DayRecord } from '@/store/useDayStore';
 const HISTORY_DAYS = 30;
 const MILLISECONDS_PER_SECOND = 1000;
 const SECONDS_PER_HOUR = 3600;
-const MINUTES_PER_HOUR = 60;
 
 /** Bugün süren gün: giriş yapılmış, henüz çıkış yok. */
 export type LiveDay = {
@@ -36,18 +35,21 @@ export type OdooSchedule = {
 	days: Record<string, DayRecord>;
 	/** Bugün hâlâ içerideyse o gün; değilse null. */
 	liveDay: LiveDay | null;
+	/** Haftalık hedef (saniye); çalışma takvimi yoksa null. */
+	weeklyTargetSeconds: number | null;
 };
 
-/** Günün vardiya saatleri ve hedef süresi; çalışanın Odoo'daki çalışma takviminden. */
+/**
+ * Günün hedef süresi; çalışanın Odoo'daki haftalık çalışma saatinden. Belirli başlangıç ve
+ * bitiş saati yoktur: hafta içi her gün haftalık saatin beşte biri (40 saat → 8 saat).
+ */
 export type DayPlan = {
-	/** "08:00 - 17:00"; o gün için tanımlı saat yoksa boş metin. */
-	shiftHours: string;
-	/** O gün çalışılması beklenen süre (saniye); çalışma günü değilse 0. */
+	/** O gün çalışılması beklenen süre (saniye); hafta sonu ya da takvim yoksa 0. */
 	targetSeconds: number;
 };
 
-/** Takvim okunana kadar ya da okunamazsa kullanılır. */
-export const EMPTY_DAY_PLAN: DayPlan = { shiftHours: '', targetSeconds: 0 };
+/** Haftalık saat bu kadar iş gününe eşit bölünür (Pazartesi–Cuma). */
+const WORKDAYS_PER_WEEK = 5;
 
 /** Uygulamadaki çalışan numarası ("7") → Odoo kayıt numarası; geçersizse null. */
 const toOdooEmployeeId = (employeeId: string): number | null => {
@@ -62,52 +64,30 @@ const INVALID_EMPLOYEE: OdooFailure = {
 	message: 'Invalid employee ID.',
 };
 
-/** 8.5 → "08:30" */
-const formatHour = (hour: number): string => {
-	const totalMinutes = Math.round(hour * MINUTES_PER_HOUR);
-	const hours = Math.floor(totalMinutes / MINUTES_PER_HOUR);
-	const minutes = totalMinutes % MINUTES_PER_HOUR;
-	return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
-};
-
-/** "2026-10-08" → Odoo'nun haftası: 0 = Pazartesi … 6 = Pazar. */
-const toOdooWeekday = (dateKey: string): number => {
+/** "2026-10-08" → haftanın günü: 0 = Pazartesi … 6 = Pazar. */
+const toWeekday = (dateKey: string): number => {
 	const [year = 0, month = 1, day = 1] = dateKey.split('-').map(Number);
 	return (new Date(year, month - 1, day).getDay() + 6) % 7;
 };
 
-/**
- * Takvimden o günün planı. Belirli bir güne yazılmış dilim varsa o kullanılır, yoksa
- * haftalık dilimler. Esnek takvimde saat yoktur, hedef günlük ortalamadır.
- */
+/** Haftalık hedef (saniye); takvim yoksa null. */
+const getWeeklyTargetSeconds = (schedule: OdooWorkSchedule): number | null =>
+	schedule.hoursPerWeek === null
+		? null
+		: Math.round(schedule.hoursPerWeek * SECONDS_PER_HOUR);
+
+/** O günün hedefi: hafta içi haftalık saatin beşte biri, hafta sonu 0. */
 export const getDayPlan = (
 	schedule: OdooWorkSchedule,
 	dateKey: string,
 ): DayPlan => {
-	const datedSlots = schedule.slots.filter((slot) => slot.dateKey === dateKey);
-	const weekday = toOdooWeekday(dateKey);
-	const slots =
-		datedSlots.length > 0
-			? datedSlots
-			: schedule.slots.filter(
-					(slot) => slot.dateKey === null && slot.weekday === weekday,
-				);
-
-	if (slots.length === 0) {
-		const isWorkday = schedule.isFlexible && weekday < 5;
-		const flexibleSeconds = (schedule.hoursPerDay ?? 0) * SECONDS_PER_HOUR;
-		return {
-			shiftHours: '',
-			targetSeconds: isWorkday ? Math.round(flexibleSeconds) : 0,
-		};
-	}
-
-	const start = Math.min(...slots.map((slot) => slot.hourFrom));
-	const end = Math.max(...slots.map((slot) => slot.hourTo));
-	const hours = slots.reduce((sum, slot) => sum + slot.hours, 0);
+	const weeklySeconds = getWeeklyTargetSeconds(schedule);
+	const isWorkday = toWeekday(dateKey) < WORKDAYS_PER_WEEK;
 	return {
-		shiftHours: `${formatHour(start)} - ${formatHour(end)}`,
-		targetSeconds: Math.round(hours * SECONDS_PER_HOUR),
+		targetSeconds:
+			weeklySeconds !== null && isWorkday
+				? Math.round(weeklySeconds / WORKDAYS_PER_WEEK)
+				: 0,
 	};
 };
 
@@ -166,7 +146,6 @@ const toDayRecord = (
 		workedSeconds: Math.floor(workedSeconds),
 		breakSeconds: Math.floor(gapSeconds + recordedBreakSeconds),
 		targetSeconds: plan.targetSeconds,
-		shiftHours: plan.shiftHours,
 		// Terminal bilgisi Odoo'da tutulmuyor.
 		checkpoint: '',
 		// Odoo'nun girişte kaydettiği konum (GPS ya da IP adresinden); bilinmiyorsa boş.
@@ -218,7 +197,11 @@ export const buildSchedule = (
 		if (day) days[dateKey] = day;
 	});
 
-	return { days, liveDay };
+	return {
+		days,
+		liveDay,
+		weeklyTargetSeconds: getWeeklyTargetSeconds(workSchedule),
+	};
 };
 
 /** Çalışanın son 30 gününü (bugün dahil) Odoo'dan okuyup gün kayıtlarına çevirir. */
@@ -246,7 +229,7 @@ export const fetchEmployeeSchedule = async (
 	};
 };
 
-/** Çalışanın `now` günündeki vardiya saatleri ve hedef süresi (ana ekrandaki kendi günü için). */
+/** Çalışanın `now` günündeki hedef süresi (ana ekrandaki kendi günü için). */
 export const fetchDayPlan = async (
 	employeeId: string,
 	now: number = Date.now(),
