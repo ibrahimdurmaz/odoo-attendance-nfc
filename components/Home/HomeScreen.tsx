@@ -9,7 +9,6 @@ import {
 } from '@/helper/dateHelpers';
 import type { OdooAttendance } from '@/helper/odooApi';
 import {
-	callOdooSession,
 	checkInAttendance,
 	checkOutAttendance,
 	fetchLastAttendance,
@@ -26,7 +25,7 @@ import { useFocusEffect } from 'expo-router';
 import type { FC } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CheckInFailedModal } from '../Modals/CheckInFailedModal';
 import { CheckInSuccessModal } from '../Modals/CheckInSuccessModal';
@@ -384,42 +383,6 @@ export const HomeScreen: FC = () => {
 	if (session.checkOutAt) {
 		addCheckOut(session.checkOutAt, session.checkOutLocation);
 	}
-	const inspectApprovalFields = async () => {
-		const fields = await callOdooSession('hr.work.location', 'fields_get', {
-			attributes: ['type', 'string', 'readonly'],
-		});
-		console.log(
-			'WORK LOCATION FIELDS',
-			fields.ok
-				? Object.entries(
-						fields.data as Record<string, { type: string; string: string }>,
-					)
-						.filter(([, value]) => ['char', 'text'].includes(value.type))
-						.map(([key, value]) => `${key} (${value.type}): ${value.string}`)
-				: fields,
-		);
-
-		const locations = await callOdooSession('hr.work.location', 'search_read', {
-			domain: [],
-			fields: ['name', 'location_type'],
-		});
-		console.log('WORK LOCATIONS', locations);
-
-		const employee = await callOdooSession('hr.employee', 'search_read', {
-			domain: [
-				[
-					'user_id',
-					'=',
-					(
-						await import('@/store/useOdooSessionStore')
-					).useOdooSessionStore.getState().session?.uid,
-				],
-			],
-			fields: ['work_location_id'],
-			limit: 1,
-		});
-		console.log('OWN WORK LOCATION', employee);
-	};
 	return (
 		<SafeAreaView
 			edges={['top']}
@@ -443,9 +406,6 @@ export const HomeScreen: FC = () => {
 			>
 				{/* Karşılama ve durum rozeti */}
 				<View style={styles.greeting}>
-					<Pressable onPress={inspectApprovalFields}>
-						<Text>test</Text>
-					</Pressable>
 					<View style={styles.greetingTexts}>
 						<Text style={[styles.caption, { color: colors.onSurfaceVariant }]}>
 							{formatDate(now)}
