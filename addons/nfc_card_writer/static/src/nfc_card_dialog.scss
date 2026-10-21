@@ -1,0 +1,23 @@
+.o_nfc_card_dialog {
+    .o_nfc_icon {
+        transform: rotate(90deg);
+    }
+    .o_nfc_pulse {
+        animation: o_nfc_pulse 1.2s ease-in-out infinite;
+    }
+    .o_nfc_serial,
+    .o_nfc_code {
+        letter-spacing: 0.05em;
+    }
+}
+
+@keyframes o_nfc_pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .o_nfc_card_dialog .o_nfc_pulse {
+        animation: none;
+    }
+}

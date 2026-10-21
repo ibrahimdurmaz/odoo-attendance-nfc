@@ -1,0 +1,33 @@
+# PostgreSQL for the Odoo 19 instance (Odoo itself runs outside Docker).
+# For a fresh setup only: set POSTGRES_PASSWORD in .env, then `docker compose up -d db`.
+services:
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: postgres
+    ports:
+      - '127.0.0.1:5434:5432'
+    volumes:
+      - odoo_db_data:/var/lib/postgresql/data
+
+  odoo:
+    image: odoo:19.0 # "latest" artık Odoo 20, mutlaka 19.0 yaz
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - '8088:8069' # backend/.env zaten localhost:8088 bekliyor
+    environment:
+      HOST: db
+      USER: odoo
+      PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./odoo_addons:/mnt/extra-addons # nfc_gate_access + nfc_card_writer
+      - odoo_web_data:/var/lib/odoo
+
+volumes:
+  odoo_db_data:
+  odoo_web_data:

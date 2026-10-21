@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Kart Liste Gorunumu -->
+    <record id="view_nfc_card_tree" model="ir.ui.view">
+        <field name="name">nfc.card.list</field>
+        <field name="model">nfc.card</field>
+        <field name="arch" type="xml">
+            <list string="NFC Cards">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="serial_number"/>
+                <field name="res_name" optional="show"/>
+                <field name="written_on" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'written'"
+                       decoration-warning="state == 'outdated'"
+                       decoration-muted="state == 'draft'"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Kart Form Gorunumu -->
+    <record id="view_nfc_card_form" model="ir.ui.view">
+        <field name="name">nfc.card.form</field>
+        <field name="model">nfc.card</field>
+        <field name="arch" type="xml">
+            <form string="NFC Card">
+                <header>
+                    <button name="action_write_card" type="object" string="Write to Card"
+                            class="btn-primary" icon="fa-wifi" invisible="not active"/>
+                    <button name="action_reset_card" type="object" string="Forget Physical Card"
+                            invisible="not serial_number"
+                            confirm="The serial number will be cleared (lost or broken card). Continue?"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_linked_record" type="object"
+                                class="oe_stat_button" icon="fa-link" invisible="not res_id">
+                            <field name="res_name" widget="statinfo" string="Linked"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" string="Card Name"/>
+                        <h1>
+                            <field name="name" placeholder="Ex: John Smith - Employee Card"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code" placeholder="Ex: NFC1A2B3C4D"/>
+                            <field name="serial_number" placeholder="Filled when the card is written"/>
+                        </group>
+                        <group>
+                            <field name="active" widget="boolean_toggle"/>
+                            <field name="written_on"/>
+                            <field name="written_by_id"/>
+                            <field name="write_count"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Linked Record" name="linked_record">
+                            <group>
+                                <field name="res_model"/>
+                                <field name="res_id"/>
+                                <field name="res_name"/>
+                            </group>
+                        </page>
+                        <page string="Notes and Description" name="card_notes">
+                            <field name="description" placeholder="Card holder, card type or other notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Kart Arama Gorunumu -->
+    <record id="view_nfc_card_search" model="ir.ui.view">
+        <field name="name">nfc.card.search</field>
+        <field name="model">nfc.card</field>
+        <field name="arch" type="xml">
+            <search string="NFC Cards">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="serial_number"/>
+                <filter name="filter_draft" string="Not Written" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_written" string="Written" domain="[('state', '=', 'written')]"/>
+                <filter name="filter_outdated" string="Code Changed" domain="[('state', '=', 'outdated')]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Menü Eylemi (Action) -->
+    <record id="action_nfc_card" model="ir.actions.act_window">
+        <field name="name">NFC Cards</field>
+        <field name="res_model">nfc.card</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Kart Okuma Eylemi (Telefon) -->
+    <record id="action_nfc_card_reader" model="ir.actions.client">
+        <field name="name">Read NFC Card</field>
+        <field name="tag">nfc_card_writer.card_dialog</field>
+        <field name="target">new</field>
+        <field name="params" eval="{'mode': 'read'}"/>
+    </record>
+
+    <!-- Ana Menü Ikonu -->
+    <menuitem id="menu_nfc_card_root"
+              name="NFC Cards"
+              sequence="46"
+              web_icon="base,static/img/icons/settings.svg"/>
+
+    <!-- Alt Menüler -->
+    <menuitem id="menu_nfc_card_sub"
+              name="All Cards"
+              parent="menu_nfc_card_root"
+              action="action_nfc_card"
+              sequence="10"/>
+
+    <menuitem id="menu_nfc_card_reader"
+              name="Read Card"
+              parent="menu_nfc_card_root"
+              action="action_nfc_card_reader"
+              sequence="20"/>
+</odoo>

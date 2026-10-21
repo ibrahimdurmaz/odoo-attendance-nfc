@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="nfc_card_writer.NfcCardDialog">
+        <Dialog title="title" size="'md'">
+            <div class="o_nfc_card_dialog text-center py-2">
+
+                <!-- What will be written -->
+                <div t-if="isWrite and props.payload" class="mb-3">
+                    <div class="text-muted small">Card</div>
+                    <div class="fw-bold" t-out="props.payload.name"/>
+                    <div class="text-muted small mt-2">Code to write</div>
+                    <div class="o_nfc_code fs-4 fw-bold font-monospace" t-out="props.payload.code"/>
+                </div>
+
+                <t t-if="state.status === 'unsupported'">
+                    <i class="fa fa-ban fa-3x text-danger mb-3"/>
+                    <p class="fw-bold">This browser cannot use NFC.</p>
+                    <p class="text-muted small">
+                        Open Odoo with <b>Chrome on an Android phone</b> over <b>HTTPS</b>
+                        and turn NFC on. iPhones do not support NFC in the browser; use the mobile app instead.
+                    </p>
+                </t>
+
+                <t t-elif="state.status === 'idle'">
+                    <i class="fa fa-wifi fa-3x text-primary mb-3 o_nfc_icon"/>
+                    <p>Press <b>Start</b>, then hold the card against the back of the phone.</p>
+                </t>
+
+                <t t-elif="state.status === 'waiting' or state.status === 'busy'">
+                    <i class="fa fa-wifi fa-3x text-primary mb-3 o_nfc_icon o_nfc_pulse"/>
+                    <p class="fw-bold" t-if="state.status === 'waiting'">Hold the card against the back of the phone...</p>
+                    <p class="fw-bold" t-else="">
+                        <t t-if="isWrite">Writing, do not move the card...</t>
+                        <t t-else="">Reading...</t>
+                    </p>
+                </t>
+
+                <t t-elif="state.status === 'done'">
+                    <i class="fa fa-check-circle fa-3x text-success mb-3"/>
+                    <p class="fw-bold" t-if="isWrite">Card written successfully.</p>
+                    <p class="fw-bold" t-else="">Card read.</p>
+                </t>
+
+                <t t-elif="state.status === 'error'">
+                    <i class="fa fa-exclamation-triangle fa-3x text-danger mb-3"/>
+                    <p class="fw-bold">Operation failed.</p>
+                </t>
+
+                <div t-if="state.message" class="alert alert-warning small" role="alert" t-out="state.message"/>
+
+                <!-- Result -->
+                <div t-if="state.serial" class="border rounded p-3 mb-3 bg-light">
+                    <div class="text-muted small">Card Serial Number</div>
+                    <div class="o_nfc_serial fs-4 fw-bold font-monospace text-break" t-out="state.serial"/>
+                </div>
+
+                <div t-if="state.releasedCard" class="alert alert-info small" role="status">
+                    This card was previously registered on <b t-out="state.releasedCard"/>.
+                    It has been moved to this record.
+                </div>
+
+                <div t-if="!isWrite and state.status === 'done'" class="text-start">
+                    <div class="text-muted small mb-1">Card content</div>
+                    <div t-if="!state.records.length" class="text-muted fst-italic mb-3">The card is empty.</div>
+                    <ul t-else="" class="list-group mb-3">
+                        <li t-foreach="state.records" t-as="record" t-key="record_index" class="list-group-item">
+                            <span class="badge text-bg-secondary me-2" t-out="record.type"/>
+                            <span class="font-monospace text-break" t-out="record.value"/>
+                        </li>
+                    </ul>
+                    <div class="text-muted small mb-1">Odoo record</div>
+                    <div t-if="state.card" class="border rounded p-2">
+                        <div class="fw-bold" t-out="state.card.name"/>
+                        <div class="small">Code: <span class="font-monospace" t-out="state.card.code"/></div>
+                        <div class="small">Status: <t t-out="stateLabels[state.card.state]"/></div>
+                        <div class="small" t-if="state.card.res_name">Linked to: <t t-out="state.card.res_name"/></div>
+                    </div>
+                    <div t-else="" class="text-muted fst-italic">No NFC card in Odoo matches this card.</div>
+                </div>
+            </div>
+
+            <t t-set-slot="footer">
+                <button t-if="state.status === 'idle'" class="btn btn-primary" t-on-click="start">Start</button>
+                <button t-if="state.status === 'error'" class="btn btn-primary" t-on-click="start">Try Again</button>
+                <button t-if="!isWrite and state.status === 'done'" class="btn btn-primary" t-on-click="start">Read Another Card</button>
+                <button t-if="state.status === 'done'" class="btn btn-secondary" t-on-click="cancel">Close</button>
+                <button t-if="state.status !== 'done'" class="btn btn-secondary" t-on-click="cancel">Cancel</button>
+            </t>
+        </Dialog>
+    </t>
+</templates>
