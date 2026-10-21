@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Kapi Liste Gorunumu -->
+    <record id="view_nfc_gate_tree" model="ir.ui.view">
+        <field name="name">nfc.gate.list</field>
+        <field name="model">nfc.gate</field>
+        <field name="arch" type="xml">
+            <list string="Kapilar ve Turnikeler">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Kapi Form Gorunumu -->
+    <record id="view_nfc_gate_form" model="ir.ui.view">
+        <field name="name">nfc.gate.form</field>
+        <field name="model">nfc.gate</field>
+        <field name="arch" type="xml">
+            <form string="Kapi Tanimi">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Kapi Adi"/>
+                        <h1>
+                            <field name="name" placeholder="Orn: Sirket Ana Giris Kapisi"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code" placeholder="Orn: SIRKET_ANA_KAPI"/>
+                        </group>
+                        <group>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Yetkili Personeller" name="authorized_employees">
+                            <field name="employee_ids">
+                                <list string="Personeller" editable="bottom">
+                                    <field name="name" string="Calisan Adi"/>
+                                    <field name="department_id" string="Departman"/>
+                                    <field name="job_title" string="Gorev / Unvan"/>
+                                    <field name="work_email" string="E-posta"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notlar ve Aciklama" name="gate_notes">
+                            <field name="description" placeholder="Kapi konumu, turnike donanim seri no veya notlar..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Menü Eylemi (Action) -->
+    <record id="action_nfc_gate" model="ir.actions.act_window">
+        <field name="name">Kapi Yonetimi</field>
+        <field name="res_model">nfc.gate</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Ana Menü Ikonu -->
+    <menuitem id="menu_nfc_gate_root"
+              name="Gate Access"
+              sequence="45"
+              web_icon="base,static/img/icons/settings.svg"/>
+
+    <!-- Alt Menü -->
+    <menuitem id="menu_nfc_gate_sub"
+              name="Tum Kapilar"
+              parent="menu_nfc_gate_root"
+              action="action_nfc_gate"
+              sequence="10"/>
+</odoo>
