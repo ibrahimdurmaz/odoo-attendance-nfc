@@ -209,6 +209,8 @@ export const HomeScreen: FC = () => {
 		}
 		if (!result.data.isTimeTypeSaved)
 			console.log('REMOTE CHECK IN', 'time type could not be saved');
+		if (!result.data.isLocationSaved)
+			console.log('REMOTE CHECK IN', 'work location could not be saved');
 		return startSession(result.data.attendance);
 	};
 	const startBreak = () => {

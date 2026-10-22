@@ -5,7 +5,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { theme, ThemeColors } from '@/assets/theme';
 import { getAttendanceSummary } from '@/helper/employee';
 import { syncEmployeesFromOdoo } from '@/helper/odooEmployeeSync';
-import { ensureRemoteWorkType } from '@/helper/odooRemoteWork';
+import {
+	ensureRemoteWorkLocation,
+	ensureRemoteWorkType,
+} from '@/helper/odooRemoteWork';
 import { useEntranceCardWriter } from '@/hooks/useEntranceCardWriter';
 import { useEmployeeStore } from '@/store/useEmployeeStore';
 import { useFocusEffect, useRouter } from 'expo-router';
@@ -40,12 +43,17 @@ export const AdminScreen = () => {
 			});
 		}, []),
 	);
-	// Uzaktan çalışma girişi için gereken "Remote Work" türü yoksa oluşturulur (yönetici yetkisi ister).
-	// Ekran bağlandığında bir kez çalışır; türün sonradan silinmesi seyrek olduğu için yeterli.
+	// Uzaktan çalışma girişi için gereken "Remote Work" türü ve çalışma yeri yoksa oluşturulur
+	// (yönetici yetkisi ister). Ekran bağlandığında bir kez çalışır; sonradan silinmeleri seyrek
+	// olduğu için yeterli.
 	useEffect(() => {
 		void ensureRemoteWorkType().then((result) => {
 			if (!result.ok)
 				console.log('REMOTE WORK TYPE', result.kind, result.message);
+		});
+		void ensureRemoteWorkLocation().then((result) => {
+			if (!result.ok)
+				console.log('REMOTE WORK LOCATION', result.kind, result.message);
 		});
 	}, []);
 	// Ekran her açıldığında çalışanları ve giriş durumlarını Odoo'dan tazeler.

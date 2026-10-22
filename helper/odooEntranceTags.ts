@@ -105,7 +105,7 @@ const findLocationIdByName = async (
 };
 
 /** Oturumu açan kullanıcının şirketinin adres kaydı; Odoo yeni çalışma yerinde iş adresi ister. */
-const fetchCompanyAddressId = async (): Promise<OdooResult<number>> => {
+export const fetchCompanyAddressId = async (): Promise<OdooResult<number>> => {
 	const uid = useOdooSessionStore.getState().session?.uid;
 	if (uid === undefined) return NO_SESSION;
 
@@ -230,7 +230,7 @@ const findLocationByCard = async (
  * Oturumu açan çalışanın çalışma yerini değiştirir. Kullanıcı kaydı üzerinden yazılır: Odoo bu
  * alanı çalışanın kendisinin değiştirebileceği alanlar arasında tutar, yönetici yetkisi gerekmez.
  */
-const setOwnWorkLocation = async (
+export const setOwnWorkLocation = async (
 	locationId: number,
 ): Promise<OdooResult<unknown>> => {
 	const uid = useOdooSessionStore.getState().session?.uid;
