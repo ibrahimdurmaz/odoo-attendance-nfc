@@ -1,6 +1,7 @@
 // Giriş kartlarının Odoo tarafı. Her çalışma yerinin (hr.work.location) kartı, o yerin
 // "Location Number" (location_number) alanında saklanır: "nfc1.<kod>.<kart seri numarası>".
-// Çalışan girişte kartı okuttuğunda, okunan kod ve seri numarası kendi çalışma yerininkiyle karşılaştırılır.
+// Çalışan girişte kartı okuttuğunda kartın hangi çalışma yerine ait olduğu bulunur ve çalışanın
+// çalışma yeri o yer yapılır; giriş, kartın bulunduğu yerden yapılmış olur.
 
 import type { OdooFailure, OdooResult } from '@/helper/odooApi';
 import { callOdooSession } from '@/helper/odooApi';
@@ -18,17 +19,9 @@ export type SavedEntranceCard = {
 
 export type EntranceCheck =
 	| { ok: true; locationName: string }
-	| {
-			ok: false;
-			reason: /** Çalışana Odoo'da çalışma yeri atanmamış. */
-				| 'noWorkLocation'
-				/** Çalışma yerine henüz kart tanımlanmamış. */
-				| 'noTagForLocation'
-				/** Okutulan kart bu çalışanın çalışma yerinin kartı değil. */
-				| 'wrongTag';
-			locationName: string | null;
-	  }
-	| { ok: false; reason: 'odoo'; failure: OdooFailure; locationName: null };
+	/** Kart hiçbir çalışma yerine kayıtlı değil ya da kaydı yenilenmiş (eski kart). */
+	| { ok: false; reason: 'unknownTag' }
+	| { ok: false; reason: 'odoo'; failure: OdooFailure };
 
 const STORED_CARD_PREFIX = 'nfc1';
 const STORED_CARD_SEPARATOR = '.';
@@ -188,40 +181,7 @@ export const saveEntranceCard = async (
 		: updated;
 };
 
-type OwnLocation = { name: string; card: EntranceCard | null } | null;
-
-/** Oturumu açan çalışanın çalışma yeri ve o yerin kartı; çalışma yeri yoksa null. */
-const fetchOwnLocation = async (): Promise<OdooResult<OwnLocation>> => {
-	const uid = useOdooSessionStore.getState().session?.uid;
-	if (uid === undefined) return NO_SESSION;
-
-	const employee = await callOdooSession('hr.employee', 'search_read', {
-		domain: [['user_id', '=', uid]],
-		fields: ['work_location_id'],
-		limit: 1,
-	});
-	if (!employee.ok) return employee;
-	const locationId = toLinkedId(firstRecord(employee.data)?.work_location_id);
-	if (locationId === null) return { ok: true, data: null };
-
-	const location = await callOdooSession(
-		'hr.work.location',
-		'read',
-		{ fields: ['name', 'location_number'] },
-		[[locationId]],
-	);
-	if (!location.ok) return location;
-	const record = firstRecord(location.data);
-	if (!record) return UNEXPECTED_RESPONSE;
-
-	return {
-		ok: true,
-		data: {
-			name: typeof record.name === 'string' ? record.name : '',
-			card: toStoredCard(record.location_number),
-		},
-	};
-};
+type TagLocation = { id: number; name: string };
 
 /**
  * Seri numaraları ancak ikisi de biliniyorsa karşılaştırılır: bazı iPhone'lar okumada seri
@@ -232,24 +192,68 @@ const isSameSerialNumber = (
 	scanned: string | null,
 ): boolean => stored === null || scanned === null || stored === scanned;
 
-/** Çalışan: okutulan kart kendi çalışma yerinin kartı mı. */
-export const checkEntranceTag = async (
+/** "=like" araması: bu kodla başlayan "nfc1.<kod>.<seri>" kaydı; seri numarası ne olursa olsun. */
+const toStoredCodePattern = (code: string): string =>
+	[STORED_CARD_PREFIX, toExactLikePattern(code), '%'].join(
+		STORED_CARD_SEPARATOR,
+	);
+
+/** Okutulan kartın kayıtlı olduğu çalışma yeri; kart hiçbir yere ait değilse null. */
+const findLocationByCard = async (
+	scanned: EntranceCard,
+): Promise<OdooResult<TagLocation | null>> => {
+	const result = await callOdooSession('hr.work.location', 'search_read', {
+		domain: [['location_number', '=like', toStoredCodePattern(scanned.code)]],
+		fields: ['name', 'location_number'],
+		limit: 1,
+	});
+	if (!result.ok) return result;
+	const record = firstRecord(result.data);
+	if (!record || typeof record.id !== 'number') return { ok: true, data: null };
+
+	const card = toStoredCard(record.location_number);
+	const isMatch =
+		card?.code === scanned.code &&
+		isSameSerialNumber(card.serialNumber, scanned.serialNumber);
+	if (!isMatch) return { ok: true, data: null };
+
+	return {
+		ok: true,
+		data: {
+			id: record.id,
+			name: typeof record.name === 'string' ? record.name : '',
+		},
+	};
+};
+
+/**
+ * Oturumu açan çalışanın çalışma yerini değiştirir. Kullanıcı kaydı üzerinden yazılır: Odoo bu
+ * alanı çalışanın kendisinin değiştirebileceği alanlar arasında tutar, yönetici yetkisi gerekmez.
+ */
+const setOwnWorkLocation = async (
+	locationId: number,
+): Promise<OdooResult<unknown>> => {
+	const uid = useOdooSessionStore.getState().session?.uid;
+	if (uid === undefined) return NO_SESSION;
+
+	return callOdooSession('res.users', 'write', {}, [
+		[uid],
+		{ work_location_id: locationId },
+	]);
+};
+
+/**
+ * Çalışan: okutulan kartın çalışma yerini bulur ve çalışanın çalışma yeri olarak seçer.
+ * Giriş, kart hangi yerinse oradan yapılmış olur.
+ */
+export const selectLocationFromTag = async (
 	scanned: EntranceCard,
 ): Promise<EntranceCheck> => {
-	const own = await fetchOwnLocation();
-	if (!own.ok)
-		return { ok: false, reason: 'odoo', failure: own, locationName: null };
-	if (own.data === null)
-		return { ok: false, reason: 'noWorkLocation', locationName: null };
+	const location = await findLocationByCard(scanned);
+	if (!location.ok) return { ok: false, reason: 'odoo', failure: location };
+	if (location.data === null) return { ok: false, reason: 'unknownTag' };
 
-	const { name, card } = own.data;
-	if (card === null)
-		return { ok: false, reason: 'noTagForLocation', locationName: name };
-
-	const isMatch =
-		card.code === scanned.code &&
-		isSameSerialNumber(card.serialNumber, scanned.serialNumber);
-	return isMatch
-		? { ok: true, locationName: name }
-		: { ok: false, reason: 'wrongTag', locationName: name };
+	const saved = await setOwnWorkLocation(location.data.id);
+	if (!saved.ok) return { ok: false, reason: 'odoo', failure: saved };
+	return { ok: true, locationName: location.data.name };
 };

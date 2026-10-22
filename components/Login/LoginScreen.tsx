@@ -15,6 +15,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { theme } from '@/assets/theme';
 import { fetchOwnEmployee, loginWithPassword } from '@/helper/odooApi';
 import { toAppPhone } from '@/helper/odooEmployeeSync';
+import { ensureRequiredModules } from '@/helper/odooModules';
 import { requestPasswordReset } from '@/helper/odooPasswordReset';
 import { Employee } from '@/store/types';
 import {
@@ -55,6 +56,14 @@ const authenticate = async (
 	}
 
 	const user = session.data;
+	// Çalışan kaydı okunmadan önce: o okuma "hr" modülünün kurulu olmasını gerektirir.
+	if (user.isAdmin) {
+		const modules = await ensureRequiredModules();
+		if (!modules.ok)
+			console.log('REQUIRED MODULES', modules.kind, modules.message);
+		else if (modules.data.unavailable.length > 0)
+			console.log('REQUIRED MODULES unavailable', modules.data.unavailable);
+	}
 	const employee = await fetchOwnEmployee();
 	if (!employee.ok) throw new Error(employee.message);
 	const profile = employee.data;

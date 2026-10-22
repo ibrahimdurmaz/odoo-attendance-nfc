@@ -3,21 +3,24 @@ import { Pressable, Text, View } from 'react-native';
 import { theme } from '@/assets/theme';
 import { useModalStore } from '@/store/modalStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
+import { useTranslation } from 'react-i18next';
 import { ModalWrapper } from './ModalWrapper';
 import { CheckInFailedModalStyles } from './styles';
-import { useTranslation } from 'react-i18next';
 
 export const CheckInFailedModal = () => {
 	const colors = theme();
 	const { t } = useTranslation();
-	const { modals, closeModal } = useModalStore();
+	const { modals, closeModal, triggerModal } = useModalStore();
 	const { visible } = modals.checkInFailed;
 	const terminalName = 'terminal 001';
 	const time = '09.00';
 	const onClose = () => {
 		closeModal('checkInFailed');
 	};
-	const onRetry = () => {};
+	const onRetry = () => {
+		closeModal('checkInFailed');
+		triggerModal('nfcPrompt');
+	};
 	const styles = CheckInFailedModalStyles;
 	return (
 		<ModalWrapper onClose={onClose} visible={visible}>
@@ -125,12 +128,7 @@ export const CheckInFailedModal = () => {
 					]}
 				>
 					<MaterialIcons color={colors.onPrimary} name='refresh' size={22} />
-					<Text
-						style={[
-							styles.buttonLabel,
-							{ color: colors.onPrimary },
-						]}
-					>
+					<Text style={[styles.buttonLabel, { color: colors.onPrimary }]}>
 						{t('UI.Buttons.Retry')}
 					</Text>
 				</Pressable>

@@ -84,10 +84,14 @@ const requestJson = async (
 		method: 'GET' | 'POST';
 		headers?: Record<string, string>;
 		body?: unknown;
+		timeoutMs?: number;
 	},
 ): Promise<JsonResponse | null> => {
 	const controller = new AbortController();
-	const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+	const timeout = setTimeout(
+		() => controller.abort(),
+		options.timeoutMs ?? REQUEST_TIMEOUT_MS,
+	);
 
 	try {
 		const response = await fetch(url, {
@@ -160,6 +164,7 @@ const callRpc = async (
 	url: string,
 	params: Record<string, unknown>,
 	sessionId?: string,
+	timeoutMs?: number,
 ): Promise<RpcResponse> => {
 	const response = await requestJson(url, {
 		method: 'POST',
@@ -167,6 +172,7 @@ const callRpc = async (
 			? { ...JSON_HEADERS, Cookie: `session_id=${sessionId}` }
 			: JSON_HEADERS,
 		body: { jsonrpc: '2.0', method: 'call', params },
+		timeoutMs,
 	});
 	if (!response) return { result: NETWORK_FAILURE, sessionId: null };
 
@@ -430,6 +436,7 @@ export const loginWithPassword = async ({
 const callSessionRoute = async (
 	path: string,
 	params: Record<string, unknown>,
+	timeoutMs?: number,
 ): Promise<OdooResult<unknown>> => {
 	const { session, replaceSessionId } = useOdooSessionStore.getState();
 	if (!session) return NO_SESSION;
@@ -438,6 +445,7 @@ const callSessionRoute = async (
 		`${session.serverUrl}${path}`,
 		params,
 		session.sessionId,
+		timeoutMs,
 	);
 	// Odoo oturum numarasını yaklaşık üç saatte bir yeniler ve eskisini kısa süre sonra siler.
 	// Oturum geçersizse gelen numara giriş yapılmamış boş bir oturumundur; o alınmaz.
@@ -452,19 +460,20 @@ const callSessionRoute = async (
  * Açık oturumla bir modelin metodunu çağırır (API anahtarı gerekmez).
  * `kwargs` metodun adlandırılmış parametreleridir; örn. search_read için { domain, fields, limit }.
  * `args` sıralı parametrelerdir; örn. write için [[kayıtNumarası], { alan: değer }].
+ * `timeoutMs` yalnızca uzun süren işlemler (ör. modül kurulumu) için verilir.
  */
 export const callOdooSession = (
 	model: string,
 	method: string,
 	kwargs: Record<string, unknown> = {},
 	args: unknown[] = [],
+	timeoutMs?: number,
 ): Promise<OdooResult<unknown>> =>
-	callSessionRoute(`/web/dataset/call_kw/${model}/${method}`, {
-		model,
-		method,
-		args,
-		kwargs,
-	});
+	callSessionRoute(
+		`/web/dataset/call_kw/${model}/${method}`,
+		{ model, method, args, kwargs },
+		timeoutMs,
+	);
 
 /** Odoo'daki oturumu kapatır ve cihazdaki oturum bilgisini siler. */
 export const logoutSession = async (): Promise<void> => {

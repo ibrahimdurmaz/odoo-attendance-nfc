@@ -36,11 +36,12 @@ Odoo şu adreste açılır: **http://localhost:8088**
 İlk açılışta veritabanı oluşturma ekranı gelir:
 
 1. Bir veritabanı adı (ör. `nfc_dev`), admin e-postası ve şifresi gir. **Demo data** kutusunu işaretlersen hazır çalışanlarla gelir, test için kolaylık sağlar.
-2. **Uygulamalar** menüsünden şunları kur: **Employees**, **Attendances**, **Time Off**, **Calendar**, **Discuss**.
-3. Geliştirici modunu aç: **Ayarlar → en alttaki "Geliştirici modunu etkinleştir"**. Ya da adresin sonuna `?debug=1` ekle.
-4. **Uygulamalar → Uygulama Listesini Güncelle**.
-5. Arama kutusundaki "Apps" filtresini kaldır, **NFC Card Writer** modülünü bulup kur.
-   `Gate & Turnstile Management` (`nfc_gate_access`) da aynı klasörde. Uygulama şu an onu kullanmıyor, kurmak isteğe bağlı.
+2. Modülleri elle kurmana gerek yok. Admin kullanıcıyla **uygulamadan** ilk kez giriş yaptığında, uygulama şu modüllerden eksik olanları kendisi kurar: **Employees**, **Attendances**, **Time Off**, **Calendar**, **Discuss**, **NFC Card Writer**, **Gate & Turnstile Management** ve **NFC Attendance Location** (girişin hangi çalışma yerinden yapıldığını kaydeder). Bu ilk giriş bir iki dakika sürebilir. Giriş butonu dönerken bekle.
+
+   Kurulum olmazsa Metro terminalinde `REQUIRED MODULES` logu çıkar. O durumda elle kur:
+   1. Geliştirici modunu aç: **Ayarlar → en alttaki "Geliştirici modunu etkinleştir"**. Ya da adresin sonuna `?debug=1` ekle.
+   2. **Uygulamalar → Uygulama Listesini Güncelle**.
+   3. Arama kutusundaki "Apps" filtresini kaldır ve yukarıdaki modülleri tek tek kur.
 
 ### Test verisi
 

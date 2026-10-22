@@ -5,7 +5,7 @@ import { Pressable, Text, View } from 'react-native';
 import { theme } from '@/assets/theme';
 import { formatTime } from '@/helper/dateHelpers';
 import type { EntranceCard } from '@/helper/odooEntranceTags';
-import { checkEntranceTag } from '@/helper/odooEntranceTags';
+import { selectLocationFromTag } from '@/helper/odooEntranceTags';
 import { useModalStore } from '@/store/modalStore';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { useTranslation } from 'react-i18next';
@@ -198,7 +198,7 @@ export const NfcPromptModal: FC<NfcPromptModalProps> = ({
 		});
 	};
 
-	// Modal açıkken kart beklenir. Okunan kart çalışanın çalışma yerinin kartıysa giriş yapılır.
+	// Modal açıkken kart beklenir. Okunan kartın çalışma yeri çalışanın yeri yapılır, sonra giriş yapılır.
 	useEffect(() => {
 		if (!visible) return;
 		let isActive = true;
@@ -217,9 +217,13 @@ export const NfcPromptModal: FC<NfcPromptModalProps> = ({
 			if (!isActive) return;
 			closeModal('nfcPrompt');
 
-			const check = card ? await checkEntranceTag(card) : null;
+			const check = card ? await selectLocationFromTag(card) : null;
 			if (!check?.ok) {
-				console.log('CHECK IN TAG', check ? check.reason : 'noCode');
+				console.log(
+					'CHECK IN TAG',
+					check ? check.reason : 'noCode',
+					check?.reason === 'odoo' ? check.failure.message : '',
+				);
 				showFailure();
 				return;
 			}
