@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_employee_form_inherit_gate_access" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit.gate.access</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="NFC ve Kapı Erişimi" name="nfc_gate_access_page">
+                    <group>
+                        <group string="Cihaz Güvenliği">
+                            <field name="locked_device_id" placeholder="Cihaz eşleştirildiğinde otomatik dolar, gerekirse silinebilir"/>
+                        </group>
+                        <group string="Yetkili Kapılar">
+                            <field name="allowed_gate_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
